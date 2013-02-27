@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- EditCycle Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=EditCycle border=0 height=131 src ="PROG-EditCycle.gif" width=241 ></p>
+	<P align=justify>
+	<br><STRONG>EditCycle</STRONG> is a 
+	  plug-in for Lightwave 6.0 or greater. It simply provides some alternate ways to 
+	  cycle through the available tools and edit modes in Layout. It contains two 
+	  plug-ins, <A href="#ChangeEditMode"><STRONG>Change Edit Mode</STRONG></A> and
+	  <A href="#MoveRotateCycler"><STRONG>Move/Rotate Cycler</STRONG></A>.
+	  This plug-in requires Lightwave 6.0 or greater.</P>
+	
+	<P align=justify>To install EditCycle, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy EditCycle.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add EditCycle.p. Layout should report that two plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        the <STRONG>EditCycle</STRONG> plug-ins from 
+        the Generics pop-up in the Plug-in Options Panel, or assign them to keys 
+        or buttons on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.   The plug-ins will be
+		the prefixed with TM_P under the Plugins heading of the 
+        Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+	<P><STRONG>EditCycle</STRONG> includes the following plugins:</P>
+
+	<br><HR width="90%">
+	<a name="#ChangeEditMode"></a>
+	<H3 align=center>Change Edit Mode
+	<HR width="40%"></H3>
+	
+	<P align=justify><STRONG>Change Edit Mode</STRONG>  
+		cycles between the item edit modes in Layout, shifting between the Object, Bone Light 
+		and Camera edit modes. This operates in a simlar to the 
+		ChangeSelectionMode command in Modeler (the space bar in the default keyboard 
+		layout). </P>
+
+    <p align="center"><IMG alt="Change Edit Mode Example" border=0 height=17
+	                       src ="EditCycle_ChangeEditMode.gif" width=277 ></p>
+
+	<P align=justify> The plug-in determines the current edit mode 
+		by reading the type of the currently selected item, changing to the next edit 
+		mode in the order of Objects, Bones, Lights, Camears, and then back to Objects 
+		again. If noitem are select, it is usually because there are no 
+		items of that type in the scene . In this case, <STRONG>Change Edit 
+		Mode</STRONG> assumes Layout is in Bone edit mode and skips ahead to Light edit mode, as you 
+		are more likly to have no bones in an object than no objects in a scene, and it 
+		keeps it from getting stuck in loops jumping from Object to 
+		Bone mode. </P>
+	
+	<HR width="90%"><br>
+	<a name="#MoveRotateCycler"></a>
+	<H3 align=center>Move/Rotate Cycle
+	<HR width="40%"></H3>
+	
+	<P align=justify>
+	    <IMG HSpace=15 alt="Change Edit Mode Example" border=0 height=33 src ="EditCycle_MoveRotateCycle.gif" width=96 align=right >
+	    <STRONG>Move/Rotate Cycle</STRONG> is 
+		very similar to the Layout's ChangeTool command (the space bar in the default 
+		keyboard layout), except it only cycles between the two tools that apply to 
+		all items: Move and Rotate.</P>
+
+	<P align=justify> Unlike <STRONG>Change Edit Mode</STRONG>, 
+		there is no way for <STRONG>Move/Rotate Cycle</STRONG> to determine the currently active 
+		tool. Instead, each time it is called it activates the 
+		opposite tool from when it was last called, no matter what the currently active 
+		tool is. This means that if you have activate the Move 
+		Tool by clicking it's button on the Layout interface, and the last 
+		tool <STRONG>Move/Rotate Cycle</STRONG> changed to was Rotate, calling 
+		<STRONG>Move/Rotate Cycle</STRONG> will appear to do nothing as it tells Layout to 
+		switch from the Move Tool back to the Move Tool. </P>
+	
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2001 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

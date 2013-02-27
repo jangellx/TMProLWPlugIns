@@ -1,0 +1,12 @@
+#!/bin/csh
+
+cd layerset
+make -f irix/makefile -u
+cd ../spherize
+make -f irix/makefile -u
+cd ../spikey
+make -f irix/makefile -u
+cd ../testcmd
+make -f irix/makefile -u
+cd ..
+rm */so_locations

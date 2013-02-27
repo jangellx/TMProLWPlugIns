@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Lightwave3D Animation Envelope Access Plugin</TITLE>
+   <META NAME="Author" CONTENT="Arnie Cachelin">
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#400040" BGCOLOR="#C0C0C0" LINK="#FFFF00" VLINK="#008000" ALINK="#FF0000" BACKGROUND="grfppsm.gif">
+
+<H1 ALIGN=CENTER><B><I><U><BLINK><FONT COLOR="#80FF00"><FONT SIZE=+2>New!</FONT></FONT></BLINK></U></I></B></H1>
+
+<H1 ALIGN=CENTER><IMG SRC="lwlogo001.gif" ALT="logo" HSPACE=5 VSPACE=5 HEIGHT=80 WIDTH=64 ALIGN=CENTER><B><I>The
+Lightwave3D Envelope Access Plugin</I></B><IMG SRC="lwlogo001.gif" ALT="logo" HSPACE=5 VSPACE=5 HEIGHT=80 WIDTH=64 ALIGN=CENTER></H1>
+
+<P>
+<HR width="100%"></P>
+
+<P><FONT SIZE=+2>This
+Global Class plugin provides the programmer with an animation envelope
+handler for use in their own Lightwave3D plugins. An envelope handler has
+functions for manipulating multi-channel spline envelopes, including disk
+I/O and an basic envelope editor interface:</FONT></P>
+
+<CENTER><P><IMG SRC="envacces.gif" ALT="Envelope Editor Panel Image" HEIGHT=543 WIDTH=546></P></CENTER>
+
+<P><FONT SIZE=+2>When this plugin is activated by calling Lightwave3D's
+global function with the string &quot;EnvelopeHandler&quot;, it returns
+an EnvelopeHandler structure with the following elements: </FONT></P>
+
+<UL>
+<P><B><TT><FONT SIZE=+1>typedef struct st_EnvelopeHandler { </FONT></TT></B></P>
+</UL>
+
+<UL>
+<UL>
+<P><B><TT><FONT SIZE=+1>int api_version; </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>Envelope *(*create)(LWError *); </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>void (*destroy)(Envelope *); </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>LWError (*copy)(Envelope *from,Envelope *to); </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>LWError (*load)(Envelope *env,char *filename);
+</FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>LWError (*save)(Envelope *env, char *filename);</FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>void (*evaluate)(Envelope *, LWTime, ChanVec);
+</FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>int (*Interface)(Envelope *, ehInterfaceData *dat);
+</FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>LWError (*LWLoad)(Envelope *env, const LWLoadState
+*); </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>LWError (*LWSave)(Envelope *env, const LWSaveState
+*); </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>Keyframe *(*createKey)(int step,ChanVec cv,int
+chans); </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>void (*putKey)(Envelope *env,Keyframe *key); </FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>Keyframe *(*getKey)(Envelope *env, int step);</FONT></TT></B></P>
+
+<P><B><TT><FONT SIZE=+1>void (*destroyKey)(Keyframe *key);</FONT></TT></B></P>
+</UL>
+
+<P><B><TT><FONT SIZE=+1>} EnvelopeHandler;</FONT></TT></B></P>
+</UL>
+
+<DT><B><TT><FONT SIZE=+1>int api_version</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>A version number to identify api feature set is currently
+3.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>Envelope *(*create)(LWError *)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function allocates and initializes an envelope
+with 1 key at 0, and returns its address, or NULL on failure.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>void (*destroy)(Envelope *)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function should be called to free an envelope
+when it's no longer needed.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWError (*copy)(Envelope *from,Envelope *to)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function will copy an envelope instance, and
+can be used to allow changes to be undone if editor is 'CANCEL'ed.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWError (*load)(Envelope *env,char *filename)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function will load an envelope file.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWError (*save)(Envelope *env, char *filename)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function will save an envelope file.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>double (*evaluate)(Envelope *, LWTime)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Call this function to find the value of an envelope
+at a given time.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>int (*Interface)(Envelope *, ehInterfaceData *)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function will open an envelope editor panel,
+using the <I>LWPanelFuncs</I> you have obtained from <A HREF="./lwpanels.html">LWPanelServices</A>.
+It will return 1 on 'OK', 0 if the user has 'CANCEL'ed, or -1 if the user
+has clicked 'Remove Envelope'. If Remove Envelope was selected, the Envelope
+you passed will be cleared, and can be destroyed. If CANCEL was selected,
+the envelope should be returned to its un-edited state. The <I>ehInterfaceData</I>
+structure that is passed into this function is defined as:</FONT></TT></DD>
+
+<UL>
+<PRE><B><TT><FONT SIZE=+1>typedef struct {</FONT></TT></B></PRE>
+</UL>
+
+<UL>
+<UL>
+<PRE><B><TT><FONT SIZE=+1>LWPanelFuncs *pfunc; </FONT></TT></B></PRE>
+</UL>
+</UL>
+
+<UL>
+<UL>
+<PRE><B><TT><FONT SIZE=+1>const char *title; </FONT></TT></B></PRE>
+
+<PRE><B><TT><FONT SIZE=+1>channelDescription chDesc[MAX_CHANNELS]; </FONT></TT></B></PRE>
+</UL>
+
+<PRE><B><TT><FONT SIZE=+1>} ehInterfaceData; </FONT></TT></B></PRE>
+</UL>
+
+<DD><TT><FONT SIZE=+1>where the <I>channelDescription</I> structure holds
+labels and limits for the envelope channels you wish to edit:</FONT></TT></DD>
+
+<UL>
+<P><B><TT><FONT SIZE=+1>typedef struct { </FONT></TT></B></P>
+
+<UL>
+<P><B><TT><FONT SIZE=+1>char *chname; </FONT></TT></B></P>
+</UL>
+</UL>
+
+<UL>
+<UL>
+<P><B><TT><FONT SIZE=+1>float min, max; </FONT></TT></B></P>
+</UL>
+
+<P><B><TT><FONT SIZE=+1>} channelDescription; </FONT></TT></B></P>
+</UL>
+
+<DT><B><TT><FONT SIZE=+1>LWError (*LWLoad)(Envelope *env, const LWLoadState
+*)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function reads an envelope from a Lightwave
+scene using the interface provided to plugins by the Lightwave Plugin SDK.
+This includes binary mode saves (as in a Shader), Brenden Mecleary has
+graciously supplied the code for this!</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWError (*LWSave)(Envelope *env, const LWSaveState
+*)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function writes an envelope into a Lightwave
+scene using the interface provided to plugins by the Lightwave Plugin SDK.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>Keyframe *(*createKey)(int step,ChanVec cv,int
+chans) </FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This call allocates and fills a Keyframe, the key
+must still be added to an envelope's keylist using the putKey method.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>void (*putKey)(Envelope *env,Keyframe *key)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function will insert key into an envelope, replacing
+any existing key at the same step. The existing key will be destroyed internally.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>Keyframe *(*getKey)(Envelope *env, int step)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function returns the key at the given step,
+or NULL if no key exists at that step.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>void (*destroyKey)(Keyframe *key)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Use this call to remove a key from an envelope and
+free it. Since this is done for any keys in an envelope when the envelope
+is destroyed, this function is only necessary for cutting keys out of envelopes,
+or freeing copied keys which are not in an envelope.</FONT></TT></DD>
+
+<DD>
+<HR WIDTH="80%"></DD>
+
+<P><B><FONT SIZE=+2>The Envelope stucture definition, and many other essential
+tidbits are in the header file <A HREF="../include/lwenvlp.h">lwenvlp.h</A>. A minimal
+example plugin which creates and edits an envelope is in the file <A HREF="../sample/common/envaccess/enview.c">EnView.c</A>.
+These files are included in the archives below.</FONT></B></P>
+
+<P>
+<HR width="100%"></P>
+
+</BODY>
+</HTML>

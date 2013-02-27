@@ -1,0 +1,90 @@
+<html>
+
+<head>
+<title>Classes: DisplacementHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="custobj.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="CustomObjHandler"></a> </td>
+    <td width="96" align="left"><a href="environ.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="EnvironmentHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>DisplacementHandler<br>
+    DisplacementInterface</h3>
+    <p>Displacement plug-ins deform objects by moving their points at each time step. They can
+    be called both during rendering and to update Layout's interface.</p>
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>
+   XCALL_( int ) MyDisplacement( long version, GlobalFunc *global,
+      LWDisplacementHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to a displacement plug-in's activation function is an
+    LWDisplacementHandler.</p>
+    <pre>
+   typedef struct st_LWDisplacementHandler {
+      LWInstanceFuncs *inst;
+      LWItemFuncs     *item;
+      LWRenderFuncs   *rend;
+      void            (*evaluate) (LWInstance, LWDisplacementAccess *);
+      unsigned int    (*flags)    (LWInstance);
+   } LWDisplacementHandler;</pre>
+    <p>The first three members of this structure are the standard <a href="../handler.html">handler
+    functions</a>. The <tt>context</tt> argument to the <tt>inst-&gt;create</tt> function is
+    the LWItemID of the object associated with this instance.</p>
+    <p>In addition to the standard functions, a displacement plug-in provides an evaluation
+    function and a flags function.<dl>
+      <dt><tt>evaluate( instance, access )</tt></dt>
+      <dd>This is where the displacement happens. At each time step, the evaluation function is
+        called for each vertex in the object. The position of the vertex is examined and modified
+        through the access structure described below.</dd>
+      <dt><br>
+        <tt>flags( instance )</tt></dt>
+      <dd>Returns an int that tells Layout whether the displacement will be in world coordinates
+        and whether it should occur before or after the object has been deformed by bones. Only
+        one of these flags should be returned.<blockquote>
+          <tt><p>LWDMF_WORLD<br>
+          LWDMF_BEFOREBONES</tt></p>
+        </blockquote>
+      </dd>
+    </dl>
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD.</p>
+    <p><strong>Displacement Access</strong></p>
+    <p>Fundamentally, a displacement plug-in takes point coordinates and moves them for each
+    timestep. The access structure gives the evaluation function the position of the point to
+    displace in two ways. </p>
+    <pre>
+    typedef struct st_DisplacementAccess {
+       double oPos[3];
+       double source[3];
+    } DisplacementAccess;</pre>
+    <dl>
+      <dt><tt>oPos</tt></dt>
+      <dd>The point location in object coordinates. This is read-only.</dd>
+      <dt><tt>source</tt></dt>
+      <dd>The location to be transformed in place by the displacement. If the flags function
+        returned the <tt>LWDMF_WORLD</tt> bit, the source is in world coordinates and has already
+        been modified by morphing, bones and object motion. Otherwise the source is in object
+        coordinates (after morphing, before item motion, and before or after bone effects,
+        depending on whether the flags function returned <tt>LWDMF_BEFOREBONES</tt>).</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

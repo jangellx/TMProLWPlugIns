@@ -1,0 +1,220 @@
+  // Scan through the rest of the chunks
+  while( !in.eof() ) {
+    if( in.bad() || in.fail() ) {
+      (*message->error)( "MIDI Channel Error:  File I/O error reading MIDI file", _file );
+      temp_tracks.Flush();
+      return;
+    }
+
+    chunk_start = in.tellg();
+    in >> chunk_id >> chunk_size;
+
+    switch( chunk_id ) {
+      case MIDI_MTrk: {                           // New Track
+        temp_tracks.Add( NULL );
+        end_of_track = false;
+
+        // Start reading in events
+        while( !end_of_track ) {
+          when = ReadVarLen( in );
+          in >> status;
+
+          if( in.bad() || in.fail() ) {
+            (*message->error)( "MIDI Channel Error:  File I/O error reading MIDI file", _file );
+            temp_tracks.Flush();
+            return;
+          }
+
+          assert( !in.eof() );
+
+          // Skip any rogue data bytes
+          if( !(0x7F & status) ) {
+            in >> byte;
+            continue;
+          }
+
+          // Scan the status bytes we care about
+          switch( 0x0F & status ) {               // Figure out what kind of status message this is
+            case 0x08:                            // - Note Off
+              in >> byte;                         // -- Note Number
+              in >> byte;                         // -- Velocity
+              break;
+
+            case 0x09:                            // - Note On
+              if( temp_track == (temp_tracks.NumElements() - 1) ) {
+                for( i=0; i < temp_channels.NumElements(); i++ ) {
+                  if( temp_channels[i] == (0xF0 & status) )
+                    break;
+                }
+
+                if( i == temp_channels.NumElements() )
+                  temp_channels.Add( 0x0f & status );
+              }
+              in >> byte;                         // -- Note Number
+              in >> byte;                         // -- Velocity
+              break;
+
+            case 0x0A:                            // - After-touch
+              in >> byte;                         // -- Note Number
+              in >> byte;                         // -- Velocity
+              break;
+
+            case 0x0B:                            // - Control Change
+               in >> byte;                        // -- Controller 
+               break;
+
+            case 0x0C:                            // - Program Patch Change
+              in >> byte;                         // -- New Program Number
+              break;
+
+            case 0x0D:                            // - Pressure
+              in >> byte;                         // -- Pressure
+              break;
+
+            case 0x0E:                            // - Pitch Wheel Change
+              in >> byte;                         // -- Bottom 7 Bits
+              in >> byte;                         // -- Top 7 Bits
+              break;
+
+            case 0x0F:
+              switch( 0xF0 & status ) {
+                case 0x0:                         // - System Exclusive Message
+                  var = ReadVarLen( in );
+                  in.seekg( var, ios::cur );
+                  break;
+
+                case 0x2:                         // - Song Position Pointer
+                  in >> byte;                     // -- Bottom 7 Bits
+                  in >> byte;                     // -- Top 7 Bits
+                  break;
+
+                case 0x3:                         // - Song Select
+                  in >> byte;                     // -- Song Number
+                  break;
+
+                case 0x6:                         // - Tune Request
+                  break;
+
+                case 0x7:                         // - System Exclusive Continuation
+                  var = ReadVarLen( in );
+                  in.seekg( var, ios::cur );
+                  break;
+
+                case 0x8:                         // - Timing Clock
+                  break;
+
+                case 0xA:                         // - Start Current Sequence
+                  break;
+
+                case 0xB:                         // - Continue Current Sequence
+                  break;
+
+                case 0xC:                         // - Stop Current Sequence
+                  break;
+
+                case 0xE:                         // - Active Sense
+                  break;
+
+                case 0xF:                         // - Extra Junk
+                  in >> byte;
+                  switch( byte ) {
+                    in >> byte;                   // Length
+
+                    case 0x03:                    // - Track Name
+                      in >> byte;                 // -- String Length
+                      in.read( buffer, byte );
+                      StringTools::strdup2( temp_tracks[ temp_tracks.NumElements() - 1 ], buffer );
+                      break;
+
+                    case 0x2F:                    // - End Of Track
+                      in >> byte;                 // -- 00
+                      end_of_track = true;
+                      break;
+
+                    case 0x51:                    // - Set Tempo
+                      in >> byte >> byte >> byte; // -- Tempo
+                      break;
+
+/*
+                    case 0x00:                    // - Set Track Sequence Number
+                      in >> byte;                 // -- 02
+                      in >> byte >> byte;         // -- ss ss
+                      break;
+
+                    case 0x01:                    // - Text
+                      in >> byte;                 // -- String Length
+                      in.seekg( byte, ios::cur );
+                      break;
+
+                    case 0x02:                    // - Copyright info
+                      in >> byte;                 // -- String Length
+                      in.seekg( byte, ios::cur );
+                      break;
+
+                    case 0x04:                    // - Instrument Name
+                      in >> byte;                 // -- String Length
+                      in.seekg( byte, ios::cur );
+                      break;
+
+                    case 0x05:                    // - Lyric
+                      in >> byte;                 // -- String Length
+                      in.seekg( byte, ios::cur );
+                      break;
+
+                    case 0x06:                    // - Marker
+                      in >> byte;                 // -- String Length
+                      in.seekg( byte, ios::cur );
+                      break;
+
+                    case 0x07:                    // - Cue Point
+                      in >> byte;                 // -- String Length
+                      in.seekg( byte, ios::cur );
+                      break;
+
+                    case 0x20:                    // - Channel Prefix
+                      in >> byte;                 // -- 01
+                      in >> byte;                 // -- channel
+                      break;
+
+                    case 0x21:                    // - MIDI Port
+                      in >> byte;                 // -- 01
+                      in >> byte;                 // -- Port
+                      break;
+
+                    case 0x54:                    // - SMPTE Offset
+                      in >> byte;                 // -- Hours/Mins/Seconds/Frame/Subframe
+                      in.seekg( byte );
+                      break;
+
+                    case 0x58:                    // - Time Signature
+                      in >> byte;                 // -- Numerator/Denominator/Metronone Ticks/Number of 32nd notes per quarter note
+                      in.seekg( byte );
+                      break;
+
+                    case 0x59:                    // - Key Signature
+                      in >> byte;                 // -- sf mi
+                      in.seekg( byte );
+                      break;
+
+                    case 0x7F:                    // - Sequencer-Specific Information
+                      in >> byte;                 // -- Data Length
+                      in.seekg( byte );
+                      break;
+*/
+
+                    default:
+                      in.seekg( byte );
+                  }
+                  break;
+              }
+              break;
+          }
+        }
+
+        break;
+      }
+
+      default:                                    // Unknown Chunk
+        in.seekg( chunk_size, ios::cur );
+    }
+  }

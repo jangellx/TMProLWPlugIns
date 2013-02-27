@@ -1,0 +1,1715 @@
+<html><head>
+<!-- $Id: lwob.htmX 2.1 1996/11/19 22:12:56 shf Exp $ -->
+<title>LightWave 3D Object File Format</title>
+</head>
+
+<body>
+<center><h1>
+			LightWave 3D Object File Format 2
+</h1><h2>
+				June 16, 1999
+</center></h2>
+
+<!------------------------------>
+<h3><hr>
+Contents
+</h3>
+
+<ul>
+    <li><a href="#H_intr">Introduction</a>
+    <li><a href="#H_type">Types and Structures</a>
+    <li><a href="#H_file">Object File Chunks</a>
+    <li><a href="#H_envl">Envelope Sub-chunks</a>
+    <li><a href="#H_clip">Image Sub-chunks</a>
+    <li><a href="#H_surf">Surface Sub-chunks</a>
+    <ul>
+	<li><a href="#Hs_base">Basic Surface Parameters</a>
+	<li><a href="#Hs_layr">Texture Layers</a>
+	<li><a href="#Hs_tmap">Texture Mapping</a>
+	<li><a href="#Hs_imap">Image Maps</a>
+	<li><a href="#Hs_proc">Procedurals</a>
+	<li><a href="#Hs_grad">Gradients</a>
+	<li><a href="#Hs_shdr">Shaders</a>
+    </ul>
+    <li><a href="#H_exam">Object File Example</a>
+    <li><a href="#H_indx">Index</a>
+</ul>
+
+<!------------------------------>
+<h2><hr> <a name="H_intr">
+Introduction
+</h2> </a>
+
+LightWave 3D objects are stored on disk as 3D meshes consistsing of
+points, polygons (which can be faces, curves or patches), and surfaces.
+Files can contain multiple layers (or parts) and each part can be a 
+single connected mesh or several disjoint meshes.
+An object file may also contain one or more surface definitions with no mesh.
+<p>
+This document describes the high-level format of the file, and describes
+in detail all the elements of the file.  There is a sample file at the
+end displayed as an annotated dump.
+<p>
+
+
+<!------------------------------>
+<h2><hr> <a name="H_type">
+Types and Structures
+</h2> </a>
+
+LightWave 3D object files are binary files composed of a series of bytes
+in the range of 0 to 255.  The format conforms to the IFF ("Interchange File Format")
+specification with a FORM-type of <tt>LWO2</tt>.  The full IFF format specification
+can be found in
+"<a href="iff_doc.html">EA IFF 85 Standard for Interchange Format Files</a>,"
+but a simplified description is included here.
+<p>
+The atomic (or lowest-level) types in the file are listed below along with 
+their type name (<b>I2</b>, <b>F4</b>, etc.).  These are used interpret sequences
+of bytes in the file.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="t_ID4">
+    ID Tag
+</i><tt><b><dd>
+	ID4
+<p></b></tt><dd>	</a>
+	An ID tag is a sequence of 4 bytes interpreted as 7-bit ASCII values,
+	usually upper-case.  These tags are used to identify the type of data
+	which follows.  <tt>FORM</tt>, <tt>SURF</tt>, <tt>POLS</tt>, and 
+	<tt>LWO2</tt> are all examples of ID tags.
+
+<p><dt><i>	<a name="t_I">
+    Signed Integer
+</i><tt><b><dd>
+	I1, I2, I4
+</tt></b><dt><i>
+    Unsigned Integer
+</i><tt><b><dd>
+	U1, U2, U4
+<p></tt></b><dd>	</a>
+	Integers can have 1, 2 or 4 bytes and can be signed or unsigned.
+	The most significant byte comes first in the file, so bytes read 
+	into memory should be reversed before being interpreted on Intel 
+	and compatible CPUs.
+
+<p><dt><i>	<a name="t_F4">
+    Float
+</i><tt><b><dd>
+	F4
+<p></b></tt><dd>	</a>
+	Floats are written as 4 byte IEEE floating-point values.  The
+	bytes should generally be reversed before being interpreted on 
+	Intel and compatible CPUs.
+
+<p><dt><i>	<a name="t_S0">
+    String
+</i><tt><b><dd>
+	S0
+<p></b></tt><dd>	</a>
+	Names or other character strings are written as a series of 
+	ASCII character values followed by a zero (or null) byte.  If the 
+	length of the string plus the null terminating byte is odd, an 
+	extra null is added to make the total length even.
+</dl></dl>
+
+		<a name="t_CHUNK">
+The basic structural element in an IFF file is the <em>Chunk</em>.  This is
+given by the structure:
+<p>		</a>
+
+<dl><dl><dd><tt><b>
+	CHUNK ::= tag<a href="#t_ID4"><a href="#t_ID4">[ID4]</a></a>,
+		length<a href="#t_I">[U4]</a>,
+		data[...], pad<a href="#t_I">[U1]</a> ?
+</dl></dl></tt></b>
+
+Each chunk starts with an ID tag which indicates the type of chunk, and an
+unsigned four-byte integer which indicates the length of the data.  After that
+follows <i>length</i> bytes of data and an optional pad byte if <i>length</i> is odd.
+The pad byte, if included, should have a value of zero.
+<p>
+
+		<a name="t_SUBCH">
+LightWave objects also have the <em>Sub-chunk</em> (or mini-chunk) structural
+element which
+is just like a chunk except that the length is given by a two-byte unsigned
+integer.  Sub-chunks are specific to LightWave objects, not general IFF files.
+<p>		</a>
+
+<dl><dl><dd><tt><b>
+	SUB-CHUNK ::= tag<a href="#t_ID4">[ID4]</a>, 
+		length<a href="#t_I">[U2]</a>, 
+		data[...], pad<a href="#t_I">[U1]</a> ?
+</dl></dl></tt></b>
+
+		<a name="t_FORM">
+For the purposes of this document, chunks and sub-chunks are written as
+"<b><i>id-tag</i> { <i>data</i> }</b>".  The entire file can be an example of
+this notation, since it is itself a <tt>FORM</tt> chunk containing the ID 
+tag <tt>LWO2</tt> and a series of data chunks.
+<p>		</a>
+
+<dl><dl><dd><tt><b>
+	FORM { 'LWO2'<a href="#t_ID4">[ID4]</a>, 
+		data<a href="#t_CHUNK">[CHUNK]</a> * }
+</dl></dl></tt></b>
+
+Very roughly, object files 
+start with the four bytes "<tt>FORM</tt>" followed by a four-byte integer giving
+the length of the file (not including the first 8 bytes) and the four 
+bytes of the FORM-type, "<tt>LWO2</tt>".  The remainder of the data is a series of
+chunks, each given by a four-character type and a four-byte length for
+the data which follows.  The contents of each chunk is determined by its
+type.
+<p>
+The chunks can occur in any order except when the data in a chunk depends
+on knowing the values in previous chunks, in which case the dependant
+chunk must occur after the chunk it depends upon.  Different applications
+may write their chunks in slightly different orders,
+so it is important for parsers to support order-independence.
+<p>
+
+The LightWave format has some composite datatypes that it uses consistently 
+which are built from the fundamental types.
+<p>
+
+<dl><dl>
+
+<dt><i> <a name="t_VX">
+    Variable-length Index
+<dd></i><b><tt> </a>
+	VX ::=  index<a href="#t_I">[U2]</a> |
+	       (index + 0xFF000000)<a href="#t_I">[U4]</a>
+</b></tt><p><dd>
+	A vertex or polygon index is written as a variable length two or 
+	four byte element.  If the index value is less than
+	65,280 (0xFF00), then the index is written as an unsigned two-byte
+	integer.  Otherwise the index is written as an unsigned four byte
+	integer with bits 24-31 set.  When reading, if the first byte in the
+	number is 255 (0xFF), then the four-byte form is being used. 
+
+<p><dt><i> <a name="t_COL12">
+    Color
+<dd></i><b><tt> </a>
+	COL12 ::= red<a href="#t_F4">[F4]</a>,
+		  green<a href="#t_F4">[F4]</a>,
+		  blue<a href="#t_F4">[F4]</a>
+</b></tt><p><dd>
+	A color is written as an RGB triple, with each color component
+	being a floating point value in the range of 0.0 to 1.0.  0.0,0.0,0.0 
+	is full black and 1.0,1.0,1.0 is full white.  Values may also be
+	out of range, although the behavior of such colors will depend on
+	their context.
+
+<p><dt><i> <a name="t_VEC12">
+    Coordinate
+<dd></i><b><tt> </a>
+	VEC12 ::= X<a href="#t_F4">[F4]</a>,
+		  Y<a href="#t_F4">[F4]</a>,
+		  Z<a href="#t_F4">[F4]</a>
+</b></tt><p><dd>
+	3D coordinates are written as an XYZ vector in floating
+	point format.  The values are distances along the X, Y, and Z axes.
+
+<p><dt><i> <a name="t_FP4">
+    Percentage
+<dd></i><b><tt> </a>
+	FP4 ::= fractional-value<a href="#t_F4">[F4]</a>
+</b></tt><p><dd>
+	Percentages are written as a floating point value, where
+	0.0 is equal to 0% and 1.0 is equal to 100%.
+
+<p><dt><i> <a name="t_ANG4">
+    Angle
+<dd></i><b><tt> </a>
+	ANG4 ::= degrees<a href="#t_F4">[F4]</a>
+</b></tt><p><dd>
+	Angles are specified as floating point values expressed in radians.
+
+<p><dt><i> <a name="t_FNAM0">
+    Filename
+<dd></i><b><tt> </a>
+	FNAM0 ::= name<a href="#t_S0">[S0]</a>
+</b></tt><p><dd>
+	Filenames (such as the names of images) are written as strings in 
+	a platform-neutral format.  This format is <i><b>aaa:bbb/ccc</i></b> for
+	absolute filenames and <i><b>aaa/bbb/ccc</b></i> for relative filenames.
+	The PC filename <i><b>A:\images\monalisa.tga</b></i> would be stored as
+	<i><b>A:images/monalisa.tga</b></i>; the Mac file
+	<i><b>:Images:Mona Lisa</b></i> would be stored as
+	<i><b>Images/Mona Lisa</b></i>; and the Unix file
+	<i><b>/usr/images/monaLisa.t</b></i> would be stored as
+	<i><b>usr:images/monaLisa.t</b></i>.
+
+</dl></dl>
+
+
+<!------------------------------>
+<h2><hr> <a name="H_file">
+Object File Chunks
+</h2> </a>
+
+The following section describes all the chunks that can be found in a LightWave
+object file.  Their order here is not important, except that chunks which
+define values in other chunks are listed first.
+<p>
+
+<dl><dl>
+
+<dt><i> <a name="c_LAYR">
+    Start Layer
+</i><p><dd><tt><b> </a>
+	LAYR { number<a href="#t_I">[U2]</a>, flags<a href="#t_I">[U2]</a>,
+		pivot<a href="#t_VEC12">[VEC12]</a>, name<a href="#t_S0">[S0]</a>,
+		parent<a href="#t_I">[U2]</a> }
+</tt></b><p>
+This chunk signals the start of a new layer.  All the data chunks which follow
+will be included in this layer until another layer chunk is encountered.  If
+data is encountered before a layer chunk, it goes into an arbitrary layer.  The
+parent index indicates the default parent for this layer and can be -1 or
+missing to indicate no parent.
+<p>
+
+<dt><i> <a name="c_PNTS">
+    Point List
+</i><p><dd><tt><b> </a>
+	PNTS { point-location<a href="#t_VEC12">[VEC12]</a> * }
+</tt></b><p>
+This chunk contains a list of the X, Y, and Z coordinates for a set of points.
+Since each coordinate has three components, and
+each component is stored as a four byte
+floating point number, the number of points in an object can be 
+determined by dividing the size in bytes of the <tt>PNTS</tt> chunk by 12.
+<p>
+By convention, the +X direction is to the right or east, the +Y
+direction is upward, and the +Z direction is forward or north.
+For models of real-world objects, the unit size is usually
+considered to be one meter.  The coordinates are specified relative
+to an object's pivot point.  See the LightWave Modeler manual for
+more information about LightWave 3D's geometric conventions.
+<p>
+Points in a <tt>PNTS</tt> chunk are numbered in the order they occur, starting
+with zero.  This index is then used by polygons to define their
+vertices.  The <tt>PNTS</tt> chunk must be before the
+<a href="#c_POLS"><tt>POLS</tt></a> or <a href="#c_VMAP"><tt>VMAP</tt></a>
+chunks that refer to it.
+<p>
+
+<dt><i> <a name="c_VMAP">
+    Vertex Mapping
+</i><p><dd><tt><b> </a>
+	VMAP { type<a href="#t_ID4">[ID4]</a>, dimension<a href="#t_I">[U2]</a>, name<a href="#t_S0">[S0]</a>,<br>
+	       ( vert<a href="#t_VX">[VX]</a>, value<a href="#t_F4">[F4]</a> # dimension )* }
+</tt></b><p>
+This chunk contains a set of floating point vectors associated with
+a set of vertices.  Each one has a type which is a four-character ID 
+code, a dimension and a name string.  After that follows a list of 
+vertex / vector pairs, with the vertex given by a vertex index in VX 
+format and an array of "dimension" floating-point values.  There can
+be any number of these chunks, although they should all have different 
+types or names.
+<p>
+Some possible type codes are <tt>TXUV</tt> for UV mapping coordinates,
+<tt>MNVW</tt> for MetaNURBS vertex weights, <tt>MORF</tt> for vector offsets
+defining an alternate object shape, <tt>SPOT</tt> for alternate vertex
+positions, <tt>RGBA</tt> for coloring, etc.
+<p>
+
+<dt><i> <a name="c_POLS">
+    Polygon List
+</i><p><dd><tt><b> </a>
+	POLS { type<a href="#t_ID4">[ID4]</a>,
+	       ( numvert+flags<a href="#t_I">[U2]</a>, vert<a href="#t_VX">[VX]</a> # numvert )* } 
+</tt></b><p>
+This chunk contains a list of polygons for the current layer.  The 'type'
+code indicates the polygon type and can be <tt>FACE</tt>, <tt>CURV</tt>,
+<tt>PACH</tt>, or possibly other values.  Each entry starts with a short
+integer specifying the number of vertices in the polygon.  The 6 high-order bits of
+the number of vertices are flags bits with different meaning for each
+polygon type, so there are a maximum of 1023 vertices per polygon.
+The vertex list is the specified number of two or four byte VX vertex 
+indices (relative to the most recent points list).  The vertex list for
+each polygon should begin at a convex vertex and proceed clockwise
+as seen from the visible side of the polygon (LightWave 3D polygons
+are single-sided, except for those whose surfaces have the double-sided 
+flag set).  Polygons should be read from the file until as many
+bytes as the chunk size specifies have been read.
+<p>
+
+<dt><i> <a name="c_TAGS">
+    Tag Strings
+</i><p><dd><tt><b> </a>
+	TAGS { tag-string<a href="#t_S0">[S0]</a> * }
+</tt></b><p>
+This chunk lists the tags strings that can be associated with polygons by
+the <a href="#c_PTAG"><tt>PTAG</tt></a> chunk.  Strings should be read 
+until as many bytes as the chunk size specifies have been read, and each
+string is assigned an index starting from zero.
+<p>
+
+<dt><i> <a name="c_PTAG">
+    Polygon Tag Mapping
+</i><p><dd><tt><b> </a>
+	PTAG { type<a href="#t_ID4">[ID4]</a>,
+	       ( poly<a href="#t_VX">[VX]</a>, tag<a href="#t_I">[U2]</a> )* }
+</tt></b><p>
+This chunk contains the all the tags of a given type for some subset of the
+polygons defined in the preceding <a href="#c_POLS"><tt>POLS</tt></a> chunk.
+The type of the tag association is given by the first element of the chunk
+and is an normal 4-character ID code.  The rest of the chunk is a list of
+polygon/tag associations.  The polygon is identified by its index into the 
+previous <a href="#c_POLS"><tt>POLS</tt></a> chunk, and the tag is given by
+its index into the previous <a href="#c_TAGS"><tt>TAGS</tt></a> chunk.
+Any number of polygons may be
+mapped with this type of tag, and mappings should be read from the file
+until as many bytes as the chunk size specifies have been read.
+<p>
+Polygon tags types and their values are extensible, but there are some
+pre-defined types.  The <tt>SURF</tt> type tags each polygon with the name
+of its surface.  In LightWave 3D terminology, a "surface" is defined as a
+named set of shading attributes and may be described in the object file in
+<a href="#c_SURF"><tt>SURF</tt></a> chunks.  Another pre-defined type is
+<tt>PART</tt> which describes what aspect of the mesh each polygon belongs
+to, and <tt>SMGP</tt> which names the smoothing group for each polygon.
+Not all polygons have a value for every tag type, and the behavior for
+polygon which lack a certain tag depends on the type.
+<p>
+
+<dt><i> <a name="c_ENVL">
+    Envelope Definition
+</i><p><dd><tt><b> </a>
+	<a href="#H_envl">ENVL</a> { 
+		index<a href="#t_I">[U4]</a>,
+		attributes<a href="#t_SUBCH">[SUB-CHUNK]</a> * }
+</tt></b><p>
+Each <tt>ENVL</tt> chunk defines the time-varying curve for a single parameter
+channel.  The index is used to identify this envelope uniquely, and can have
+any non-zero value less than 0x1000000.
+Following the index is a series of sub-chunks, which are like normal
+IFF chunks except that their sizes are specified by short integers
+instead of longs.  The number of sub-chunks may vary depending on the
+complexity of the envelope, so sub-chunks should be read from the file
+until as many bytes as the chunk size specifies have been read.
+New types of sub-chunks may be introduced as the program capabilities
+increase, but any unknown sub-chunks may be skipped over by using their
+size.
+<p>
+
+<dt><i> <a name="c_CLIP">
+    Image or Sequence Definition
+</i><p><dd><tt><b> </a>
+	<a href="#H_clip">CLIP</a> {
+		index<a href="#t_I">[U4]</a>,
+		attributes<a href="#t_SUBCH">[SUB-CHUNK]</a> * }
+</tt></b><p>
+Each <tt>CLIP</tt> chunk defines a image which can be used for applying as 
+a texture map in surfaces.  The term 'clip' is used to describe these since
+they may be time-varying sequences or animations rather than just stills.
+The index identifies this clip uniquely and may be any non-zero value less
+than 0x1000000.  The attributes which define the source imagery and modifiers
+follow as a variable list of sub-chunks.
+<p>
+
+<dt><i> <a name="c_SURF">
+    Surface Definition
+</i><p><dd><tt><b> </a>
+	<a href="#H_surf">SURF</a> {
+		name<a href="#t_S0">[S0]</a>, source<a href="#t_S0">[S0]</a>,
+		attributes<a href="#t_SUBCH">[SUB-CHUNK]</a> * }
+</tt></b><p>
+Each <tt>SURF</tt> chunk describes the shading attributes of a particular
+surface.  These chunks begin with the name of the surface being described
+plus the name of the source surface.  If the source name is non-null, then
+this surface is derived from the source surface.  The base attributes of
+the source surface can be overridden by this surface, and texture blocks can
+be added to the source surface.  The material attributes follow as a
+variable list of sub-chunks.
+<p>
+
+<dt><i> <a name="c_BBOX">
+    Bounding Box
+</i><p><dd><tt><b> </a>
+	BBOX { min<a href="#t_VEC12">[VEC12]</a>, max<a href="#t_VEC12">[VEC12]</a> }
+</tt></b><p>
+This is an optional chunk which can be included to store the bounding box for
+the vertex data in a layer.  The min and max vectors are the lower and upper
+corners of the bounding box.
+<p>
+
+<dt><i> <a name="c_DESC">
+    Description Line
+</i><p><dd><tt><b> </a>
+	DESC { description-line<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+This is an optional chunk which can be used to hold an object description.
+This should be a simple line of upper and lowercase characters, punctuation
+and spaces which describes the contents of the object file.  There should 
+be no control characters in this text string and it should generally be 
+kept short.
+<p>
+
+<dt><i> <a name="c_TEXT">
+    Commentary Text
+</i><p><dd><tt><b> </a>
+	TEXT { comment<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+This is another optional chunk which can be used to hold comments about
+the object.  The text is just like the DESC chunk, but it can be about 
+any subject, it may contain newline characters and it does not need to be
+particularly short.
+<p>
+
+<dt><i> <a name="c_ICON">
+    Thumbnail Icon Image
+</i><p><dd><tt><b> </a>
+	ICON { encoding<a href="#t_I">[U2]</a>, width<a href="#t_I">[U2]</a>,
+		data<a href="#t_I">[U1]</a> * }
+</tt></b><p>
+This optional chunk contains an iconic or thumbnail image for the object
+which can be used when viewing the file in a browser.  The encoding is a code
+for the data format which can only be zero for now meaning uncompressed,
+unsigned bytes as RGB triples.  The width specifies the number of pixels 
+contained in each row of the image.  The data consists of rows of pixels
+(RGB triples for now), and the height of the image is determined by the 
+length of the data.
+<p>
+
+</dl></dl>
+
+
+<!------------------------------>
+<h2><hr>	<a name="H_envl">
+Envelope Sub-chunks
+</h2>	</a>
+
+The <a href="#c_ENVL"><tt>ENVL</tt></a> chunk contains a series of
+sub-chunks describing the keyframes, intervals and global attributes
+of a single envelope.
+<p>
+Envelopes are referenced by clips and surfaces by their index.  The
+index value is given in the preamble of the
+<a href="#c_ENVL"><tt>ENVL</tt></a> chunk, and index values of zero
+indicate no envelope for a parameter.
+<p>
+
+<dl><dl>
+
+<dt><i>		<a name="e_PRE">
+    Pre-Behavior
+</i><p><dd><tt><b> </a>
+	PRE { type<a href="#t_I">[U2]</a> }
+</tt></b><p>
+	The pre-behavior for an envelope defines the signal value for
+	times before the first key.  The integer code selects one of
+	several predefined behaviors, starting from zero: Reset,
+	Constant, Repeat, Ocsillate, Offset Repeat, Linear.
+<p>
+
+<dt><i>		<a name="e_POST">
+    Post-Behavior
+</i><p><dd><tt><b> </a>
+	POST { type<a href="#t_I">[U2]</a> }
+</tt></b><p>
+	The post-behavior determines the signal value for times after
+	the last key.  The type codes are the same as for pre-behaviors.
+<p>
+
+<dt><i>		<a name="e_KEY">
+    Keyframe Time and Value
+</i><p><dd><tt><b> </a>
+	KEY { time<a href="#t_F4">[F4]</a>, value<a href="#t_F4">[F4]</a> }
+</tt></b><p>
+	This chunk defines the time and value for an envelope keyframe.
+	The signal value for the envelope is exactly the value of the key
+	when the signal is evaluated at the time of the key.  Values
+	between keyframes are interpolations of adjacent keyframe values.
+<p>
+
+<dt><i>		<a name="e_SPAN">
+    Interval Interpolation
+</i><p><dd><tt><b> </a>
+	SPAN { type<a href="#t_ID4">[ID4]</a>, value<a href="#t_F4">[F4]</a> * }
+</tt></b><p>
+	This sub-chunk defines the interpolation between the most recently
+	specified <tt>KEY</tt> chunk and the keyframe immediately before
+	it in time.  The type ID code defines the interpolation algorithm
+	and can be <tt>STEP</tt>, <tt>LINE</tt>, <tt>TCB</tt>, <tt>HERM</tt>
+	or <tt>BEZI</tt>.  The variable number of parameters values that
+	follow define the particulars of the interpolation.
+<p>
+
+<dt><i>		<a name="e_CHAN">
+    Plug-in Channel Operators
+</i><p><dd><tt><b> </a>
+	CHAN { server-name<a href="#t_S0">[S0]</a>, flags<a href="#t_I">[U2]</a>, data[...] }
+</tt></b><p>
+	Channel filters can be layered on top of a basic keyframed envelope
+	to provide some more elaborate effects.  Each channel chunk contains
+	the name of the plug-in server and some flags bits.  Only the first
+	flag bit is defined, which if set indicates that the filter is
+	disabled.  The plug-in data follows as raw bytes.
+<p>
+
+<dt><i>		<a name="e_NAME">
+    Channel Name
+</i><p><dd><tt><b> </a>
+	NAME { channel-name<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+	This is an optional envelope sub-chunk which is not used by LightWave
+	in any way.  It is only provided to allow external programs to browse 
+	through the envelopes available in an object fille.
+<p>
+
+</dl></dl>
+
+
+<!------------------------------>
+<h2><hr>	<a name="H_clip">
+Image Sub-chunks
+</h2>	</a>
+
+The <a href="#c_CLIP"><tt>CLIP</tt></a> chunk contains a series of
+sub-chunks which serve to describe a single time-varying image.  The
+first sub-chunk has to be one of the source chunks: <tt>STIL</tt>,
+<tt>ISEQ</tt>, <tt>ANIM</tt>, <tt>XREF</tt> or <tt>STCC</tt>.
+The chunks after that serve as modifiers for the source chunk and are
+applied as filters layered on top of the source image.
+<p>
+
+<dl><dl>
+
+<dt><i>		<a name="i_STIL">
+    Still Image
+</i><p><dd><tt><b> </a>
+	STIL { name<a href="#t_FNAM0">[FNAM0]</a> }
+</tt></b><p>
+	This source chunk describes a single still image.  The image is
+	referenced by a filename in neutral path format.
+<p>
+
+<dt><i>		<a name="i_ISEQ">
+    Image Sequence
+</i><p><dd><tt><b> </a>
+	ISEQ { num-digits<a href="#t_I">[U1]</a>, flags<a href="#t_I">[U1]</a>,
+		offset<a href="#t_I">[I2]</a>, loop-length<a href="#t_I">[I2]</a>,
+		prefix<a href="#t_FNAM0">[FNAM0]</a>, suffix<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+	This source chuck describes an image sequence, which is basically
+	a filename with a number in the middle.
+	The number of digits is the number of zeros used to encode the sequence
+	number in the filename. The flags has bits for looping and interlace.
+	Offset and loop-length define the frames in the sequence.
+	The prefix and suffix are stuck before and after the frame number to
+	make the filename for each frame, which is in neutral path format.
+<p>
+
+<dt><i>		<a name="i_ANIM">
+    Plug-in Animation
+</i><p><dd><tt><b> </a>
+	ANIM { server-name<a href="#t_S0">[S0]</a>, data[...] }
+</tt></b><p>
+	This chunk indicates that the source imagery comes from a plug-in
+	animation loader.  The loader is defined by the server name and 
+	its data which just follows as binary bytes.
+<p>
+
+<dt><i>		<a name="i_XREF">
+    Reference
+</i><p><dd><tt><b> </a>
+	XREF { clip-index<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The source for a clip can also be a different clip, which
+	is identified by its index value, stored in variable-length format.
+<p>
+
+<dt><i>		<a name="i_STCC">
+    Color-cycling Still
+</i><p><dd><tt><b> </a>
+	STCC { lo<a href="#t_I">[I2]</a>, hi<a href="#t_I">[I2]</a>, name<a href="#t_FNAM0">[FNAM0]</a> }
+</tt></b><p>
+	A still image with color-cycling is a source defined by a 
+	neutral-format name and cycling parameters.
+	If lo is less than hi, the colors cycle forward, and if hi is less 
+	than lo, they go backwards.
+<p>
+
+<dt><i>		<a name="i_CONT">
+    Contrast
+</i><p><dd><tt><b> </a>
+	CONT { contrast-delta<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This modifier alters the contrast of the image up or down by the
+	given percentage.
+<p>
+
+<dt><i>		<a name="i_BRIT">
+    Brightness
+</i><p><dd><tt><b> </a>
+	BRIT { brightness-delta<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This modifier alters the brightness of the image up or down by the
+	given percentage.
+<p>
+
+<dt><i>		<a name="i_SATR">
+    Saturation
+</i><p><dd><tt><b> </a>
+	SATR { saturation-delta<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This modifier alters the saturation of the image up or down by the
+	given percentage.
+<p>
+
+<dt><i>		<a name="i_HUE">
+    Hue
+</i><p><dd><tt><b> </a>
+	HUE { hue-rotation<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This modifier rotates the hue of the image 360 degrees for
+	100% of hue rotation.
+<p>
+
+<dt><i>		<a name="i_GAMM">
+    Gamma Correction
+</i><p><dd><tt><b> </a>
+	GAMM { gamma<a href="#t_F4">[F4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This modifier applies the given gamma to the image, where a value of
+	1.0 is no change.
+<p>
+
+<dt><i>		<a name="i_NEGA">
+    Negative
+</i><p><dd><tt><b> </a>
+	NEGA { enable<a href="#t_I">[U2]</a> }
+</tt></b><p>
+	If the value is true, this modifier performs a negation of the image.
+<p>
+
+<dt><i>		<a name="i_CROP">
+    Image Cropping
+</i><p><dd><tt><b> </a>
+	CROP { x<a href="#t_FP4">[FP4]</a>, y<a href="#t_FP4">[FP4]</a>,
+		w<a href="#t_FP4">[FP4]</a>, h<a href="#t_FP4">[FP4]</a> }
+</tt></b><p>
+	This operator crops the image by a window specified as fractions of
+	the total.  After the operator is applied, the value of the image at
+	(x,y) is now found at (0.0,0.0) and the value at (x+w,y+h) is found
+	at (1.0,1.0).
+<p>
+
+<dt><i>		<a name="i_ALPH">
+    Override Alpha
+</i><p><dd><tt><b> </a>
+	ALPH { clip-index<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This modifier takes a different clip (referenced by index) and uses
+	its grayscale value as the alpha for this image.
+<p>
+
+<dt><i>		<a name="i_COMP">
+    Composite
+</i><p><dd><tt><b> </a>
+	COMP { clip-index<a href="#t_VX">[VX]</a>, blend<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This modifier takes a different clip (referenced by index) and
+	composites it on top of the current image.  The alpha for the 
+	other image is multiplied by the blend percentage before it is
+	composited with this image.
+<p>
+
+<dt><i>		<a name="i_IFLT">
+    Plug-in Image Filters
+</i><p><dd><tt><b> </a>
+	IFLT { server-name<a href="#t_S0">[S0]</a>, flags<a href="#t_I">[U2]</a>, data[...] }
+</tt></b><p>
+	Plug-in image filters can be used to pre-filter an image before
+	rendering.  The filter has to be able to exist outside of the special
+	environment of rendering in order to work here.  Filters are given
+	by a server name, an enable flag, and plug-in server data as raw bytes.
+<p>
+
+<dt><i>		<a name="i_PFLT">
+    Plug-in Pixel Filters
+</i><p><dd><tt><b> </a>
+	PFLT { server-name<a href="#t_S0">[S0]</a>, flags<a href="#t_I">[U2]</a>, data[...] }
+</tt></b><p>
+	Pixel filters may also be used as clip modifiers, and they are stored
+	and used in a way that is exactly like image filters above.
+<p>
+
+</dl></dl>
+
+
+<!------------------------------>
+<h2><hr>	<a name="H_surf">
+Surface Sub-chunks
+</h2>	</a>
+
+The sub-chunks found in a <a href="#c_SURF"><tt>SURF</tt></a> surface chunk
+will consists of one of two types.  They may be "basic" surface parameters
+with some simple data, or they may be surface blocks which contain nested
+parameters specific to the block type.
+
+<dl><dl><dt>
+</i><p><dd><tt><b>	<a name="c_BLOK">
+	BLOK { type<a href="#t_ID4">[ID4]</a>, ordinal<a href="#t_ID4">[ID4]</a>,
+	       attributes<a href="#t_SUBCH">[SUB-CHUNK]</a> * }
+</tt></b><p>		</a>
+</dl></dl>
+
+Blocks are identified by a type, which is a four-character ID code, plus 
+an ordinal string which is used to order the block with respect to other 
+blocks.  After that the type-specific block parameters follow as nested 
+sub-chunks.  The ordinal strings are never read by the user, so they can contain
+any characters from 1 to 255 and tend to be very short.  The only rule is
+that an ordinal string must not end with a 1 byte, since that prevents
+arbitrary insertion.
+<p>
+The shading parameters for a polygon are the result of composing the surface
+parameters of the <a href="#c_SURF"><tt>SURF</tt></a> chunk with the 
+parameters from any source surface (which may itself be a composite).  If the
+same basic surface parameter is found in both this surface and its source,
+then the values in this surface take precedence.  All the blocks in both
+this surface and in the source surface are composed together, sorting on the
+ordinal string.
+<p>
+
+<h3>	<a name="Hs_base">
+Basic Surface Parameters
+</h3>	</a>
+The following surface sub-chunks define the base characteristics of a
+surface.  These are values that are independent of texturing and correspond
+roughly to the options on the main window of the Surface Editor.  Even if 
+the effects of 
+textures and shaders override these settings completely in final rendering,
+as many of these should still be specified as possible since they are also
+used for previewing and real-time rendering.  Most of these values contain
+a reference to an optional envelope and may therefore change over time.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="s_COLR">
+    Base Color
+</i><p><dd><tt><b> </a>
+	COLR { base-color<a href="#t_COL12">[COL12]</a>,
+		envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This defines the base color of the surface, which is the color that lies
+	under all the other texturing attributes.
+<p>
+
+<dt><i>		<a name="s_Shad">
+    Base Shading Values
+</i><p><dd><tt><b> </a>
+	DIFF, LUMI, SPEC, REFL, TRAN, TRNL { intensity<a href="#t_FP4">[FP4]</a>,
+						envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	These sub-chunks specify the base level of the surface's
+	diffuse, luminosity, specular, reflection, transparency, or
+	tranlucency settings.  If any of these sub-chunks are absent 
+	for a surface, a value of zero is assumed.
+<p>
+
+<dt><i>		<a name="s_GLOS">
+    Specular Glossiness
+</i><p><dd><tt><b> </a>
+	GLOS { glossiness<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	Glossiness is encoded as a floating point percentage and is only
+	needed if the specular value of a surface is non-zero.  This
+	glossiness percentage is converted to a specular exponent by
+	the formula 2<sup>(10 * glossiness + 2)</sup>.  Thus a glossiness 
+	of 20% (0.2) gives a specular exponent of 2<sup>4</sup>, or 16 
+	which is equivalent to the old "Low"
+	glossiness preset.  Likewise 40% is 64 or "Medium," 60% is 256 or "High,"
+	and 80% is 1024 or "Maximum."  If this chunk is missing a value of
+	40% is assumed.
+<p>
+
+<dt><i>		<a name="s_SHRP">
+    Diffuse Sharpness
+</i><p><dd><tt><b> </a>
+	SHRP { sharpness<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	Diffuse sharpness replaces the old "Sharp Terminator" flag with a
+	smoothly varying percentage value.  The default value of zero results
+	in normal shading, and a 50% value is the same as the old sharp
+	terminator setting.
+<p>
+
+<dt><i>		<a name="s_BUMP">
+    Bump Intensity
+</i><p><dd><tt><b> </a>
+	BUMP { strength<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This encodes the basic bump map intensity.  I'm not totally sure how
+	this is used in the shading equation.
+<p>
+
+<dt><i>		<a name="s_SIDE">
+    Polygon Sidedness
+</i><p><dd><tt><b> </a>
+	SIDE { sidedness[U2] }
+</tt></b><p>
+	The sidedness of a polygon can be 1 for front-only, or 3 for front
+	and back.  This replaces the old "Double Sided" flag bit.  If missing,
+	single-sided polygons are assumed.
+<p>
+
+<dt><i>		<a name="s_SMAN">
+    Max Smoothing Angle
+</i><p><dd><tt><b> </a>
+	SMAN { max-smoothing-angle<a href="#t_ANG4">[ANG4]</a> }
+</tt></b><p>
+	This specifies the maximum angle between two adjacent polygons
+	that can be smooth shaded.  Polygons with a greater angle between 
+	them will appear to meet at a sharp seam.  If this chunk is missing,
+	or if the value is zero or less, then the polygons are not smoothed.
+<p>
+
+<dt><i>		<a name="s_RFOP">
+    Reflection Options
+</i><p><dd><tt><b> </a>
+	RFOP { reflection-options<a href="#t_I">[U2]</a> }
+</tt></b><p>
+	Reflection options is a numeric code that describes
+	how reflections are handled for this surface and is only meaningful
+	if the reflectivity of the surface is non-zero.  If the mode is 0, then
+	only the backdrop colors in the scene are reflected.  If the mode is
+	1, it is the same as 0 except that raytracing is used for objects in 
+	the scene when it is enabled.  If the mode is 2 and an image is
+	provided by the <tt>RIMG</tt> sub-chunk, then the image wrapped spherically
+	around the scene is reflected.  If the mode is 3, it is the same
+	as 2 except that raytracing is used when enabled.  If there is no
+	<tt>RFOP</tt> sub-chunk, a value of 3 is assumed.
+<p>
+
+<dt><i>		<a name="s_RIMG">
+    Reflection Map Image
+</i><p><dd><tt><b> </a>
+	RIMG { image<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The reflection image is wrapped around the scene and is used for
+	reflection mapping if the <tt>RFOP</tt> mode is set to use an image and the
+	reflectivity of the surface is non-zero.  If the <tt>RFOP</tt> mode setting
+	expects an image and there is no <tt>RIMG</tt> chunk, then the backdrop
+	colors are reflected.  The image is the index of a <tt>CLIP</tt> chunk,
+	or zero to indicate no image.
+<p>
+
+<dt><i>		<a name="s_RSAN">
+    Reflection Map Image Seam Angle
+</i><p><dd><tt><b> </a>
+	RSAN { seam-angle<a href="#t_ANG4">[ANG4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This angle is the heading angle of the reflection map seam.  If missing,
+	a value of zero is assumed.
+<p>
+
+<dt><i>		<a name="s_RIND">
+    Refractive Index
+</i><p><dd><tt><b> </a>
+	RIND { refractive-index<a href="#t_F4">[F4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The surface's refractive index determines how much light rays bend
+	when passing into or out of this material, and is
+	defined as the ratio of the speed of light in a vacuum to the
+	speed of light in the material.  Since light is fastest in a
+	vacuum, this value should therefore be greater than or equal to 1.0.
+<p>
+
+<dt><i>		<a name="s_CLRH">
+    Color Highlights
+</i><p><dd><tt><b> </a>
+	CLRH { color-highlights<a href="#t_F4">[F4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The color highlight percentage determines how much the reflections
+	on a surface, including specular highlights, are tinted by the color
+	of the surface.  This replaces the old discrete "Color Highlights" flag.
+<p>
+
+<dt><i>		<a name="s_TROP">
+    Transparency Options
+</i><p><dd><tt><b> </a>
+	TROP { transparency-options<a href="#t_I">[U2]</a> }
+</tt></b><p>
+	Transparency options are just the same as reflection options
+	except that they describe how refraction is handled.  Refraction
+	can be any combination of background color, image or raytracing.
+<p>
+
+<dt><i>		<a name="s_TIMG">
+    Refraction Map Image
+</i><p><dd><tt><b> </a>
+	TIMG { image<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The refraction image is wrapped around the scene and is used for
+	refraction mapping if the <tt>TROP</tt> mode is set to use an image and the
+	transparency of the surface is non-zero.  This setting is the refractive
+	analogue of <tt>RIMG</tt>.
+<p>
+
+<dt><i>		<a name="s_CLRF">
+    Color Filter
+</i><p><dd><tt><b> </a>
+	CLRF { color-filter<a href="#t_F4">[F4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The color filter percentage determines how much rays passing through a
+	transparent surface are tinted by the color of the surface.  This 
+	replaces the old discrete "Color Filter" flag.
+<p>
+
+<dt><i>		<a name="s_ADTR">
+    Additive Transparency
+</i><p><dd><tt><b> </a>
+	ADTR { additive<a href="#t_F4">[F4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This percentage selects how "additive" transparency effect are.  The
+	default value of zero indicates that transparent surfaces fully
+	attenuate the background color while a value of 100% indicates that
+	that the background color is full strength under the transparent
+	surface.
+<p>
+
+<dt><i>		<a name="s_GLOW">
+    Glow Effect
+</i><p><dd><tt><b> </a>
+	GLOW { type<a href="#t_I">[U2]</a>,
+		intensity<a href="#t_F4">[F4]</a>, intensity-envelope<a href="#t_VX">[VX]</a>,
+		size<a href="#t_F4">[F4]</a>, size-envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The glow effect causes a surface to spread and effect neighboring 
+	areas of the image.  The type can be 0 for Hastings glow, and 1 for
+	image convolution.  The size and intensity modulate how large and
+	how strong the effect is, but the exact units are unclear.
+<p>
+
+<dt><i>		<a name="s_LINE">
+    Render Outlines
+</i><p><dd><tt><b> </a>
+	LINE { flags<a href="#t_I">[U2]</a>,
+		size<a href="#t_F4">[F4]</a>, size-envelope<a href="#t_VX">[VX]</a>,
+		color<a href="#t_COL12">[COL12]</a>, color-envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	The line effect draws illustrations-like outlines around the borders
+	of objects and surfaces.  The lines are drawn with the given thickness
+	and the given color, but how thickness is reckoned is unclear.
+<p>
+
+<dt><i>		<a name="s_ALPH">
+    Alpha Mode
+</i><p><dd><tt><b> </a>
+	ALPH { mode<a href="#t_U2">[U2]</a>, value<a href="#t_U2">[U2]</a> }
+</tt></b><p>
+	This chunk defines the alpha channel output options for the surface.
+	If mode is 0, this surface does not affect the Alpha channel at all 
+	when rendered.  If mode is 1, the alpha channel will have a fixed 
+	value which is the second parameter in the chunk and should have a 
+	value from 0 to 255.  If mode is 2, the alpha value is derived from
+	surface opacity, which is the default if the <tt>ALPH</tt> chunk is 
+	missing.  If mode is 3, the alpha value comes from shadow density.
+<p>
+</dl></dl>
+
+
+<h3>	<a name="Hs_layr">
+Texture Layers
+</h3>	</a>
+Surface textures in LightWave are <a href="#c_BLOK"><tt>BLOK</tt></a> 
+sub-chunks of type <tt>IMAP</tt>, <tt>PROC</tt> or <tt>GRAD</tt> corresponding
+to image-based, procedural or gradient-based modulations of one of the shading 
+parameters.  Any number of these texture layers may be present in a surface 
+and their effect is cumulative.
+<p>
+While each type of texture layer has sub-chunks that are specific to that
+block type, there are some common sub-chunks that may be present in some
+or all of the different texture types.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="s_ATEX:TYPE">
+    Channel Type
+</i><p><dd><tt><b> </a>
+	TYPE { texture-type<a href="#t_ID4">[ID4]</a> }
+</tt></b><p>
+    This sub-chunk is required in all texture blocks and can have a
+    value of <tt>COLR</tt>, <tt>DIFF</tt>, <tt>LUMI</tt>, <tt>SPEC</tt>,
+    <tt>REFL</tt>, <tt>TRAN</tt>, <tt>TRNL</tt>, or <tt>BUMP</tt>,
+    corresponding to a modulation of the color, diffuse, luminosity, 
+    specular, reflection, transparency, translucency, or bump attribute.
+<p>
+
+<dt><i>		<a name="s_ATEX:NAME">
+    Algorithm
+</i><p><dd><tt><b> </a>
+	NAME { algorithm-name<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+    This is a character string identifying the name of the algorithm used for this
+    texturing layer.  For image maps this is the name of the projection
+    used; for gradients it is the name of the input parameter; and for 
+    procedurals it is the name of the texture algorithm.
+<p>
+
+<dt><i>		<a name="s_ATEX:ENAB">
+    Enable State
+</i><p><dd><tt><b> </a>
+	ENAB { enable<a href="#t_I">[U2]</a> }
+</tt></b><p>
+    This flag is either 1 for an enabled texture layer, or 0 for a texture 
+    layer that should be ignored.  If the chunk is missing,
+    the texture is assumed to be enabled.
+<p>
+
+<dt><i>		<a name="s_ATEX:OPAC">
+    Opacity
+</i><p><dd><tt><b> </a>
+	OPAC { type<a href="#t_I">[U2]</a>, opacity<a href="#t_FP4">[FP4]</a>,
+		envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This specifies how opaque this texture is with respect to the textures
+	before it.  The types can be 0 for additive opacity, 1 for subtractive
+	opacity, 2 for difference, 3 for multiply, 4 for divide, 5 for alpha and
+	6 for texture displacement opacity mode.  If no opacity parameters are 
+	specified, 100% additive opacity is assumed.
+<p>
+
+<dt><i>		<a name="s_ATEX:FLAG">
+    Flags
+</i><p><dd><tt><b> </a>
+	FLAG { texture-flags<a href="#t_I">[U2]</a> }
+</tt></b><p>
+    This short integer has bits which specify various options for the
+    current texture.  Currently only a few least significant bits are
+    used.  The options that set bits indicate are (starting with the
+    least significant bit):  World Coords, Negative Image, Pixel Blending,
+    and Antialiasing.  Some obviously apply only to image maps.
+<p>
+</dl></dl>
+
+
+<h3>	<a name="Hs_tmap">
+Texture Mapping
+</h3>	</a>
+Image map and procedural texture blocks employ some of the same sub-chunks to
+define the mapping from object or world coordinate space to texture space.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="s_ATEX:AXIS">
+    Major Axis
+</i><p><dd><tt><b> </a>
+	AXIS { texture-axis<a href="#t_I">[U2]</a> }
+</tt></b><p>
+    This short integer can be 0, 1 or 2 indicating that the major axis of
+    the texture is given by the X, Y or Z axis, respectively.
+<p>
+
+<dt><i>		<a name="s_ATEX:SIZE">
+    Position, Orientation and Size
+</i><p><dd><tt><b> </a>
+	CNTR, SIZE, ROTA { vector<a href="#t_VEC12">[VEC12]</a>,
+				envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	These sub-chunks each consist of a vector for the texture's
+	size, center and rotation.  The size and center are normal
+	positional vectors in meters, and the rotation is a vector of
+	heading, pitch and bank in radians.  If missing, the center 
+	and rotation are assumed to be zero.  The size should always 
+	be specified if it to be used for any given mapping.
+<p>
+
+<dt><i>		<a name="s_ATEX:OREF">
+    Reference Object
+</i><p><dd><tt><b> </a>
+	OREF { object-name<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+	This subchuck specifies a reference object for the texture.  The 
+	reference object is given by name, and the position, rotation and
+	scale of the object are used to compute the texture mapping at 
+	any given time.  Does this override the previous chunks or just
+	modify them? -- I don't know.
+<p>
+
+<dt><i>		<a name="s_ATEX:FALL">
+    Falloff
+</i><p><dd><tt><b> </a>
+	FALL { type<a href="#t_I">[U2]</a>, vector<a href="#t_VEC12">[VEC12]</a>,
+		envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	Texture effects may fall off from the texture center if this
+	sub-chunk is present.  The type can be 0 to indicate that the
+	falloff is independent in each axis, or it can be 1 to indicate
+	that the falloff is based on distance from the center.  How the
+	vector is interpreted in distance-based falloff is also unclear.
+<p>
+</dl></dl>
+
+
+<h3>	<a name="Hs_imap">
+Image Maps
+</h3>	</a>
+Texture blocks of type <tt>IMAP</tt> are image maps, and use an image to
+modulate one of the shading parameters.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="s_IMAP:IMAG">
+    Image Map
+</i><p><dd><tt><b> </a>
+	IMAG { texture-image<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	This specifies an image to be used for image texture mapping
+	as an index of a <tt>CLIP</tt> chunk.
+<p>
+
+<dt><i>		<a name="s_IMAP:WRAP">
+    Image Wrap Options
+</i><p><dd><tt><b> </a>
+	WRAP { width-wrap<a href="#t_I">[U2]</a>, height-wrap<a href="#t_I">[U2]</a> }
+</tt></b><p>
+	This specifies how image-based textures will interpret the color of areas
+	outside the image.  If the mode is 0, then outside the image is considered to
+	be black.  If the mode is 1, areas outside the image are clamped to the
+	closest image edge value.  If the mode is 2, then the image repeats outside
+	the image area resulting in a uniform tiling.  If the mode is 3, then the
+	image repeats but with mirroring, so that each each adjacent repetition is
+	reversed.  If no wrap options are specified, 2 is assumed.
+<p>
+
+<dt><i>		<a name="s_IMAP:WRPx">
+    Image Wrap Ammount
+</i><p><dd><tt><b> </a>
+	WRPW, WRPH { cycles<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	For mapping modes that wrap around in the width or height directions,
+	like "Cylindrical" or "Spherical," these parameters control how many
+	times the image repeats over each full interval.
+<p>
+
+<dt><i>		<a name="s_IMAP:VMAP">
+    UV Vertex Map
+</i><p><dd><tt><b> </a>
+	VMAP { txuv-map-name<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+	For mapping modes that depend on texture coordinates at each vertex,
+	this selects the name of the <tt>TXUV</tt> vertex map that contains
+	those coordinates.
+<p>
+
+<dt><i>		<a name="s_IMAP:AAST">
+    Antialiasing Strength
+</i><p><dd><tt><b> </a>
+	AAST { antialising-strength<a href="#t_FP4">[FP4]</a> }
+</tt></b><p>
+	This specifies the strength of antialiasing used for the texture.  If the
+	Antialiasing bit is set in the <tt>TFLG</tt> sub-chunk and this sub-chunk
+	is missing, 100% is assumed.  This setting currently only affects
+	image-based textures.
+<p>
+</dl></dl>
+
+
+<h3>	<a name="Hs_proc">
+Procedural Textures
+</h3>	</a>
+Texture blocks of type <tt>PROC</tt> are procedural textures that modulate
+their shading parameter with an algorithmic effect.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="s_PROC:COLR">
+    Texture Color
+</i><p><dd><tt><b> </a>
+	COLR { texture-color<a href="#t_COL12">[COL12]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	If the texture is set to modify the <tt>COLR</tt> shading channel,
+	then this is the alternate color value to use.
+<p>
+
+<dt><i>		<a name="s_PROC:VALU">
+    Texture Value
+</i><p><dd><tt><b> </a>
+	VALU { texture-value<a href="#t_FP4">[FP4]</a>, envelope<a href="#t_VX">[VX]</a> }
+</tt></b><p>
+	Textures that modify anything other than the <tt>COLR</tt> channel
+	are scalar values, and this is the alternate value.
+<p>
+
+<dt><i>		<a name="s_PROC:xTPS">
+    Algorithmic Texture Parameters
+</i><p><dd><tt><b> </a>
+	FTPS { float-parameter<a href="#t_F4">[F4]</a> * }<br>
+	ITPS { integer-parameter<a href="#t_I">[I2]</a> * }<br>
+	ETPS { envelope-parameter<a href="#t_VX">[VX]</a> * }
+</tt></b><p>
+	The <tt>FTPS</tt> sub-chunk contains a sequence of floating point
+	numbers that specify texture-type specific parameters (such as 
+	Contrast, Turbulence, Wavelength, etc).
+	The <tt>ETPS</tt> sub-chunk contains a sequence of envelopes that
+	correspond to each floating point parameter.
+	The <tt>ITPS</tt> sub-chunk is similar but is used for integer
+	parameters (such as number of Frequencies, Wave Sources, etc).
+	In general, these parameters are stored in the sequence they are
+	found on the interface panel, and the number of each type of
+	parameter can be computed from the sub-chunk length.
+<p>
+</dl></dl>
+
+
+<h3>	<a name="Hs_grad">
+Gradient Textures
+</h3>	</a>
+Texture blocks of type <tt>GRAD</tt> are gradient textures that modulate
+their shading parameter by mapping some input parameter through an
+arbitrary transfer function.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="s_GRAD:GRxx">
+    Gradient Range
+</i><p><dd><tt><b> </a>
+	GRST, GREN { input-range<a href="#t_FP4">[FP4]</a> }
+</tt></b><p>
+	These two sub-chunks store the start and end of the input range.
+	These values do not affect rendering at all and are stored only
+	for the user-interface.
+<p>
+
+<dt><i>		<a name="s_GRAD:FTPS">
+    Gradient Keys
+</i><p><dd><tt><b> </a>
+	FTPS { ( input<a href="#t_FP4">[FP4]</a>, output<a href="#t_FP4">[FP4]</a> # 4 )* }
+</tt></b><p>
+	The transfer function is defined as a series of keys, each with
+	an input value and a vector of RGBA output values.  Given an input value,
+	the gradient can be evaluated by selecting the keys whose positions
+	bracket the value and linearly interpolating between their outputs.
+	If the input value is lower than the first key or higher than the
+	last key, the gradient value is the value of the closest key.  There
+	is always at least one key, so every <tt>FTPS</tt> sub-chunk will
+	have at least five values or there is no gradient.
+<p>
+</dl></dl>
+
+
+<h3>	<a name="Hs_shdr">
+Plug-in Shaders
+</h3>	</a>
+Plug-in shaders are <a href="#c_BLOK"><tt>BLOK</tt></a> sub-chunks of type
+<tt>SHDR</tt>.  They are applied to a surface after all built-in textures,
+and in the order specified by the block sequence.  In addition to the 
+sub-chunks listed below, shaders can also contain the standard
+<a href="#s_ATEX:ENAB"><tt>ENAB</tt></a> sub-chunk.
+<p>
+
+<dl><dl>
+<dt><i>		<a name="s_SHDR:NAME">
+    Server Name
+</i><p><dd><tt><b> </a>
+	NAME { name<a href="#t_S0">[S0]</a> }
+</tt></b><p>
+	Plug-in shaders are identified by their server name, which is stored
+	in this sub-chunk.
+<p>
+
+<dt><i>		<a name="s_SHDR:DATA">
+    Shader Data
+</i><p><dd><tt><b> </a>
+	DATA { shader-data[...] }
+</tt></b><p>
+	A shader can store up to 65,535 bytes of data to describe its settings,
+	and these are stored directly in this sub-chunk without modification.
+	The length and contents of this chunk will depend completely on the
+	shader specified by the previous <tt>NAME</tt> chunk.
+<p>
+</dl></dl>
+
+
+<!------------------------------>
+<h2><hr> <a name="H_exam">
+Object File Example
+</h2> </a>
+
+<dl><dd>
+The file starts with the standard simple form IFF header.  It is just a
+chunk of type
+<a href="#t_FORM"><tt>FORM</tt></a>
+which identifies this file as an IFF.  The first four bytes in the main
+outer chunk are the ID <tt>LWO2</tt> which specifies this is a LightWave
+Object File IFF.
+<p>
+<em>NOTE: This example is a bit out of date.  It was created before the
+surface atom reformation and the polygon tag revolution.</em>
+<p>
+
+<p></dl><pre>
+464f524d 000003c2            FORM {		   IFF file header; FORM chunk
+						     file length is 962 + 8 bytes
+4c574f32                       LWO2		     FORM type ID for LW OBjects
+</pre><dl><dd>
+
+<p></dl><pre>
+53524653 00000016              SRFS {		   Surface name list
+42 6c 75 65 20 50 6c 61 73 74 65 72 00 00
+                                 "Blue Plaster"	     name 0
+43 68 72 6f 6d 65 00 00          "Chrome"	     name 1
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+4c415952 0000001a              LAYR {		   Start New layer
+0000 0000                        0, 0		     layer number, flags
+00000000 00000000 00000000       0.0, 0.0, 0.0	     pivot point
+57 61 6c 6c 20 42 6f 78 00 00    "Wall Box"	     layer name
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+504e5453 00000060              PNTS {		   Points (96 / 12 = 8 points)
+3f800000 3f800000 3f800000        1.0,  1.0,  1.0    point 0
+3f800000 bf800000 3f800000        1.0, -1.0,  1.0    point 1
+bf800000 bf800000 3f800000       -1.0, -1.0,  1.0    point 2
+bf800000 3f800000 3f800000       -1.0,  1.0,  1.0    point 3
+3f800000 3f800000 bf800000        1.0,  1.0, -1.0    point 4
+3f800000 bf800000 bf800000        1.0, -1.0, -1.0    point 5
+bf800000 bf800000 bf800000       -1.0, -1.0, -1.0    point 6
+bf800000 3f800000 bf800000       -1.0,  1.0, -1.0    point 7
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+42424f58 00000018              BBOX {		   Bounding Box (optional)
+bf800000 bf800000 bf800000       -1.0, -1.0, -1.0    low corner
+3f800000 3f800000 3f800000        1.0,  1.0,  1.0    high corner
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+564d4150 00000060              VMAP {		   Vertex Map
+55564d50 0002                    UVMP, 2	     type code, dimension
+49 6d 61 67 65 20 55 56 00 00    "Image UV"	     map name
+
+  0000                           0		     point 0 mapped to:
+    3f800000 3f800000             1.0,  1.0	      these 2 float values
+  0001                           1		     point 1
+    3f800000 00000000             1.0,  0.0
+  0002                           2		     point 2
+    00000000 00000000             0.0,  0.0
+  0003                           3		     point 3
+    00000000 3f800000             0.0,  1.0
+  0004                           4		     point 4
+    3f800000 3f800000             1.0,  1.0
+  0005                           5		     point 5
+    3f800000 00000000             1.0,  0.0
+  0006                           6		     point 6
+    00000000 00000000             0.0,  0.0
+  0007                           7		     point 7
+    00000000 3f800000             0.0,  1.0
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+504f4c53 0000004c              POLS {		   Polygons
+46414345                         FACE		     type (facets)
+
+  0004 0000                      4, 0		     4 vertices, surface 0 ("Blue Plaster")
+    0000 0001 0002 0003          0, 1, 2, 3	     point indices for vertices
+  0004 0000                      4, 0
+    0004 0005 0006 0007          4, 5, 6, 7
+  0004 0000                      4, 0
+    0000 0001 0005 0004          0, 1, 5, 4
+  0004 0000                      4, 0
+    0001 0002 0006 0005          1, 2, 6, 5
+  0004 0000                      4, 0
+    0002 0003 0007 0006          2, 3, 7, 6
+  0004 0000                      4, 0
+    0003 0000 0004 0007          3, 0, 4, 7
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+4c415952 00000012              LAYR {		   Start New Layer
+0001 0000                        1, 0		     layer number, flags
+00000000 00000000 00000000       0.0, 0.0, 0.0	     pivot point
+0000                             ""		     name (none)
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+504e5453 00000048              PNTS {		   Points (72 / 12 = 6 points)
+00000000 3fb4fdf4 00000000        0.0,   1.414, 0.0    point 0
+3fb4fdf4 00000000 00000000        1.414, 0.0,   0.0    point 1
+00000000 00000000 3fb4fdf4        0.0,   0.0,   1.414  point 2
+bfb4fdf4 00000000 00000000       -1.414, 0.0,   0.0    point 3
+00000000 00000000 bfb4fdf4        0.0,   0.0,  -1.414  point 4
+00000000 bfb4fdf4 00000000        0.0,  -1.414, 0.0    point 5
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+42424f58 00000018              BBOX {		   Bounding Box (optional)
+bfb4fdf4 bfb4fdf4 bfb4fdf4       -1.414, -1.414, -1.414
+3fb4fdf4 3fb4fdf4 3fb4fdf4        1.414,  1.414,  1.414
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+564d4150 0000004c              VMAP {		   Vertex Map
+55564d50 0002                    UVMP, 2	     type, dimension
+49 6d 61 67 65 20 55 56 00 00    "Image UV"	     map name
+
+  0000                           0
+    3f000000 3f000000            1.0, 1.0
+  0001                           1
+    3f800000 3f800000            0.5, 0.5
+  0002                           2
+    3f800000 00000000            0.5, 0.0
+  0003                           3
+    00000000 00000000            0.0, 0.0
+  0004                           4
+    00000000 3f800000            0.0, 0.5
+  0005                           5
+    3f000000 3f000000            1.0, 1.0
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+564d4150 00000018              VMAP {		   Vertex Map
+5049434b 0000                    PICK, 0	     type, dimension
+50 69 63 6b 20 53 65 74 00 00    "Pick Set"	     map name
+
+  0001                           1
+  0002                           2
+  0003                           3
+  0004                           4
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+504f4c53 00000054              POLS {
+46414345                         FACE
+
+  0003 0001                      3, 1
+    0000 0001 0002               0, 1, 2
+  0003 0001                      3, 1
+    0000 0002 0003               0, 2, 3
+  0003 0001                      3, 1
+    0000 0003 0004               0, 3, 4
+  0003 0001                      3, 1
+    0000 0004 0001               0, 4, 1
+  0003 0001                      3, 1
+    0005 0001 0004               5, 1, 4
+  0003 0001                      3, 1
+    0005 0004 0003               5, 4, 3
+  0003 0001                      3, 1
+    0005 0003 0002               5, 3, 2
+  0003 0001                      3, 1
+    0005 0002 0001               5, 2, 1
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+53555246 00000020              SURF {
+42 6c 75 65 20 50 6c 61 73 74 65 72 00 00
+                                 "Blue Plaster"
+50 6c 61 73 74 65 72 00          "Plaster"
+
+    434f4c52 0003                COLR {
+    a0 a0 c8 00                    160, 160, 200
+                                 }
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+53555246 00000040              SURF {
+43 68 72 6f 6d 65 00 00          "Chrome"
+44 65 66 61 75 6c 74 00          "Default"
+
+    434f4c52 0003                COLR {
+    c8c8dc00                       200, 200, 220
+                                 }
+    44494646 0004                DIFF {
+    3e99999a                       0.3
+                                 }
+    474c4f53 0002                GLOS {
+    0040                           64
+                                 }
+    5245464c 0004                REFL {
+    3f400000                       0.75
+                                 }
+    53504543 0004                SPEC {
+    3eb33333                       0.35
+                                 }
+                               }
+</pre><dl><dd>
+
+<p></dl><pre>
+53555246 00000068              SURF {
+50 6c 61 73 74 65 72 00          "Plaster"
+44 65 66 61 75 6c 74 00          "Default"
+
+    474c4f53 0002                GLOS {
+    0018
+                                 }
+    53504543 0004                SPEC {
+    3e4ccccd
+                                 }
+
+    424c4f4b 0040                BLOK {
+      41544558                     ATEX
+      80 00                        128
+
+      4e414d45 000e                NAME {
+      46 72 61 63 74 61 6c 20
+      4e 6f 69 73 65 00              "Fractal Noise"
+                                   }
+      53495a45 000c                SIZE {
+      3f000000 3f000000 3f000000     0.5, 0.5, 0.5
+                                   }
+      54595045 0004                TYPE {
+      44494646                       DIFF
+                                   }
+      56414c55 0004                VALU {
+      3f400000                       0.75
+                                   }
+                                 }
+                               }
+</pre>
+
+
+
+<!------------------------------>
+<h3><hr> <a name="H_indx">
+Index
+</h3> </a>
+
+<em>NOTE: The index is just plain wrong.  It's written by hand so I'm not going to
+update it until everything else is right.</em>
+<p>
+
+<ul>
+
+<li><a href="#s_COLR">	Base Color</a>
+<li><a href="#s_Shad">	Base Shading Values</a>
+<li><a href="#s_xTEX">	BTEX</a>
+<li><a href="#t_CHUNK">	Chunk</a>
+<li><a href="#s_COLR">	COLR</a>
+<li><a href="#s_IMCC">	Color Cycling</a>
+<li><a href="#s_xTEX">	CTEX</a>
+<li><a href="#c_CRVS">	Curve List</a>
+<li><a href="#t_ANG4">	ANG4</a>
+<li><a href="#s_Shad">	DIFF</a>
+<li><a href="#s_xTEX">	DTEX</a>
+<li><a href="#s_EDGE">	EDGE</a>
+<li><a href="#s_EDGE">	Edge Tranparency Threshold</a>
+<li><a href="#t_F4">	F4</a>
+<li><a href="#c_POLS">	Face List</a>
+<li><a href="#s_FLAG">	FLAG</a>
+<li><a href="#s_FLYR">	FLYR</a>
+<li><a href="#s_FLYR">	Flyer Clip Options</a>
+<li><a href="#t_FNAM0">	FNAM0</a>
+<li><a href="#t_FORM">	FORM</a>
+<li><a href="#t_FORM">	Format Header</a>
+<li><a href="#t_FP4">	FP4</a>
+<li><a href="#s_GLOS">	GLOS</a>
+<li><a href="#t_I">	I1</a>
+<li><a href="#t_I">	I2</a>
+<li><a href="#t_I">	I4</a>
+<li><a href="#t_ID4">	ID4</a>
+<li><a href="#s_IMCC">	IMCC</a>
+<li><a href="#s_IMSQ">	IMSQ</a>
+<li><a href="#c_LAYR">	LAYR</a>
+<li><a href="#s_Shad">	LUMI</a>
+<li><a href="#s_xTEX">	LTEX</a>
+<li><a href="#t_FORM">	LWO2</a>
+<li><a href="#s_SMAN">	Max Smoothing Angle</a>
+<li><a href="#t_SUBCH">	Mini-chunk</a>
+<li><a href="#c_PCHS">	Patch List</a>
+<li><a href="#s_SHDR">	Plug-in Shader</a>
+<li><a href="#s_SDAT">	Plug-in Shader Data</a>
+<li><a href="#c_PNTS">	Point List</a>
+<li><a href="#s_Shad">	REFL</a>
+<li><a href="#s_RIMG">	Reflection Map Image</a>
+<li><a href="#s_RSAN">	Reflection Map Seam Angle</a>
+<li><a href="#s_RFLT">	Reflection Mode</a>
+<li><a href="#s_RIND">	Refractive Index</a>
+<li><a href="#s_RFLT">	RFLT</a>
+<li><a href="#s_RIMG">	RIMG</a>
+<li><a href="#s_RIND">	RIND</a>
+<li><a href="#s_RSAN">	RSAN</a>
+<li><a href="#s_xTEX">	RTEX</a>
+<li><a href="#t_S0">	S0</a>
+<li><a href="#s_SDAT">	SDAT</a>
+<li><a href="#s_IMSQ">	Sequence Options</a>
+<li><a href="#s_SHDR">	SHDR</a>
+<li><a href="#s_SMAN">	SMAN</a>
+<li><a href="#s_SMAN">	Smoothing Angle</a>
+<li><a href="#s_GLOS">	Specular Glossiness</a>
+<li><a href="#s_Shad">	SPEC</a>
+<li><a href="#s_xTEX">	STEX</a>
+<li><a href="#t_SUBCH">	Sub-chunk</a>
+<li><a href="#c_SURF">	Surface Definition</a>
+<li><a href="#s_FLAG">	Surface Flags</a>
+<li><a href="#c_SRFS">	Surface List</a>
+<li><a href="#s_TAAS">	TAAS</a>
+<li><a href="#s_TALP">	TALP</a>
+<li><a href="#s_TAMP">	TAMP</a>
+<li><a href="#s_TCLR">	TCLR</a>
+<li><a href="#s_TSIZ">	TCTR</a>
+<li>			Texture
+	<ul>
+	<li><a href="#s_TxPn">	Algorithmic Parameters</a>
+	<li><a href="#s_TAAS">	Antialiasing Strength</a>
+	<li><a href="#s_TAMP">	Bump Amplitude</a>
+	<li><a href="#s_TCLR">	Color</a>
+	<li><a href="#s_TFLG">	Flags</a>
+	<li><a href="#s_TALP">	Image Alpha</a>
+	<li><a href="#s_TIMG">	Image Map</a>
+	<li><a href="#s_TWRP">	Image Wrap Modes</a>
+	<li><a href="#s_TSIZ">	Location and Size</a>
+	<li><a href="#s_TxPn">	Noise Frequencies</a>
+	<li><a href="#s_TOPC">	Opacity</a>
+	<li><a href="#s_xTEX">	Start Definition</a>
+	<li><a href="#s_TVAL">	Value</a>
+	<li><a href="#s_TxPn">	Wave Sources</a>
+	</ul>
+<li><a href="#s_TSIZ">	TFAL</a>
+<li><a href="#s_TFLG">	TFLG</a>
+<li><a href="#s_TxPn">	TFPn</a>
+<li><a href="#s_TxPn">	TFRQ</a>
+<li><a href="#s_TIMG">	TIMG</a>
+<li><a href="#s_TxPn">	TIPn</a>
+<li><a href="#s_TOPC">	TOPC</a>
+<li><a href="#s_Shad">	TRAN</a>
+<li><a href="#s_TSIZ">	TSIZ</a>
+<li><a href="#s_TxPn">	TSPn</a>
+<li><a href="#s_xTEX">	TTEX</a>
+<li><a href="#s_TVAL">	TVAL</a>
+<li><a href="#s_TSIZ">	TVEL</a>
+<li><a href="#s_TWRP">	TWRP</a>
+<li>			Type
+	<ul>
+	<li><a href="#t_ANG4">	Angle</a>
+	<li><a href="#t_COL12">	Color</a>
+	<li><a href="#t_VEC12">	Coordinate</a>
+	<li><a href="#t_FNAM0">	Filename</a>
+	<li><a href="#t_F4">	Float</a>
+	<li><a href="#t_ID4">	ID Tag</a>
+	<li><a href="#t_I">	Integer, Signed</a>
+	<li><a href="#t_I">	Integer, Unsigned</a>
+	<li><a href="#t_FP4">	Percentage, Floating-point</a>
+	<li><a href="#t_S0">	String</a>
+	<li><a href="#t_VX">	Vertex Index</a>
+	</ul>
+<li><a href="#t_I">	U1</a>
+<li><a href="#t_I">	U2</a>
+<li><a href="#t_I">	U4</a>
+<li><a href="#t_VEC12">	VEC12</a>
+<li><a href="#t_VX">	VX</a>
+</ul>
+
+</body></html>
+

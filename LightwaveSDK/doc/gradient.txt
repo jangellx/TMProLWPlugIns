@@ -1,0 +1,80 @@
+Gradients:
+
+'Gradient.p' is a global plugin that provides gradient services to other
+plugins.  A gradient is a "black box" which processes a input parameter
+and returns a value.  Usually it is used to return a color value, making
+it possible to map a range of values into a color ramp.
+
+Because the return value might be different than color, there are three
+different gradient types: 
+
+            - color (LWGT_COLOR)
+            - scalar (LWGT_SCALAR)
+            - percent (LWGT_PERCENT)
+
+The difference between 'scalar' and 'percent' is how the UI will display
+the control for the key value.  In both cases the value is handled as a
+float value.
+
+Sometimes it is necessary to limit the values within a specific range,
+this can be achieved using the LWGF_FIXEDMIN and LWGF_FIXEDMAX flags.
+The min and max values must be set in the gradient structure.  The input
+parameter list must given at gradient creation, this is a list of
+'gParamDesc' structures, they hold a pointer to the input name and the
+start and end values (ie: the range value) for each input parameter. 
+ 
+The gradient handler has the following functions:
+
+    create()
+
+        creates a gradient structure and initialises it.  User
+        must pass the flag, the type and the input parameter
+        description (pDesc).
+
+    destroy()
+
+        kills the gradient.
+
+    copy()
+
+        to copy a gradient.
+
+    load()
+
+        loads from a stream.
+
+    save()
+
+        saves to a stream.
+
+    load_lw()
+
+        loads from a Lw stream (passing the LWLoadState)
+
+    save_lw()
+
+        saves to LW stream.
+
+    interface()
+
+        opens the user interface, user must pass the gradient
+        structure and the gradient title.
+
+    evaluate()
+
+        evaluates the gradient for a given input parameter,
+        fills in the return structure provided by user.
+
+    freeHandler()
+
+        frees any memory allocated by gradients (necessary
+        when copy/pastes are made between gradients) . This
+        function should be called at the end of the program.
+
+
+A short example of how to use gradients can be found
+under sample\common\gradient.
+
+G. Duquesne
+5/5/98
+

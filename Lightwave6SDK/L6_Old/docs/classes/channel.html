@@ -1,0 +1,92 @@
+<html>
+
+<head>
+<title>Classes: ChannelHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="brdf.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="BRDFHandler"></a> </td>
+    <td width="96" align="left"><a href="colorpik.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ColorPicker"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+
+<h3>ChannelHandler</h3>
+    <p>What channel handlers do.</p>
+    <p><strong>Background</strong></p>
+    <p>More about channel handlers.</p>
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>
+   XCALL_( int ) MyChannel( long version, GlobalFunc *global,
+      LWChannelHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to a channel handler's activation function is an
+    LWChannelHandler.</p>
+    <pre>
+   typedef struct st_LWChannelHandler {
+      LWInstanceFuncs *inst;
+      void            (*evaluate) (LWInstance, const LWChannelAccess *);
+      unsigned int    (*flags)    (LWInstance);
+   } LWChannelHandler;
+</pre>
+    <p>The first member of this structure points to the standard instance
+    <a href="../handler.html">handler functions</a>. A channel handler also provides
+    an evaluation function and a flags function.</p>
+      <dt><tt>evaluate( instance, access )</tt></dt>
+      <dd>This is where the channel handler does its work.</dd>
+      <dt><br>
+        <tt>flags( instance )</tt></dt>
+      <dd>Returns an int that tells the renderer ??</dd>
+    </dl>
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD.</p>
+    <p><strong>Channel Access</strong></p>
+    <p>This is the structure passed to the handler's evaluation function.</p>
+<pre>
+   typedef struct st_LWChannelAccess {
+      LWChannelID   chan;
+      LWFrame       frame;
+      LWTime        time;
+      double        value;
+      void         (*getChannel)  (LWChannelID chan, LWTime t,
+                      double *value);
+      void         (*setChannel)  (LWChannelID chan, const double value);
+      const char * (*channelName) (LWChannelID chan);
+   } LWChannelAccess;
+</pre>
+
+<dl>
+<dt><tt>chan</tt></dt>
+<dd>The channel ID.</dd>
+<dt><tt>frame</tt></dt>
+<dd>The frame number of the evaluation.</dd>
+<dt><tt>time</tt></dt>
+<dd>The time of the evaluation, in seconds.</dd>
+<dt><tt>value</tt></dt>
+<dd>The current value of the channel at the given time.</dd>
+<dt><tt>getChannel( channel, time, value )</tt></dt>
+<dd>Retrieves a value from a channel.</dd>
+<dt><tt>setChannel( channel, value )</tt></dt>
+<dd>Sets the value of a channel.</dd>
+<dt><tt>channelName( channel )</tt></dt>
+<dd>Returns the name associated with the channel ID.</dd>
+</dl>
+
+</td></tr></table>
+</body>
+
+</html>

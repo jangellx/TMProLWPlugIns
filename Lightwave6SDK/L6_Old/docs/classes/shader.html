@@ -1,0 +1,297 @@
+<html>
+
+<head>
+<title>Classes: ShaderHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="scenecvt.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="SceneConverter"></a> </td>
+    <td width="96" align="left"><a href="tool.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ToolHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>ShaderHandler<br>
+    ShaderInterface</h3>
+    <p>Shaders set the color and other appearance attributes of each visible spot on a
+    surface.</p>
+    <p><strong>Background</strong></p>
+    <p>A <em>surface</em>, sometimes called a <em>material</em> in other programs, is a
+    collection of attributes that define the appearance of a polygon. The same surface can be
+    applied to multiple objects, and different surfaces can be applied to different polygons
+    on the same object. Shaders are always associated with a surface and affect its appearance
+    during rendering by setting or modifying its attributes. More than one shader can be
+    associated with a surface, and the effects of one shader might in turn be modified by the
+    next shader in line. A shader can also fire rays into the scene that cause other shaders
+    to be evaluated.</p>
+    <p><img width="360" height="240" border="0" align="right" hspace="8" vspace="8"
+    src="../images/shader.gif" alt="Shader Figure"></p>
+    <p>For each pixel in the final image, the renderer finds the spot in the scene that the
+    camera sees at that pixel. If the spot is on an object, its appearance depends on the
+    suface assigned to the polygon it lies in. The renderer uses the surface settings to
+    calculate a color for the pixel, and if a shader is attached to the surface, its
+    evaluation function is called to either modify the surface settings or perform its own
+    color calculation.</p>
+    <p>The shader evaluation function is given detailed information about the surface
+    attributes and the geometry of the spot and about the context of the evaluation, and it
+    has access to several raytracing functions that can tell it even more about the scene.</p>
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>
+   XCALL_( int ) MyShader( long version, GlobalFunc *global,
+      LWShaderHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to a shader's activation function is an LWShaderHandler.</p>
+    <pre>
+   typedef struct st_LWShaderHandler {
+      LWInstanceFuncs *inst;
+      LWItemFuncs     *item;
+      LWRenderFuncs   *rend;
+      void            (*evaluate) (LWInstance, LWShaderAccess *);
+      unsigned int    (*flags)    (LWInstance);
+   } LWShaderHandler;</pre>
+    <p>The first three members of this structure are the standard <a href="../handler.html">handler
+    functions</a>. In addition to these, a shader provides an evaluation function and a flags
+    function.<dl>
+      <dt><tt>evaluate( instance, access )</tt></dt>
+      <dd>This is where the shader does its work. At each time step in the animation, the
+        evaluation function is called for each pixel affected by the shader's surface. The access
+        argument, described below, contains information about the spot to be colored.</dd>
+      <dt><br>
+        <tt>flags( instance )</tt></dt>
+      <dd>Returns an int that tells the renderer which surface attributes the shader will modify
+        and whether it will call the raytracing functions. These flags are bitfields that should
+        be combined using bitwise-OR to create the return value. They correspond to members of the
+        shader access structure described below. For efficiency reasons, the renderer will ignore
+        changes to any surface attributes that weren't indicated by the bit flags returned from
+        this function and won't provide access to the raytracing functions unless the <tt>LWSHF_RAYTRACE</tt>
+        bit is set. The flags are <blockquote>
+          <tt><p>LWSHF_NORMAL<br>
+          LWSHF_COLOR<br>
+          LWSHF_LUMINOUS<br>
+          LWSHF_DIFFUSE<br>
+          LWSHF_SPECULAR<br>
+          LWSHF_MIRROR<br>
+          LWSHF_TRANSP<br>
+          LWSHF_ETA<br>
+          LWSHF_ROUGH<br>
+          LWSHF_RAYTRACE</tt></p>
+        </blockquote>
+      </dd>
+    </dl>
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD.</p>
+    <p><strong>Shader Access</strong></p>
+    <p>The spot evaluation function is called for every visible spot on a surface with a
+    shader access structure describing the spot to be shaded. The access structure contains
+    some values which are read-only and some which are meant to be modified. The read-only
+    values describe the geometry of the pixel being shaded. The read-write values describe the
+    current attribute settings of the spot and should be modified in place to affect the final
+    look of the spot. Since shaders may be layered, these properties may be altered many more
+    times before final rendering. The access structure also contains special functions that
+    can be called only while rendering. </p>
+    <pre>   typedef struct st_LWShaderAccess {
+      int               sx, sy;
+      double            oPos[3], wPos[3];
+      double            gNorm[3];
+      double            spotSize;
+      double            raySource[3];
+      double            rayLength;
+      double            cosine;
+      double            oXfrm[9], wXfrm[9];
+      LWItemID          objID;
+      int               polNum;
+
+      double            wNorm[3];
+      double            color[3];
+      double            luminous;
+      double            diffuse;
+      double            specular;
+      double            mirror;
+      double            transparency;
+      double            eta;
+      double            roughness;
+
+      LWIlluminateFunc *illuminate;
+      LWRayTraceFunc   *rayTrace;
+      LWRayCastFunc    *rayCast;
+      LWRayShadeFunc   *rayShade;
+
+      int               flags;
+      int               bounces;
+      LWItemID          sourceID;
+      double            wNorm0[3];
+      double            bumpHeight;
+   } LWShaderAccess;</pre>
+    <p><em><strong>Read-Only Parameters</strong></em></p>
+    <p>These fields provide read-only information about the local geometry of the spot and the
+    context of the evaluation.<dl>
+      <dt><tt>sx, sy</tt></dt>
+      <dd>The pixel coordinates at which the spot is visible in the rendered image. This is
+        labeled &quot;PIXEL&quot; in the figure, but note that it won't necessarily be the spot's
+        projection onto the viewplane. When the viewing ray originates on a reflective surface,
+        for example, the pixel coordinates are usually for the source of the ray (the spot's
+        reflection). The pixel coordinate origin (0, 0) is in the upper left corner of the image.</dd>
+      <dt><tt>oPos</tt></dt>
+      <dd>Spot position in object (Modeler) coordinates (the (X', Y', Z') system in the figure).</dd>
+      <dt><tt>wPos</tt></dt>
+      <dd>Spot position in world coordinates (X, Y, Z). This is the position after transformation
+        and the effects of bones, displacement and morphing.</dd>
+      <dt><tt>gNorm</tt></dt>
+      <dd>Geometric normal in world coordinates. This is the raw polygonal normal at the spot,
+        unperturbed by smoothing or bump mapping. </dd>
+      <dt><tt>wNorm0</tt></dt>
+      <dd>The interpolated normal in world coordinates. This is the same as <tt>gNorm</tt>, but
+        after smoothing.</dd>
+      <dt><tt>spotSize</tt></dt>
+      <dd>Approximate spot diameter, useful for texture antialiasing. The diameter is only
+        approximate because spots in general aren't circular--on a surface viewed on edge, they're
+        long and thin. </dd>
+      <dt><tt>raySource</tt></dt>
+      <dd>Origin of the incoming viewing ray in world coordinates. Labeled &quot;EYE&quot; in the
+        figure, this is often the camera, but it can also, for example, be a point on a reflective
+        surface. </dd>
+      <dt><tt>rayLength</tt></dt>
+      <dd>The distance the viewing ray traveled in free space to reach this spot (ordinarily the
+        distance between <tt>raySource</tt> and <tt>wPos</tt>).</dd>
+      <dt><tt>cosine</tt></dt>
+      <dd>The cosine of the angle between the viewing ray and the raw surface normal (the dot
+        product of <tt>gNorm</tt> and the unit viewing ray vector <tt>(wPos - raySource)/rayLength</tt>).
+        This indicates how glancing the view is and gives a measure of how approximate the spot
+        size is. </dd>
+      <dt><tt>oXfrm</tt></dt>
+      <dd>Object to world transformation matrix. The nine values in this array form a 3 x 3 matrix
+        that describes the rotation and scaling of the object. This is useful primarily for
+        transforming direction vectors (bump gradients, for example) from object to world space.</dd>
+      <dt><tt>wXfrm</tt></dt>
+      <dd>World to object transformation matrix (the inverse of <tt>oXfrm</tt>).</dd>
+      <dt><tt>objID</tt></dt>
+      <dd>The object being shaded. A single shader instance can be shared between multiple
+        objects, so this may be different for each call to the shader's evaluation function. For
+        sample sphere rendering the ID will refer to an object not in the current scene. </dd>
+      <dt><tt>polNum</tt></dt>
+      <dd>An index identifying the polygon that contains the spot. It may represent other
+        sub-object information in non-mesh objects.</dd>
+      <dt><tt>flags</tt></dt>
+      <dd>Bit fields describing the nature of the call. The <tt>LWSAF_SHADOW</tt> bit tells you
+        when the evaluation function is being called during shadow computations, which you might
+        want to treat differently from &quot;regular&quot; shader evaluation.</dd>
+      <dt><tt>bounces</tt></dt>
+      <dd>The number of times the viewing ray has branched, or bounced, before reaching this spot.
+        This value can be used to limit recursion.</dd>
+      <dt><tt>sourceID</tt></dt>
+      <dd>The item ID of the source of the viewing ray.</dd>
+    </dl>
+    <p><em><strong>Modifiable Parameters</strong></em></p>
+    <p>These parameters are used by the renderer to compute the perceived color at the spot
+    and may be modified by the shader. Many of them correspond directly to surface parameters
+    in the user interface, although the values may be represented by different ranges. Unless
+    stated otherwise, the values of these fields nominally range from 0.0 to 1.0, and values
+    outside that range are also valid.</p>
+    <p>The shader's flags function must have returned the correct flags for the fields the
+    shader will modify, or changes to these fields will be ignored. To set the perceived color
+    directly, a shader can set all of the parameters to zero except for <tt>luminous</tt>,
+    which should be 1.0, and <tt>color</tt>, which should be the output color of the spot. <dl>
+      <dt><tt>wNorm</tt></dt>
+      <dd>Surface normal in world coordinates. If you modify this vector, you must renormalize it
+        (make its length equal to 1.0).</dd>
+      <dt><tt>bumpHeight</tt></dt>
+      <dd>The apparent height of the bump, expressed as</dd>
+      <dt><tt>color</tt></dt>
+      <dd>The RGB components of the base color of the spot.</dd>
+      <dt><tt>luminous</tt></dt>
+      <dd>Luminosity level.</dd>
+      <dt><tt>diffuse</tt></dt>
+      <dd>Diffuse reflection level.</dd>
+      <dt><tt>specular</tt></dt>
+      <dd>Specular reflection level.</dd>
+      <dt><tt>mirror</tt></dt>
+      <dd>Mirror reflection level.</dd>
+      <dt><tt>transparency</tt></dt>
+      <dd>Transparency level. </dd>
+      <dt><tt>eta</tt></dt>
+      <dd>Index of refraction. In the real world this ranges between 1.0 and about 3.5, depending
+        on the material, but values outside that range are also valid here. </dd>
+      <dt><tt>roughness</tt></dt>
+      <dd>Surface roughness, or the inverse of glossiness. This field corresponds to (the inverse
+        of) the exponent in the Phong specular highlight formula.</dd>
+    </dl>
+    <a name="raytrace"><p><em><strong>Rendering Functions</strong></em></p></a>
+    <p>These functions are provided only in a rendering context, since they depend
+    on having full information about the scene. They will not be available in other contexts,
+    e.g. previewing.<dl>
+      <dt><tt>illuminate( lightID, position, direction, color )</tt></dt>
+      <dd>This function obtains the light ray (color and direction) hitting the given position
+        from the given light at the current time step. The return value is zero if the light does
+        not illuminate the given world coordinate position at all. The color includes effects from
+        shadows (if any), falloff, spotlight cones and transparent objects between the light and
+        the point. <dl>
+          <dt><br>
+            <tt>lightID</tt></dt>
+          <dd>The light, given by its LWItemID.</dd>
+          <dt><tt>position</tt></dt>
+          <dd>The world coordinates of the spot at which the illumination will be tested. </dd>
+          <dt><tt>direction</tt></dt>
+          <dd>Storage for the direction of the light ray computed by the function.</dd>
+          <dt><tt>color</tt></dt>
+          <dd>Storage for the color of the light ray. </dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>rayTrace( position, direction, color )</tt></dt>
+      <dd>Trace a ray from the given location in the given direction in world coordinates. The
+        return value is the length of the ray (or -1.0 if infinite) and the color coming from that
+        direction. The direction argument is the outgoing direction and must be normalized (a unit
+        vector). <dl>
+          <dt><br>
+            <tt>position</tt></dt>
+          <dd>The world coordinates of the source of the ray.</dd>
+          <dt><tt>direction</tt></dt>
+          <dd>A unit-length vector, the outgoing direction of the ray in world coordinates.</dd>
+          <dt><tt>color</tt></dt>
+          <dd>Storage for the color of the spot hit by the ray.</dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>rayCast( position, direction )</tt></dt>
+      <dd>This is a quicker version of the rayTrace function which only returns the distance to
+        the nearest surface (or -1.0). It performs neither shading nor recursive raytracing. <dl>
+          <dt><br>
+            <tt>position</tt></dt>
+          <dd>The world coordinates of the source of the ray.</dd>
+          <dt><tt>direction</tt></dt>
+          <dd>A unit-length vector, the outgoing direction of the ray in world coordinates.</dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>rayShade( position, direction, shaderAccess )</tt></dt>
+      <dd>This function traces a ray to the nearest surface and evaluates the basic surface
+        parameters and any shaders on that surface. The ShaderAccess structure passed (and owned)
+        by the client is filled in with the result and no more processing is done. <dl>
+          <dt><br>
+            <tt>position</tt></dt>
+          <dd>The source of the ray in world coordinates.</dd>
+          <dt><tt>direction</tt></dt>
+          <dd>A unit-length vector, the outgoing direction of the ray in world coordinates.</dd>
+          <dt><tt>shaderAccess</tt></dt>
+          <dd>A pointer to an empty ShaderAccess structure that will be filled in by the function.</dd>
+        </dl>
+      </dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

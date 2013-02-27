@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- Nullify Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=Nullify border=0 height=131 src ="PROG-Nullify.gif" width=213 ></p>
+	<P align=justify>
+	<br><STRONG>Nullify</STRONG> is a 
+	  plug-in for Lightwave 6.0 or greater. It replaces all selected objects with nulls, can
+	  add a prefix or suffix to the name, or clear the bones from those objects, and adjust
+	  the shadow options.  This plug-in requires Lightwave 6.0 or greater.</P>
+	
+	<P align=justify>To install Nullify, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy Nullify.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add Nullify.p. Layout should report that one plug-in has been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        <STRONG>Nullify</STRONG> plug-in from 
+        the Generics pop-up in the Plug-in Options Panel, or assign it to a key 
+        or button on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.   The plug-in will be
+		the prefixed with TM_P under the Plugins heading of the 
+        Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+
+	<hr width="90%">
+	
+    <p align=center><IMG alt="Nullify Interface" border=0 height=233 src="Nullify-Main.jpg" width=429></p>
+
+	<P align=justify>To use <STRONG>Nullify</STRONG>,
+       you must first select the objects you want to convert to nulls.  All selected objects will
+	   be nullified.  Once you have selected the appropriate objects, launch <b>Nullify</b>.  You should
+	   see an interface simlar to the one shown above.  The <i>About</i> button, as you'd expect,
+	   presents information about the plug-in.</P>
+
+	<P align=justify>All of the settings in the interface are optional.  If you don't want to use
+	   them, just click <i>OK</i> to continue.  In this default state, all the selected objects
+	   will simply be converted into nulls.</P
+
+	<P align=justify>If <i>Store Original Names</i> is checked, the original object name will be stored
+     as a tag in the scene file.  You van view tags with the Comments Generic plug-in included with
+     Lightwave.  <b>Nullify</b> writes tags that are compatible with <b>Replace Objects</b>, allowing
+     you to use the <b>Replace With Original Object</b> plug-in to reload the original item.
+     The tag starts with the keyword "OriginalItem", then a 0 if it was a null or a 1 if it was an
+     object, and finally the path to the object, or the original name of the null object.  If this
+     tag already exists for this object, it will be replaced with the new tag.  If this option is left
+     unchecked, then no tags will be modified or created.</P>
+
+	<P align=justify>You can add a prefix or a suffix to the object's name after it has been
+	   converted to a null via the <i>Prefix</i> and <i>Suffix</i> fields.  The new null object's
+	   name will start with the prefix, then contain the original object name, and finally end
+	   in the suffix.</P>
+
+	<P align=justify>If <i>Nullify Descendants</i> is enabled, then all children of the selected items
+	   will also be converted to nulls using the panel's settings</P>
+
+	<P align=justify>When <i>Remove Bones</i> is enabled, any bones in the nullified objects will be
+	   cleared.  In most cases the bones are no longer nessesary once the object has become a null.
+	   However, there are cases where expressions, plug-ins or <i>Use Bones From Object</i>, where
+	   you may want the bones to remain</P>
+
+	<P align=justify>If <i>Disable Shadow Options</i> is enabled, the <i>Cast Shadow</i>, <i>Receive
+	   Shadow</i> and <i>Self Shadow</i> options are disabled.  This has been reported to reduce render
+	   times, even on nulls.</P>
+
+ 	<P align=justify><i>Remove Moprh Mixer</i> will remove any instances of Morph Mixer applied to any of
+     the objects being nullified if checked.</P>
+
+	<P align=justify>Clicking <i>OK</i> will use the settings in the panel to convert objects into nulls.
+	   It will also store the interface settings until Layout is quit, allowing you to quickly nullify
+	   smaller groups of objects successivly.  <i>Cancel</i> will exit Nullify without performing any
+	   changes to your scene.</P>
+
+    <H3 align=center><b>Revision History</b>
+	  <HR width=50%></H3>
+	  <ul>
+	    <li><b>05-26-02</b>
+		  <ul>
+        <li>Added <em>Remove Morph Mixer</em> toggle</li>
+      </ul>
+	    <li><b>04-22-01</b>
+		  <ul>
+		    <li>Added <i>Store Original Names</i> toggle</li>
+		    <li>Added a progress bar for the nullification and reselection processing</li>
+		  </ul>
+	    <li><b>01-14-01</b>  First Public Release</li>
+	  </ul>
+	
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2001 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

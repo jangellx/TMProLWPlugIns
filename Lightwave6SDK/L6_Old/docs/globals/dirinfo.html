@@ -1,0 +1,92 @@
+<html>
+
+<head>
+<title>Globals: Directory Info</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="compinfo.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="LW Comp Info"></a> </td>
+    <td width="96" align="left"><a href="filereq.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="File Request"></a> </td>
+    <td width="96" align="left"><a href="../globals.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Globals"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>&quot;Directory Info&quot;</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 5.5 - 6.0, Inspire 1.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout, Modeler</small></p>
+    <p>The function returned by the directory info global gives plug-ins read-only access to
+    LightWave's internal directory list. This tells you where LightWave would look first for a
+    given item. It can be used to set the initial path for a <a href="filereq2.html">file
+    request</a>.</p>
+    <p><strong>Global Call</strong></p>
+    <pre>   LWDirInfoFunc *dirinfo;
+   dirinfo = global( &quot;Directory Info&quot;, GFUSE_TRANSIENT );</pre>
+    <p>The global function returns a pointer to an LWDirInfoFunc.</p>
+    <pre>   typedef const char * LWDirInfoFunc (const char *name);</pre>
+    <p>The <tt>name</tt> argument identifies which directory path should be returned by the
+    directory info function. It can be any of the strings in the list below.</p>
+    <p>The paths returned by Layout are relative to the content directory. You can fully
+    qualify these paths by also asking for the content directory path, although in most cases
+    this will correspond to the operating system's current working directory, so that the
+    relative path will point to the same location without being expanded to a full path.</p>
+    <div align="center"><center><table border="0" cellpadding="4" cellspacing="0">
+      <tr>
+        <td width="150" valign="top"><em><strong>Layout</strong></em><br>
+        <tt>&quot;Animations&quot;<br>
+        &quot;Command&quot;<br>
+        &quot;Content&quot;<br>
+        &quot;Envelopes&quot;<br>
+        &quot;Hierarchies&quot;<br>
+        &quot;Output&quot;<br>
+        &quot;Previews&quot;<br>
+        &quot;Scenes&quot;<br>
+        &quot;Surfaces&quot;</tt></td>
+        <td width="150" valign="top"><em><strong>Modeler</strong></em><br>
+        <tt>&quot;Fonts&quot;<br>
+        &quot;Macros&quot;</tt></td>
+        <td width="150" valign="top"><em><strong>Both</strong></em><br>
+        <tt>&quot;Images&quot;<br>
+        &quot;Install&quot;<br>
+        &quot;Motions&quot;<br>
+        &quot;Objects&quot;<br>
+        &quot;Plugins&quot;<br>
+        &quot;Settings&quot;<br>
+        &quot;Temp&quot;</tt></td>
+      </tr>
+    </table>
+    </center></div><p><strong>Example</strong></p>
+    <p>This code fragment initializes a path string with the default directory for images.</p>
+    <pre>   #include &lt;lwserver.h&gt;
+   #include &lt;lwhost.h&gt;
+
+   #define MAXFILESZ 260
+
+   char *imgdir, path[ MAXFILESZ ] = &quot;&quot;;
+   LWDirInfoFunc *dirinfo;
+
+   dirinfo = global( &quot;Directory Info&quot;, GFUSE_TRANSIENT );
+   if ( dirinfo ) {
+      imgdir = dirinfo( &quot;Images&quot; );
+      if ( imgdir )
+         if ( strlen( imgdir ) &lt; MAXFILESZ )
+            strcpy( path, imgdir );
+   }
+   ...
+</pre>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<html>
+
+<head>
+<title>Globals: File Request 2</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="filereq.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="File Request"></a> </td>
+    <td width="96" align="left"><a href="filetype.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="File Type Pattern"></a> </td>
+    <td width="96" align="left"><a href="../globals.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Globals"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>&quot;File Request 2&quot;</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 5.5 - 6.0, Inspire 1.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout, Modeler</small></p>
+    <p>The file request 2 global returns a function that prompts the user for a file
+    selection. The request displays the file dialog currently installed in LightWave. This may
+    be the default system dialog or a <a href="../classes/freq.html">custom file dialog</a>
+    plug-in. See the <a href="filereq.html">&quot;File Request&quot;</a> global for an
+    alternative interface to the file dialog mechanism.</p>
+    <p>The primary advantage of this file request global over the original &quot;File
+    Request&quot; is a smarter and more flexible interface to the file dialog. The dialog is
+    initialized by filling out a structure, rather than through a limited number of function
+    arguments.</p>
+    <p>Note that in contrast to the original, this global allows plug-ins to call the file
+    request activation function directly. Plug-ins calling this global act as the host side of
+    the <a href="../classes/freq.html">FileRequest</a> plug-in class.</p>
+    <p><strong>Global Call</strong></p>
+    <pre>   LWFileActivateFunc *filereq;
+   filereq = global( &quot;File Request 2&quot;, GFUSE_TRANSIENT );</pre>
+    <p>The global function returns a pointer to an LWFileActivateFunc.</p>
+    <pre>   typedef int LWFileActivateFunc (int version, LWFileReqLocal *);</pre>
+    <p>The return value of this function can be any of the values defined for the <a
+    href="server.html#activatereturn">return values of activation functions</a>. Any value
+    other than <tt>AFUNC_OK</tt> must be handled as an error.</p>
+    <p>The version is passed as the <tt>version</tt> argument to the file request plug-in's
+    activation function. This should be set to the value defined by the <tt>LWFILEREQ_VERSION</tt>
+    symbol in <tt>lwdialog.h</tt>. File request plug-ins with a different activation version
+    will return <tt>AFUNC_BADVERSION</tt>.</p>
+    <p>The second argument to this function is a pointer to a structure that is passed as the <tt>local</tt>
+    argument to the file request plug-in's activation function.</p>
+    <p><strong>The Local Structure</strong></p>
+    <p>The file request function passes an LWFileReqLocal as the local argument to the
+    activation function of the file request plug-in.</p>
+    <pre>   typedef struct st_LWFileReqLocal {
+      int         reqType;
+      int         result;
+      const char *title;
+      const char *fileType;
+      char       *path;
+      char       *baseName;
+      char       *fullName;
+      int         bufLen;
+      int        (*pickName) (void);
+   } LWFileReqLocal;</pre>
+    <dl>
+      <dt><tt>reqType</tt></dt>
+      <dd>Indicates the type of file request. Possible values are <blockquote>
+          <p><tt>FREQ_LOAD<br>
+          FREQ_SAVE<br>
+          FREQ_DIRECTORY<br>
+          FREQ_MULTILOAD</tt></p>
+        </blockquote>
+      </dd>
+      <dt><tt>result</tt></dt>
+      <dd>The result of the request. This will be 1 if the user selected a file, 0 if the user
+        cancelled the request, and a negative number to indicate an error.</dd>
+      <dt><tt><br>
+        title</tt></dt>
+      <dd>The title string. This is generally displayed near the top of the file dialog and tells
+        the user what kind of file is being requested.</dd>
+      <dt><tt><br>
+        fileType</tt></dt>
+      <dd>A file type pattern string. This is used to filter the names displayed in the dialog.
+        Pattern strings for certain types of files can be obtained from the <a
+        href="filetype.html">&quot;File Type Pattern&quot;</a> global. If you construct your own
+        pattern strings, remember that these are platform-specific and may also be
+        locale-specific.</dd>
+      <dt><tt><br>
+        path</tt></dt>
+      <dd>The initial path. Default paths for certain file types can be obtained from the <a
+        href="dirinfo.html">&quot;Directory Info&quot;</a> global. If you construct your own path
+        string, remember that path lexics depend on the platform. If the user selects a file, the
+        initial path is replaced with the path of the selected file.</dd>
+      <dt><tt><br>
+        baseName</tt></dt>
+      <dd>The initial file name, not including the path. This can be empty, or it can contain a
+        default name. The initial name can also contain wildcards that may be used to filter the
+        names displayed in the dialog. If the user selects a file, the initial name is replaced
+        with the name (not including the path) of the selected file.</dd>
+      <dt><tt><br>
+        fullName</tt></dt>
+      <dd>The file request returns the selected file name, including the path, in this string. The
+        initial contents are ignored.</dd>
+      <dt><tt><br>
+        bufLen</tt></dt>
+      <dd>The size in bytes of the <tt>baseName</tt>, <tt>path</tt> and <tt>fullName</tt> strings.
+        Note that all of them must be the same size, and should be large enough to hold the
+        largest file name you expect to process (a minimum of 256 bytes is recommended).</dd>
+      <dt><tt><br>
+        pickName()</tt></dt>
+      <dd>An optional callback function that you should provide when making <tt>MULTILOAD</tt>
+        requests. This function will be called for each selected file. It returns 0 to continue
+        and any non-zero value to stop processing the files in a multiple file selection. Your
+        LWFileRequestLocal structure needs to be visible to your <tt>pickName</tt> function if you
+        want it to extract each file name as it's called.</dd>
+    </dl>
+    <p><strong>Example</strong></p>
+    <p>This code fragment asks the user for the name of a file to save.</p>
+    <pre>   #include &lt;lwserver.h&gt;
+   #include &lt;lwhost.h&gt;
+
+   #define MAXFILESZ 260
+
+   static char
+      node[ MAXFILESZ ] = &quot;&quot;,
+      path[ MAXFILESZ ] = &quot;&quot;,
+      name[ MAXFILESZ ] = &quot;&quot;;
+   static LWFileReqLocal frloc;
+
+   LWFileActivateFunc *filereq;
+   int result;
+
+   filereq = global( &quot;File Request 2&quot;, GFUSE_TRANSIENT );
+   if ( !filereq ) goto NoFileReq;  /* global calls can fail */
+
+   frloc.reqType  = FREQ_SAVE; 
+   frloc.title    = &quot;Save Widget&quot;;
+   frloc.bufLen   = MAXFILESZ;
+   frloc.pickName = NULL;
+   frloc.fileType = &quot;*.wgt&quot;;            /* a Windows-specific pattern */
+   strcpy( frloc.path, &quot;Widgets&quot; );     /* a relative path */
+   strcpy( frloc.baseName, &quot;foo.wgt&quot; ); /* a default name */
+
+   result = filereq( LWFILEREQ_VERSION, &amp;frloc );
+   if ( result == AFUNC_OK &amp;&amp; frloc.result &gt; 0 ) {
+      save_widget( widget, frloc.fullName );
+      ...
+</pre>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

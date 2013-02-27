@@ -1,0 +1,1168 @@
+	TITLE	E:\TMPro_SourceTree\Projects\Portable\bfstream\bofstream.cpp
+	.386P
+include listing.inc
+if @Version gt 510
+.model FLAT
+else
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+_DATA	SEGMENT DWORD USE32 PUBLIC 'DATA'
+_DATA	ENDS
+CONST	SEGMENT DWORD USE32 PUBLIC 'CONST'
+CONST	ENDS
+_BSS	SEGMENT DWORD USE32 PUBLIC 'BSS'
+_BSS	ENDS
+$$SYMBOLS	SEGMENT BYTE USE32 'DEBSYM'
+$$SYMBOLS	ENDS
+$$TYPES	SEGMENT BYTE USE32 'DEBTYP'
+$$TYPES	ENDS
+_TLS	SEGMENT DWORD USE32 PUBLIC 'TLS'
+_TLS	ENDS
+;	COMDAT ?lock@ios@@QAAXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?unlock@ios@@QAAXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?lockptr@ios@@IAEPAU_CRT_CRITICAL_SECTION@@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?setlock@streambuf@@QAEXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?clrlock@streambuf@@QAEXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?lock@streambuf@@QAEXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?unlock@streambuf@@QAEXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?lockptr@streambuf@@IAEPAU_CRT_CRITICAL_SECTION@@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?gptr@streambuf@@IBEPADXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?setf@ios@@QAEJJJ@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?rdbuf@ios@@QBEPAVstreambuf@@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?unlockbuf@ios@@QAAXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??4istream@@IAEAAV0@ABV0@@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6ostream@@QAEAAV0@P6AAAV0@AAV0@@Z@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6ostream@@QAEAAV0@D@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?put@ostream@@QAEAAV1@D@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?put@ostream@@QAEAAV1@C@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?write@ostream@@QAEAAV1@PBEH@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?flush@@YAAAVostream@@AAV1@@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??4iostream@@IAEAAV0@PAVstreambuf@@@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?fd@filebuf@@QBEHXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?is_open@filebuf@@QBEHXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?rdbuf@ifstream@@QBEPAVfilebuf@@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?rdbuf@ofstream@@QBEPAVfilebuf@@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?setmode@ofstream@@QAEHH@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?rdbuf@fstream@@QBEPAVfilebuf@@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??0bofstream@@QAE@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??_Gbofstream@@UAEPAXI@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??_Dbofstream@@QAEXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??0bofstream@@QAE@PBDHH@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??0bofstream@@QAE@H@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??0bofstream@@QAE@HPADH@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?B_Init@bofstream@@QAEXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??1bofstream@@UAE@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?setmode@bofstream@@QAEHH@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@D@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@E@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@C@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@PBD@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@PBE@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@F@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@G@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@J@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@K@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@M@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@N@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@H@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??6bofstream@@QAEAAV0@I@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??_7bofstream@@6B@
+CONST	SEGMENT DWORD USE32 PUBLIC 'CONST'
+CONST	ENDS
+;	COMDAT ??_8bofstream@@7B@
+CONST	SEGMENT DWORD USE32 PUBLIC 'CONST'
+CONST	ENDS
+FLAT	GROUP _DATA, CONST, _BSS
+	ASSUME	CS: FLAT, DS: FLAT, SS: FLAT
+endif
+PUBLIC	??_7bofstream@@6B@				; bofstream::`vftable'
+PUBLIC	??_8bofstream@@7B@				; bofstream::`vbtable'
+PUBLIC	??_Gbofstream@@UAEPAXI@Z			; bofstream::`scalar deleting destructor'
+PUBLIC	??_Ebofstream@@UAEPAXI@Z			; bofstream::`vector deleting destructor'
+PUBLIC	??0bofstream@@QAE@XZ				; bofstream::bofstream
+PUBLIC	?B_Init@bofstream@@QAEXXZ			; bofstream::B_Init
+EXTRN	__except_list:DWORD
+EXTRN	___CxxFrameHandler:NEAR
+EXTRN	??1ios@@UAE@XZ:NEAR				; ios::~ios
+EXTRN	??0ios@@IAE@XZ:NEAR				; ios::ios
+EXTRN	??0ofstream@@QAE@XZ:NEAR			; ofstream::ofstream
+EXTRN	??1ofstream@@UAE@XZ:NEAR			; ofstream::~ofstream
+EXTRN	??0bfstream@@QAE@XZ:NEAR			; bfstream::bfstream
+EXTRN	??1bfstream@@QAE@XZ:NEAR			; bfstream::~bfstream
+;	COMDAT ??_7bofstream@@6B@
+; File E:\TMPro_SourceTree\Projects\Portable\bfstream\bofstream.cpp
+CONST	SEGMENT
+??_7bofstream@@6B@ DD FLAT:??_Ebofstream@@UAEPAXI@Z	; bofstream::`vftable'
+CONST	ENDS
+;	COMDAT ??_8bofstream@@7B@
+CONST	SEGMENT
+??_8bofstream@@7B@ DD 00H				; bofstream::`vbtable'
+	DD	0cH
+CONST	ENDS
+;	COMDAT xdata$x
+xdata$x	SEGMENT
+$T2255	DD	019930520H
+	DD	03H
+	DD	FLAT:$T2258
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	ORG $+4
+$T2258	DD	0ffffffffH
+	DD	FLAT:$L2248
+	DD	00H
+	DD	FLAT:$L2250
+	DD	01H
+	DD	FLAT:$L2251
+xdata$x	ENDS
+;	COMDAT ??0bofstream@@QAE@XZ
+_TEXT	SEGMENT
+_$initVBases$ = 8
+_this$ = -16
+$T2247 = -20
+__$EHRec$ = -12
+??0bofstream@@QAE@XZ PROC NEAR				; bofstream::bofstream, COMDAT
+
+; 11   :                          bfstream() {
+
+  00000	6a ff		 push	 -1
+  00002	68 00 00 00 00	 push	 $L2256
+  00007	64 a1 00 00 00
+	00		 mov	 eax, DWORD PTR fs:__except_list
+  0000d	50		 push	 eax
+  0000e	64 89 25 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, esp
+  00015	83 ec 08	 sub	 esp, 8
+  00018	8b 44 24 18	 mov	 eax, DWORD PTR _$initVBases$[esp+16]
+  0001c	56		 push	 esi
+  0001d	8b f1		 mov	 esi, ecx
+  0001f	c7 44 24 04 00
+	00 00 00	 mov	 DWORD PTR $T2247[esp+24], 0
+  00027	85 c0		 test	 eax, eax
+  00029	89 74 24 08	 mov	 DWORD PTR _this$[esp+24], esi
+  0002d	74 1e		 je	 SHORT $L2092
+  0002f	8d 4e 0c	 lea	 ecx, DWORD PTR [esi+12]
+  00032	c7 06 00 00 00
+	00		 mov	 DWORD PTR [esi], OFFSET FLAT:??_8bofstream@@7B@ ; bofstream::`vbtable'
+  00038	e8 00 00 00 00	 call	 ??0ios@@IAE@XZ		; ios::ios
+  0003d	c7 44 24 04 01
+	00 00 00	 mov	 DWORD PTR $T2247[esp+24], 1
+  00045	c7 44 24 14 00
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 0
+$L2092:
+  0004d	6a 00		 push	 0
+  0004f	8b ce		 mov	 ecx, esi
+  00051	e8 00 00 00 00	 call	 ??0ofstream@@QAE@XZ	; ofstream::ofstream
+  00056	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  00059	c7 44 24 14 01
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 1
+  00061	e8 00 00 00 00	 call	 ??0bfstream@@QAE@XZ	; bfstream::bfstream
+  00066	8b 06		 mov	 eax, DWORD PTR [esi]
+  00068	c6 44 24 14 02	 mov	 BYTE PTR __$EHRec$[esp+32], 2
+  0006d	8b 48 04	 mov	 ecx, DWORD PTR [eax+4]
+  00070	c7 04 31 00 00
+	00 00		 mov	 DWORD PTR [ecx+esi], OFFSET FLAT:??_7bofstream@@6B@ ; bofstream::`vftable'
+
+; 12   :   B_Init();
+
+  00077	8b ce		 mov	 ecx, esi
+  00079	e8 00 00 00 00	 call	 ?B_Init@bofstream@@QAEXXZ ; bofstream::B_Init
+
+; 13   : }
+
+  0007e	8b 4c 24 0c	 mov	 ecx, DWORD PTR __$EHRec$[esp+24]
+  00082	8b c6		 mov	 eax, esi
+  00084	5e		 pop	 esi
+  00085	64 89 0d 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, ecx
+  0008c	83 c4 14	 add	 esp, 20			; 00000014H
+  0008f	c2 04 00	 ret	 4
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$L2248:
+  00000	8b 45 ec	 mov	 eax, DWORD PTR $T2247[ebp]
+  00003	83 e0 01	 and	 eax, 1
+  00006	85 c0		 test	 eax, eax
+  00008	0f 84 0b 00 00
+	00		 je	 $L2249
+  0000e	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00011	83 c1 0c	 add	 ecx, 12			; 0000000cH
+  00014	e9 00 00 00 00	 jmp	 ??1ios@@UAE@XZ		; ios::~ios
+$L2249:
+  00019	c3		 ret	 0
+$L2250:
+  0001a	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  0001d	83 c1 08	 add	 ecx, 8
+  00020	e9 00 00 00 00	 jmp	 ??1ofstream@@UAE@XZ	; ofstream::~ofstream
+$L2251:
+  00025	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00028	83 c1 08	 add	 ecx, 8
+  0002b	e9 00 00 00 00	 jmp	 ??1bfstream@@QAE@XZ	; bfstream::~bfstream
+$L2256:
+  00030	b8 00 00 00 00	 mov	 eax, OFFSET FLAT:$T2255
+  00035	e9 00 00 00 00	 jmp	 ___CxxFrameHandler
+text$x	ENDS
+??0bofstream@@QAE@XZ ENDP				; bofstream::bofstream
+PUBLIC	??1bofstream@@UAE@XZ				; bofstream::~bofstream
+EXTRN	??3@YAXPAX@Z:NEAR				; operator delete
+;	COMDAT ??_Gbofstream@@UAEPAXI@Z
+_TEXT	SEGMENT
+___flags$ = 8
+??_Gbofstream@@UAEPAXI@Z PROC NEAR			; bofstream::`scalar deleting destructor', COMDAT
+  00000	56		 push	 esi
+  00001	8d 71 f4	 lea	 esi, DWORD PTR [ecx-12]
+  00004	57		 push	 edi
+  00005	8d 7e 0c	 lea	 edi, DWORD PTR [esi+12]
+  00008	8b cf		 mov	 ecx, edi
+  0000a	e8 00 00 00 00	 call	 ??1bofstream@@UAE@XZ	; bofstream::~bofstream
+  0000f	8b cf		 mov	 ecx, edi
+  00011	e8 00 00 00 00	 call	 ??1ios@@UAE@XZ		; ios::~ios
+  00016	f6 44 24 0c 01	 test	 BYTE PTR ___flags$[esp+4], 1
+  0001b	74 09		 je	 SHORT $L2269
+  0001d	56		 push	 esi
+  0001e	e8 00 00 00 00	 call	 ??3@YAXPAX@Z		; operator delete
+  00023	83 c4 04	 add	 esp, 4
+$L2269:
+  00026	8b c6		 mov	 eax, esi
+  00028	5f		 pop	 edi
+  00029	5e		 pop	 esi
+  0002a	c2 04 00	 ret	 4
+??_Gbofstream@@UAEPAXI@Z ENDP				; bofstream::`scalar deleting destructor'
+_TEXT	ENDS
+PUBLIC	??0bofstream@@QAE@PBDHH@Z			; bofstream::bofstream
+EXTRN	??0ofstream@@QAE@PBDHH@Z:NEAR			; ofstream::ofstream
+;	COMDAT xdata$x
+; File E:\TMPro_SourceTree\Projects\Portable\bfstream\bofstream.cpp
+xdata$x	SEGMENT
+$T2279	DD	019930520H
+	DD	02H
+	DD	FLAT:$T2281
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	ORG $+4
+$T2281	DD	0ffffffffH
+	DD	FLAT:$L2274
+	DD	00H
+	DD	FLAT:$L2276
+xdata$x	ENDS
+;	COMDAT ??0bofstream@@QAE@PBDHH@Z
+_TEXT	SEGMENT
+__name$ = 8
+__ios$ = 12
+__filebuf$ = 16
+_$initVBases$ = 20
+_this$ = -16
+$T2273 = -20
+__$EHRec$ = -12
+??0bofstream@@QAE@PBDHH@Z PROC NEAR			; bofstream::bofstream, COMDAT
+
+; 20   :                       bfstream() {
+
+  00000	6a ff		 push	 -1
+  00002	68 00 00 00 00	 push	 $L2280
+  00007	64 a1 00 00 00
+	00		 mov	 eax, DWORD PTR fs:__except_list
+  0000d	50		 push	 eax
+  0000e	64 89 25 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, esp
+  00015	83 ec 08	 sub	 esp, 8
+  00018	8b 44 24 24	 mov	 eax, DWORD PTR _$initVBases$[esp+16]
+  0001c	56		 push	 esi
+  0001d	8b f1		 mov	 esi, ecx
+  0001f	c7 44 24 04 00
+	00 00 00	 mov	 DWORD PTR $T2273[esp+24], 0
+  00027	85 c0		 test	 eax, eax
+  00029	89 74 24 08	 mov	 DWORD PTR _this$[esp+24], esi
+  0002d	74 1e		 je	 SHORT $L2106
+  0002f	8d 4e 0c	 lea	 ecx, DWORD PTR [esi+12]
+  00032	c7 06 00 00 00
+	00		 mov	 DWORD PTR [esi], OFFSET FLAT:??_8bofstream@@7B@ ; bofstream::`vbtable'
+  00038	e8 00 00 00 00	 call	 ??0ios@@IAE@XZ		; ios::ios
+  0003d	c7 44 24 04 01
+	00 00 00	 mov	 DWORD PTR $T2273[esp+24], 1
+  00045	c7 44 24 14 00
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 0
+$L2106:
+  0004d	8b 4c 24 20	 mov	 ecx, DWORD PTR __ios$[esp+20]
+  00051	8b 44 24 24	 mov	 eax, DWORD PTR __filebuf$[esp+20]
+  00055	8b 54 24 1c	 mov	 edx, DWORD PTR __name$[esp+20]
+  00059	6a 00		 push	 0
+  0005b	80 c9 80	 or	 cl, -128		; ffffff80H
+  0005e	50		 push	 eax
+  0005f	51		 push	 ecx
+  00060	52		 push	 edx
+  00061	8b ce		 mov	 ecx, esi
+  00063	e8 00 00 00 00	 call	 ??0ofstream@@QAE@PBDHH@Z ; ofstream::ofstream
+  00068	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0006b	c7 44 24 14 01
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 1
+  00073	e8 00 00 00 00	 call	 ??0bfstream@@QAE@XZ	; bfstream::bfstream
+  00078	8b 06		 mov	 eax, DWORD PTR [esi]
+  0007a	8b 48 04	 mov	 ecx, DWORD PTR [eax+4]
+
+; 21   :   ;
+; 22   : }
+
+  0007d	8b c6		 mov	 eax, esi
+  0007f	c7 04 31 00 00
+	00 00		 mov	 DWORD PTR [ecx+esi], OFFSET FLAT:??_7bofstream@@6B@ ; bofstream::`vftable'
+  00086	8b 4c 24 0c	 mov	 ecx, DWORD PTR __$EHRec$[esp+24]
+  0008a	5e		 pop	 esi
+  0008b	64 89 0d 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, ecx
+  00092	83 c4 14	 add	 esp, 20			; 00000014H
+  00095	c2 10 00	 ret	 16			; 00000010H
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$L2274:
+  00000	8b 45 ec	 mov	 eax, DWORD PTR $T2273[ebp]
+  00003	83 e0 01	 and	 eax, 1
+  00006	85 c0		 test	 eax, eax
+  00008	0f 84 0b 00 00
+	00		 je	 $L2275
+  0000e	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00011	83 c1 0c	 add	 ecx, 12			; 0000000cH
+  00014	e9 00 00 00 00	 jmp	 ??1ios@@UAE@XZ		; ios::~ios
+$L2275:
+  00019	c3		 ret	 0
+$L2276:
+  0001a	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  0001d	83 c1 08	 add	 ecx, 8
+  00020	e9 00 00 00 00	 jmp	 ??1ofstream@@UAE@XZ	; ofstream::~ofstream
+$L2280:
+  00025	b8 00 00 00 00	 mov	 eax, OFFSET FLAT:$T2279
+  0002a	e9 00 00 00 00	 jmp	 ___CxxFrameHandler
+text$x	ENDS
+??0bofstream@@QAE@PBDHH@Z ENDP				; bofstream::bofstream
+PUBLIC	??0bofstream@@QAE@H@Z				; bofstream::bofstream
+EXTRN	??0ofstream@@QAE@H@Z:NEAR			; ofstream::ofstream
+;	COMDAT xdata$x
+; File E:\TMPro_SourceTree\Projects\Portable\bfstream\bofstream.cpp
+xdata$x	SEGMENT
+$T2293	DD	019930520H
+	DD	03H
+	DD	FLAT:$T2295
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	ORG $+4
+$T2295	DD	0ffffffffH
+	DD	FLAT:$L2288
+	DD	00H
+	DD	FLAT:$L2290
+	DD	01H
+	DD	FLAT:$L2291
+xdata$x	ENDS
+;	COMDAT ??0bofstream@@QAE@H@Z
+_TEXT	SEGMENT
+__filedesc$ = 8
+_$initVBases$ = 12
+_this$ = -16
+$T2287 = -20
+__$EHRec$ = -12
+??0bofstream@@QAE@H@Z PROC NEAR				; bofstream::bofstream, COMDAT
+
+; 27   :                       bfstream() {
+
+  00000	6a ff		 push	 -1
+  00002	68 00 00 00 00	 push	 $L2294
+  00007	64 a1 00 00 00
+	00		 mov	 eax, DWORD PTR fs:__except_list
+  0000d	50		 push	 eax
+  0000e	64 89 25 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, esp
+  00015	83 ec 08	 sub	 esp, 8
+  00018	8b 44 24 1c	 mov	 eax, DWORD PTR _$initVBases$[esp+16]
+  0001c	56		 push	 esi
+  0001d	8b f1		 mov	 esi, ecx
+  0001f	c7 44 24 04 00
+	00 00 00	 mov	 DWORD PTR $T2287[esp+24], 0
+  00027	85 c0		 test	 eax, eax
+  00029	89 74 24 08	 mov	 DWORD PTR _this$[esp+24], esi
+  0002d	74 1e		 je	 SHORT $L2112
+  0002f	8d 4e 0c	 lea	 ecx, DWORD PTR [esi+12]
+  00032	c7 06 00 00 00
+	00		 mov	 DWORD PTR [esi], OFFSET FLAT:??_8bofstream@@7B@ ; bofstream::`vbtable'
+  00038	e8 00 00 00 00	 call	 ??0ios@@IAE@XZ		; ios::ios
+  0003d	c7 44 24 04 01
+	00 00 00	 mov	 DWORD PTR $T2287[esp+24], 1
+  00045	c7 44 24 14 00
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 0
+$L2112:
+  0004d	8b 44 24 1c	 mov	 eax, DWORD PTR __filedesc$[esp+20]
+  00051	6a 00		 push	 0
+  00053	50		 push	 eax
+  00054	8b ce		 mov	 ecx, esi
+  00056	e8 00 00 00 00	 call	 ??0ofstream@@QAE@H@Z	; ofstream::ofstream
+  0005b	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0005e	c7 44 24 14 01
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 1
+  00066	e8 00 00 00 00	 call	 ??0bfstream@@QAE@XZ	; bfstream::bfstream
+  0006b	8b 0e		 mov	 ecx, DWORD PTR [esi]
+  0006d	c6 44 24 14 02	 mov	 BYTE PTR __$EHRec$[esp+32], 2
+  00072	8b 51 04	 mov	 edx, DWORD PTR [ecx+4]
+
+; 28   :   B_Init();
+
+  00075	8b ce		 mov	 ecx, esi
+  00077	c7 04 32 00 00
+	00 00		 mov	 DWORD PTR [edx+esi], OFFSET FLAT:??_7bofstream@@6B@ ; bofstream::`vftable'
+  0007e	e8 00 00 00 00	 call	 ?B_Init@bofstream@@QAEXXZ ; bofstream::B_Init
+
+; 29   : }
+
+  00083	8b 4c 24 0c	 mov	 ecx, DWORD PTR __$EHRec$[esp+24]
+  00087	8b c6		 mov	 eax, esi
+  00089	5e		 pop	 esi
+  0008a	64 89 0d 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, ecx
+  00091	83 c4 14	 add	 esp, 20			; 00000014H
+  00094	c2 08 00	 ret	 8
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$L2288:
+  00000	8b 45 ec	 mov	 eax, DWORD PTR $T2287[ebp]
+  00003	83 e0 01	 and	 eax, 1
+  00006	85 c0		 test	 eax, eax
+  00008	0f 84 0b 00 00
+	00		 je	 $L2289
+  0000e	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00011	83 c1 0c	 add	 ecx, 12			; 0000000cH
+  00014	e9 00 00 00 00	 jmp	 ??1ios@@UAE@XZ		; ios::~ios
+$L2289:
+  00019	c3		 ret	 0
+$L2290:
+  0001a	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  0001d	83 c1 08	 add	 ecx, 8
+  00020	e9 00 00 00 00	 jmp	 ??1ofstream@@UAE@XZ	; ofstream::~ofstream
+$L2291:
+  00025	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00028	83 c1 08	 add	 ecx, 8
+  0002b	e9 00 00 00 00	 jmp	 ??1bfstream@@QAE@XZ	; bfstream::~bfstream
+$L2294:
+  00030	b8 00 00 00 00	 mov	 eax, OFFSET FLAT:$T2293
+  00035	e9 00 00 00 00	 jmp	 ___CxxFrameHandler
+text$x	ENDS
+??0bofstream@@QAE@H@Z ENDP				; bofstream::bofstream
+PUBLIC	??0bofstream@@QAE@HPADH@Z			; bofstream::bofstream
+EXTRN	??0ofstream@@QAE@HPADH@Z:NEAR			; ofstream::ofstream
+;	COMDAT xdata$x
+; File E:\TMPro_SourceTree\Projects\Portable\bfstream\bofstream.cpp
+xdata$x	SEGMENT
+$T2307	DD	019930520H
+	DD	03H
+	DD	FLAT:$T2309
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	ORG $+4
+$T2309	DD	0ffffffffH
+	DD	FLAT:$L2302
+	DD	00H
+	DD	FLAT:$L2304
+	DD	01H
+	DD	FLAT:$L2305
+xdata$x	ENDS
+;	COMDAT ??0bofstream@@QAE@HPADH@Z
+_TEXT	SEGMENT
+__filedesc$ = 8
+_name$ = 12
+__value$ = 16
+_$initVBases$ = 20
+_this$ = -16
+$T2301 = -20
+__$EHRec$ = -12
+??0bofstream@@QAE@HPADH@Z PROC NEAR			; bofstream::bofstream, COMDAT
+
+; 35   :                       bfstream() {
+
+  00000	6a ff		 push	 -1
+  00002	68 00 00 00 00	 push	 $L2308
+  00007	64 a1 00 00 00
+	00		 mov	 eax, DWORD PTR fs:__except_list
+  0000d	50		 push	 eax
+  0000e	64 89 25 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, esp
+  00015	83 ec 08	 sub	 esp, 8
+  00018	8b 44 24 24	 mov	 eax, DWORD PTR _$initVBases$[esp+16]
+  0001c	56		 push	 esi
+  0001d	8b f1		 mov	 esi, ecx
+  0001f	c7 44 24 04 00
+	00 00 00	 mov	 DWORD PTR $T2301[esp+24], 0
+  00027	85 c0		 test	 eax, eax
+  00029	89 74 24 08	 mov	 DWORD PTR _this$[esp+24], esi
+  0002d	74 1e		 je	 SHORT $L2120
+  0002f	8d 4e 0c	 lea	 ecx, DWORD PTR [esi+12]
+  00032	c7 06 00 00 00
+	00		 mov	 DWORD PTR [esi], OFFSET FLAT:??_8bofstream@@7B@ ; bofstream::`vbtable'
+  00038	e8 00 00 00 00	 call	 ??0ios@@IAE@XZ		; ios::ios
+  0003d	c7 44 24 04 01
+	00 00 00	 mov	 DWORD PTR $T2301[esp+24], 1
+  00045	c7 44 24 14 00
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 0
+$L2120:
+  0004d	8b 44 24 24	 mov	 eax, DWORD PTR __value$[esp+20]
+  00051	8b 4c 24 20	 mov	 ecx, DWORD PTR _name$[esp+20]
+  00055	8b 54 24 1c	 mov	 edx, DWORD PTR __filedesc$[esp+20]
+  00059	6a 00		 push	 0
+  0005b	50		 push	 eax
+  0005c	51		 push	 ecx
+  0005d	52		 push	 edx
+  0005e	8b ce		 mov	 ecx, esi
+  00060	e8 00 00 00 00	 call	 ??0ofstream@@QAE@HPADH@Z ; ofstream::ofstream
+  00065	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  00068	c7 44 24 14 01
+	00 00 00	 mov	 DWORD PTR __$EHRec$[esp+32], 1
+  00070	e8 00 00 00 00	 call	 ??0bfstream@@QAE@XZ	; bfstream::bfstream
+  00075	8b 06		 mov	 eax, DWORD PTR [esi]
+  00077	c6 44 24 14 02	 mov	 BYTE PTR __$EHRec$[esp+32], 2
+  0007c	8b 48 04	 mov	 ecx, DWORD PTR [eax+4]
+  0007f	c7 04 31 00 00
+	00 00		 mov	 DWORD PTR [ecx+esi], OFFSET FLAT:??_7bofstream@@6B@ ; bofstream::`vftable'
+
+; 36   :   B_Init();
+
+  00086	8b ce		 mov	 ecx, esi
+  00088	e8 00 00 00 00	 call	 ?B_Init@bofstream@@QAEXXZ ; bofstream::B_Init
+
+; 37   : }
+
+  0008d	8b 4c 24 0c	 mov	 ecx, DWORD PTR __$EHRec$[esp+24]
+  00091	8b c6		 mov	 eax, esi
+  00093	5e		 pop	 esi
+  00094	64 89 0d 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, ecx
+  0009b	83 c4 14	 add	 esp, 20			; 00000014H
+  0009e	c2 10 00	 ret	 16			; 00000010H
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$L2302:
+  00000	8b 45 ec	 mov	 eax, DWORD PTR $T2301[ebp]
+  00003	83 e0 01	 and	 eax, 1
+  00006	85 c0		 test	 eax, eax
+  00008	0f 84 0b 00 00
+	00		 je	 $L2303
+  0000e	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00011	83 c1 0c	 add	 ecx, 12			; 0000000cH
+  00014	e9 00 00 00 00	 jmp	 ??1ios@@UAE@XZ		; ios::~ios
+$L2303:
+  00019	c3		 ret	 0
+$L2304:
+  0001a	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  0001d	83 c1 08	 add	 ecx, 8
+  00020	e9 00 00 00 00	 jmp	 ??1ofstream@@UAE@XZ	; ofstream::~ofstream
+$L2305:
+  00025	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00028	83 c1 08	 add	 ecx, 8
+  0002b	e9 00 00 00 00	 jmp	 ??1bfstream@@QAE@XZ	; bfstream::~bfstream
+$L2308:
+  00030	b8 00 00 00 00	 mov	 eax, OFFSET FLAT:$T2307
+  00035	e9 00 00 00 00	 jmp	 ___CxxFrameHandler
+text$x	ENDS
+??0bofstream@@QAE@HPADH@Z ENDP				; bofstream::bofstream
+PUBLIC	?setmode@bofstream@@QAEHH@Z			; bofstream::setmode
+;	COMDAT ?B_Init@bofstream@@QAEXXZ
+_TEXT	SEGMENT
+?B_Init@bofstream@@QAEXXZ PROC NEAR			; bofstream::B_Init, COMDAT
+
+; 44   :   setmode( binary );
+
+  00000	68 80 00 00 00	 push	 128			; 00000080H
+  00005	e8 00 00 00 00	 call	 ?setmode@bofstream@@QAEHH@Z ; bofstream::setmode
+
+; 45   : }
+
+  0000a	c3		 ret	 0
+?B_Init@bofstream@@QAEXXZ ENDP				; bofstream::B_Init
+_TEXT	ENDS
+;	COMDAT xdata$x
+; File E:\TMPro_SourceTree\Projects\Portable\bfstream\bofstream.cpp
+xdata$x	SEGMENT
+$T2325	DD	019930520H
+	DD	01H
+	DD	FLAT:$T2327
+	DD	2 DUP(00H)
+	DD	2 DUP(00H)
+	ORG $+4
+$T2327	DD	0ffffffffH
+	DD	FLAT:$L2320
+xdata$x	ENDS
+;	COMDAT ??1bofstream@@UAE@XZ
+_TEXT	SEGMENT
+_this$ = -16
+__$EHRec$ = -12
+??1bofstream@@UAE@XZ PROC NEAR				; bofstream::~bofstream, COMDAT
+
+; 49   : bofstream::~bofstream() {
+
+  00000	6a ff		 push	 -1
+  00002	68 00 00 00 00	 push	 $L2326
+  00007	64 a1 00 00 00
+	00		 mov	 eax, DWORD PTR fs:__except_list
+  0000d	50		 push	 eax
+  0000e	64 89 25 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, esp
+  00015	51		 push	 ecx
+  00016	56		 push	 esi
+  00017	8b f1		 mov	 esi, ecx
+  00019	89 74 24 04	 mov	 DWORD PTR _this$[esp+20], esi
+  0001d	8b 46 f4	 mov	 eax, DWORD PTR [esi-12]
+  00020	8b 48 04	 mov	 ecx, DWORD PTR [eax+4]
+  00023	c7 44 31 f4 00
+	00 00 00	 mov	 DWORD PTR [ecx+esi-12], OFFSET FLAT:??_7bofstream@@6B@ ; bofstream::`vftable'
+
+; 50   :   ;
+; 51   : }
+
+  0002b	8d 56 f4	 lea	 edx, DWORD PTR [esi-12]
+  0002e	33 c9		 xor	 ecx, ecx
+  00030	85 d2		 test	 edx, edx
+  00032	89 4c 24 10	 mov	 DWORD PTR __$EHRec$[esp+28], ecx
+  00036	74 03		 je	 SHORT $L2319
+  00038	8d 4e fc	 lea	 ecx, DWORD PTR [esi-4]
+$L2319:
+  0003b	e8 00 00 00 00	 call	 ??1bfstream@@QAE@XZ	; bfstream::~bfstream
+  00040	8d 4e fc	 lea	 ecx, DWORD PTR [esi-4]
+  00043	c7 44 24 10 ff
+	ff ff ff	 mov	 DWORD PTR __$EHRec$[esp+28], -1
+  0004b	e8 00 00 00 00	 call	 ??1ofstream@@UAE@XZ	; ofstream::~ofstream
+  00050	8b 4c 24 08	 mov	 ecx, DWORD PTR __$EHRec$[esp+20]
+  00054	5e		 pop	 esi
+  00055	64 89 0d 00 00
+	00 00		 mov	 DWORD PTR fs:__except_list, ecx
+  0005c	83 c4 10	 add	 esp, 16			; 00000010H
+  0005f	c3		 ret	 0
+_TEXT	ENDS
+;	COMDAT text$x
+text$x	SEGMENT
+$L2320:
+  00000	8b 4d f0	 mov	 ecx, DWORD PTR _this$[ebp]
+  00003	83 e9 04	 sub	 ecx, 4
+  00006	e9 00 00 00 00	 jmp	 ??1ofstream@@UAE@XZ	; ofstream::~ofstream
+$L2326:
+  0000b	b8 00 00 00 00	 mov	 eax, OFFSET FLAT:$T2325
+  00010	e9 00 00 00 00	 jmp	 ___CxxFrameHandler
+text$x	ENDS
+??1bofstream@@UAE@XZ ENDP				; bofstream::~bofstream
+EXTRN	?setmode@filebuf@@QAEHH@Z:NEAR			; filebuf::setmode
+;	COMDAT ?setmode@bofstream@@QAEHH@Z
+_TEXT	SEGMENT
+?setmode@bofstream@@QAEHH@Z PROC NEAR			; bofstream::setmode, COMDAT
+
+; 58   :   return( ofstream::setmode( binary ) );
+
+  00000	8b 01		 mov	 eax, DWORD PTR [ecx]
+  00002	68 80 00 00 00	 push	 128			; 00000080H
+  00007	8b 50 04	 mov	 edx, DWORD PTR [eax+4]
+  0000a	8b 4c 0a 04	 mov	 ecx, DWORD PTR [edx+ecx+4]
+  0000e	e8 00 00 00 00	 call	 ?setmode@filebuf@@QAEHH@Z ; filebuf::setmode
+
+; 59   : }
+
+  00013	c2 04 00	 ret	 4
+?setmode@bofstream@@QAEHH@Z ENDP			; bofstream::setmode
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@D@Z			; bofstream::operator<<
+EXTRN	?put@ostream@@QAEAAV1@E@Z:NEAR			; ostream::put
+;	COMDAT ??6bofstream@@QAEAAV0@D@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@D@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 68   :   (*this).put( var );
+
+  00000	8b 44 24 04	 mov	 eax, DWORD PTR _var$[esp-4]
+  00004	56		 push	 esi
+  00005	8b f1		 mov	 esi, ecx
+  00007	50		 push	 eax
+  00008	e8 00 00 00 00	 call	 ?put@ostream@@QAEAAV1@E@Z ; ostream::put
+
+; 69   :   return *this;
+
+  0000d	8b c6		 mov	 eax, esi
+  0000f	5e		 pop	 esi
+
+; 70   : }
+
+  00010	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@D@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@E@Z			; bofstream::operator<<
+;	COMDAT ??6bofstream@@QAEAAV0@E@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@E@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 75   :   (*this).put( var );
+
+  00000	8b 44 24 04	 mov	 eax, DWORD PTR _var$[esp-4]
+  00004	56		 push	 esi
+  00005	8b f1		 mov	 esi, ecx
+  00007	50		 push	 eax
+  00008	e8 00 00 00 00	 call	 ?put@ostream@@QAEAAV1@E@Z ; ostream::put
+
+; 76   :   return *this;
+
+  0000d	8b c6		 mov	 eax, esi
+  0000f	5e		 pop	 esi
+
+; 77   : }
+
+  00010	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@E@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@C@Z			; bofstream::operator<<
+;	COMDAT ??6bofstream@@QAEAAV0@C@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@C@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 82   :   (*this).put( var );
+
+  00000	8b 44 24 04	 mov	 eax, DWORD PTR _var$[esp-4]
+  00004	56		 push	 esi
+  00005	8b f1		 mov	 esi, ecx
+  00007	50		 push	 eax
+  00008	e8 00 00 00 00	 call	 ?put@ostream@@QAEAAV1@E@Z ; ostream::put
+
+; 83   :   return *this;
+
+  0000d	8b c6		 mov	 eax, esi
+  0000f	5e		 pop	 esi
+
+; 84   : }
+
+  00010	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@C@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@PBD@Z			; bofstream::operator<<
+EXTRN	?write@ostream@@QAEAAV1@PBDH@Z:NEAR		; ostream::write
+;	COMDAT ??6bofstream@@QAEAAV0@PBD@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@PBD@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 89   :   int len = strlen( var );
+
+  00000	8b 54 24 04	 mov	 edx, DWORD PTR _var$[esp-4]
+  00004	56		 push	 esi
+  00005	8b f1		 mov	 esi, ecx
+  00007	57		 push	 edi
+  00008	8b fa		 mov	 edi, edx
+  0000a	83 c9 ff	 or	 ecx, -1
+  0000d	33 c0		 xor	 eax, eax
+  0000f	f2 ae		 repne scasb
+  00011	f7 d1		 not	 ecx
+  00013	49		 dec	 ecx
+
+; 90   :   write( var, len );                   // write out the string
+
+  00014	51		 push	 ecx
+  00015	52		 push	 edx
+  00016	8b ce		 mov	 ecx, esi
+  00018	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 91   :   return *this;
+
+  0001d	8b c6		 mov	 eax, esi
+  0001f	5f		 pop	 edi
+  00020	5e		 pop	 esi
+
+; 92   : }
+
+  00021	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@PBD@Z ENDP			; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@PBE@Z			; bofstream::operator<<
+;	COMDAT ??6bofstream@@QAEAAV0@PBE@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@PBE@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 97   :   int len = strlen( (const char *)var );
+
+  00000	8b 54 24 04	 mov	 edx, DWORD PTR _var$[esp-4]
+  00004	56		 push	 esi
+  00005	8b f1		 mov	 esi, ecx
+  00007	57		 push	 edi
+  00008	8b fa		 mov	 edi, edx
+  0000a	83 c9 ff	 or	 ecx, -1
+  0000d	33 c0		 xor	 eax, eax
+  0000f	f2 ae		 repne scasb
+  00011	f7 d1		 not	 ecx
+  00013	49		 dec	 ecx
+
+; 98   :   write( var, len );                   // write out the string
+
+  00014	51		 push	 ecx
+  00015	52		 push	 edx
+  00016	8b ce		 mov	 ecx, esi
+  00018	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 99   :   return *this;
+
+  0001d	8b c6		 mov	 eax, esi
+  0001f	5f		 pop	 edi
+  00020	5e		 pop	 esi
+
+; 100  : }
+
+  00021	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@PBE@Z ENDP			; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@F@Z			; bofstream::operator<<
+EXTRN	?ConvertEndian@bfstream@@IAEXAAF@Z:NEAR		; bfstream::ConvertEndian
+;	COMDAT ??6bofstream@@QAEAAV0@F@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@F@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 105  : bofstream & bofstream::operator<<( short var ) {
+
+  00000	56		 push	 esi
+  00001	8b f1		 mov	 esi, ecx
+
+; 106  :   ConvertEndian( var );                // Change the endian, if needed
+
+  00003	8d 44 24 08	 lea	 eax, DWORD PTR _var$[esp]
+  00007	50		 push	 eax
+  00008	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0000b	e8 00 00 00 00	 call	 ?ConvertEndian@bfstream@@IAEXAAF@Z ; bfstream::ConvertEndian
+
+; 107  :   write( (char *)&var, 2 );            // write out the value
+
+  00010	8d 4c 24 08	 lea	 ecx, DWORD PTR _var$[esp]
+  00014	6a 02		 push	 2
+  00016	51		 push	 ecx
+  00017	8b ce		 mov	 ecx, esi
+  00019	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 108  :   return *this;
+
+  0001e	8b c6		 mov	 eax, esi
+  00020	5e		 pop	 esi
+
+; 109  : }
+
+  00021	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@F@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@G@Z			; bofstream::operator<<
+EXTRN	?ConvertEndian@bfstream@@IAEXAAG@Z:NEAR		; bfstream::ConvertEndian
+;	COMDAT ??6bofstream@@QAEAAV0@G@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@G@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 114  : bofstream & bofstream::operator<<( unsigned short var ) {
+
+  00000	56		 push	 esi
+  00001	8b f1		 mov	 esi, ecx
+
+; 115  :   ConvertEndian( var );                // Change the endian, if needed
+
+  00003	8d 44 24 08	 lea	 eax, DWORD PTR _var$[esp]
+  00007	50		 push	 eax
+  00008	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0000b	e8 00 00 00 00	 call	 ?ConvertEndian@bfstream@@IAEXAAG@Z ; bfstream::ConvertEndian
+
+; 116  :   write( (char *)&var, 2 );            // write out the value
+
+  00010	8d 4c 24 08	 lea	 ecx, DWORD PTR _var$[esp]
+  00014	6a 02		 push	 2
+  00016	51		 push	 ecx
+  00017	8b ce		 mov	 ecx, esi
+  00019	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 117  :   return *this;
+
+  0001e	8b c6		 mov	 eax, esi
+  00020	5e		 pop	 esi
+
+; 118  : }
+
+  00021	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@G@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@J@Z			; bofstream::operator<<
+EXTRN	?ConvertEndian@bfstream@@IAEXAAJ@Z:NEAR		; bfstream::ConvertEndian
+;	COMDAT ??6bofstream@@QAEAAV0@J@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@J@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 123  : bofstream & bofstream::operator<<( long var ) {
+
+  00000	56		 push	 esi
+  00001	8b f1		 mov	 esi, ecx
+
+; 124  :   ConvertEndian( var );                // Change the endian, if needed
+
+  00003	8d 44 24 08	 lea	 eax, DWORD PTR _var$[esp]
+  00007	50		 push	 eax
+  00008	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0000b	e8 00 00 00 00	 call	 ?ConvertEndian@bfstream@@IAEXAAJ@Z ; bfstream::ConvertEndian
+
+; 125  :   write( (char *)&var, 4 );            // write out the value
+
+  00010	8d 4c 24 08	 lea	 ecx, DWORD PTR _var$[esp]
+  00014	6a 04		 push	 4
+  00016	51		 push	 ecx
+  00017	8b ce		 mov	 ecx, esi
+  00019	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 126  :   return *this;
+
+  0001e	8b c6		 mov	 eax, esi
+  00020	5e		 pop	 esi
+
+; 127  : }
+
+  00021	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@J@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@K@Z			; bofstream::operator<<
+EXTRN	?ConvertEndian@bfstream@@IAEXAAK@Z:NEAR		; bfstream::ConvertEndian
+;	COMDAT ??6bofstream@@QAEAAV0@K@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@K@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 132  : bofstream & bofstream::operator<<( unsigned long var ) {
+
+  00000	56		 push	 esi
+  00001	8b f1		 mov	 esi, ecx
+
+; 133  :   ConvertEndian( var );                // Change the endian, if needed
+
+  00003	8d 44 24 08	 lea	 eax, DWORD PTR _var$[esp]
+  00007	50		 push	 eax
+  00008	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0000b	e8 00 00 00 00	 call	 ?ConvertEndian@bfstream@@IAEXAAK@Z ; bfstream::ConvertEndian
+
+; 134  :   write( (char *)&var, 4 );            // write out the value
+
+  00010	8d 4c 24 08	 lea	 ecx, DWORD PTR _var$[esp]
+  00014	6a 04		 push	 4
+  00016	51		 push	 ecx
+  00017	8b ce		 mov	 ecx, esi
+  00019	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 135  :   return *this;
+
+  0001e	8b c6		 mov	 eax, esi
+  00020	5e		 pop	 esi
+
+; 136  : }
+
+  00021	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@K@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@M@Z			; bofstream::operator<<
+EXTRN	?ConvertEndian@bfstream@@IAEXAAM@Z:NEAR		; bfstream::ConvertEndian
+;	COMDAT ??6bofstream@@QAEAAV0@M@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@M@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 141  : bofstream & bofstream::operator<<( float var ) {
+
+  00000	56		 push	 esi
+  00001	8b f1		 mov	 esi, ecx
+
+; 142  :   ConvertEndian( var );                // Change the endian, if needed
+
+  00003	8d 44 24 08	 lea	 eax, DWORD PTR _var$[esp]
+  00007	50		 push	 eax
+  00008	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0000b	e8 00 00 00 00	 call	 ?ConvertEndian@bfstream@@IAEXAAM@Z ; bfstream::ConvertEndian
+
+; 143  :   write( (char *)&var, 4 );            // write out the value
+
+  00010	8d 4c 24 08	 lea	 ecx, DWORD PTR _var$[esp]
+  00014	6a 04		 push	 4
+  00016	51		 push	 ecx
+  00017	8b ce		 mov	 ecx, esi
+  00019	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 144  :   return *this;
+
+  0001e	8b c6		 mov	 eax, esi
+  00020	5e		 pop	 esi
+
+; 145  : }
+
+  00021	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@M@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@N@Z			; bofstream::operator<<
+EXTRN	?ConvertEndian@bfstream@@IAEXAAN@Z:NEAR		; bfstream::ConvertEndian
+;	COMDAT ??6bofstream@@QAEAAV0@N@Z
+_TEXT	SEGMENT
+_var$ = 8
+??6bofstream@@QAEAAV0@N@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 150  : bofstream & bofstream::operator<<( double var ) {
+
+  00000	56		 push	 esi
+  00001	8b f1		 mov	 esi, ecx
+
+; 151  :   ConvertEndian( var );               // Change the endian, if needed
+
+  00003	8d 44 24 08	 lea	 eax, DWORD PTR _var$[esp]
+  00007	50		 push	 eax
+  00008	8d 4e 08	 lea	 ecx, DWORD PTR [esi+8]
+  0000b	e8 00 00 00 00	 call	 ?ConvertEndian@bfstream@@IAEXAAN@Z ; bfstream::ConvertEndian
+
+; 152  :   write( (char *)&var, 8 );           // write out the value
+
+  00010	8d 4c 24 08	 lea	 ecx, DWORD PTR _var$[esp]
+  00014	6a 08		 push	 8
+  00016	51		 push	 ecx
+  00017	8b ce		 mov	 ecx, esi
+  00019	e8 00 00 00 00	 call	 ?write@ostream@@QAEAAV1@PBDH@Z ; ostream::write
+
+; 153  :   return *this;
+
+  0001e	8b c6		 mov	 eax, esi
+  00020	5e		 pop	 esi
+
+; 154  : }
+
+  00021	c2 08 00	 ret	 8
+??6bofstream@@QAEAAV0@N@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@H@Z			; bofstream::operator<<
+;	COMDAT ??6bofstream@@QAEAAV0@H@Z
+_TEXT	SEGMENT
+??6bofstream@@QAEAAV0@H@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 159  : bofstream & bofstream::operator<<( int var ) {
+
+  00000	8b c1		 mov	 eax, ecx
+
+; 160  :   // As int sizes are platform specific, they are not supported.  Cast ints to
+; 161  :   //  longs or shorts instead.
+; 162  :   assert( 0 ); // DON'T WRITE OUT INTS!!!
+; 163  :   return *this;
+; 164  : }
+
+  00002	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@H@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+PUBLIC	??6bofstream@@QAEAAV0@I@Z			; bofstream::operator<<
+;	COMDAT ??6bofstream@@QAEAAV0@I@Z
+_TEXT	SEGMENT
+??6bofstream@@QAEAAV0@I@Z PROC NEAR			; bofstream::operator<<, COMDAT
+
+; 169  : bofstream & bofstream::operator<<( unsigned int var ) {
+
+  00000	8b c1		 mov	 eax, ecx
+
+; 170  :   // As int sizes are platform specific, they are not supported.  Cast ints to
+; 171  :   //  longs or shorts instead.
+; 172  :   assert( 0 ); // DON'T WRITE OUT UNSIGNED INTS!!!
+; 173  :   return *this;
+; 174  : }
+
+  00002	c2 04 00	 ret	 4
+??6bofstream@@QAEAAV0@I@Z ENDP				; bofstream::operator<<
+_TEXT	ENDS
+END

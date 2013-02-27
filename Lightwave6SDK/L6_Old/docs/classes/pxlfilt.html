@@ -1,0 +1,149 @@
+<html>
+
+<head>
+<title>Classes: PixelFilterHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="objrep.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="ObjReplacementHandler"></a> </td>
+    <td width="96" align="left"><a href="texture.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ProceduralTextureHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>PixelFilterHandler<br>
+    PixelFilterInterface</h3>
+    <p>Pixel filters apply image processing effects to individual pixels in the rendered
+    image. </p>
+    <p><strong>Background</strong></p>
+    <p>Pixel filters look like image filters at first glance, but they differ in several
+    significant ways. Pixel filters are applied during rendering, before antialiasing and
+    motion blur, so their effects are accumulated for antialiasing and motion blur purposes by
+    Layout automatically. And unlike image filters, which have access to the entire image and
+    are called once per frame, pixel filters only evaluate, and only have access to, a single
+    pixel sample at a time, and they can be called multiple times per pixel during the
+    rendering of a frame.</p>
+    <p>In perhaps a less obvious way, pixel filters also resemble shaders, although they
+    evaluate samples of the entire rendered image rather than a single surface, and they have
+    access to somewhat different information. References to the documentation of both image
+    filters and shaders will be made here.</p>
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>
+   XCALL_( int ) MyPixelFilter( long version, GlobalFunc *global,
+      LWPixelFilterHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to a pixel filter's activation function is an
+    LWPixelFilterHandler.</p>
+    <pre>
+   typedef struct st_LWPixelFilterHandler {
+      LWInstanceFuncs *inst;
+      LWItemFuncs     *item;
+      LWRenderFuncs   *rend;
+      void            (*evaluate) (LWInstance, const LWPixelAccess *);
+      unsigned int    (*flags)    (LWInstance);
+   } LWPixelFilterHandler;</pre>
+    <p>The first three members of this structure are the standard <a href="../handler.html">handler
+    functions</a>. In addition to these, a pixel filter provides an evaluation function and a
+    flags function.<dl>
+      <dt><tt>evaluate( instance, access )</tt></dt>
+      <dd>This is where the pixel filter does its work. For each frame, the filter is given access
+        to the red, green, blue and alpha values of each pixel sample, along with any other pixel
+        data requested by the flags function. The access structure, described below, provides
+        pixel information and functions for examining the buffers and writing new RGB and alpha
+        values.</dd>
+      <dt><br>
+        <tt>flags( instance )</tt></dt>
+      <dd>Returns an int that tells the renderer which buffers the pixel filter will need to
+        examine and whether the evaluation function will call one of the raytracing functions in
+        the access structure. The return value contains bitfields combined using bitwise-OR. <dl>
+          <dt><br>
+            <tt>LWPFF_RAYTRACE</tt></dt>
+          <dd>Indicates that the evaluation function will call one of the raytracing functions. Unless
+            this flag is part of the return value, the raytracing functions won't be available.</dd>
+        </dl>
+        <p>See the <a href="imgfilt.html#flags">ImageFilterHandler</a> page for a list of the
+        buffer codes. The <tt>LWBUF</tt> codes listed there and in lwfilter.h are bit
+        positions, not the flags themselves, so you'll need to form the expression <tt>(1 &lt;&lt;
+        LWBUF_WHATEVER)</tt> to create the flags before ORing them together. (You don't need to do
+        this to <tt>LWPFF_RAYTRACE</tt>.) For efficiency reasons, the renderer will ignore
+        requests from the evaluation function for access to any buffers that weren't indicated by
+        the bit flags returned from the flags function.</p>
+      </dd>
+    </dl>
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD.</p>
+    <p><strong>Pixel Access</strong></p>
+    <p>This is the access structure passed to the evaluation function. Because the sampling of
+    the output image is adaptive, pixel positions may be evaluated in any order, multiple
+    times, or not at all. The evaluation function must call <tt>setRGBA</tt> for every pixel
+    it evaluates, even if the filter doesn't modify the pixel.</p>
+    <pre>
+   typedef struct st_LWPixelAccess {
+      double            sx, sy;
+      void             (*bufVal)  (int type, int num, LWBufferValue *);
+      void             (*fltVal)  (int type, int num, float *);
+      void             (*setRGBA) (LWBufferValue[4]);
+      LWIlluminateFunc *illuminate;
+      LWRayTraceFunc   *rayTrace;
+      LWRayCastFunc    *rayCast;
+      LWRayShadeFunc   *rayShade;
+   } LWPixelAccess;</pre>
+    <dl>
+      <dt><tt>sx, sy</tt></dt>
+      <dd>Image coordinates of the sample, in pixel units. These are floating point values that
+        indicate the position of the sample on some idealized continuously valued image. The
+        integer pixel coordinates are just these values truncated.</dd>
+      <dt><br>
+        <tt>bufVal( type, buflen, buf )<br>
+        fltVal( type, buflen, buf )</tt></dt>
+      <dd>Get a pixel value from one of the buffers. <tt>bufVal</tt> returns values from
+        byte-encoded buffers and <tt>fltVal</tt> returns values from float-encoded buffers. If the
+        buffer type is invalid, or a buffer not requested by the flags function, the returned
+        pixel value is undefined. <dl>
+          <dt><br>
+            <tt>type</tt></dt>
+          <dd>The <tt>LWBUF</tt> code of the buffer to examine. See the <a href="imgfilt.html#flags">image
+            filter</a> page for a complete list.</dd>
+          <dt><tt>buflen</tt></dt>
+          <dd>The number of contiguous values to return. For most buffers, this number will be 1, but
+            the RGB buffers can be retrieved all at once. With a <tt>type</tt> of <tt>LWBUF_RAW_RED</tt>,
+            for example, the number can be up to 3 to get <tt>RAW_RED</tt>, <tt>RAW_GREEN</tt> and <tt>RAW_BLUE</tt>,
+            and for <tt>LWBUF_RED</tt> it can be up to 4, for the RGBA values.</dd>
+          <dt><tt>buf</tt></dt>
+          <dd>The requested pixel values are copied to this location. It must point to enough memory
+            to hold <tt>buflen</tt> values, <tt>buflen * sizeof( LWBufferValue )</tt> for <tt>bufVal</tt>
+            and <tt>buflen * sizeof( float )</tt> for <tt>fltVal</tt>.</dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>setRGBA( rgba )</tt></dt>
+      <dd>The output of the pixel filter (red, green, blue and alpha) is set by calling this
+        function. The pixel filter must set the output RGBA even if it doesn't modify the input
+        value.</dd>
+      <dt><br>
+        <tt>illuminate( lightID, position, direction, color )<br>
+        rayTrace( position, direction, color )<br>
+        rayCast( position, direction )<br>
+        rayShade( position, direction, shaderAccess )</tt></dt>
+      <dd>These functions trace rays into the scene. See the discussion of the raytracing
+        functions in the <a href="shader.html#raytrace">ShaderHandler</a> documentation for
+        details.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

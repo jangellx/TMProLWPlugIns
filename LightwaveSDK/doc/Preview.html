@@ -1,0 +1,143 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Preview</TITLE>
+</HEAD>
+<BODY>
+
+<FONT SIZE=5><P ALIGN="CENTER">Preview.p</P>
+</FONT><FONT SIZE=2><P>&nbsp;</P>
+<P>&nbsp;</P>
+</FONT><U><P>Overview:</P>
+</U><FONT SIZE=2><P>Preview.p is a global service plugin for layout. It provides services to create, access and display data buffers. Typically, previews should be used for layout plugins like shaders or pixel/image filters. </P>
+<P>&nbsp;</P>
+</FONT><U><P>How it works:</P>
+</U><FONT SIZE=2><P>In the case of a pixel filter, it is necessary to have the following informations: color, alpha and  z depth, which means 3 layers of information. Preview.p gives the ability to create these layers of information and other layers if necessary. In fact, any preview is a stack of layers of a given data type. The user can access these layers by saving or getting information via the "savePreviewSt" and "getPreviewSt" functions. The structure "prevBufferAccess" passed to these functions is close to the ShaderAccess structure, it holds all the shading information for the current pixel being processed.</P>
+<P>The user must follow the following steps to use a preview:</P>
+<ol>
+<li>create the preview specifying how many and which layers are needed. The user must also specify the preview resolution.
+<li>initialise the preview to make sure the scene settings (resolution, camera settings, etc.) are correctly updated. The initialisation should take place in the plugin's "init" function.
+<li>fill in the prevBufferAccess structure and save it for each plugin evaluation (ie: in the shader's "evaluate" function).
+<li>destroy the buffers when plugin is destroyed.
+</ol>
+<P>&nbsp;</P>
+<P>When creating the UI, the user should use the PREV_CTL macro which creates all the necessary controls and returns a pointer to a control (the area that holds all the preview controls). After all controls have been moved the "finalizePrev" function should be used to make sure all controls are correctly moved.</P>
+<P>&nbsp;</P>
+<P>Each layer is described by a desc structure. When creating a buffer the easiest way is to specify a flag which tells the creation function which layers will be used and automatically sets the desc structures. To add a specific layer the user may use the "addLayer" function specifying the desc parameters for this layer.</P>
+<P>&nbsp;</P>
+</FONT><U><P>Functions:</P>
+</U>
+<FONT SIZE=2>
+<ul>
+<li>create : creates the buffer, passing the buffer resolution in pixels and the flag. The flag tells the function which layers must be created LWPBF_RGBAZ and LWPBF_SHADER are the most common combination of flags for pixel filters and shaders. If it is necessary to cache the result of raytraced reflection and transparency, the user may add LWPBF_RTBUFFERS.
+<li>addLayer: adds a layer specified by it's desc structure.
+<li>init: initialises buffer given the current time. This function should be called during plugin's init function to make sure camera and scen information are correctly updated.
+<li>load: loads a buffer given the file name.
+<li>save: saves a buffer given the file name.
+<li>interface: creates teh UI controls for the preview, returns a 'master' control which holds all the controls in its area.
+<li>finalizePrev: updates the preview controls after the master control has been moved.
+<li>refresh: redraws the preview window with the last displayed layer.
+<li>blitToScreen: blits the bitmap buffer to screen. This should be used for real time modifications of preview.
+<li>renderPixel: saves pixel to the 'render' layer and displays in preview window.
+<li>renderPixelOffScreen: same than previous but draws offscreen. blitToScreen must be used after all the buffer has been processed.
+<li>savePreviewSt: saves the prevBufferAccess structure to the buffer. The flag tells which layers are concerned.
+<li>getPreviewSt: retrieves information from buffer (user must fill in the sx and sy parameters of the prevBufferAccess to specify which pixel is requested).
+</ul>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>Here is a simple example of how to create a typical pixel filter buffer...</P>
+</FONT>
+<PRE>
+// ----------------------------------------------------------------- //
+#include &lt;splug.h&gt;
+#include &lt;moni.h&gt;
+#include &lt;lwbase.h&gt;
+#include &lt;lwran.h&gt;
+&nbsp;
+#include&#9;"preview.h"
+#include&#9;"Gui_help.h"
+&nbsp;
+#define&#9;PREV_OFFSET&#9;&#9;10
+&nbsp;
+&nbsp;
+MessageFuncs&#9;&#9;*message;
+PrevBufferHandler&#9;*prev_handler;
+&nbsp;
+static&#9;LWPanelID&#9;&#9;panID;
+static&#9;LWPanelFuncs&#9;*panl;
+static &#9;LWPanControlDesc   desc;&#9; &#9;&#9;&#9;&#9;&#9;&#9;&#9;
+static &#9;LWValue ival={LWT_INTEGER},ivecval={LWT_VINT},&#9;
+  &#9;fval={LWT_FLOAT},fvecval={LWT_VFLOAT},sval={LWT_STRING};
+&nbsp;
+void Drawings(LWPanelID panID, void *dat, DrMode dmode)
+{&#9;
+&#9;(*prev_handler-&gt;refresh)((prevBuffer*)dat);
+}
+&nbsp;
+void&#9;glop(LWControl&#9;*ctl,prevBuffer&#9;*buf)
+{
+&#9;(*prev_handler-&gt;refresh)(buf);
+}
+&nbsp;
+XCALL_(int)previewTest (
+&#9;long&#9;&#9;&#9; version,
+&#9;GlobalFunc&#9;&#9;*global,
+&#9;prevBuffer&#9;&#9;*inst,
+&#9;void&#9;&#9;&#9;*serverData)
+{
+&#9;LWControl&#9;&#9;&#9;*ctl,*ctl2;
+&#9;LWPanelID&#9;&#9;&#9;panID;
+&nbsp;
+&nbsp;
+&#9;message = (*global) ("Info Messages", GFUSE_TRANSIENT);
+&#9;if (!message )
+&#9;&#9;return AFUNC_BADGLOBAL;
+&nbsp;
+&#9;panl = (*global) (PANEL_SERVICES_NAME, GFUSE_TRANSIENT);
+&#9;if(!panl)
+&#9;{
+&#9;&#9;(*message-&gt;error)("Unable to activate global "PANEL_SERVICES_NAME, "please add plugin lwpanels.p" );
+&#9;&#9;return AFUNC_BADGLOBAL;
+&#9;}
+&nbsp;
+&#9;prev_handler = (*global) (PREVIEW_ACCESS_NAME, GFUSE_TRANSIENT);
+&#9;if(!prev_handler)
+&#9;{
+&#9;&#9;(*message-&gt;error)("Unable to activate global "PREVIEW_SERVICES_NAME,"Please add plugin Preview.p");
+&#9;&#9;return AFUNC_BADGLOBAL;
+&#9;}
+&nbsp;
+&#9;inst = (*prev_handler-&gt;createPrev)(200,100,LWPBF_RGBAZ);&#9;// creates a 3 layers buffer: RGB, A and Z depth
+&nbsp;
+&#9;if(!inst )
+&#9;{
+&#9;&#9;(*message-&gt;error)("On a un probleme les gars!","Unable to create preview buffer");
+&#9;&#9;return AFUNC_BADGLOBAL;
+&#9;}
+&nbsp;
+&#9;panID=PAN_CREATE(panl,"Test panel");
+&#9;ctl = (*prev_handler-&gt;Interface)(inst,panID);
+&#9;ctl2 = BUTTON_CTL(panl,panID,"Refresh");
+&#9;CON_SETEVENT(ctl2,(int) glop,(int) inst);
+&#9;MOVE_CON(ctl2, conX(ctl), conY(ctl) + conH(ctl));
+&nbsp;
+&#9;(*panl-&gt;set)( panID,PAN_USERDRAW,(void *)Drawings);
+&#9;(*panl-&gt;set)( panID,PAN_USERDATA,(void *)inst);
+&#9;finalizePrev(inst);
+&#9;(*panl-&gt;open)(panID,PANF_BLOCKING|PANF_CANCEL|PANF_FRAME);
+&#9;if (panID)
+&#9;&#9;PAN_KILL(panl,panID);
+&nbsp;
+&#9;(*prev_handler-&gt;destroy)(inst);
+&#9;return AFUNC_OK&#9;;
+}
+&nbsp;
+&nbsp;
+ServerRecord&#9;ServerDesc[] = {
+&#9;{ "LayoutGeneric", "testPreview", previewTest},
+&#9;{ NULL }
+} ;
+</BODY>
+</PRE>
+</HTML>

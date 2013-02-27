@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cd layerset
+make -f sun/makefile
+cd ../spherize
+make -f sun/makefile
+cd ../spikey
+make -f sun/makefile
+cd ../testcmd
+make -f sun/makefile
+cd ..

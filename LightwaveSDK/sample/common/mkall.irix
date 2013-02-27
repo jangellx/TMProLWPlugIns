@@ -1,0 +1,10 @@
+#!/bin/csh
+
+cd vsformat
+make -f irix/makefile -u
+cd ../laymon
+make -f irix/makefile -u
+cd ../gradient
+make -f irix/makefile -u
+cd ..
+rm */so_locations

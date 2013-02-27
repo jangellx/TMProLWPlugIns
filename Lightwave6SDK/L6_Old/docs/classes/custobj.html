@@ -1,0 +1,147 @@
+<html>
+
+<head>
+<title>Classes: CustomObjHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="cs.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="CommandSequence"></a> </td>
+    <td width="96" align="left"><a href="displace.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="DisplacementHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>CustomObjHandler<br>
+    CustomObjInterface</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 6.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout</small></p>
+    <p>Custom objects provide a method for drawing in Layout's scene views. They can be the
+    visual representation of abstract data in the scene, similar to the 3D cross Layout draws
+    to represent the position and orientation of null objects.</p>
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>
+   XCALL_( int ) MyCustomObj( long version, GlobalFunc *global,
+      LWCustomObjHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to a custom object's activation function is an
+    LWCustomObjHandler.</p>
+    <pre>
+   typedef struct st_LWCustomObjHandler {
+      LWInstanceFuncs *inst;
+      LWItemFuncs     *item;
+      LWRenderFuncs   *rend;
+      void            (*evaluate) (LWInstance, const LWCustomObjAccess *);
+      unsigned int    (*flags)    (LWInstance);
+   } LWCustomObjHandler;</pre>
+    <p>The first three members of this structure are the standard <a href="../handler.html">handler
+    functions</a>. In addition to these, a custom object provides an evaluation function and a
+    flags function.<dl>
+      <dt><tt>evaluate( instance, access )</tt></dt>
+      <dd>Draw the object on the interface using the information in the access structure,
+        described below.</dd>
+      <dt><br>
+        <tt>flags( instance )</tt></dt>
+      <dd>Returns boolean settings for the object. None are currently defined.</dd>
+    </dl>
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD</p>
+    <p><strong>Custom Object Access</strong></p>
+    <p>The access structure contains drawing functions and fields indicating which of the
+    interface views the object will be drawn in and whether it is currently selected.</p>
+    <p>Except as noted, there aren't any restrictions on what your custom object looks like.
+    But it will be helpful to users if your object's appearance is consistent with the rest of
+    Layout's interface. You'll automatically get the user's choice of color</p>
+    <pre>   typedef struct st_LWCustomObjAccess {
+      int   view;
+      int   flags;
+      void *dispData;
+      void (*setColor)   (void *, float rgb[3]);
+      void (*setPattern) (void *, int lpat);
+      void (*point)      (void *, double[3], int csys);
+      void (*line)       (void *, double[3], double[3], int csys);
+      void (*triangle)   (void *, double[3], double[3], double[3],
+                            int csys);
+      void (*circle)     (void *, double[3], double, int csys);
+   } LWCustomObjAccess;</pre>
+    <dl>
+      <dt><tt>view</tt></dt>
+      <dd>The view the object will be drawn in. Possible values are <blockquote>
+          <tt><p>LWVIEW_ZY<br>
+          LWVIEW_XZ<br>
+          LWVIEW_XY<br>
+          LWVIEW_PERSP<br>
+          LWVIEW_LIGHT<br>
+          LWVIEW_CAMERA</p>
+          </tt>
+        </blockquote>
+        <p>These refer to the orthographic, perspective, light and camera views available to the
+        user in the Layout interface.</p>
+      </dd>
+      <dt><tt>flags</tt></dt>
+      <dd>Contains bitfields with information about the context of the render request. Currently
+        the only flag defined is <tt>LWCOFL_SELECTED</tt>, which tells you whether the object
+        should be rendered in its selected state.</dd>
+      <dt><br>
+        <tt>dispData</tt></dt>
+      <dd>An opaque pointer to private data used by Layout. Pass this as the first argument to the
+        drawing functions.</dd>
+      <dt><br>
+        <tt>setColor( dispData, rgb )</tt></dt>
+      <dd>Set the current drawing color. Calling this is optional. By default, all drawing is done
+        in the color set by the user in the Scene panel when the custom object isn't selected, and
+        in yellow when the object is selected. Color settings don't persist between calls to the
+        evaluation function, nor do they change the settings in the Scene panel.</dd>
+      <dt><br>
+        <tt>setPattern( dispData, linepat )</tt></dt>
+      <dd>Set the current line pattern. The pattern codes are <blockquote>
+          <tt><p>LWLPAT_SOLID<br>
+          LWLPAT_DOT<br>
+          LWLPAT_DASH<br>
+          LWLPAT_LONGDOT</p>
+          </tt>
+        </blockquote>
+        <p>As with <tt>setColor</tt>, calling <tt>setPattern</tt> is optional. By default, all
+        drawing is done with solid lines. Line pattern settings don't persist between evaluations.</p>
+      </dd>
+      <dt><tt>point( dispData, xyz, coord_sys )</tt></dt>
+      <dd>Draw a point at the specified position. The point will be drawn in the color set by the
+        most recent <tt>setColor</tt> call, or in the default color if no color was set. The
+        coordinate system argument identifies the coordinates in which the position is expressed
+        and may be one of the following. <blockquote>
+          <tt><p>LWCSYS_WORLD<br>
+          LWCSYS_OBJECT<br>
+          LWCSYS_ICON</tt></p>
+        </blockquote>
+        <p><tt>LWCSYS_ICON</tt> is a special coordinate system that works like <tt>LWCSYS_OBJECT</tt>
+        but scales with the grid size. Layout's camera and light images are examples of the use of
+        this mode.</p>
+      </dd>
+      <dt><tt>line( dispData, end1, end2, coord_sys )</tt></dt>
+      <dd>Draw a line between the specified endpoints using the current color and line pattern.</dd>
+      <dt><br>
+        <tt>triangle( dispData, v1, v2, v3, coord_sys )</tt></dt>
+      <dd>Draw a triangle with the specified vertices using the current color and line pattern.</dd>
+      <dt><br>
+        <tt>circle( dispData, center, radius, coord_sys )</tt></dt>
+      <dd>Draw a circle of the given radius around the specified center point using the current
+        color and line pattern. Circles can only be drawn in the orthographic views, not in the
+        light, camera or perspective views.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

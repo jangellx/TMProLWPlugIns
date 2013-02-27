@@ -1,0 +1,724 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>SpaceWare SDK 1.0 for Unix and Windows NT Running
+   X11</TITLE>
+<!--This file created 10:12 AM  4/7/98 by Claris Home Page version 2.0-->
+<X-SAS-WINDOW TOP=48 BOTTOM=576 LEFT=35 RIGHT=911>
+<!--This file created 10:51 AM  3/26/98 by Claris Home Page version 2.0-->
+<!--This file created 3:42 PM  3/12/98 by Claris Home Page version 2.0-->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<A HREF="Install.htm"><IMG SRC="graphics/prev1.gif" ALT="graphics/prev1.gif" NOSAVE BORDER=0 X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=22 WIDTH=46 ALIGN=BOTTOM></A><A HREF="Integrat.htm"><IMG SRC="graphics/next1.gif" ALT="graphics/next1.gif" NOSAVE BORDER=0 X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=22 WIDTH=46 ALIGN=BOTTOM></A>
+<H1>
+<FONT COLOR="#0000AF">Device Information</FONT></H1>
+<A NAME="PSInfo"></A><B><FONT FACE="Arial"><FONT COLOR="#000080">PowerSensor
+Information</FONT></FONT></B>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>The Spaceball device is a true 3D input
+device that detects the slightest fingertip pressure applied to it and
+resolves the pressure into X, Y, and Z translations and rotations, moving
+your 3D images instantaneously and simultaneously. This provides intuitive,
+interactive six degrees-of-freedom control of 3D graphical images and objects.</FONT></FONT>
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/2003sm.gif" X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=205 WIDTH=317 ALIGN=BOTTOM><IMG SRC="graphics/3003sm.gif" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=230 WIDTH=317 ALIGN=BOTTOM></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Spaceball 2003 FLX Series<FONT COLOR="#FFFFFF">Spacersdfspac</FONT>Spaceball
+3003 FLX Series</FONT></FONT></B></CENTER>
+
+
+<P><B><FONT FACE="Arial"><FONT SIZE=-1>Operating Modes</FONT></FONT></B>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>Using the Spaceball device is natural
+and intuitive. There are two basic ways to move objects with the Spaceball
+device:</FONT></FONT>
+<UL>
+<LI>
+<FONT SIZE=-1><FONT FACE="Arial">Manipulate the Spaceball</FONT><FONT FACE="Times Roman">&reg;</FONT><FONT FACE="Arial">
+PowerSensor</FONT><FONT FACE="Times Roman">&reg;</FONT><FONT FACE="Arial">
+ball as if you were holding the 3D model in your hand - this is <B>Object
+Mode</B>. Push left and the image moves left. Push right and it moves right.
+Lift up or push down and the image moves accordingly. Push away and or
+pull forward on the PowerSensor (the ball shaped portion of the controller)
+and the image responds. Twist in any direction and the image rotates in
+that direction.</FONT></FONT></LI>
+
+<LI>
+<FONT FACE="Arial"><FONT SIZE=-1>Manipulate the Spaceball PowerSensor ball
+as if it were your head or a camera - this is <B>Eyepoint Mode</B> or<B>
+Camera Mode</B>. Push left and the scene moves to the right. Push right
+and the scene moves to the left. Lift up and the scene moves down. Push
+down and the scene moves up.</FONT></FONT></LI>
+</UL>
+<FONT FACE="Arial"><FONT SIZE=-1>You can apply any of these actions at
+the same time, causing the image to move as you move.</FONT></FONT>
+
+<P><FONT SIZE=-1><FONT FACE="Arial">The patented Spaceball PowerSensor
+technology is based on a mechanism which separates a combined force and
+torque into six forces and then uses optical mask sensing technology to
+detect the resulting displacements. A hollow outer ball </FONT><FONT FACE="Times New Roman">‘</FONT><FONT FACE="Arial">floats</FONT><FONT FACE="Times New Roman">’</FONT><FONT FACE="Arial">
+in place on six leaf springs, each with a ball tip that fits into a corresponding
+slot in the outer ball. As the outer ball is pushed and/or twisted the
+leaf springs are deflected so as to resist the movement. The LED/detector
+pairs measure the deflection of each leaf spring.</FONT></FONT>
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/SBParts.GIF" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=333 WIDTH=292 ALIGN=BOTTOM><IMG SRC="graphics/SBAxes.GIF" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=337 WIDTH=312 ALIGN=BOTTOM></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1><B>Optical Sensor</B> <B><FONT COLOR="#FFFFFF">Spacerspacerspacersp</FONT>PowerSensor
+Axes</B></FONT></FONT></CENTER>
+
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>In the Optical Sensor graphic, the
+purple object is the LED. The green object to the right is the photo sensor.
+The red square on the photo sensor blocks the light from the LED. An optical
+sensor is located at the end of each leaf spring.</FONT></FONT>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>Each leaf spring has a molded on optical
+mask that blocks the amount of light reaching the detector. At rest half
+the light is blocked. Spring deflection in one direction lets more light
+through and deflection in the other direction blocks more light. The amount
+of light is measured to determine the spring deflection.</FONT></FONT>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>Adding a pair of readings (from both
+ends of an axis) yields the force vector. Subtracting one of the pair from
+the other yields the torque vector. For example, in the diagram above F2+F5
+yields the force along the red axis. F2-F5 yields the torque about the
+blue axis.</FONT></FONT>
+<BR>&nbsp;
+
+<P><A NAME="SB_Buttons"></A><B><FONT FACE="Arial"><FONT COLOR="#0000AF">Spaceball
+Buttons</FONT></FONT></B>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>Each Spaceball model returns slightly
+different button numbers.</FONT></FONT>
+<TABLE BORDER CELLPADDING=5 >
+<TR>
+<TD WIDTH="70">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Buttons</FONT></FONT></B></CENTER>
+</TD>
+
+<TD WIDTH="203">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Spaceball 2003A and 2003B&nbsp;</FONT></FONT></B></CENTER>
+</TD>
+
+<TD WIDTH="177">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Spaceball 2003 FLX</FONT></FONT></B></CENTER>
+</TD>
+
+<TD WIDTH="178">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Spaceball 3003 and 3003 FLX</FONT></FONT></B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH="70">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>1-7</FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD WIDTH="203"><FONT FACE="Arial"><FONT SIZE=-1>1-7</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="177"><FONT FACE="Arial"><FONT SIZE=-1>1-7</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="178"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD WIDTH="70">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>8</FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD WIDTH="203"><FONT FACE="Arial"><FONT SIZE=-1>Rezero</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="177"><FONT FACE="Arial"><FONT SIZE=-1>9 (the equivalent of the
+Pick button)</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="178"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD WIDTH="70">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Pick</FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD WIDTH="203"><FONT FACE="Arial"><FONT SIZE=-1>9</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="177"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="178"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD WIDTH="70">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Right</FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD WIDTH="203"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="177"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="178"><FONT FACE="Arial"><FONT SIZE=-1>9</FONT></FONT>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD WIDTH="70">
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Left</FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD WIDTH="203"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="177"><FONT FACE="Arial"><FONT SIZE=-1>N/A</FONT></FONT>&nbsp;</TD>
+
+<TD WIDTH="178"><FONT FACE="Arial"><FONT SIZE=-1>Driver Menu</FONT></FONT>&nbsp;</TD>
+</TR>
+</TABLE>
+
+
+<P><A NAME="DataSup"></A><B><FONT FACE="Arial"><FONT COLOR="#000080">Data
+Supplied</FONT></FONT></B>
+
+<P><FONT SIZE=-1><FONT FACE="Arial">The Spaceball provides full, simultaneous
+six-axis movement in any and all directions. The Spaceball PowerSensor
+delivers 10 bits of digital precision. The diagrams below show the orientation
+of Translation and Rotation axes on the Spaceball PowerSensor. Following
+the diagrams, there are two charts explaining the data range of each axis,
+and the axis </FONT><FONT FACE="Times New Roman">‘</FONT><FONT FACE="Arial">meaning</FONT><FONT FACE="Times New Roman">’</FONT><FONT FACE="Arial">
+in both 6D Navigation (Eyepoint Control) and 6D Object Control (Object
+Movement).</FONT></FONT>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>It is crucial to a good implementation
+of the Spaceball and your application that the movement resulting from
+pressures on the PowerSensor be as smooth and instantaneous as possible.
+Please use the diagrams and charts below when adding support for the Spaceball
+to your application.</FONT></FONT>
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/2003web.jpg" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=248 WIDTH=280 ALIGN=BOTTOM><IMG SRC="graphics/3003web.jpg" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=294 WIDTH=279 ALIGN=BOTTOM></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1><B>Spaceball 2003 Series</B><FONT COLOR="#FFFFFF">SPACERSPACE
+</FONT><B>Spaceball 3003 Series</B></FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/Rotation.GIF" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=93 WIDTH=555 ALIGN=BOTTOM></CENTER>
+
+
+<P><FONT SIZE=-1><FONT FACE="Arial">The Spaceball can return data in the
+32767 to </FONT><FONT FACE="Times New Roman">–</FONT><FONT FACE="Arial">32768
+range on each axis. The usable range tends to be in the 10000 to </FONT><FONT FACE="Times New Roman">–</FONT><FONT FACE="Arial">10000
+range. In addition to the axis data, the Spaceball also returns the elapsed
+time since the last event. This is called the 'period' and is measured
+in 1/16ths of a millisecond.</FONT></FONT>
+<BR>&nbsp;
+
+<P><A NAME="HowUsed"></A><B><FONT FACE="Arial"><FONT COLOR="#000080">How
+Data Should be Used</FONT></FONT></B>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>One of the most frequently-asked questions
+Spacetec receives is how to map the axes of the device to match the application.
+Here is the rule of thumb.</FONT></FONT>
+<TABLE BORDER CELLPADDING=5 HEIGHT="88" >
+<TR>
+<TD><FONT FACE="Arial"><FONT SIZE=-1><B><FONT COLOR="#AF0000">Note</FONT></B>:</FONT></FONT>&nbsp;
+<BR><FONT FACE="Arial"><FONT SIZE=-1>The home position for the device is
+with the negative Z-axis pointing towards the screen. The teapot in these
+illustrations, when at home or rest, is between the two posts, slightly
+above the surface with the spout pointing to the right as shown in the
+graphic below.</FONT></FONT>&nbsp;</TD>
+</TR>
+</TABLE>
+
+<CENTER><IMG SRC="graphics/start.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Teapot at Rest</FONT></FONT></B></CENTER>
+
+<CENTER><TABLE>
+<TR>
+<TD VALIGN=TOP><B><FONT FACE="Arial">Translation Controls</FONT></B>&nbsp;</TD>
+</TR>
+</TABLE></CENTER>
+&nbsp;
+<CENTER><TABLE BORDER CELLPADDING=10 >
+<TR>
+<TD VALIGN=TOP>
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Spaceball Value</FONT></FONT></B></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Eyepoint Control</FONT></FONT></B></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Object Control</FONT></FONT></B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Translate Z-axis 0 to -10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TZn.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Backward</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TeyeZb.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Zoom In</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TobjYi.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Translate Z-axis 0 to 10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TZp.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Forward</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TeyeZf.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Zoom Out</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TobjYo.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Translate Y-axis 0 to 10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TYp.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Up or Jumps</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TeyeYu.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Up</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TobjZu.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Translate Y-axis 0 to -10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TYn.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Down or Crouch</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TeyeYd.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Down</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TobjYd.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Translate X-axis 0 to 10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TXp.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Right</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TeyeXr.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Right</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TobjXr.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Translate X-axis 0 to -10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TXn.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Left</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TeyeXl.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Left</FONT></FONT>&nbsp;</CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/TobjXl.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+</TABLE></CENTER>
+&nbsp;
+<CENTER><TABLE CELLPADDING=10 >
+<TR>
+<TD VALIGN=TOP><B><FONT FACE="Arial">Rotation Control</FONT></B>&nbsp;</TD>
+</TR>
+</TABLE></CENTER>
+&nbsp;
+<CENTER><TABLE BORDER CELLPADDING=10 >
+<TR>
+<TD VALIGN=TOP>
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Spaceball Value</FONT></FONT></B></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Eyepoint Control</FONT></FONT></B></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Object Movement</FONT></FONT></B></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Rotate Z-axis 0 to 10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RZp.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Right Cartwheel or Barrel Roll</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/ReyeZr.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Spins Clockwise</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RobjYc.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Rotate Z-axis 0 to -10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RZn.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Left Cartwheel or Barrel Roll</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/ReyeZl.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Spins Counterclockwise</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RobjYcc.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Rotate Y-axis 0 to -10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RYn.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Spin Clockwise</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/ReyeYcc.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Spins Clockwise</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RobjZcc.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Rotate Y-axis 0 to 10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RYp.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Spin Counterclockwise</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/ReyeYc.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Spins Counterclockwise</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RobjZc.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Rotate X-axis 0 to 10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RXp.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Pitch Up or Look Up</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/ReyeXu.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Object top spins towards you</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RobjXt.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Rotate X-axis 0 to -10,000</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RXn.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Pitch Down or Look Down</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/ReyeXd.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+
+<TD VALIGN=TOP>
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>Object bottom spins towards you</FONT></FONT></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/RobjXb.JPG" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=100 WIDTH=150 ALIGN=BOTTOM></CENTER>
+</TD>
+</TR>
+</TABLE></CENTER>
+<A NAME="WhyAATM"></A><B><FONT FACE="Arial"><FONT COLOR="#000080">Why ArbitraryAxisToMatrix</FONT></FONT></B>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>The Spaceball produces both a translation
+and a rotation vector simultaneously as a user pushes, pulls, or torques
+the PowerSensor (as is shown in the diagram below). The translation vector
+represents the force the user applies to move the Spaceball. The rotations
+returned from the Spaceball represent the vector about which the user is
+applying a torque.</FONT></FONT>
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/ApplyRot.GIF" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=184 WIDTH=174 ALIGN=BOTTOM></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Applying a Rotation to the
+PowerSensor</FONT></FONT></B></CENTER>
+
+
+<P><FONT SIZE=-1><FONT FACE="Arial">The translation vector is fairly easy
+to interpret. The three components (X, Y, and Z) of the translation vector
+can be applied in the same manner as similar data from the keyboard or
+mouse is applied to the viewing transform. The rotation vector is a different
+situation. Applying the rotation vector as individual parts will not give
+the same result as rotation about the vector (see below). If the data is
+applied individually the user will notice a </FONT><FONT FACE="Times New Roman">“</FONT><FONT FACE="Arial">wobble</FONT><FONT FACE="Times New Roman">”</FONT><FONT FACE="Arial">
+when performing a rotation.</FONT></FONT>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>&nbsp;</FONT></FONT>
+<CENTER></CENTER>
+
+<CENTER><IMG SRC="graphics/IndivRot.GIF" X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=174 WIDTH=176 ALIGN=BOTTOM><IMG SRC="graphics/VectRot.GIF" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=180 WIDTH=173 ALIGN=BOTTOM></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><B><FONT FACE="Arial"><FONT SIZE=-1>Individual Rotations vs. Rotation
+about a Vector</FONT></FONT></B></CENTER>
+
+<CENTER></CENTER>
+
+<CENTER><FONT FACE="Arial"><FONT SIZE=-1>&nbsp;</FONT></FONT></CENTER>
+
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>There is a way to convert the Spaceball
+data into a delta rotation matrix which corresponds to a rotation about
+a vector. The following matrix is taken from <U>Robot Manipulators</U>
+by Richard P. Paul, where X, Y, and Z are the components of the (unit)
+vector and&nbsp;<IMG SRC="graphics/sign.GIF" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=17 WIDTH=14 ALIGN=BOTTOM>is
+the angle of rotation.</FONT></FONT>
+
+<P><IMG SRC="graphics/DeltaRot.GIF" NOSAVE X-SAS-UseImageWidth X-SAS-UseImageHeight HEIGHT=123 WIDTH=575 ALIGN=BOTTOM>
+
+<P><FONT FACE="Arial"><FONT SIZE=-1>This bit of mathematics is implemented
+by the <FONT COLOR="#008000"><A HREF="MathLib.htm#SPW_ArbitraryAxisToMatrix">SPW_ArbitraryAxisToMarix</A></FONT>
+function (SpaceWare Math Library) which makes it easy to include in your
+application.</FONT></FONT>
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P>&nbsp;
+</BODY>
+</HTML>

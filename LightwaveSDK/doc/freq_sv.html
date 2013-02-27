@@ -1,0 +1,193 @@
+<html><head>
+<title>freq</title></head>
+<body>
+
+Standard Request Plug-ins --
+Stuart Ferguson 2/27/97
+<p>
+<ul>
+<br>
+<li>1.  <a href="#S1">Introduction</a>
+<br>
+<li>2.  <a href="#S2">File Dialogs</a>
+<ul>
+<li>2.1.  <a href="#S2.1">Activation Parameters</a>
+<li>(1) <a href="#S2.1">Public types</a>
+<li>(2) <a href="#S2.1">Public types</a>
+<li>2.2.  <a href="#S2.2">Process</a>
+<li>2.3.  <a href="#S2.3">File Types</a>
+<li>(3) <a href="#S2.3">Public types</a>
+</ul>
+<br>
+<li>3.  <a href="#S3">Color Dialogs</a>
+<li>(4) <a href="#S3">Public types</a>
+</ul>
+
+<hr>
+<a name="S1"><h1>1. Introduction</h1></a>
+
+LightWave makes some of its more common requests from the user using
+standard dialogs.  These dialogs (or &quot;requesters&quot;) are used for getting
+files and paths for saving and loading, and for getting color choices.
+By default, the standard system dialogs are used, but these can be
+overridden by plugins of the right class.
+<p>
+
+<hr>
+<a name="S2"><h1>2. File Dialogs</h1></a>
+
+The file dialog server class is &quot;FileRequester&quot; and the version is 3.
+Version 1 was used in LightWave verisons 4.0 and 5.0, but no third party
+plugin file dialogs were written so that version has been obsoleted.
+<p>
+The activation function for a file requester server performs the entire
+operation at once.  The host passes a local structure defining the
+request, the server opens a requester and gets a reply from the user
+and returns that result back to the calling host.
+<p>
+A file requester should respect the current directory of the caller
+when processing the request and should leave it unchanged.  It should
+also allow the user to specify relative path names as well as fully
+qualified ones.  (Both of these issues have to be specially coded 
+when using the Windows common file dialogue.)
+<p>
+<ul>
+<ul>
+<li>2.1.  <a href="#S2.1">Activation Parameters</a>
+<li>2.2.  <a href="#S2.2">Process</a>
+<li>2.3.  <a href="#S2.3">File Types</a>
+</ul>
+</ul>
+
+<a name="S2.1"><h2>2.1. Activation Parameters</h2></a>
+
+The local struct contains a set of values set mainly by the host to
+specify the request and to receive results.
+<p>
+<dl>
+<dt>reqType
+<dd>This is one of the FREQ_* values below and defines the type of file request
+being made by the host.  LOAD lets the user pick a single existing file
+for reading.  SAVE lets the user pick a single file, existing or not, for
+writing.  DIRECTORY lets the user pick a directory which will later be used
+to locate files.  MULTILOAD lets the user pick one or more existing files
+for reading.
+
+</dl>
+<dl><dd><h4>(1) Public types</h4></dl>
+<pre>
+	    #define FREQ_LOAD        1
+	    #define FREQ_SAVE        2
+	    #define FREQ_DIRECTORY   3
+	    #define FREQ_MULTILOAD   4
+	    . . .</pre>
+
+<dl>
+<dt>result
+<dd>This is the return code from the request.  A value of 0 indicates that the
+user canceled the request, and a value of 1 indicates that the request was
+completed and a file was selected.
+<dt>title
+<dd>This is a possible title for the dialog to help remind the user what they
+are supposed to select.
+<dt>fileType
+<dd>This string is the name of the type of file being requested.  In addition
+to being a descriptive name for the user, this is also a key that can be
+used to get a filename pattern for files that can be read and for the
+default type for a new file.
+<dt>path, baseName, fullName
+<dd>These character buffers are provided by the caller to receive the name of
+the selected file.  The path is the absolute or relative path for the file
+and does not include the filename.  BaseName is the name of the file without
+any path, and fullName is the combined result name.
+<dt>bufLen
+<dd>This is the minimum length of the three buffers above.
+<dt>pickName
+<dd>This is an optional callback which the host provides for the MULTILOAD
+request type.  It will be called for each selected file and if it returns
+a non-zero value the file processing should halt.
+
+</dl>
+<dl><dd><h4>(2) Public types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_FileReq_Local {
+		    int              reqType, result;
+		    const char      *title;
+		    const char      *fileType;
+		    char            *path;
+		    char            *baseName;
+		    char            *fullName;
+		    int              bufLen;
+		    int            (*pickName) (void);
+	    } FileReq_Local;
+	    <a href="#S2.3">. . .</a></pre>
+
+
+<a name="S2.2"><h2>2.2. Process</h2></a>
+
+The host first sets the request type, the title string and file type in the
+local struct.  The host also sets the path and baseName buffers to contain
+an initial path and filename for the dialog.  It sets the path, baseName and
+fullName pointers and the bufLen is set to a value that will not overrun
+any of the provided buffers.  If this is a MULTILOAD request type, the host
+also sets the pickName callback.  It then passes this structure to the
+server through the Activation function.
+<p>
+At this point the server displays the dialog to the user and allows him to 
+make a choice starting from the initial path and filename.  If the user
+cancels the request, the result is set to 0 and the server exits without
+doing anything else.  For any of the single selection requests (LOAD, SAVE 
+and DIRECTORY), the users' choice of file is written to the path, baseName 
+and fullName buffers, the result is set to 1 and the server exits.
+<p>
+In the MULTILOAD case, the users' choices of files are written to the path,
+baseName and fullName buffers one at a time and pickName is called for each.
+This must be done even if only one file was selected.  The path buffer should
+be left containing at least one path for the multiple selection and the
+result should be set to 1 for success before the server exits.
+<p>
+
+<a name="S2.3"><h2>2.3. File Types</h2></a>
+
+The host provides a global function to get filename patterns from
+file type strings, returned by ID &quot;File Type Pattern&quot;.  This function
+takes a file type string and returns a pattern used to match files of the
+given type.  If the type is unknown, or the string is null, a generic
+wildcard is returned to match all files on the system which will vary
+depending on the host filesystem.
+<p>
+<dl><dd><h4>(3) Public types</h4></dl>
+<pre>
+	    <a href="#S2.1">. . .</a>
+	    typedef const char      *FileTypeFunc (const char *);
+	    <a href="#S3">. . .</a></pre>
+
+On Windows, the file types are of the form &quot;*.xxx&quot; and are separated by
+semicolons.  On the Mac, the file types are four-character file types,
+also separated by semicolons.  For those two systems, the default type
+for a new file is the first file type in the string.  On Unix, the file 
+type is most likely a regular expression but may vary.
+<p>
+
+<hr>
+<a name="S3"><h1>3. Color Dialogs</h1></a>
+
+The color dialog server class is &quot;ColorPicker&quot; and the version is 3.
+<p>
+The interface is extremely simple.  The host sets the initial RGB value
+for the color and passes that to the Activation function for the server.
+The server displays a color dialog to the user and sets the result to
+zero if the user cancels and one of the user picks a new color.  The host
+can provide an optional hint about a title for the request.
+<p>
+<dl><dd><h4>(4) Public types</h4></dl>
+<pre>
+	    <a href="#S2.3">. . .</a>
+	    typedef struct st_ColorPick_Local {
+		    const char      *title;
+		    int              red, green, blue;
+		    int              result;
+	    } ColorPick_Local;</pre>
+
+</body></html>

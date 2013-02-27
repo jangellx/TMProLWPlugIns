@@ -1,0 +1,567 @@
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+<HEAD>
+<TITLE>Lightwave 3D Layout Monitor Plugin</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<B><CENTER><FONT SIZE="4">Layout Monitor Global Class Plugin</B><BR>
+(<B>LAYMON</B>)<BR>
+by:<BR>
+Ryan A. Mapes<BR>
+</CENTER><BR>
+<B>Plugin: LayoutMonitor (laymon.p) &#150; v1.0 &#151; 3/16/98<BR>
+Class: Global<BR>
+Access: Layout_Monitor<BR>
+</B>NOTE: Recommended LWPanels.p v16<BR>
+<BR>
+<B><U></FONT><FONT SIZE="4">Contents</U></B></FONT><FONT SIZE="3"><BR>
+<OL>
+<LI>Introduction<BR>
+<LI>Installation<BR>
+<LI>Development<BR>
+<UL>
+<LI>Basic Operations<BR>
+<UL>
+<LI>Create
+<LI>Use
+<LI>Close<BR>
+<LI>Basic Operations Example (Direct Access)<BR>
+</UL>
+<LI>Advanced Operations<BR>
+<UL>
+<LI>Updating messages<BR>
+<LI>Monitor screen positioning<BR>
+<LI>Pause enable<BR>
+<LI>Changing colors<BR>
+<LI>Multiple Monitors<BR>
+<LI>Monitor Version<BR>
+<LI>Advanced Operations Example (Direct Access)<BR>
+</UL>
+<LI>Using the Macros<BR>
+<LI>Usage Example (Macros)<BR>
+</UL>
+<LI>Comments<BR>
+</OL>
+
+
+
+
+<BR>
+<BR>
+<B><U></FONT><FONT SIZE="4">Introduction</U></B></FONT><FONT SIZE="3"><BR>
+<P>
+
+Layout Monitor (LAYMON) is a Lightwave 3D global class plugin which enables plugins to display a progress monitor during execution.  As a global class plugin it is intended for use as a service to other plugins.  It is not a fancy shader plugin or anything - nothing an end-user would ever use (directly).  It is just a simple progress monitor.  The user just receives the benefit (and well deserved satisfaction) of seeing a progress bar move along as another (i.e., your) plugin does it's thing.<BR>
+<BR>
+<B><U></FONT><FONT SIZE="4">LAYMON Installation</U></B></FONT><FONT SIZE="3"><BR>
+<UL>
+<LI>Copy <B>laymon.p</B> plugin file to the Lightwave plugins/layout directory<BR>
+<LI>Add the global class plugin file via Layout's <I>Options -&gt; General Options</I> interface just as any plugin<BR>
+<B><LI>LWPanels.p</B> (version 16 or above) is also recommended (but not required)<BR>
+</UL>
+<BR>
+<B><U></FONT><FONT SIZE="4">Development</U></B></FONT><FONT SIZE="3"><BR>
+<P>
+
+To access the laymon services,  first obtain its functions by calling the global function with the name for the plug-in service, in this case <B>LAYMON_SERVICES_NAME</B>.  If the <I>laymon.p</I> plugin services are available, the global function will return a pointer to a <B>LWLMonitor</B> structure which, in turn, provides access to the Layout Monitor functions.  The definitions for LWLMonitor, and the associated <B>LWLMonID</B> instance pointer are in the <B>laymon.h</B> header file which must be </FONT><FONT FACE="Courier New">#included</FONT><FONT FACE="Times New Roman"> in the plugin source code.<BR>
+<BR>
+<B>Layout Monitor Access Structure:<BR>
+</B>typedef void *LWLMonID;<BR>
+<TABLE BORDER=0>
+<TR>
+<TD>
+typedef struct<BR>
+st_LWLMonitor {<BR>
+</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD>LWLMonID&nbsp;(*init )( unsigned int,int,int,unsigned int,char *,char *,char *);</TD>
+<TD>// Create (and open)<BR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD>int (*step) ( LWLMonID,unsigned int,char *,char *);<BR></TD>
+<TD>// Increment<BR><TD>
+</TR>
+<TR>
+<TD></TD>
+<TD>int (*set) ( LWLMonID, LWLM_tag,int,int,int );<BR></TD>
+<TD>// Change settings<BR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD>void (*done) ( LWLMonID );<BR></TD>
+<TD>// Close<BR></TD>
+</TR>
+<TR>
+<TD>
+} LWLMonitor;<BR>
+</TD>
+</TR>
+</TABLE>
+<BR>
+<B><U>Basic Operations<BR>
+</U></B><P>
+
+Laymon provides a set of services to create, modify, and destroy the monitor.  <P>
+
+Direct access to these capabilities can be accomplished via the <I>init</I>, <I>step</I>, <I>set</I>, and <I>done</I> functions.  An easier, and recommended, method is to use the provided macro definitions, particularly when setting monitor attributes.  Either way is up to the developer. :)  Both options are documented here to assist in either programming style.  In fact, the Basic and Advanced sections describe using the direct access functions.  The macro section describes using the available macros instead.<BR>
+<BR>
+<P>
+
+The minimum subset of actions required to use a monitor are<BR>
+<OL>
+<LI>obtain monitor functions from global access<BR>
+<LI>create the monitor and obtain a monitor ID<BR>
+<LI>destroy the monitor.<BR>
+</OL>
+<P>
+Realistically, however, there will probably be a few steps to process through, else, why the monitor?<BR>
+<BR>
+<B>Obtaining Laymon Services from Layout</B><BR>
+<P>
+
+The Layout Monitor functions are obtained from the Layout via a global access call.  The service to request is <I>LAYMON_SERVICES_NAME</I>.  The global will return a pointer to the Laymon functions.<BR>
+<BR>
+<B>Monitor Create</B><BR>
+<P>
+
+To create a monitor instance, call layout monitor's <I>create</I> function (directly or through the LAYMON_INIT macro).  This will return a LWLMonID pointer which must be handed back to all other monitor functions.  Most of the fields in the <I>init</I> call are initial starting values.  They include: total steps, desired monitor screen position (x,y), whether to include a pause button, the desired monitor title and the category and sub-category messages.<BR><P>
+
+The total steps can be anything from 0 to max unsigned integer.  Monitor positioning is limited to within the 640x480 standard screen display limitation for Layout interfaces.  If the x,y  monitor position values are set to -1 the monitor will open in the default location.  The monitor title, like the total steps, can not be modified after the monitor is initialized.  <B>The call to the <I>init</I> function will attempt to open the monitor immediately </B>(with step 0).  Therefore, the informative messages on the <I>init</I> call should be things like &quot;Process Initializing&quot;, &quot;Please wait&quot;, etc. depending on when the monitor is created within the plugin.<BR>
+<BR>
+<B>Increment the Progress Bar</B><BR>
+<P>
+
+When a new monitor is created, the current step is set to 0.  As processing continues, this current step is incremented via calls to the monitor <I>step</I> function (either with a macro or directly).  If the step count exceeds the total steps specified in the <I>init</I> function call, the monitor progress bar will simply sit at 100%.  While not a problem in itself, it doesn't tell the user much.  The <I>step</I> function performs multiple operations including updating the informative messages and, of course, incrementing the counter at a different step interval than 1.<BR><P>
+
+
+The monitor can be reused <I>for the same number of total steps</I> by calling LAYMON_RSET.  This will reset the current step back to zero.<BR>
+<P>
+
+<B>Monitor Close</B><BR>
+<P>
+
+To close a monitor, and release its system resources, call the <I>done</I> monitor function (or LAYMON_DONE) with the instance ID of the monitor to close.  If more than one monitor was created (see advanced operations), they may be closed in any order since each operates completely independent of the other(s).<BR>
+<BR>
+<B><U>Basic Operations Example (Direct Access)</U></B><BR>
+<P>
+
+The following example demonstrates the processing required to open, use and close a simple monitor.  The loop to increment the counter has been omitted.<BR>
+<OL>
+	<LI>First, declare the data types
+		<DL><DT>LWLMonitor *my_mon;
+		<DT>LWLMonID    my_monID;
+		</DL><BR>
+
+	<LI>Obtain the monitor services from layout
+		<DL><DT>my_mon    = global (  LAYMON_SERVICES_NAME, GFUSE_TRANSIENT );
+		</DL><BR>
+
+	<LI>Create and initialize a new monitor instance.
+		<DL>
+		<DT>my_monID  = (*my_mon-&gt;create) ( my_monID, 1, -1, -1, LAYMON_FALSE, &quot;Progress Monitor&quot;, &quot;Processing&quot;, &quot;Initializing&quot; );
+		<DT>// macro: LAYMON_DFLT
+		</DL><BR>
+
+	<LI>Just increment 1 step<BR>
+		NOTE: <B>rc</B> will be equivalent to LAYMON_USERCANCEL if the user clicked abort
+		
+		<DL>
+		<DT>rc = (*my_mon-&gt;step) ( my_monID, 1, NULL, NULL );
+		<DT>// macro: LAYMON_STEP
+		</DL><BR>
+
+	<LI>Close the monitor
+		<DL>
+		<DT>(void)(*my_mon-&gt;done) ( my_monID );
+		<DT>// macro: LAYMON_DONE
+		</DL><BR>
+
+</OL>
+
+<BR>
+<B><U>Advanced Operations</U></B><BR>
+<P>
+
+<B>Updating Messages</B><BR>
+<P>
+
+The informative strings provide a means to give a little something back to the user.  In theory, there are two types of messages to display - the category (msg) and sub-category (info).  In reality, those are fancy names for simple 'char *' or character arrays.  Generally, the category message would describe an overall stage of processing while the sub-category would be for more frequent updates of individual processes involved.  They are updated through the <I>step</I> function call (or various macros).  To only modify the current messages without incrementing the counter, call the <I>step</I> function with an increment value of 0 (zero) and the desired message strings.  If either message string is NULL, the current string will remain for the respective field.<BR>
+<B><BR></B><P>
+
+The informative messages are always displayed.  These messages could be something generic and not require any changes during plugin execution.  However, updates provide the user with more detailed information regarding the current stage of processing.  For instance, one might wish to change the progress bar color setting to match a certain stage of processing - e.g., to use a red color bar to represent processing pixels in the red spectrum.  Just one way of adding visual information to a verbal text message.<BR>
+<B><BR>
+Monitor Screen Position<BR>
+</B><P>
+
+Screen position of the monitor is set during monitor creation.  The initial position is limited with a 640x480 screen space for cross platform and machine compatibility purposes.  Attempts to specify values outside this region will resolve to the maximum in either direction.<BR>
+<BR>
+<B>Pause Enable</B><BR>
+<P>
+
+What? Pause? Why on earth would someone wish such a thing?  Well, haven't you ever wanted to check email but some terribly awful process is making a wasteland of your poor, poor, overworked CPU?  Hmmm, at least some users might.<BR>
+<P>
+
+The pause button simply suspends operation until the user clicks continue.  The pause feature is transparent to plugin operations unless it is dependent upon the system clock. If system tick counts are important to your plugin operation, by all means disable the pause button :)<BR>
+<BR>
+
+<B>Setting Color Attributes<BR>
+</B><P>
+
+Why color?  Because Lightwave is a graphics program, and I can.  Plus, gotta have <I>some</I> fun.<BR>
+A color &quot;range&quot; is probably the wrong choice of words.  However, &quot;range&quot; in this context refers to the progress bar percentage when a default color change is to occur.  By default, this range transition points are at 33% and 66%.  The result during processing is as follows:<BR>
+<P>
+
+From percentage 0-33 (default setting) the low-range color is used for the progress bar, the mid-range color is then used from percent values of 33-66% and, finally, the high-range color is used from 66-100%.<BR>
+<P>
+
+The range transition points for low, middle and high can be set via the LAYOMN_RBAR macro (or a <I>set</I> function call if you prefer).  When a color transition occurs, the entire progress bar will alter to become the new color.  Currently only 3 &quot;ranges&quot; exist - low, middle and high.  However, the color used can be changed <I>at any time</I> by setting all color ranges to a desired RGB setting by using the LWLM_CALL flag in the set function call (or using the LAYMON_COLR macro).<BR>
+<BR>
+<P>
+
+Why would color be useful? I am unable to say entirely. Perhaps users might like visual reference points in order to, say, identify at a glance no only the percent complete but also what current activity is processing.<BR>
+<BR>
+<P>
+
+<B>NOTE</B>: Color values are in the normal RGB format (0-255) for each red, green, blue field.  However, because a large variety of screens, video cards, display settings, etc. exist, setting color values to the more commonly supported 256 color set is probably advised.<BR>
+<B><BR>
+
+Creating Multiple Monitors</B><BR>
+<P>
+
+Sure, why not.  Say, for example, one wished to show the progress during the processing of an image.  Further, let's say, the exciting, fun, nifty, super-CPU intensive processing being done on each individual pixel is excruciatingly long.  Therefore, perhaps out of fear that the user might become nervous of a system crash, or simply to keep the user company while she, or he, waits, one progress monitor just isn't enough.<BR>
+<P>
+
+For example, one might use a monitor to track the overall processing, say, row by row and a second to indicate processing of pixels in each row.  Rejoice, rejoice, the crowd goes wild.  Would not the user be so happy? You bet.  After all, the user readily sees the obvious hard work involved on her/his behalf.<BR>
+<BR><P>
+
+But, 'How are multiple monitors possible?', you ask.  You have probably already figured it out.  Simply declare and create more than one monitor ID variable and create (i.e., LAYMON_INIT) each ID. Woo-Hoo!  It's as easy as that.<BR>
+<BR><P>
+
+
+Multiple monitors could be used for any number of reasons and I won't speculate too much here.  Suffice to say, there isn't any imposed limit by laymon on the number of concurrent monitors - you may use as many as you please.   Screen real-estate, functionality, available RAM, CPU overhead, and realistic sensibility ... these things will probably keep the number to 3 or less at any given time.<BR>
+<BR><P>
+
+
+When using multiple monitors, monitor screen positioning becomes a bit more important (during the monitor create step).  Otherwise, if each monitor uses the default location they will all sit on top of each other.  Unfortunately, it is left as an exercise for the developer to position multiple monitors as desired.<BR>
+<BR>
+<B>User Aborts</B><BR><P>
+
+The user clicks 'Go' ... time goes on ... everyone's happy ... birds sing ... a child laughs ... YIKES! No output name was specified!!!  Oh no.  ABORT!! ABORT!! MISSON FAILED!!! ARBORT!!!  Sigh, it happens.<BR>
+<BR><P>
+
+
+Therefore, all laymon monitors have an 'Abort' button.  <I>NOTE: This is true, unless te current Lightwave instance is using an old version of the panels interface (&lt;v16), in which case it's is an 'OK' button instead.</I>  In either case, when abort (or OK) is clicked, Layout Monitor will return LAYMON_USERCANCEL during any of the update or step calls.  By the way, just because the user asked doesn't mean the plugin must stop, but I <I>usually</I> do.<BR><P>
+
+
+NOTE: Most calls via the <I>set</I> function return other information or void results and should not be compared against LAYMON_USERCANCEL.  The exception is when calling set with LWLM_RESET.  Meanwhile, all calls to the <I>step</I> function, however, will return the status of the monitor.<BR>
+<BR>
+
+<B>Monitor Version</B><BR>
+<P>
+
+Obtaining the current version (integer data type) of Layout Monitor services is done via a 'set' function call as follows:<BR>
+<DL>
+<DD>int ver = (*mon-&gt;set) ( monID, LWLM_VERSION,(int)NULL, (int)NULL, (int)NULL );
+<DD>// macro: LAYMON_VER
+</DL><BR>
+
+<B>Other Set function activities:<BR>
+<P>
+
+</B>The Layout Monitor's <I>set</I> function performs a variety of operations.  Most notably is setting the progress bar color(s).  The <I>set</I> function is used for a variety of tasks.  Consequently, the function argument fields vary depending on the desired operation.  Most general operations with the <I>set</I> function, however, are better accessed via the available macros.<BR>
+<BR>
+
+<B><U>Advanced Operations Example (Direct Access)</U></B><BR><P>
+
+
+For the following simple example, let's make some coffee (mmmm, coffee) in, oh, 3 steps: Brew, Pour, Drink.<BR>
+<OL>
+<LI>First, declare the data types<P>
+
+	<DL><DD>LWLMonitor *my_mon;
+	<DD>LWLMonID    my_monID;
+</DL><BR>
+
+<LI>Obtain the monitor services
+	<DL><DD>my_mon    = global (  LAYMON_SERVICES_NAME, GFUSE_TRANSIENT );
+</DL><BR>
+
+<LI>Create and initialize a new monitor instance.<BR>
+NOTE: LAYMON_TRUE (or LAYMON_FALSE) indicates whether or not to include a pause button.  For this example we will enable pause in case the user wishes to pour some coffee before brewing is complete.  Also, for position, let's use the Lightwave default location (i.e., center of the screen).<P>
+	<DL><DD>my_monID  = (*my_mon-&gtcreate) ( my_monID, 3, -1, -1, LAYMON_TRUE, "Coffee Maker", "Making coffee", "Brewing" );
+	<DD>// macro: LAYMON_INIT
+</DL><BR>
+
+<LI>Update the sub-category message<BR>
+This does NOT increment counter.  It only informs the user something is happening.<P>
+
+<DL>
+	<DD>rc        = (*my_mon-&gtstep) ( my_monID, 0, NULL, "Still Brewing" );
+	<DD>// macro: LAYMON_UPD
+</DL><BR>
+
+<LI>Increment counter by a given value and update the messages.<BR>
+At this point step one, brewing, is complete so let's change the category (msg) and sub-category (info) messages (NULL strings will not change current settings)<P>
+
+
+<DL>
+	<DD>rc        = (*my_mon-&gtstep) ( my_monID, 0, NULL, "Brewing Completed" );
+	<DD>// macro: LAYMON_UPD<BR>
+
+	<DD>rc        = (*my_mon-&gtstep) ( my_monID, 0, NULL, "Fresh Coffee Ready" );
+	<DD>// macro: LAYMON_UPD<BR>
+
+	<DD>rc        = (*my_mon-&gtstep) ( my_monID, 1, "Coffee Available", "Pouring Coffee" );
+	<DD>// macro: LAYMON_INCR
+</DL><BR>
+
+<LI>Let's add a few informative messages <P>
+
+<DL>
+	<DD>rc        = (*my_mon-&gtstep) ( my_monID, 0, NULL, "Coffee anyone?" );
+	<DD>// macro: LAYMON_UPD<BR>
+
+	<DD>rc        = (*my_mon-&gtstep) ( my_monID, 0, NULL, "Cream or Sugar?" );
+	<DD>// macro: LAYMON_UPD
+</DL><BR>
+
+<LI>Increment counter (retain existing messages)<P>
+
+<DL>
+	<DD>rc        = (*my_mon-&gtstep) ( my_monID, 1, NULL, NULL );
+	<DD>// macro: LAYMON_STEP
+</DL><BR>
+
+<LI>Reset the counter (e.g., best for repeated loops)<BR>
+
+Useful when wishing to track another process (with the same number of steps) without closing and creating another monitor.  For a demonstration of the two options (monitor reuse vs. multiple create destroy actions) compare <I>Example Two</I> and <I>Example Three</I> in the <B><I>montest.c</I></B> source code example<BR>
+NOTE: This is actually a call to the monitor's <I><B>set</B></I> function rather than <I>step</I> as one might think.<P>
+
+<DL>
+	<DD>rc = (*my_mon-&gt<B>set</B>) ( monID, LWLM_RESET, (int)NULL, (int)NULL, (int)NULL);
+	<DD>// macro: LAYMON_RSET
+</DL><BR>
+
+<LI>Change the point(s) at which the color changes - following sets low at 0-50%, mid 50-75%, high 75-100%<P>
+
+<DL>
+	<DD>(void)LAYMON_RBAR ( my_mon, my_monID, 50, 75  );
+	<DD>// macro: LAYMON_RBAR
+</DL><BR>
+
+<LI>Change colors for designated ranges<P>
+<DL>
+	<DD>(void)(*my_mon-&gtset) ( my_monID, LWLM_CLOW, 0, 0, 0,  );
+	<DD>// Black	- macro: LAYMON_CLOW<BR>
+	<DD>(void)(*my_mon-&gtset) ( my_monID, LWLM_CMID, 255, 0, 0,  );
+	<DD>// Red	- macro: LAYMON_CMID<BR>
+	<DD>(void)(*my_mon-&gtset) ( my_monID, LWLM_CHIGH, 255, 255, 255  );
+	<DD>// White	- macro: LAYMON_CHIGH<BR>
+</DL><BR>
+
+<LI>Set all colors to same value<P>
+<DL>
+	<DD>(void)(*my_mon-&gtset) ( my_monID, LWLM_CALL, 255, 255, 255 );
+	<DD>// All white	- macro: LAYMON_COLR
+</DL><BR>
+
+<LI>Close the monitor<P>
+
+<DL>
+	<DD>(void)(*my_mon-&gtdone) ( my_monID );
+	<DD>// macro: LAYMON_DONE
+</DL><BR>
+
+</OL>
+
+<!- MACROS ->
+<BR>
+<B><U>LAYMON Macros</U></B><BR><P>
+<B>Macro descriptions:</B><BR>
+<I>(see also the laymon.h header file)</I></B><BR>
+<I>Monitor creation:</I>
+
+<DL>
+<DT><B>LAYMON_INIT</B>
+	<DD>Creates a new monitor instance and initializes it with specified values
+	<DD>LAYMON_INIT( mon, steps, posx, posy, pawz_flag, title, msg, info )
+<DT><B>LAYMON_DFLT</B>
+	<DD>Creates a new monitor instance but initializes it with default values
+	<DD>LAYMON_DFLT( mon, steps )
+</DL>
+
+<I>Monitor update:</I>
+These three macros update the monitor message strings, increment the current step count and return <I>LAYMON_USERCANCEL</I> if user canceled operation
+<DL>
+<DT><B>LAYMON_INCR</B>
+	<DD>Allows any positive step increment value and also message modification
+	<DD>LAYMON_INCR( mon, monID, inc, msg, info )
+<DT><B>LAYMON_STEP</B>
+	<DD>Adds 1 to the counter value - does NOT modify messages
+	<DD>LAYMON_STEP( mon, monID )
+<DT><B>LAYMON_UPD</B>
+	<DD>Updates the sub-category message - does NOT increment the counter value
+	<DD>LAYMON_UPD( mon, monID,info)
+</DL><BR>
+
+<I>Change settings:</I>
+<DL>
+<DT><B>LAYMON_RBAR</B>
+	<DD>Set low and high [integer percent] values (for color shift)
+	<DD>LAYMON_RBAR( mon, monID, low, high )
+<DT><B>LAYMON_COLR</B>
+	<DD>Set All colors to specified rgb values
+	<DD>LAYMON_COLR( mon, monID, r, g, b )
+<DT><B>LAYMON_CLOW</B>
+	<DD>Low range color
+	<DD>LAYMON_CLOW( mon, monID, r, g, b )
+<DT><B>LAYMON_CMID</B>
+	<DD>Middle range color
+	<DD>LAYMON_CMID( mon, monID, r, g, b )
+<DT><B>LAYMON_CHIGH</B>
+	<DD>High range color
+	<DD>LAYMON_CHIGH( mon, monID, r, g, b )
+</DL><BR>
+
+<I>Monitor close:</I>
+<DL>
+<DT><B>LAYMON_DONE</B>
+	<DD>Releases allocated monitor resources
+	<DD>LAYMON_DONE(mon,monID)
+</DL><BR>
+
+<I>Misc.:</I>
+<DL>
+<DT><B>LAYMON_RSET</B>
+	<DD>Reset the monitor counter and messages
+	<DD>LAYMON_RSET( mon, monID, msg, info )
+<DT><B>LAYMON_VER</B>
+	<DD>Returns the current version of Layout Monitor
+	<DD>LAYMON_VER( mon, monID)
+</DL><BR>
+
+<B>Macro Fields:</B><BR>
+Summary of what each macro field represents.
+
+<DL>
+<DT><B>mon</B>
+<DD>monitor structure (obtained from global - &quot;Layout_Monitor&quot;)
+<DT><B>monID</B>
+<DD>monitor ID (returned from MON_INIT)
+<DT><B>steps</B>
+<DD>total steps to track in progress monitor
+<DT><B>posx,posy</B>
+<DD>x,y position (max 639x479) of monitor (-1,-1 uses default)
+<DT><B>pawz_flg</B>
+<DD>enable a pause button (blocks further processing until click continue)
+<DT><B>title</B>
+<DD>Progress Monitor title bar string
+<DT><B>msg</B>
+<DD>Informative message - &quot;Category&quot;
+<DT><B>info</B>
+<DD>Informative message - &quot;Sub-Category&quot;
+<DT><B>inc</B>
+<DD>number of steps to increment
+<DT><B>r,g,b</B>
+<DD>Red, Green and Blue values for desired color
+</DL>
+<BR>
+<BR>
+<B>Macro Example:<BR>
+
+<I>(see also the montest.c layout monitor example)</I></B><P>
+
+<OL>
+<LI>First, declare a monitor services global pointer
+<DL>
+	<LI>LWLMonitor *my_mon;
+	<LI>LWLMonID    my_monID;
+</DL><BR>
+
+<LI>Obtain a monitor services structure
+<DL>
+	<DD>my_mon    = global (  LAYMON_SERVICES_NAME, GFUSE_TRANSIENT );
+</DL><BR>
+
+<LI>Create and initialize a new monitor LAYMON_TRUE (or LAYMON_FALSE) indicates whether or not to include a pause button
+<DL>
+	<DD>my_monID  = LAYMON_INIT ( my_mon, 9, 240, 200, LAYMON_TRUE, &quot;Coffee Maker&quot;, &quot;Making coffee&quot;, &quot;Brewing&quot; );
+</DL><BR>
+
+<LI>Update the sub-category message (does NOT increment counter)
+<DL>
+	<DD>        rc = LAYMON_UPD  ( my_mon, my_monID, &quot;Still Brewing&quot; );
+</DL><BR>
+
+<LI>Increment counter by a given value and display category (msg) and sub-category (info) messages (NULL strings will not change current settings)
+<DL>
+	<DD>rc = LAYMON_INCR ( my_mon, my_monID, 1, &quot;Brewing Completed&quot;, &quot;Pouring Coffee&quot; );
+</DL><BR>
+
+<LI>Let's add a few informative messages
+<DL>
+	<DD>rc = LAYMON_UPD  ( my_mon, my_monID, &quot;Coffee anyone?&quot; );
+	<DD>rc = LAYMON_UPD  ( my_mon, my_monID, &quot;Cream or Sugar?&quot; );
+</DL><BR>
+
+<LI>Increment counter (retain existing messages)
+<DL>
+	<DD>rc = LAYMON_STEP ( my_mon, my_monID );
+</DL><BR>
+
+<LI>Reset the counter (e.g., best for repeated loops) - useful when wishing to track another process (with the same number of steps) without closing and creating another monitor
+<DL>
+	<DD>rc = LAYMON_RSET ( my_mon, my_monID );
+</DL><BR>
+
+<LI>Change the point at which the color changes - following sets low at 0-50%, mid 50-75%, high 75-100%
+
+<DL>
+	<DD>(void)LAYMON_RBAR ( my_mon, my_monID, 50, 75  );
+</DL><BR>
+
+<LI>Change colors for designated ranges<BR>
+<DL>
+	<DD>(void)LAYMON_CLOW ( my_mon, my_monID, 0, 0, 0,  );
+	<DD>// Black<BR>
+
+	<DD>(void)LAYMON_CMID ( my_mon, my_monID, 255, 0, 0,  );
+	<DD>// Red<BR>
+
+	<DD>(void)LAYMON_CHIGH ( my_mon, my_monID, 255, 255, 255  );
+	<DD>// White
+</DL><BR>
+
+<LI>Or perhaps, set all colors to same value at once
+<DL>
+	<DD>(void)LAYMON_COLR ( my_mon, my_monID, 255, 255, 255 );
+	<DD>// All white
+</DL><BR>
+
+<LI>Close the monitor
+<DL>
+	<DD>(void)LAYMON_DONE ( my_mon, my_monID );
+</DL>
+<I>That's all there is too it.</I><BR>
+
+</OL>
+<B><U>Comments</U><BR>
+<UL><P>
+
+</B><LI>There are no built-in delays.  Layout Monitor simply updates the monitor for each call.  Therefore, as a rule of thumb, if the monitor window flickers during execution, calls to update, increment, etc. are occurring faster than the screen can refresh itself.  Yes, this is machine dependent but, if it happens on a development machine, you will probably wish to reduce the frequency of laymon calls.  In most cases, this should not be a problem.
+<LI>BTW: I am going to bed now. And an unrivaled cheer heralds the land.
+<LI>Now, go forth and produce greatness :)
+</UL>
+<BR>
+<BR>
+<BR>
+COPYRIGHT (C) 1998 NewTek, Inc.<BR>
+
+</BODY>
+</HTML>
+

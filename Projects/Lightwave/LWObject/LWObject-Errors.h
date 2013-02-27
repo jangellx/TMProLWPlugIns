@@ -1,0 +1,27 @@
+//
+// LWObject-Errors.h
+//
+
+#ifndef HEADER_LWOBJECT_ERROR
+#define HEADER_LWOBJECT_ERROR
+
+// Error Codes
+enum LWObjectErrorCode {
+  LWOERROR_OK = 0,
+
+  // Read Errors
+  LWOERROR_INVALID_PATH,
+  LWOERROR_FILE_NOT_FOUND,
+  LWOERROR_ERROR_OPENING_FILE,
+  LWOERROR_NOT_A_LWO,
+  LWOERROR_BAD_VERSION,
+  LWOERROR_ERROR_READING_FILE,
+
+  LWOERROR_BAD_TAGS,
+  LWOERROR_BAD_LAYR,
+  LWOERROR_BAD_BBOX };
+
+// Error Strings
+extern const char *LWObjectErrorString[];
+
+#endif

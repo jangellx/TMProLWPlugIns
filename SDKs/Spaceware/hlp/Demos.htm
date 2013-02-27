@@ -1,0 +1,492 @@
+<!--This file created 11:03 AM  5/19/98 by Claris Home Page version 2.0-->
+<HTML>
+<HEAD>
+   <TITLE>Demos</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 2.0">
+   <X-SAS-WINDOW TOP=62 BOTTOM=589 LEFT=8 RIGHT=823>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<P><A HREF="Integrat.htm"><IMG SRC="graphics/prev1.gif"
+ALT="graphics/prev1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0
+ALIGN=bottom></A><A HREF="TandT.htm"><IMG SRC="graphics/next1.gif"
+ALT="graphics/next1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0 ALIGN=bottom></A></P>
+
+<H1><FONT COLOR="#0000AF">Demos</FONT></H1>
+
+<P><B><FONT FACE="Arial"
+COLOR="#000080"><A NAME="Building the Demos"></A>Building the
+Demos</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">Source code for several Spaceball
+demos (Widget, CityFly, sbtest32, and sbtstmfc) is provided to show
+examples of programming for the Spaceball device. The demo makefiles
+were created using the Visual C++ development environment, which
+allows for either Release or Debug builds of the program on either of
+the two architectures. To build a demo follow these steps:</FONT>
+</P>
+
+<OL>
+   <LI><FONT SIZE="-1" FACE="Arial">Load the makefile into the
+   Microsoft Developers Studio (</FONT><B><FONT SIZE="-1"
+   FACE="Arial">File &gt; Open Workspace &gt; List Files of Type &gt;
+   Makefiles</FONT></B><FONT SIZE="-1" FACE="Arial">).&nbsp;</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Select the type of build you
+   want.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Compile.</FONT>
+</OL>
+
+<P><FONT SIZE="-1" FACE="Arial">The executable should be located in
+the platform-specific bin directory, as follows:</FONT></P>
+
+<BLOCKQUOTE><P><TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Alpha</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\demoname\bin\win32a\debug (or
+         release)</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Intel</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\demoname\bin\win32i\debug (or
+         release)</FONT>
+      </TD></TR>
+</TABLE></P></BLOCKQUOTE>
+
+<P><B><FONT FACE="Arial"
+COLOR="#000080"><A NAME="CityFly"></A>CityFly</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">The CityFly Demo program demonstrates
+how you can use the Spaceball device to interact with geometry using
+eyepoint control, similar to walk-through movement. When you start
+CityFly you see a wire-frame model of a city. Moving the PowerSensor
+ball on the Spaceball device makes the scene move as if the ball were
+your head. Pushing the PowerSensor ball to the left causes the model
+to move to the right, pushing the PowerSensor ball to the right
+causes the model to move to the left, and so on. Rotations are all
+centered about your viewpoint.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial"><IMG SRC="graphics/Win00001.gif"
+ALT="graphics/Win00001.gif" WIDTH=442 HEIGHT=325 BORDER=0
+ALIGN=bottom></FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Motion
+Filter/Constraints</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">By default, only Y rotations (looking
+left and right) are allowed in CityFly. To turn on all rotations
+(left/right, up/down, forward/backward) press </FONT><B><FONT
+SIZE="-1" FACE="Arial">Button 4</FONT></B><FONT SIZE="-1"
+FACE="Arial"> on a Spaceball 2003 device.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">To constrain movement to the single
+largest screen-based X, Y, or Z axis, activate the </FONT><B><FONT
+SIZE="-1" FACE="Arial">Single Axis Filter</FONT></B><FONT SIZE="-1"
+FACE="Arial"> (</FONT><B><FONT SIZE="-1" FACE="Arial">Button
+3</FONT></B><FONT SIZE="-1" FACE="Arial"> on the Spaceball 2003
+device or select the </FONT><B><FONT SIZE="-1" FACE="Arial">Single
+Axis Filter</FONT></B><FONT SIZE="-1" FACE="Arial"> in the SpaceWare
+Settings window).</FONT></P>
+
+<P><TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top>
+         <P><B><FONT FACE="Arial">Spaceball 2003 Buttons</FONT></B>
+      </TD></TR>
+</TABLE><TABLE BORDER=1 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER>1.</CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles translations On/Off.
+         The default is On.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">2.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles rotations On/Off.
+         The default is On.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">3.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles the Single Axis
+         Filter On/Off. When this is On, only the most dominant force
+         applied to the Spaceball is applied to the object. When this
+         is Off, all motions applied to the Spaceball are applied to
+         the object. The default for this filter is Off.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">4.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles roll On/Off. When
+         this is Off, the program filters out any rotation except for
+         left/right rotation.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">5.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Lowers the sensitivity of
+         both translations and rotations.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">6.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Increases the sensitivity of
+         both translations and rotations.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">7.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Not used.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">8.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><B><FONT SIZE="-1" FACE="Arial">Spaceball 2003A and
+         2003B</FONT></B><FONT SIZE="-1" FACE="Arial">: Rezeroes the
+         Spaceball. Instructs the Spaceball to assume a rest position
+         in case of image drift (movement of the select object(s)
+         independent of any pressure on the Spaceball device).<BR>
+         
+         <BR>
+         
+         </FONT><B><FONT SIZE="-1" FACE="Arial">Spaceball 2003
+         FLX</FONT></B><FONT SIZE="-1" FACE="Arial">: Resets the view
+         to the default.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">Pick</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><B><FONT SIZE="-1" FACE="Arial">Spaceball 2003A and
+         2003B</FONT></B><FONT SIZE="-1" FACE="Arial">: Resets the
+         view to the default. This button is not available on the
+         2003 FLX.</FONT>
+      </TD></TR>
+</TABLE></P>
+
+<P><TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top>
+         <P><B><FONT FACE="Arial">Spaceball 3003 Buttons</FONT></B>
+      </TD></TR>
+</TABLE><TABLE BORDER=1 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">Right</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Resets the view to the
+         default.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">Left</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles the driver menu
+         On/Off.<BR>
+         
+         </FONT>
+      </TD></TR>
+</TABLE></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Keys</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Esc</FONT></B><FONT SIZE="-1"
+FACE="Arial">: Quits the program.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">If you have any problems or questions
+contact </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="TechSup.htm">Technical
+Support</A></FONT><FONT SIZE="-1" FACE="Arial"> at Spacetec
+IMC.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080"><BR>
+
+<A NAME="Widget World"></A>Widget World</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">The Widget World demo program
+demonstrates how you can use the Spaceball device to interact with
+geometry using object control, similar to typical CAD system
+movement.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial"><IMG SRC="graphics/Win00002.gif"
+ALT="graphics/Win00002.gif" WIDTH=541 HEIGHT=511 BORDER=0
+ALIGN=bottom></FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">You need to run Widget with a data
+file for an argument. There is one in
+%SDK%/demos/widget/dat/widget.dat. Once you select a data file, a
+wire-frame of the model appears with a small cross roughly in the
+middle of it. Moving the PowerSensor ball causes the model to move
+the same way. Pushing the PowerSensor ball to the left moves the
+model to the left, pushing the PowerSensor ball to the right moves
+the model to the right, and so on. This is object mode.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">The data file format for the Widget
+World scene is a set of points in X, Y, and Z format. These points
+are connected by edges to form line segments. The line segments are
+connected to form polygons. The polygons are rendered to the screen
+to display a scene. The first two lines on the file are points that
+define the extents of the scene. Next appear the number points,
+edges, and polygons. Then, the points, the edges (defined by the
+numbers of the points they connect), and finally the polygons appear.
+The polygons contain data fields for the number of edges they
+contain, a color for rendering the polygon (not currently used), and
+the list of edges.</FONT></P>
+
+<P><TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top>
+         <P><B><FONT FACE="Arial">Spaceball 2003 Buttons</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+</TABLE><TABLE BORDER=1 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">1.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles translations On/Off.
+         The default is On.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">2.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles rotations On/Off.
+         The default is On.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">3.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles the Single Axis
+         Filter On/Off. When this mode is On only the most dominant
+         force applied to the Spaceball is applied to the object.
+         When this filter is Off all motions applied to the Spaceball
+         are applied to the object. The default is for this filter is
+         Off.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">4.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Not used in this
+         application.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">5.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Lowers the sensitivity of
+         both translations and rotations.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">6.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Increases the sensitivity of
+         both translations and rotations.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">7.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Restores settings to their
+         default value.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">8.</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><B><FONT SIZE="-1" FACE="Arial">Spaceball 2003A and
+         2003B</FONT></B><FONT SIZE="-1" FACE="Arial">: Rezeroes the
+         Spaceball. Instructs the Spaceball to assume a rest position
+         in case of image drift (movement of the select object(s)
+         independent of any pressure on the Spaceball device).<BR>
+         
+         <BR>
+         
+         </FONT><B><FONT SIZE="-1" FACE="Arial">Spaceball 2003
+         FLX</FONT></B><FONT SIZE="-1" FACE="Arial">: Resets the view
+         to the default.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">Pick</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><B><FONT SIZE="-1" FACE="Arial">Spaceball 2003A and
+         2003B</FONT></B><FONT SIZE="-1" FACE="Arial">: Resets the
+         view to the default.<BR>
+         
+         <BR>
+         
+         </FONT><B><FONT SIZE="-1" FACE="Arial">Spaceball 2003
+         FLX</FONT></B><FONT SIZE="-1" FACE="Arial">: Not
+         available.</FONT>
+      </TD></TR>
+</TABLE></P>
+
+<P><B><FONT FACE="Arial">Spaceball 3003 Buttons</FONT></B><TABLE
+BORDER=1 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">Right</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Resets the view to the
+         default.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><CENTER><B><FONT SIZE="-1" FACE="Arial">Left</FONT></B>
+         </CENTER>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Toggles the driver menu
+         On/Off.</FONT>
+      </TD></TR>
+</TABLE></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Keys</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Esc</FONT></B><FONT SIZE="-1"
+FACE="Arial">: Quits the program.</FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Command Line Options</FONT></B>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial">Entering a file name causes sbwidget
+to look for that data file instead of the default (widget.dat, in the
+local directory).</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">If you have any problems or questions
+contact </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="TechSup.htm">Technical
+Support</A></FONT><FONT SIZE="-1" FACE="Arial"> at Spacetec
+IMC.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><B><FONT FACE="Arial"
+COLOR="#000080"><A NAME="sbtest32"></A>sbtest32</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">This is a very simple program which
+reads the Spaceball data and prints it to a Win32 Window. It also
+prints out the button presses and releases as well as zero
+events.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial"><IMG SRC="graphics/Win00003.gif"
+ALT="graphics/Win00003.gif" WIDTH=266 HEIGHT=284 BORDER=0
+ALIGN=bottom></FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><B><FONT FACE="Arial"
+COLOR="#000080"><A NAME="sbtestmfc"></A>sbtstmfc</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">This is a very simple program which
+reads the Spaceball data and prints it to a MFC Window. It also
+prints out the button presses and releases as well as zero
+events.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial"><IMG SRC="graphics/Win00004.gif"
+ALT="graphics/Win00004.gif" WIDTH=407 HEIGHT=367 BORDER=0
+ALIGN=bottom></FONT></P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+</BODY>
+</HTML>

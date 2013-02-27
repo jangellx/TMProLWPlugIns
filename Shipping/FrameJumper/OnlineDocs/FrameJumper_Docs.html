@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- Frame Jumper Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt="Frame Jumper" border=0 height=131 src ="PROG-FrameJumper.gif" width=234 ></p>
+	<P align=justify>
+	<br><STRONG>Frame Jumper</STRONG>
+	  is a plug-in for Lightwave 6.0 or greater.  It provides keyframe marking tools and functions to jump
+	  through and modify Layout's aniamtion timeline.  It includes 42 plug-ins: the
+      <a HREF="#FrameJumperMaster">FrameJumper</a> Master plug-in and it's interface,
+	  the generic to add the Master and open the interface,
+      <a HREF="#FrameJumperProperties">FrameJumperProperties</a>, and the generics
+      <a HREF="#JumpToNextMarker">JumpToNextMarker</a>,
+      <a HREF="#JumpToPreviousMarker">JumpToPreviousMarker</a>,
+      <a HREF="#JumpToNextMarkerGroup">JumpToNextMarkerGroup</a>,
+      <a HREF="#JumpToPreviousMarkerGroup">JumpToPreviousMarkerGroup</a>,
+      <a HREF="#MarkFrame">MarkFrame</a>,
+      <a HREF="#UnmarkFrame">UnmarkFrame</a>, and twelve each of
+      <a HREF="#MarkFrameAs">MarkFrameAs</a> and
+      <a HREF="#JumpToMarker">JumpToMarker</a>.  It also includes these related frame jumping plug-ins:
+      <a HREF="#JumpToRenderFirstFrame">JumpToRenderFirstFrame</a>,
+      <a HREF="#JumpToRenderLastFrame">JumpToRenderLastFrame</a>,
+      <a HREF="#JumpToPreviewFirstFrame">JumpToPreviewFirstFrame</a>,
+      <a HREF="#JumpToPreviewLastFrame">JumpToPreviewLastFrame</a>,
+      <a HREF="#NextFrameByRenderStep">NextFrameByRenderStep</a>,
+      <a HREF="#PreviousFrameByRenderStep">PreviousFrameByRenderStep</a>,
+      <a HREF="#NextFrameByPreviewStep">NextFrameByPreviewStep</a>,
+      <a HREF="#PreviousFrameByPreviewStep">PreviousFrameByPreviewStep</a>,
+      <a HREF="#SetRenderRangeToPreviewRange">SetRenderRangeToPreviewRange</a> and
+      <a HREF="#SetPreviewRangeToRenderRange">SetPreviewRangeToRenderRange</a>.</P>
+
+	<P align=justify>To install <STRONG>Frame Jumper</STRONG>, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy FrameJumper.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add FrameJumper.p. Layout should report that 42 plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        <STRONG>Frame Jumper</STRONG> plug-ins from 
+        the Generics pop-up in the Plug-in Options Panel, or assign them to keys 
+        or buttons on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.   The plug-ins will be
+		the prefixed with TM_P under the Plugins heading of the 
+        Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+
+	<br><HR width="90%">
+    <a name="FrameJumperMaster"></a>
+	<H3 align=center>Frame Jumper
+	<HR width="40%"></H3>
+	
+	<P align=justify><STRONG>Frame Jumper</STRONG> is a Master plug-in for marking and jumping to frames.  The Generic plug-ins
+	   <a HREF="#JumpToNextMarker">Jump To Next Marker</a> and <a HREF="#JumpToPreviousMarker">Jump To Previous Marker</a>,
+	   allow you to step through the markers from Layout, as well as creating and deleting markers via
+       <a HREF="#MarkFrame">Mark Frame</a> and <a HREF="#UnmarkFrame">Unmark Frame</a>, and change groups
+	   with <a HREF="#JumpToNextMarkerGroup">JumpToNextMarkerGroup</a> and
+	   <a HREF="#JumpToPreviousMarkerGroup">JumpToPreviousMarkerGroup</a>.  Markers in a group
+	   can be bound to keys or buttons in Layout using the <a HREF="#MarkFrameAs">Mark Frame As</a> and
+       <a HREF="#JumpToMarker">Jump To Marker</a> generic plug-ins.
+
+	<P align=justify><b>Frame Jumper</b> allows you to mark any number of frames, creating "markers".  You can
+	   have any number of markers.  Markers are stored in groups, of which you can have as many as you like.
+	   Markers and groups can be named, and markers can be disabled and set to a particular time or bound to a key.
+	   All markers in the current group are presented in the <b>Frame Jumper</b> interface, which can be used to browse
+	   the markers, change groups or modify markers.  You can also use the previously mentioned generic plug-ins
+	   to cycle through and modify markers and groups directly from Layout.</P>
+	   
+	<P align=justify>There are two ways to activate <STRONG>Frame Jumper</STRONG>.  The simplest way is to
+	   activate any of the above plug-ins, or the <a HREF="#FrameJumperProperties">Frame Jumper Properties</a>
+	   Generic.  These automatically add the <b>Frame Jumper</b> Master plug-in.  The other option is to
+	   manually add the <b>Frame Jumper</b> Master from Layout's Plug-in Options panel; just select it
+	   from the Master pop-up.</p>
+
+	<P align=justify><b>Frame Jumper</b>'s interface can be opened by double-clicking on
+	   the activated Master plug-in from the Plug-in Options Panel, or by activating the
+	   <a HREF="#FrameJumperProperties">Frame Jumper Properties</a> generic.
+	   This opens a non-modal panel, meaning you can leave it open while you work in Layout.  You can resize
+	   the interface vertically by dragging the lower-right corner of the panel, where the diagonal lines
+	   are drawn.  Below is an example of the interface.</p>
+
+    <p align=center><IMG alt="Frame Jumper Master Interface" border=0 height=358 src="FrameJumper-Main.jpg" width=225></p>
+
+	<P align=justify>At the top of the interface is the the <i>Units</i> pop-up.  This determines
+	   if the times are displayed and entered in Seconds or Frames.</p>
+
+	<P align=justify>The About button at the bottom right will pop up information about <b>Frame Jumper</b>
+	   and it's related plug-ins, as well as the keyboard equivilants for the interface.</P>
+
+   	<P align=justify>The most important part of the interface is the lister.  This dislpays all marked frames,
+	   and is sorted by time.  Double-clicking a particular marker will jump to that time in Layout.
+	   The first column of the list shows if the marker is currently enabled.  Disabled markers are skipped by the
+	   <a HREF="#JumpToNextMarker">Jump To Next Marker</a> and <a HREF="#JumpToPreviousMarker">Jump To Previous Marker</a>
+	   Generic plug-ins.  You can click in this column to enable or disable a marker.  The second column marks the frame
+	   that the marker points to.  The third column displays the name of the marker.  The final column displays the
+	   key that the marker is bound to, with nothing displayed for an unbound marker.  The key corresponds to one
+	   of the twelve </P>
+
+	<P align=justify>
+       <IMG alt="Group Popup" border=0 height=80 src="FrameJumper-Group.jpg" width=133 align=right hspace=15>
+	   Just above the lister is the <i>Group</i> pop-up.  This allows you to select the currently
+	   active group.  The lister will show only the markers in that group.  You can use theedit field to change the
+	   group name at any time.  By clicking on the pop-up to the right of the field, you can change groups to any
+	   above the divider.  The Create Group entry allows you to create a new, empty group.  Delete Group clears
+	   the current group and all of it's markers.  If no more groups exist, a new, empty group will be created.
+
+	<P align=justify>The <i>Modify</i> button toggles between the default browser mode and the advanced edit mode.
+	   When enabled, new controls will be made visible at the bottom of the interface, as seen in the example
+	   below.</P>
+
+    <p align=center><IMG alt="Frame Jumper Master Interface" border=0 height=435 src="FrameJumper-Modify.jpg" width=225></p>
+
+   	<P align=justify>The <i>Add</i> button will add a new marker to the list at the current Layout time
+	   to the current group.  You can have any number of markers in each group.  <i>Remove</i> will remove
+	   the currently selected marker from the list.</P>
+
+   	<P align=justify>The <i>Name</i> field allows you to change the name of the currently selected marker.
+	   This can be anything you like; it is just a label for your reference.</P>
+
+	<P align=justify><i>When</i> is the time that this marker points to.  This will be in seconds or frames,
+	   depending on the state of the <i>Units</i> pop-up.</P>
+
+   	<P align=justify><i>Enable</i> toggles the active state of the marker.  Disabled markers will be skipped
+	   by the <a HREF="#JumpToNextMarker">Jump To Next Marker</a> and
+	   <a HREF="#JumpToPreviousMarker">Jump To Previous Marker</a> generics.</P>
+
+	<P align=justify>The <i>Key</i> pop-up allows you to bind a marker to one of the
+	   <a HREF="#JumpToMarker">Jump To Marker</a> generic plug-ins.  Setting this to Off unbinds the marker.
+	   Setting it to any other value binds the current marker to that key, and unbinds any other marker in
+	   the same group that may have been using that key.</P>
+
+   	<P align=justify>The <i>In Group</i> pop-up allows you to change the group that the currently selected
+	   marker belongs to.  The marker will immediatly jump to the new group and be removed from the current
+	   group's list.  If a marker in the new group has is bound to the same key as this marker, the existing
+	   marker will be reset to Off and the new marker will take precedence.</P>
+
+	<H3 align=center>Loading, Saving and Load From Scene
+	  <HR width=50%></H3>
+
+	<P align=justify><i>FrameJumper</i> only allows one instance of itself to be in the scene at a time.  It
+	   will automatically detect multiples of itself and remove it (although it might have to wait until the
+	   next event occurs first).  All instances share the same data, and nothing is cleared from memory until
+	   all instances have been removed.</P>
+
+  	<P align=justify>If for some reason multiple instances exist and you save the scene, only the first instance
+	   will save data, so you don't have to worry about the data being saved twice or other wacky effects.  This
+	   will only happen if you add the Master plug-in and immediatly save the scene, so it should be fairly rare.
+	   On scene load, only the first instance's data will load, and the rest will be considered as duplicates and
+	   be ignored.<P>
+
+  	<P align=justify>In the case of Load From Scene, however the first instance in the scene will be loaded, and
+	  it's groups will be added to the data already loaded into the scene.  This ensures that the new groups are
+	  loaded without change, while the original groups remain intact.  As with loading, all other instances in 
+	  the scene will be skipped.</P>
+
+    <H3 align=center><b>Keyboard Equivilants</b>
+	  <HR width=50%></H3>
+	  <table align=center>
+	    <tr><td>Esc</td>                   <td>Close Panel</td></tr>
+        <tr><td>Arrow Up/Down</td>         <td>Previous/Next Marker</td></tr>
+        <tr><td>Shift-Arrow Up/Down</td>   <td>First/Last Marker</td></tr>
+        <tr><td>Ctrl-Arrow Up/Down</td>    <td>Previous/Next Marker Group</td></tr>
+        <tr><td>*</td>                     <td>New Group</td></tr>
+        <tr><td>=/+</td>                   <td>Add Marker</td></tr>
+        <tr><td>Del/-</td>                 <td>Remove Marker</td></tr>
+        <tr><td>Enter/Return</td>          <td>Go To Marker's Time</td></tr>
+        <tr><td>Tab</td>                   <td>Activate Group Name Field</td></tr>
+        <tr><td>m</td>                     <td>Toggle Modify Mode</td></tr>
+        <tr><td>Shift-F1 to Shift-F12</td> <td>Go To Marker At Key 1-12</td></tr>
+        <tr><td>Ctrl-F1 to Ctrl-F12</td>   <td>Set Marker's Key To 1-12</td></tr>
+        <tr><td>t/w</td>                   <td>Activate When Field</td></tr>
+        <tr><td>L</td>                     <td>Set Marker To Current Layout Time</td></tr>
+        <tr><td>Space</td>                 <td>Toggle Enable Marker</td></tr>
+        <tr><td>n</td>                     <td>Activate Name Field</td></tr>
+        <tr><td>f</td>                     <td>Display Time In Frames</td></tr>
+        <tr><td>s</td>                     <td>Display Time In Seconds</td></tr>
+        <tr><td>F1</td>                    <td>About/Keys</td></tr>
+	  </table>
+
+	<br><HR width="90%">
+	<a name="#FrameJumperProperties"></a>
+	<H3 align=center>Frame Jumper Properties
+	<HR width="40%"></H3>
+
+  	<P align=justify><b>Frame Jumper Properties</b> provides a quick method to get to the
+	   <a HREF="#FrameJumperMaster">Frame Jumper</a> Master plug-in.  If the Master has already been activated,
+	   this will simply open it's interface.  If the Master isn't currently active, this will first add
+	   it and then open the interface.</P>
+
+	<br><HR width="90%">
+	<a name="#JumpToNextMarker"></a>
+	<a name="#JumpToPreviousMarker"></a>
+	<H3 align=center>Jump To Next Marker<br>
+	                 Jump To Previous Marker
+	<HR width="40%"></H3>
+
+  	<P align=justify><b>Jump To Next Marker</b> and <b>Jump To Previous Marker</b> will step to the next
+	   and previous enabled marker, respectively, in the current <b>Frame Jumper</b>group.  Disabled
+	   markers will be skipped.</P>
+
+	<br><HR width="90%">
+	<a name="#JumpToNextMarkerGroup"></a>
+	<a name="#JumpToPreviousMarkerGroup"></a>
+	<H3 align=center>Jump To Next Marker Group<br>
+	                 Jump To Previous Marker Group
+	<HR width="40%"></H3>
+
+  	<P align=justify><b>Jump To Next Marker Group</b> and <b>Jump To Previous Marker Group</b> will step to the next
+	   and previous group, respectively.  All future marker operations will take place on this group until a new
+	   group is selected.</P>
+
+
+	<br><HR width="90%">
+	<a name="#MarkFrame"></a>
+	<a name="#UnmarkFrame"></a>
+	<H3 align=center>Mark Frame<br>
+	                 Unmark Frame
+	<HR width="40%"></H3>
+
+  	<P align=justify><b>Mark Frame</b> will create a new marker at the current time while
+	   <b>Unmark Frame</b> will remove any markers that exist at this time.  Both of these only affect the
+	   currently selected group.</P>
+
+  	<P align=justify>There are twelve each of the <b>Mark Frame As</b> and <b>Jump To Marker</b> plug-ins,
+	  each ending in a different number between 1 and 12.  <b>Mark Frame As</b> will create a new marker at
+	  the current time, and assign it to the key that plug-in ends in.  For example, <b>Mark As Frame 4</b>
+	  will create a marker at the current time and set its key to 4.  If a marker already exists in the current
+	  group with this key, it will be reset to Off and the newly marked frame will get the key.</P>
+
+  	<P align=justify><b>Jump To Marker</b> will jump to the marker with matching its key.  For example,
+	  <b>Jump To Marker 6</b> will jump to the marker with a key of 6.</P>
+
+	<P align=justify>All 24 of these plug-ins affect only the currently selected group.</P>
+
+	<br><HR width="90%">
+	<a name="#JumpToRenderFirstFrame"></a>
+	<a name="#JumpToRenderLastFrame"></a>
+	<H3 align=center>Jump To Render First Frame<br>
+	                 Jump To Render Last Frame
+	<HR width="40%"></H3>
+	
+	<P align=justify><b>Jump To Render First Frame</b> and <b>Jump To Render Last Frame</b> allow you to quickly
+	  jump to the first and last frames of an animation, respectively, as set in the Render Options panel in Layout.</P>
+
+	<br><HR width="90%">
+	<a name="#JumpToPreviewFirstFrame"></a>
+	<a name="#JumpToPreviewLastFrame"></a>
+	<H3 align=center>Jump To Preview First Frame<br>
+	                 Jump To Preview Last Frame
+	<HR width="40%"></H3>
+
+	<P align=justify><b>Jump To Preview First Frame</b> and <b>Jump To Preview Last Frame</b> allow you to quickly
+	  jump to the first and last frames of an animation, respectively, as set in the fields on either end of the
+	  frame slider in Layout's main interface.</P>
+
+
+	<br><HR width="90%">
+	<a name="#NextFrameByRenderStep"></a>
+	<a name="#PreviousFrameByRenderStep"></a>
+	<H3 align=center>Next Frame By Render Step<br>
+	                 Previous Frame By Render Step
+	<HR width="40%"></H3>
+
+	<P align=justify><b>Next Frame By Render Step</b> and <b>Previous Frame By Render Step</b> jump to the
+	  next frame that would be rendered at the step set in the Render Options panel.  For example, if the
+	  Render Step was set to 3 and the Render First Frame was to 1 and the current frame 11, activating
+	  <b>Next Frame By Render Step</b> would jump to frame 13, the next frame that Layout would render
+	  at that step.</P>
+
+	<br><HR width="90%">
+	<a name="#NextFrameByPreviewStep"></a>
+	<a name="#PreviousFrameByPreviewStep"></a>
+	<H3 align=center>Next Frame By Preview Step<br>
+	                 Previous Frame By Preview Step
+	<HR width="40%"></H3>
+
+	<P align=justify><b>Next Frame By Preview Step</b> and <b>Previous Frame By Preview Step</b> jump to the
+	  next frame that would be rendered for a preview at the preview step set in Layout's main interface in
+	  a similar manner to their Render Step cousins.</P>
+
+	<br><HR width="90%">
+	<a name="#SetRenderRangeToPreviewRange"></a>
+	<a name="#SetPreviewRangeToRenderRange"></a>
+	<H3 align=center>Set Render Range To Preview Range<br>
+	                 Set Preview Range To Render Range
+	<HR width="40%"></H3>
+
+	<P align=justify><b>Set Render Range To Preview Range</b> copies the Preview First Frame,
+	   Preview Last Frame and Preview Step into the Render First Frame, Render Last Frame and
+	   Render Step fields in the Render Options panel.  <b>Set Preivew Range To Render Range</b>
+	   reverses this, copying the Render Range values into the Preview Range.</P>
+
+	<br>
+	<P align=justify>After the options are set the way you like, click <i>Create Dirs</i> to build the content
+	   directory structure.  The status field to the left will fill as directories are created, and will turn
+	   red when reporting an error.  Click continue to close return to the main interface.</P>
+	   
+    <H3 align=center><b>Revision History</b>
+	  <HR width="50%"></H3>
+	  <ul>
+	    <li><b>07-28-01</b>
+		  <ul>
+		    <li>Interface update bug fixes
+      </ul>
+
+	    <li><b>03-04-01</b>  First Public Release</li>
+	  </ul>
+
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

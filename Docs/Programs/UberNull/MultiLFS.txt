@@ -1,0 +1,63 @@
+
+MultiLFS 1.0 -- TM Productions -- http://www.tmproductions.com
+
+MultiLFS stand form Multiple Load-From-Scene.  It's purpose is to load
+multiple instances of one scene into another scene, similar to the 
+Load From Scene feature of Lightwave.  Unlike Lightwave's Load From
+Scene, you can load in as many instances of the load-from scene as
+you like.
+
+
+Argument Template:
+
+	MultiLFS ?
+		Gets help on how to use UberNull
+
+	MultiLFS <source.lws> <lfs.lws> <count> [-o <output>] [-lights] 
+                 <FIRST or LAST>
+
+		<source.lws>
+			The name of the scene file to load into
+		<lfs.lws>
+			The name of the scene to Load From Scene from
+		<count>
+			The number of times to Loaad From Scene
+		[-o(utput) <output.lws>]
+			The name of the newly created, MultiLFS'ed scene.
+			If not specified, the a new scene will be created
+			in the same directory called <scene>-MultiLFSed.lws
+		[-lights]
+			Load lights as well as objects
+
+
+MultiLFS takes the source scene provided and creates a new output scene.
+It copies the source scene into the output, and adds the objects and
+optionally the lights from the load-from scene the number of times
+specified.  
+
+Examples:
+	MultiLFS tree.lws bird.lws 6
+		Creates a new scene called tree-MultiLFSed.lws containing
+		the scene tree.lws and six copies of bird.lws
+
+	MultiLFS valley.lws soldier.lws 20 -o valley_with_troops.lws -lights
+		Creates a new scene called valley_with_troops.lws containing
+		the original valley scene plus the contents fo twenty solider
+		scenes, as well as the lights from those scenes.
+
+
+-- Important Notes:
+
+- MultiLFS DOES NOT MODIFY the original scene.  It creates a new scene
+  ending in -MultiLFSed if no output is specified. Thus there is no risk
+  of MultiLFS destroying your original scene.
+
+- The current version of MultiLFS SHOULD work on all bones, objects,
+  lights and cameras.  However, it may not work on verions of Lightwave
+  before or after 5.6.  It will almost certainly not work with Lightwave
+  6.0 due to what may be a drastically different file format.
+
+
+-- History
+
+V1.0	- First release

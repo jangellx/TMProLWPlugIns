@@ -1,0 +1,53 @@
+
+-- Compiling Lightwave Plug-Ins ----------------------------------------
+
+Lightwave plug-ins require the following basic elements:
+
+-- Project File and Worksapce ---------------
+The project should compile to a Win32 DLL (without AppWizard or MFC).
+Optimally, a Lightwave plug-ins should include NO platform-spcific code,
+thus allowing for ports to the Mac, Amiga, SGI and other platforms with
+minimal effort.
+
+-- Library and Object Files -----------------
+- The linker library server.lib
+- The object file serv_w.lib
+
+You need one set of these each in both debug and release versions for each
+platform you intend to compile for.  I usually do this like so:
+
+  Libs
+    Libs -- Debug x86
+      serv_w.obj
+      server.obj
+    Libs -- Release x86
+      serv_w.obj
+      server.obj
+    Libs -- Debug AXP
+      serv_w.obj
+      server.obj
+    Libs -- Release AXP
+      serv_w.obj
+      server.obj
+
+Each configuration (under Project/Settings) should include only ONE of these;
+the others should be Excluded From Build (via the Project Settings, General
+tab).
+
+-- Main File ----------------------------
+The main source file can be C or C++.  If using C++, all functions that are
+passed as pointers to Lightwave MUST be declared extern "C", or they will not
+work.  Otherwise, you can do more or less what the Lightwave SDK documentation
+says to do.
+
+See the example plug-ins in LightwaveSDK/samples and Workspaces/Lightwave.
+
+-- Plug-In Naming and Debugging -----------
+The plug-in's name should end in .p, not .dll (change it from within Project
+Settings, Link tab, Output File Name).
+
+You can also set up the Project Settings so that when you run or debug the
+plug-in, you can have MSVC++ automatically launch Lightwave.  Just change the
+plug-in's Project Settings in the Debug tab's Executable field to Lightwave,
+and change the working directory to that which Lightwave resides.
+

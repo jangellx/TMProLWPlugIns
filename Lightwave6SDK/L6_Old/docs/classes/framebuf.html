@@ -1,0 +1,82 @@
+<html>
+
+<head>
+<title>Classes: FrameBufferHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="freq.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="FileRequester"></a> </td>
+    <td width="96" align="left"><a href="globserv.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="Global"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+<h3>FrameBufferHandler<br>
+FrameBufferInterface</h3>
+<pre>
+typedef struct st_LWFrameBufferHandler {
+   LWInstanceFuncs *inst;
+   LWError         (*open) (LWInstance, int w, int h);
+   void            (*close) (LWInstance);
+   LWError         (*begin) (LWInstance);
+   LWError         (*write) (LWInstance,
+                      const LWBufferValue *R,
+                      const LWBufferValue *G,
+                      const LWBufferValue *B,
+                      const LWBufferValue *alpha);
+   void            (*pause) (LWInstance);
+} LWFrameBufferHandler;
+</pre>
+<p>
+This handler is used
+to display the output of rendering as each frame is completed.  This is
+for the user to view, so the frame buffer should also be able to
+pause waiting for user input.
+<p>
+A frame buffer is an instance, but it may be very limited.  The built-
+in frame buffers have no UI and no stored state.
+<p>
+<dl>
+<dt>open
+<dd>Open display at the given size.
+<dt>close
+<dd>Close display and end display transations.
+<dt>begin
+<dd>Start a new frame.
+<dt>write
+<dd>Write a new line of RGB and alpha data to the
+framebuffer.  Lines always come from top to bottom and
+there are always enough to fill the width and height of
+the requested display.
+<dt>pause
+<dd>Display the buffer to the user and wait for their signal
+to continue before returning.
+
+</dl>
+The sequence of calls for rendering to the frame buffer can be
+visualized as a regular expression:
+<p>
+open, (begin, (write)H, pause?)*, close
+<p>
+Any number of frames may be displayed in a session (even zero).  Write
+will always be called for all the lines in the image and pause is optional.
+<p>
+
+
+</td></tr></table>
+
+</body>
+
+</html>

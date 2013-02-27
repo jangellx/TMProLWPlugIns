@@ -1,0 +1,169 @@
+<html>
+
+<head>
+<title>Globals: LW Item Info 2</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="gmempool.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="Global Memory"></a> </td>
+    <td width="96" align="left"><a href="lightinf.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="LW Light Info 2"></a> </td>
+    <td width="96" align="left"><a href="../globals.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Globals"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>&quot;LW Item Info 2&quot;</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 6.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout</small></p>
+    <p>The item info global returns functions for traversing a list of the items in a scene
+    and for getting information about any one of them. The information available through this
+    global is common to all item types. Information specific to certain item types is provided
+    through separate global functions.</p>
+    <p>This information is read-only, and in general, it doesn't account for the effects of
+    plug-ins.</p>
+    <p><strong>Global Call</strong></p>
+    <pre>   LWItemInfo *iteminfo;
+   iteminfo = global( &quot;LW Item Info 2&quot;, GFUSE_TRANSIENT );</pre>
+    <p>The global function returns a pointer to an LWItemInfo.</p>
+    <pre>   typedef struct st_LWItemInfo {
+      LWItemID     (*first)      (LWItemType, LWItemID);
+      LWItemID     (*next)       (LWItemID);
+      LWItemID     (*firstChild) (LWItemID parent);
+      LWItemID     (*nextChild)  (LWItemID parent, LWItemID prevChild);
+      LWItemID     (*parent)     (LWItemID);
+      LWItemID     (*target)     (LWItemID);
+      LWItemID     (*goal)       (LWItemID);
+      LWItemType   (*type)       (LWItemID);
+      const char * (*name)       (LWItemID);
+      void         (*param)      (LWItemID, LWItemParam, LWTime,
+                                    LWDVector vector);
+      unsigned int (*limits)     (LWItemID, LWItemParam,
+                                    LWDVector min, LWDVector max);
+      const char * (*getTag)     (LWItemID, int);
+      void         (*setTag)     (LWItemID, int, const char *);
+   } LWItemInfo;</pre>
+    <dl>
+      <dt><tt>id = first( itemtype, bone_object )</tt> </dt>
+      <dd>Returns the ID of the first item of a given type, or <tt>LWITEM_NULL</tt> if there are
+        no items of this type in the scene. Valid item types are <blockquote>
+          <p><tt>LWI_OBJECT<br>
+          LWI_LIGHT<br>
+          LWI_CAMERA<br>
+          LWI_BONE</tt></p>
+        </blockquote>
+        <p>If <tt>itemtype</tt> is <tt>LWI_BONE</tt>, the second argument is the ID of the boned
+        object. Otherwise it should be <tt>LWITEM_NULL</tt>. </p>
+      </dd>
+      <dt><tt>id = next( item )</tt></dt>
+      <dd>Returns the next item of the same type as the <tt>item</tt> argument. If there are no
+        more, this returns <tt>LWITEM_NULL</tt>. </dd>
+      <dt><tt><br>
+        id = firstChild( parent )</tt></dt>
+      <dd>Returns the first child item of the parent item, or <tt>LWITEM_NULL</tt> if the parent
+        item has no children. </dd>
+      <dt><tt><br>
+        id = nextChild( parent, child )</tt></dt>
+      <dd>Returns the next child item given a parent item and the previous child, or <tt>LWITEM_NULL</tt>
+        if there are no more children. </dd>
+      <dt><tt><br>
+        id = parent( item )</tt></dt>
+      <dd>Returns the item's parent, if any, or <tt>LWITEM_NULL</tt>. </dd>
+      <dt><tt><br>
+        id = target( item )</tt></dt>
+      <dd>Returns the item's target, if any, or <tt>LWITEM_NULL</tt>. </dd>
+      <dt><tt><br>
+        id = goal( item )</tt></dt>
+      <dd>Returns the item's goal, if any, or <tt>LWITEM_NULL</tt>. </dd>
+      <dt><tt><br>
+        itemtype = type( item )</tt></dt>
+      <dd>Returns the type of an item. </dd>
+      <dt><tt><br>
+        itemname = name( item )</tt></dt>
+      <dd>Returns the name of the item as it appears to the user. </dd>
+      <a name="param">
+      <dt><tt><br>
+        param( item, param, time, vector )</tt></dt>
+      </a>
+      <dd>Returns vector parameters associated with an item. The <tt>param</tt> argument
+        identifies which parameter vector you want. The parameters are <dl>
+          <dt><tt><br>
+            LWIP_POSITION</tt> </dt>
+          <dd>The keyframed position <em>before</em> parenting. Equivalently, if the item is parented,
+            this is its position relative to its parent.</dd>
+          <dt><tt>LWIP_W_POSITION</tt> </dt>
+          <dd>The keyframed position in world coordinates (<em>after</em> parenting). </dd>
+          <dt><tt>LWIP_ROTATION</tt> </dt>
+          <dd>The keyframed rotation, in radians (relative to its parent's rotation). </dd>
+          <dt><tt>LWIP_SCALING</tt> </dt>
+          <dd>The keyframed scale factors (relative to the parent's scale). </dd>
+          <dt><tt>LWIP_PIVOT</tt> </dt>
+          <dd>The item's pivot point, in its own coordinates. This is the origin for rotations. </dd>
+          <dt><tt>LWIP_RIGHT</tt> </dt>
+          <dt><tt>LWIP_UP</tt> </dt>
+          <dt><tt>LWIP_FORWARD</tt> </dt>
+          <dd>+X, +Y and +Z direction vectors for the item, in world coordinates. Together they form
+            the item's rotation and scale transformation matrix. Since they include scaling, these
+            vectors aren't normalized. </dd>
+          <dt><tt>LWIP_W_RIGHT</tt> </dt>
+          <dt><tt>LWIP_W_UP</tt> </dt>
+          <dt><tt>LWIP_W_FORWARD</tt> </dt>
+          <dd>+X, +Y and +Z direction vectors for the world, in item coordinates. In other words,
+            these are the inverse of the previous parameters. </dd>
+        </dl>
+        <p>The value is written to the vector array for the given time. </p>
+      </dd>
+      <dt><tt>channels = limits( item, param, minvec, maxvec )</tt></dt>
+      <dd>Get upper and lower bounds on vector parameters. These may be limits set by the user on
+        joint angles or ranges of movement. The function returns an integer containing bit flags
+        that indicate which of the three vector components contain limits. The symbols for these
+        bits are <blockquote>
+          <p><tt>LWVECF_0<br>
+          LWVECF_1<br>
+          LWVECF_2</tt></p>
+        </blockquote>
+        <p>If the bit is set, then the corresponding element of the vector array contains a valid
+        limit. If the bit is 0, the channel is unbounded.</p>
+      </dd>
+      <p><strong>Example</strong></p>
+      <p>This code fragment traverses the object list, collecting names and some parameters.</p>
+      <pre>   #include &lt;lwserver.h&gt;
+   #include &lt;lwrender.h&gt;
+
+   LWItemInfo *iteminfo;
+   LWItemID id;
+   char *name;
+   LWTime t = 3.0;          /* seconds */
+   LWDVector rt, up, fd;
+
+   iteminfo = global( &quot;LW Item Info 2&quot;, GFUSE_TRANSIENT );
+   if ( iteminfo ) {
+      id = iteminfo-&gt;first( LWI_OBJECT, NULL );
+      while ( id ) {
+         name = iteminfo-&gt;name( id );
+         iteminfo-&gt;param( id, LWIP_RIGHT, t, rt );
+         iteminfo-&gt;param( id, LWIP_UP, t, up );
+         iteminfo-&gt;param( id, LWIP_FORWARD, t, fd );
+         if ( rt[ 0 ] &gt; 0.0 ) { ...
+
+         id = iteminfo-&gt;next( id );
+      }
+   }
+
+</pre>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

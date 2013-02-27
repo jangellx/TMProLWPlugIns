@@ -1,0 +1,226 @@
+<html>
+
+<head>
+<title>Plug-in Classes</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="globals.html"><img width="96" height="20" border="0"
+    src="images/navlt.gif" alt="Globals"></a> </td>
+    <td width="96" align="left"><a href="handler.html"><img width="64" height="20" border="0"
+    src="images/navrt.gif" alt="Handlers"></a> </td>
+    <td width="384" align="right"><a href="index.html"><img width="230" height="20" border="0"
+    src="images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>Plug-in Classes</h3>
+    <p>The plug-in SDK divides plug-ins into classes according to what they do. Each class
+    plugs into LightWave at specific points and performs a well-defined set of tasks.</p>
+    <div align="center"><center><table border="0" cellpadding="4" cellspacing="0">
+      <tr>
+        <td colspan="3" align="center"><em><strong>Class Index</strong></em></td>
+      </tr>
+      <tr>
+        <td valign="top"><a href="classes/animload.html">AnimLoaderHandler</a> <br>
+        <a href="classes/animsave.html">AnimSaverHandler</a> <br>
+        <a href="classes/channel.html">ChannelHandler</a> <br>
+        <a href="classes/colorpik.html">ColorPicker</a> <br>
+        <a href="classes/cs.html">CommandSequence</a> <br>
+        <a href="classes/tool.html">CreateToolHandler</a> <br>
+        <a href="classes/custobj.html">CustomObjHandler</a> <br>
+        <a href="classes/displace.html">DisplacementHandler</a> <br>
+        <a href="classes/environ.html">EnvironmentHandler</a> <br>
+        <a href="classes/freq.html">FileRequester</a> <br>
+        </td>
+        <td valign="top"><a href="classes/framebuf.html">FrameBufferHandler</a> <br>
+        <a href="classes/globserv.html">Global</a> <br>
+        <a href="classes/imgfilt.html">ImageFilterHandler</a> <br>
+        <a href="classes/imgload.html">ImageLoader</a> <br>
+        <a href="classes/imgsave.html">ImageSaver</a> <br>
+        <a href="classes/itemmot.html">ItemMotionHandler</a> <br>
+        <a href="classes/generic.html">LayoutGeneric</a> <br>
+        <a href="classes/master.html">MasterHandler</a> <br>
+        <a href="classes/me.html">MeshDataEdit</a> <br>
+        <a href="classes/objload.html">ObjectLoader</a> <br>
+        </td>
+        <td valign="top"><a href="classes/objrep.html">ObjReplacementHandler</a> <br>
+        <a href="classes/pxlfilt.html">PixelFilterHandler</a> <br>
+        <a href="classes/texture.html">ProceduralTextureHandler</a> <br>
+        <a href="classes/scenecvt.html">SceneConverter</a> <br>
+        <a href="classes/shader.html">ShaderHandler</a> <br>
+        <a href="classes/tool.html">ToolHandler</a> <br>
+        <a href="classes/tool.html">TransformToolHandler</a> <br>
+        <a href="classes/volume.html">VolumetricHandler</a> <br>
+        </td>
+      </tr>
+    </table>
+    </center></div><p>The following summary loosely groups the classes into a few broad
+    categories. These categories are merely suggestive. They don't have any technical
+    significance, and there are certainly other ways the classes can be grouped. The classes
+    in the ignominious <em>Other</em> category are actually among the most interesting;
+    they're categories unto themselves.</p>
+    <p><em><strong>File Handling</strong></em><dl>
+      <dt><a name="ImageLoader" href="classes/imgload.html">ImageLoader</a></dt>
+      <dd>LightWave relies on image loader plug-ins to read image files. An image loader converts
+        the image information in a file into a rectangular bitmap in one of LightWave's internal
+        formats, which include 8-bit grayscale, 8-bit indexed color, 24-bit RGB, 32-bit RGBA, and
+        floating point grayscale, RGB and RGBA.</dd>
+      <dt><br>
+        <a name="ImageSaver" href="classes/imgsave.html">ImageSaver</a></dt>
+      <dd>As you might guess, image savers work very much like image loaders in reverse. Loaders
+        and savers employ the same protocols, and the loader and saver for a given format almost
+        always share source code and reside in the same .p file.</dd>
+      <dt><br>
+        <a name="AnimLoaderHandler" href="classes/animload.html">AnimLoaderHandler</a></dt>
+      <dd>Animation loaders treat animation files (AVI, QuickTime or MPEG files, for example) as a
+        sequence of still images. LightWave calls on them during rendering to retrieve one frame
+        at a time from an animation file. Frames are passed to LightWave using the image loader
+        protocols.</dd>
+      <dt><br>
+        <a name="AnimSaverHandler" href="classes/animsave.html">AnimSaverHandler</a></dt>
+      <dd>Animation savers write out a sequence of rendered images as an animation file. The
+        rendered frames are added to the animation file as each frame is rendered. The rendered
+        image is passed to the saver in the same way it's passed to <a href="#FrameBufferHandler">frame
+        buffer display</a> plug-ins, except that there is no pause function call after each frame,
+        and animation savers are initially given a filename. </dd>
+      <dt><br>
+        <a name="ObjectLoader" href="classes/objload.html">ObjectLoader</a></dt>
+      <dd>Object loaders read and convert object geometry files.When Layout or Modeler encounter
+        an object file in a format they don't recognize, they call the object loaders in sequence
+        until one of them recognizes and loads the object. Any geometry data that LightWave's
+        native object format supports can also be passed to LightWave by an object loader. <p>There
+        isn't a corresponding object saver class. You can implement an object saver using the <a
+        href="#MeshDataEdit">MeshDataEdit</a> class in Modeler or the mesh access globals in
+        Layout.</p>
+      </dd>
+      <dt><a name="SceneConverter" href="classes/scenecvt.html">SceneConverter</a></dt>
+      <dd>Scene converters are used to load foreign scene formats. When Layout encounters a scene
+        file it can't load, it passes the filename to the scene converters in sequence until one
+        of them recognizes the format. The converter rewrites the scene as a temporary LWSC file
+        and passes the filename of the temporary file back to Layout, and after Layout loads the
+        file, it calls the plug-in again to delete the temporary file. </dd>
+    </dl>
+    <p><em><strong>Dialogs</strong></em><dl>
+      <dt><a name="FileRequester" href="classes/freq.html">FileRequester</a></dt>
+      <dd>File requester plug-ins replace the host platform's default file selection dialog, or
+        provides one if none exists.</dd>
+      <dt><br>
+        <a name="ColorPicker" href="classes/colorpik.html">ColorPicker</a></dt>
+      <dd>Color picker plug-ins replace the host platform's default color selection mechanism. </dd>
+    </dl>
+    <p><em><strong>Modeling</strong></em><dl>
+      <dt><a name="MeshDataEdit" href="classes/me.html">MeshDataEdit</a></dt>
+      <dd>Mesh editing Modeler plug-ins can examine, modify and create points and polygons.
+        They're listed in the Modeler interface in the Custom pop-up under Tools.</dd>
+      <dt><br>
+        <a name="CommandSequence" href="classes/cs.html">CommandSequence</a></dt>
+      <dd>These Modeler plug-ins can issue commands similar to the operations available to the
+        user in the interface. They can also do the same mesh editing that MeshDataEdit plug-ins
+        do. CommandSequence plug-ins appear in the Custom popup in the Objects menu, and the user
+        has the ability to set the string arguments they receive.</dd>
+      <dt><br>
+        <a name="ToolHandler" href="classes/tool.html">ToolHandler<br>
+        CreateToolHandler<br>
+        TransformToolHandler</a></dt>
+      <dd>Description.</dd>
+    </dl>
+    <p><em><strong>Rendering</strong></em><dl>
+      <dt><a name="DisplacementHandler" href="classes/displace.html">DisplacementHandler</a></dt>
+      <dd>Displacement plug-ins deform objects by moving their points. The evaluation function is
+        called for each vertex at each time step.</dd>
+      <dt><br>
+        <a name="ItemMotionHandler" href="classes/itemmot.html">ItemMotionHandler</a></dt>
+      <dd>At each time step, item motion plug-ins can translate, rotate and scale any item that
+        can be keyframed (objects, lights, cameras, bones). </dd>
+      <dt><br>
+        <a name="ChannelHandler" href="classes/channel.html">ChannelHandler</a></dt>
+      <dd>Channel handlers are similar to item motion handlers, but they work on a single keyframe
+        channel, and the data they control can represent anything, not just the familiar motion
+        channels. These can be used in combination with <a href="#CustomObjHandler">custom objects</a>.</dd>
+      <dt><br>
+        <a name="ObjReplacementHandler" href="classes/objrep.html">ObjReplacementHandler</a></dt>
+      <dd>Object replacement plug-ins can replace the geometry of an object at each time step. The
+        evaluation function replaces an object simply by returning the filename of a different
+        object. This can be used to load object sequences, analogous to image sequences, or to
+        manage multiple versions of an object modeled at different levels of detail.</dd>
+      <dt><br>
+        <a name="ShaderHandler" href="classes/shader.html">ShaderHandler</a></dt>
+      <dd>Shaders modify the appearance of a surface during rendering. The shader evaluation
+        function is called at every pixel in which the associated surface is visible, and at each
+        of these surface spots, the shader can modify any or all of the surface's basic
+        attributes.</dd>
+      <dt><br>
+        <a name="ProceduralTextureHandler" href="classes/texture.html">ProceduralTextureHandler</a></dt>
+      <dd>Procedural textures are functions that modulate the parameters of a surface. They are
+        exactly like Layout's built-in textures (fractal noise, for example), taking an arbitrary
+        3D vector as input and producing another vector as output. They work at a lower level than
+        shaders.</dd>
+      <dt><br>
+        <a name="ImageFilterHandler" href="classes/imgfilt.html">ImageFilterHandler</a></dt>
+      <dd>Image filter plug-ins apply image post processing (filtering) effects to the final
+        rendered image. Each filter is applied after all the antialiasing and motion blur passes
+        are complete. The filter has access to LightWave's internal image buffers, and it does its
+        work by modifying the red, green, blue and alpha values of the final image. Image filters
+        may also be called to apply their effects to a test image in a preview window. </dd>
+      <dt><br>
+        <a name="PixelFilterHandler" href="classes/pxlfilt.html">PixelFilterHandler</a></dt>
+      <dd>Pixel filters apply image post processing effects to individual pixels (strictly
+        speaking, <em>samples</em>) in the rendered image. Pixel filters have access to the same
+        internal buffers as image filters, but differ from image filters because they work on one
+        sample at a time, rather than the entire image, and they're called before antialiasing and
+        motion blur. Pixel filters also resemble shaders, except that they work on the rendered
+        image rather than a single surface.</dd>
+      <dt><br>
+        <a name="EnvironmentHandler" href="classes/environ.html">EnvironmentHandler</a></dt>
+      <dd>Environment handlers replace Layout's backdrop and fog effects. They can draw the sky
+        and the horizon, for example, on the scene's infinitely distant backdrop, or attenuate and
+        whiten the color of distant objects to simulate fog.</dd>
+      <dt><br>
+        <a name="VolumetricHandler" href="classes/volume.html">VolumetricHandler</a></dt>
+      <dd>Volume rendering plug-ins integrate opacity and color along rays fired through the
+        scene. The rays are fired by Layout and passed one at a time to the volume renderer for
+        evaluation. Volumetric rendering can be used to create smoke plumes, splashing liquids,
+        x-ray views, hair, fur, feathers--anything that involves light transmission effects or
+        details too fine to model with explicit geometry.</dd>
+      <dt><br>
+        <a name="MasterHandler" href="classes/master.html">MasterHandler</a></dt>
+      <dd>Master plug-ins manage complex animation effects that require the coordinated operation
+        of multiple plug-in instances, or multiple plug-ins of different classes. Examples include
+        surface effects that the user can apply to all surfaces simultaneously, and a physics
+        engine that can control motion, deformation and volumetrics through a single interface.</dd>
+    </dl>
+    <p><em><strong>Other</strong></em><dl>
+      <dt><a name="FrameBufferHandler" href="classes/framebuf.html">FrameBufferHandler</a></dt>
+      <dd>Frame buffer plug-ins display the rendered image as each frame is completed. They
+        include a pause function to give the user time to view the image and decide whether to
+        continue rendering. </dd>
+      <dt><br>
+        <a name="Global" href="classes/globserv.html">Global</a></dt>
+      <dd>Global plug-ins provide services that any other plug-in can use. These services are
+        added to the list of services available through the <tt>GlobalFunc</tt> every plug-in
+        receives in its activation function. The <a href="globals.html">globals page</a> explains
+        how both built-in and plug-in Global class services are made available to other plug-ins.</dd>
+      <dt><br>
+        <a name="LayoutGeneric" href="classes/generic.html">LayoutGeneric</a></dt>
+      <dd>Generic plug-ins are utilities that perform non-rendering tasks such as configuring
+        external devices or performing calculations. Generics can also issue commands that alter
+        the scene.</dd>
+      <dt><br>
+        <a name="CustomObjHandler" href="classes/custobj.html">CustomObjHandler</a></dt>
+      <dd>These can be thought of as custom null objects. The plug-in controls how the object
+        looks to the user in Layout's interface and can get and set an arbitrary number of channel
+        parameters.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

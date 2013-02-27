@@ -1,0 +1,46 @@
+
+--- Converting AXP Projects to X86 and visa-versa ---
+
+When you create a project on an Intel or an Alpha machine, it will not automatically
+compile on the other platform.  There are a few steps you have to perform to make a
+new project configuration for the desired platform.
+
+-- X86 to Alpha
+Select the menu item Build/Configurations.  This presents you with a list of all the
+configurations for all projects.  This generally includes just Win32 Release and Win32
+Debug.
+
+To make the Alpha versions, just select the configuration you want to convert and click
+the Add button.  This opens the Add Project Configuration window.  Change the name of
+the project from Release or Debug to Release Alpha or Debug Alpha, respectivly.
+
+It is important that the Intel versions are ALWAYS named Release and Debug, and the
+Alpha versions are ALWAYS named Realease Alpha and Debug Alpha.  This is nessesary
+because the configuration name is how MSVC++ determines what to compile.  If you have
+one project with a configuration called Debug Alpha and one named Debug AXP, the project
+will not be compiled successfully and will not be linked with your program.
+
+To re-itterate:
+
+  Intel Debug:    Win32 Debug
+  Intel Release:  Win32 Release
+  Alpha Debug:    Win32 Debug Alpha
+  Alpha Release:  Win32 Release Alpha
+
+Be sure your configurations are named correctly.  OFten if you get a lot of linker
+errors and are sure you have all your dependancies set up correctly, it can be because
+your configurations are named wrong.
+
+
+-- Alpha to X86
+This is very similar to converting from X86 to Alpha.  However, by default MSVC++
+creates a configuration called Win32 Debug or Win32 Release on the Alpha.  You must
+first rename the existing configuratiosn to Win32 Debug Alpha and Win32 Release Alpha,
+and then generate the new Win32 Debug and Win32 Release configurations for x86.
+
+
+-- Picking Configurations
+Choose your configuration via the Build/Set Active Configurations menu option.
+Choose whichever you need to compile at the time.  Then hit compile, and you're set.
+
+

@@ -1,0 +1,34 @@
+
+UberNull -- TM Productions -- http://www.tmproductions.com
+
+UberNull is a simple program that parents every object, camera, bone
+and light that is not already parented to an UberNull.  This is
+useful for creating setups and assemblies, where it is useful to have
+everything parented to a single, easy to manage null object.
+
+Argument Template:
+
+	UberNull ?
+		Gets help on how to use UberNull
+
+	UberNull <scene.lws>
+		<scene.lws> is the name of the scene file to UberNullify
+
+UberNull takes the scene file provided and generates a new scene file
+called <scene>-UberNull.lws in the same directory.  The new scene
+contains a null object called --UberNull--<scene> as the first object,
+in the scene, to which everything that was previously unparented is
+now parented to.
+
+
+-- Important Notes:
+
+- UberNull DOES NOT MODIFY the original scene.  It creates a new scene
+  ending in -UberNull. Thus there is no risk of UberNull destroying your
+  original scene.
+
+- UberNull SHOULD work on all bones, objects, lights and cameras.
+  However, it may not work on verions of Lightwave before or after
+  5.6.  It will almost certainly not work with Lightwave 6.0 due to
+  what may be a drastically different file format.
+

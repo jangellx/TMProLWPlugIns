@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- Mot-ify Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="../../images/logo/TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt="Moy-ify" border=0 height=131 src ="PROG-Motify.gif" width=234 ></p>
+	<P align=justify>
+	<br><STRONG>Motify</STRONG>
+	  is a replacement Delete Key panel for Lightwave 6.0 or greater.  It includes more advanced features, including
+	  clearing motions, deleting ranges of keys and deleting keys within a threshold.</P>
+
+	<P align=justify>To install Mot-ify, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy Motify.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add Motify.p. Layout should report that one plug-in has been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        <STRONG>Mot-ify</STRONG> plug-in from 
+        the Generics pop-up in the Plug-in Options Panel, or assign it to a key 
+        or button on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.   The plug-in will be
+		the prefixed with TM_P under the Plugins heading of the 
+        Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+
+	<hr width="90%">
+	
+	<P align=justify><STRONG>Mot-ify</STRONG> is designed to completely replace the Delete Key panel
+	built into Lightwave 6, and you can use it in exactly the same way.  It is recommended that you
+	replace your default Delete Key key (the Delete key in the default keyboard layouts) with
+	Mot-ify so it is always available, as well as providing you with more advanced options than
+	Delete Key at a keystroke.
+
+    <p align=center><IMG alt="Mot-ify Interface" border=0 height=184 src="Motify-Main.jpg" width=432></p>
+
+	<P align=justify>To use <STRONG>Mot-ify</STRONG>,
+       you must first select the item you want to delete keyframes from.  Once you have selected
+	   the appropriate items, launch <b>Mot-ify</b>.  You should see an interface simlar to the one
+	   shown above.  Using <b>Mot-Ify</b> involes selecting some items, choosing a <i>Delete Mode</i>,
+	   entering a range and threshold, enabling or disabling channels, choosing a <i>For</i> mode,
+	   and hitting OK to process the keyframes.   Most of these steps are optional; to simply delete
+	   a keyframe at the current time in the previous <i>For</i> mode, launch <b>Mot-ify</b> and
+	   click <i>OK</i>.  Clicking <i>Cancel</i> will exit without modifing any motions.</P>
+
+	<P align=justify>
+       <IMG align=right alt="For Popup" border=0 height=95 src="Motify-For.jpg" width=195 hspace=15>
+	   Most of these options should look familiar from the Delete Key panel.  For example,
+	   the Position, Rotation and Scale buttons, and the individual channel buttons operate in the exact
+	   same manner as those in the Delete Key panel.  The <i>For</i> pop-up also identical, except that
+	   it includes a new option, <i>Selected Items And Descendants</i>, which is conspicuously missing
+	   from the the built-in panel.  As with Delete Key, <i>For</i> determines which objects will have
+	   their keys deleted.</P>
+
+	<P align=justify>The main differences come at the top of the interface.  <i>Delete Mode</i> determines
+	   what Mot-ify does to the item's motion.  The default mode, <i>Delete Key</i>, forces <b>Mot-ify</b>
+	   to act exactly like the built-in Delete Key command, deleteing the key at the specified time.  Both
+	   integer and fractional keyframe values can be entered.  The <i>Threshold</i> field can be used to
+	   determine how close a keyframe has to be to the choosen frame to be deleted.  This is useful for
+	   deleting fractional keyframes when <i>Allow Fractional Current Frame</i> is disabled in Layout's
+	   Options Panel.</P>
+
+    <P align=justify>
+       <IMG align=right alt=" Popup" border=0 height=140 src="Motify-Modes.jpg" width=171 hspace=15>
+	   <i>Delete Keys Within Range</i> will delete all keyframes between the <i>To</i> and <i>From</i>
+	   frames, including the <i>To</i> and <i>From</i> frames themselves.  As with <i>Delete Key</i> mode,
+	   the <i>Threshold</i> can be used to delete keys around before <i>To</i> and after <i>From</i>, although
+	   now matter what the threshold is, all keys within the range will be deleted.<P>
+
+	<P align=justify>
+	   <i>Delete Keys Outside Range</i> will delete all keyframes outside the <i>To</i> and <i>From</i>
+	   frames, not including the <i>To</i> and <i>From</i> frames themselves.  <i>Threshold</i> is not
+	   used in thise mode; it only applies to modes where the <i>To</i> or <i>From</i> frames are
+	   also deleted.<P>
+
+    <P align=justify>
+	   <i>Delete Keys Before Range</i> deletes all keyframes before the <i>To</i> frame.  Similarly,
+	   <i>Delete Keys After Range</i> deletes all keys after the <i>From</i> frame.  In neither
+	   case are the <i>To</i> or <i>From</i> frames deleted.</P>
+
+    <P align=justify>
+	   <i>Clear Motion</i> duplicates the function of Lightwave 5.6's Clear Motion feature in the
+	   old Motion Graph.  All existing keyframes will be deleted, and a new, default keyframe
+	   will be created.  Unlike 5.6's Clear Motion, this will only clear the channels marked at
+	   the bottom of the interface.</P>
+	   
+	<P align=justify>If all keyframes become deleted in any of these modes, a new default keyframe is
+	   created at frame 0 with a positon and rotation of 0.0 on all axes, and a scale of 1.0.</P>
+	   
+	<P align=justify>
+       <IMG align=right alt="Thresholds Popup" border=0 height=125 src="Motify-Thresholds.jpg" width=61 hspace=15>
+	   For more control in <i>Delete Key</i> and <i>Delete Within Range</i>, the <i>Threshold</i>
+	   can be used.  <i>Threshold</i> determines how close a keyframe has to be to the <i>From</i> and <i>To</i>
+	   frame numbers in order to be deleted.  The default value of 0.0 means that the key must exactly
+	   match the frame numbers entered.  A value of 0.1 mean that any keyframe within 0.1 frames will be
+	   deleted.  For example, if the you are trying to delete keyframe 20 with a <i>Threshold</i> of 0.1, 
+	   all keys between the range of 19.9 throuhg 20.1 will be deleted.  A value of 0.5 can be used to ensure
+	   that any fractional keys between the current frame and the next or previous frames are deleted with
+	   going into the domain of the the next keyframe.  The pop-up to the right of the <i>Threshold</i>
+	   field contains a number of reasonable presets for the threshold value.</P>
+
+	<P align=justify>
+	   The <i>Protection</i> pop-up can be used to ensure that certain important keyframes
+	   are not deleted by <b>Mot-ify</b>, no matter what the <i>Delete Mode</i> or <i>To</i>/<i>From</i>
+	   range are.  This is especially useful when deleting keys outside a range or clearing a motion,
+	   where deleting all keyframes could ruin your scene or destroy your character's bone setup and IK poses.</P>
+
+	<P align=justify>
+       <IMG align=right alt="Protection Popup" border=0 height=95 src="Motify-Protect.jpg" width=118 hspace=15>
+	   <i>No Protection</i> means that no keyframes will be protected from deletion.  This
+	   allows you to delete any frame with <b>Mot-ify</b>.</P>
+	
+	<P align=justify><i>Protect Frame 0</i> will ensure that no keys at frame 0 are deleted.  Similarly,
+	   <i>Protect Neg &amp; 0</i> will protect frame 0 and all negative keyframes.</P>
+
+   	<P align=justify><i>Protect First Key</i> and <i>Protect Last Key</i> will keep <b>Mot-ify</b> from
+	   deleting the first or last key in the channel, respectivly.</P>
+
+   	<P align=justify>The <i>About</i> button will open the <i>About Mot-ify</i> panel, which contains
+	   information about the plug-in and a list of keyboard equivilants that can be used.</p>
+
+	<P align=justify>As with Delete Key, <b>Mot-ify</b> has buttons to enabled and disable individual
+	   channels and groups of channels.  Only the selected channels will be processed.  You can click
+	   the <i>Position</i>, <i>Rotation</i> and <i>Scale</i> buttons to toggle all the channels in
+	   that group, and shift-click to invert that group's selection.</P>
+
+	<P align=justify>The <i>All Other Channels</i> toggle is a very powerful feature, but can cause
+	   a lot of damage to your scene if used incorrectly.  When you click on it, a message will appear
+	   asking if you're really sure you want it enabled.  If you do, then all non-motion channels will
+	   also be processed by <b>Mot-ify</b> (the <i>Position</i>, <i>Rotation</i> and <i>Scale</i> buttons
+	   still determine if the motion channels are processed).  This includes all envelopes applied to
+	   those items (like Camera Zoom Factor and Light Intensity), envelopes for applied plug-ins (such
+	   as Morph Mixer channels), and surface envelopes applied in the Surface Editor.  <b>Use this feature
+	   carefully</b>, especially when deleting keys on multiple items at once; in such cases <b>Mot-ify</b>
+	   will ask you once more if you're really sure you want to do this.</P>
+
+	<P align=justify>To begin processing, fill in the options you want and click <i>OK</i>.  In some of the
+	   more time-consuming operations, such as clearing the motions of items and their children, or deleting
+	   a range of keys in all items, <b>Mot-ify</b> will display a progress window while it works.</P>
+
+	<H3 align=center>Limitations
+	  <HR width=50%></H3>
+
+	<P align=justify>The one thing that keeps <b>Mot-ify</b> from being a complete replacement for Delete
+	   Key is edit field control.  LWPanels doesn't simulate Layout's handling of Return (which accepts the
+	   value and closes the panel) and Enter (which acts like Tab, closing the panel after the last field).
+
+	<P align=justify>You'll also notice that no edit fields are active when you open the panel, which means
+	   you can't just call <b>Mot-ify</b>, typing in a value, and hit Return to continue.  This is again
+	   due to how LWPanels handles edit fields.  It is possible to make the edit field enabled by default, but
+	   this slows down quick deletion operations by requiring you to hit Enter more times to close the panel.
+
+    <P align=justify>Instead I've opted to make <b>Mot-ify</b> immediatly available for quickly deleting
+	   keys at the current time just by calling it and hitting Return or Enter, which probably covers 90% of
+	   it's everyday use.  To enter a different time value, you'll have to first hit Tab to go to the first
+	   edit field, or click in a field.</P>
+
+    <H3 align=center><b>Keyboard Equivilants</b>
+	  <HR width=50%></H3>
+	  <table align=center>
+	    <tr><td>Esc</td>                <td>Cancel (Do Nothing)</td></tr>
+        <tr><td>Enter/Return</td>       <td>OK (Process)</td></tr>
+        <tr><td>Arrow Up/Down</td>      <td>Previous/Next Delete Mode</td></tr>
+        <tr><td>Ctrl-Arrow Up/Down</td> <td>Previous/Next For Mode</td></tr>
+        <tr><td>Shift-Z/z</td>          <td>Previous/Next Protection Mode</td></tr>
+        <tr><td>Tab/f</td>              <td>Activate From Field</td></tr>
+        <tr><td>t</td>                  <td>Activate Delete Field</td></tr>
+        <tr><td>e</td>                  <td>Activate Threshold Field</td></tr>
+        <tr><td>1-3</td>                <td>Toggle Individual Position Channels</td></tr>
+        <tr><td>4-6</td>                <td>Toggle Individual Rotation Channels</td></tr>
+        <tr><td>7-8</td>                <td>Toggle Individual Scale Channels</td></tr>
+        <tr><td>p</td>                  <td>Toggle all Position Channels</td></tr>
+        <tr><td>r</td>                  <td>Toggle all Rotation Channels</td></tr>
+        <tr><td>s</td>                  <td>Toggle all Scale Channels</td></tr>
+        <tr><td>Shift-P</td>            <td>Invert Position Channels</td></tr>
+        <tr><td>Shift-R</td>            <td>Invert Rotation Channels</td></tr>
+        <tr><td>Shift-S</td>            <td>Invert Scale Channels</td></tr>
+        <tr><td>F1</td>                 <td>About/Keys</td></tr>
+	  </table>
+
+    <H3 align=center><b>Revision History</b>
+	  <HR width=50%></H3>
+	  <ul>
+	    <li><b>04-22-01</b>  Fixed another deep channel group bug that caused lock-ups in certain situations</li>
+	    <li><b>02-12-01</b>  Fixed a bug that would cause Mot-ify to lock up (or rather, it would get stuck
+		  in an endless loop) when scanning deep channel groups.  This was most obvious when deleting keys from
+		  a ParticleFX emitter.</li>
+	    <li><b>01-29-01</b>  <i>All Other Channels</i> will now also affect all other channel groups belonging
+		  to an item, except for the bones of an object (which are, technically, channel groups of the object).
+		  This allows <b>Mot-ify</b> to be used with to delete Morph Mixer keys and other keys within groups.</li>
+	    <li><b>01-20-01</b>
+		  <ul>
+		    <li>Replaced the <i>Protect Frame 0</i> checkbox with the <i>Protection</i> pop-up</li>
+			<li>The <i>Protection</i> mode is now remembered between activations, at least until Layout is quit.
+			<li>Removed <i>Clear Motion Except Frame 0</i></li> and <i>Clear Motion After Frame 0</i>, since
+			    those functions are now available from the <i>Protection</i> pop-up.</li>
+		    <li>Added keyboard equivilants to open the About/Keys panel and change <i>Protection</i> modes</li>
+		    <li>Fixed a bug where a new default frame was created at frame 0 if frame 0</li>
+		  </ul>
+	    <li><b>01-16-01</b>
+		  <ul>
+		    <li>Added <i>All Other Channels</i> toggle</li>
+		    <li>Fixed the <i>All Items</i> <i>For</i> mode, which was previously ignoring unparented items.</li>
+			<li>Fixed <i>About Box</i> title bar, removed some extra spacing and fixed a crash when scrolling
+			    the Keyboard Equivilants List.</li>
+		  </ul>
+	    <li><b>01-14-01</b>  First Public Release</li>
+	  </ul>
+	
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

@@ -1,0 +1,33 @@
+
+--- Creating New Programs --------------------------
+There are a couple of key things to remember when creating programs that will use
+the TM Productions linker libraries:
+
+- The project MUST link with the Multithreaded Linker Library in Release mode,
+and Multithreaded Debug Linker Library in Debug mode.  If you do not do this, you
+will get linker errors about functions be redefined in LIBC or similar.
+
+- You must ensure that any linker library projects that must be linked with this
+program are dependencies of your main project, else they won't be linked or compiled
+when your program is compiled.
+
+- You must be sure that you have the nessesary configurations for the platform and
+mode (debug or release) that you are compiling for.  See the file on converting AXP
+to and from X86 projects for more information.  If this is not set up correctly, you
+may encounter a series of liner errors.
+
+- For Lightwave plug-ins, you must include the appropriate Lightwave header files
+(including Lightwave_SDK_CPP_Wrappers will do generally cover this), have a
+ServerRecord filled out (or ServerName, ServerClass and Active() function), and have
+all functions that are passes as pointers to Lightwave declared as extern "C".  You
+must also be sure to link with server.lib and serv_w.obj, or your plug-in won't be
+recognized as on when added to Lightwave.  The plug-in should be compiled as a DLL
+and end in .p.
+
+- For convience, I place executables in a single directory, sorted by platform and
+configuration.  To do this, simply change the Output Path in the Link tab of the
+Project Settings to point to Bin/<platform>/<config>/<program>.  Do NOT use absolute
+paths; rather add the apropriate number of ../'s to the begining of the path to go
+back enough directories to create a relative path to the Bin directory.  This is a
+bit of a pain to setup, but I find it more convenient once it is.
+

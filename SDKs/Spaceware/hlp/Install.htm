@@ -1,0 +1,1315 @@
+<!--This file created 10:58 AM  5/19/98 by Claris Home Page version 2.0-->
+<HTML>
+<HEAD>
+   <TITLE>Installing the SDK</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 2.0">
+   <X-SAS-WINDOW TOP=17 BOTTOM=594 LEFT=8 RIGHT=888>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<P><A HREF="SupPlatf.htm"><IMG SRC="graphics/prev1.gif"
+ALT="graphics/prev1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0
+ALIGN=bottom></A><A HREF="DevInfo.htm"><IMG SRC="graphics/next1.gif"
+ALT="graphics/next1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0 ALIGN=bottom></A></P>
+
+<H1><FONT COLOR="#0000AF">Installing the SDK</FONT></H1>
+
+<P><FONT SIZE="-1" FACE="Arial">Before you install the SpaceWare SDK
+1.0 for Windows 95 and Windows NT, you:</FONT></P>
+
+<UL>
+   <LI><FONT SIZE="-1" FACE="Arial">Need to know the drive letter of
+   the drive from which you will load the SpaceWare SDK</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Must have the SpaceWare driver
+   version 8.0 or later installed on your computer</FONT>
+</UL>
+
+<P><FONT SIZE="-1" FACE="Arial">Follow these steps to install the
+SDK:&nbsp;</FONT></P>
+
+<OL>
+   <LI><FONT SIZE="-1" FACE="Arial">Insert the SpaceWare software
+   media into the CD-ROM drive.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Click on </FONT><B><FONT
+   SIZE="-1" FACE="Arial">Start &gt;</FONT></B><FONT SIZE="-1"
+   FACE="Arial"> </FONT><B><FONT SIZE="-1"
+   FACE="Arial">Run</FONT></B><FONT SIZE="-1" FACE="Arial">. Make
+   sure the command line </FONT><B><FONT
+   FACE="Courier New">e:\setup.exe</FONT></B><FONT SIZE="-1"
+   FACE="Arial"> appears in the edit box and click on </FONT><B><FONT
+   SIZE="-1" FACE="Arial">OK</FONT></B><FONT SIZE="-1" FACE="Arial">.
+   If you install from another drive, substitute that drive letter
+   for </FONT><B><FONT FACE="Courier New">e</FONT></B><FONT SIZE="-1"
+   FACE="Arial">.&nbsp;</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Follow the Installation program
+   prompts.</FONT>
+</OL>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;<BR>
+
+<A NAME="Changes in this Release"></A>Changes in this
+Release</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">This release of the SpaceWare SDK
+contains the following changes from previous releases:</FONT></P>
+
+<UL>
+   <LI><FONT SIZE="-1" FACE="Arial">Only versions of the library
+   compiled with the Microsoft Visual C++ 4.2B compiler are
+   provided.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">The SpaceWare Input library,
+   siapp, is now produced as a DLL, with source code provided to
+   rebuild the static library portion.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">The tuning for the device has
+   changed internal to the library. Any applications using a previous
+   version of the SDK may need to change the tuning constants to
+   maintain the correct feel.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">SiDispatch is provided for
+   backward compatibility only. It is not recommended that you use
+   this function.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">SiSetTypeMask is obsolete, but a
+   stubbed version is provided for backwards compatibility.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Two new demos, sbtest32 and
+   sbtstmfc, are included.</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">All Help documentation is in HTML
+   format.<BR>
+   
+   </FONT><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B>
+</UL>
+
+<P><B><FONT FACE="Arial"
+COLOR="#000080"><A NAME="Files Installed"></A>Files
+Installed</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">When referencing SpaceWare SDK
+directories and files, this document uses the string </FONT><B><FONT
+SIZE="-1" FACE="Arial">%SDK%</FONT></B><FONT SIZE="-1" FACE="Arial">
+to indicate the top level directory where you installed the SDK. The
+default directory is:<BR>
+
+c:\Program Files\Spacetec\SpaceWare\sdk\</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">This SDK is designed to work on both
+Intel and DEC Alpha platforms. In the directory listings the separate
+directories are noted by </FONT><B><FONT SIZE="-1"
+FACE="Arial">&lt;platform&gt;</FONT></B><FONT SIZE="-1" FACE="Arial">
+which can be win32i for Intel or win32a for DEC Alpha.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">In the top level directory there are
+two files:</FONT></P>
+
+<BLOCKQUOTE><P><TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Batch file to rebuild all
+         libraries and demos from included source code</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">readme.txt</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Release notes</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+</P></BLOCKQUOTE>
+
+<P><B><FONT FACE="Arial"
+COLOR="#000080"><A NAME="SpaceWare DLLs"></A>SpaceWare
+DLLs</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">As part of the SDK, two Dynamic Link
+Libraries (DLLs), siappdll.dll and siappdld.dll, are installed in
+your Windows system (or system32 for Windows NT) directory. These
+files must be in the Windows system directory in order for the
+Spaceball to work properly. Spacetec gives developers full license to
+distribute these files. These same DLLs are in the following
+directories:</FONT></P>
+
+<BLOCKQUOTE><P><TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1"
+         FACE="Arial">lib\uapi\bin\siappdll\&lt;platform&gt;\debug\siappdld.dll</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the debugging version of the
+         Spaceball DLL</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1"
+         FACE="Arial">lib\uapi\bin\siappdll\&lt;platform&gt;\release\siappdll.dll</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the release version of the
+         Spaceball DLL</FONT>
+      </TD></TR>
+</TABLE></P></BLOCKQUOTE>
+
+<P><B><FONT FACE="Arial"
+COLOR="#000080"><A NAME="SpaceWare Libraries"></A>SpaceWare
+Libraries</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">The SpaceWare library consists of two
+parts: the Input Library and the Math Library. These libraries should
+be built separately, combined into a single library, and then linked
+into your application. The Input Library and Math Library were
+generated using the Microsoft Visual C++ compiler, versions
+4.2B.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">There are two versions of this
+SpaceWare library: siappst.lib</FONT><I><FONT SIZE="-1" FACE="Arial">
+</FONT></I><FONT SIZE="-1" FACE="Arial">and</FONT><I><FONT SIZE="-1"
+FACE="Arial"> </FONT></I><FONT SIZE="-1" FACE="Arial">siappmt.lib.
+The first has been compiled for single-threaded applications and the
+second for multithreaded applications. They are located in the
+hardware platform-specific directory in the
+%SDK%\lib\siapp\bin\&lt;platform&gt; directory. To add SpaceWare
+support to an application you must link one of the SpaceWare
+libraries (siappst.lib</FONT><I><FONT SIZE="-1" FACE="Arial">
+</FONT></I><FONT SIZE="-1" FACE="Arial">or</FONT><I><FONT SIZE="-1"
+FACE="Arial"> </FONT></I><FONT SIZE="-1" FACE="Arial">siappmt.lib) to
+the application.</FONT></P>
+
+<P><TABLE BORDER=1 CELLPADDING=5 HEIGHT=88>
+   <TR>
+      <TD>
+         <P><B><FONT SIZE="-1" FACE="Arial"
+         COLOR="#AF0000">Note</FONT></B><FONT SIZE="-1"
+         FACE="Arial">:<BR>
+         
+         You must also link the standard winmm.lib into the
+         application.</FONT>
+      </TD></TR>
+</TABLE></P>
+
+<P><TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top WIDTH=460>
+         <P><B><FONT SIZE="-1" FACE="Arial">Combined
+         Library</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=460>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\siapp\bin\&lt;platform&gt;\debug\mthread\siappmtd.lib</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">static SpaceWare library
+         compiled for debug multithreaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=460>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\siapp\bin\&lt;platform&gt;\debug\sthread\siappstd.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static SpaceWare library
+         compiled for debug single-threaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=460>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\siapp\bin\&lt;platform&gt;\release\mthread\siappmt.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static SpaceWare library
+         compiled for release multithreaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=460>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\siapp\bin\&lt;platform&gt;\release\sthread\siappst.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static SpaceWare library
+         compiled for release single-threaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=460>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\siapp\src\build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">batch file to merge the
+         Input and Math libraries into one library</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><B><FONT SIZE="-1" FACE="Arial">Math Library</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\bin\&lt;platform&gt;\debug\mthread\spwmath.lib</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">static Math Library compiled
+         for debug multithreaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\bin\&lt;platform&gt;\debug\sthread\spwmath.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static Math Library compiled
+         for debug single-threaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\bin\&lt;platform&gt;\release\mthread\spwmath.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static Math Library compiled
+         for release multithreaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\bin\&lt;platform&gt;\release\sthread\spwmath.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static Math Library compiled
+         for release single-threaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\inc\spwslim.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library header
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\
+         lib\slim\src\build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">batch file to build the Math
+         libraries from a MS-DOS prompt</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\ib\slim\src\spwmath.mak</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Makefile for building the
+         various versions of the Math Library</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\arbaxtom.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\compmat.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\copymat.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\crosprod.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\dotprod.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\getmatsc.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\gettranm.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\highvalf.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\initmat.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\invmat.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\latupv.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\m13x33.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\m14x44.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\m2lauvec.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\m33x33.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\m44x44.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\matdeter.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\mfl14x44.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\mkidentm.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\mtoarbax.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\normvec.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\orthnorm.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\printmat.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\printsbd.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\printvec.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file.</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\scalemat.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\slim.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\trposmat.</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Librry source
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=445>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\slim\src\veclen.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Math Library source
+         file</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<TABLE >
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><B><FONT SIZE="-1" FACE="Arial">Input Library</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\bin\siapp\&lt;platform&gt;\debug\mthread\siappd.lib</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">static Input Library
+         compiled for debug multithreaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\bin\siapp\&lt;platform&gt;\debug\sthread\siappd.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static Input Library
+         compiled for debug single-threaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\bin\siapp\&lt;platform&gt;\release\mthread\siapp.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static Input Library
+         compiled for release multithreaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\bin\siapp\&lt;platform&gt;\release\sthread\siapp.lib</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">static Input Library
+         compiled for single-threaded applications</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\bin\siappdll\&lt;platform&gt;\debug\siappdld.dll</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">DLL for performing SpaceWare
+         Input functions for the debug libraries</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\bin\siappdll\&lt;platform&gt;\release\siappdll.dll</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">DLL for performing SpaceWare
+         Input functions for the release libraries</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\src\siapp\build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">batch file for building the
+         Input Library from an MS-DOS prompt</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\src\siapp\siapp.mak</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Makefile for building the
+         Input Library</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\src\siapp\readme.txt</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">build notes for building the
+         Input Library</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\src\siapp\siapp.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file for the Input
+         Library</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=467>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\lib\uapi\src\siapp\siapp.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the Input
+         Library</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<A NAME="SpaceWare Include Files"></A><B><FONT FACE="Arial"
+COLOR="#000080">SpaceWare Include Files</FONT></B></P>
+
+<P><TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top WIDTH=221>
+         <P><B><FONT SIZE="-1" FACE="Arial">Include Files</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=221>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\inc\si.h</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">Input Library header
+         file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=221>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\inc\spwdata.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare data
+         definitions</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=221>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\inc\spwerror.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare error codes</FONT>
+      
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=221>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\inc\spwmacro.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare macros</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=221>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\inc\spwplat.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare platform
+         definitions</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=221>
+         <P><FONT SIZE="-1"
+         FACE="Arial">spacetec\inc\spwmacro.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare macros (duplicated
+         for the demos)</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=221>
+         <P><FONT SIZE="-1"
+         FACE="Arial">spacetec\inc\spwplat.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare platform
+         definitions (duplicated for the demos)</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<A NAME="SpaceWare Demo Files"></A><B><FONT FACE="Arial"
+COLOR="#000080">SpaceWare Demo Files</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">There are four demos shipped with the
+SDK: cityfly, widget, sbtest32, and sbtstmfc.</FONT></P>
+
+<P><TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><B><FONT SIZE="-1" FACE="Arial">CityFly</FONT></B><FONT
+         SIZE="-1" FACE="Arial"> </FONT><B><FONT SIZE="-1"
+         FACE="Arial">Demo Files</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\bin\&lt;platform&gt;\debug\cityflyd.exe</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">CityFly debug
+         executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\bin\&lt;platform&gt;\release\cityfly.exe</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">CityFly release
+         executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\dat\bldgs.dat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">data file for the buildings
+         in the demo</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\dat\land.dat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">data file for the ground in
+         the demo</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\hlp\cityfly.hlp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">help file for running
+         CityFly</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\inc\cityfly.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for
+         CityFly</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\inc\icon.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for
+         CityFly</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\inc\iconmask.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for
+         CityFly</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\res\bwin.rc</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">resource file for the button
+         window</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\res\icon2.ico</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">icon for the CityFly
+         demo</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\res\resource.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">resource header file for the
+         button window</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\res\s64.bmp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">bitmap in the button
+         window</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\src\build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">batch file to build all the
+         versions of the demo</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\src\cityfly.mak</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Makefile for building
+         CityFly</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\src\cityfly.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\src\main.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=428>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\cityfly\src\winmain.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><B><FONT SIZE="-1" FACE="Arial">Widget</FONT></B><FONT
+         SIZE="-1" FACE="Arial"> </FONT><B><FONT SIZE="-1"
+         FACE="Arial">Demo Files</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\bin\&lt;platform&gt;\debug\widget.exe</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">debugging executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\bin\&lt;platform&gt;\release\widget.exe</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">release executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\dat\widget.dat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">data file used by the
+         demo</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\inc\widget.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the
+         demo</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\src\build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">batch file to build the demo
+         from a MS-DOS prompt</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\src\widget.mak</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Makefile for the demo</FONT>
+      
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\src\ntgraph.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\src\widget.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=426>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\widget\src\winmain.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<TABLE >
+   <TR>
+      <TD VALIGN=top WIDTH=452>
+         <P><B><FONT SIZE="-1" FACE="Arial">sbtest32</FONT></B><FONT
+         SIZE="-1" FACE="Arial"> </FONT><B><FONT SIZE="-1"
+         FACE="Arial">Demo Files</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=452>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtest32\bin\&lt;platform&gt;\debug\sbtest32.exe</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">debugging executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=452>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtest32\bin\&lt;platform&gt;\release\sbtest32.exe</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">release executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=452>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtest32\inc\sbtest32.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=452>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtest32\src\build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">batch file to build the demo
+         from a MS-DOS prompt</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=452>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtest32\src\sbtest32.mak</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Makefile for the demo</FONT>
+      
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=452>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtest32\src\sbtest32.c</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<TABLE BORDER=0>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><B><FONT SIZE="-1" FACE="Arial">sbtstmfc</FONT></B><FONT
+         SIZE="-1" FACE="Arial"> </FONT><B><FONT SIZE="-1"
+         FACE="Arial">Demo Files</FONT></B>
+      </TD><TD VALIGN=top>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\bin\&lt;platform&gt;\debug\sbtstmfc.exe</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">debugging executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\bin\&lt;platform&gt;\release\sbtstmfc.exe</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">release executable</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\inc\MainFrm.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\inc\resource.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\inc\sbtstmfc.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\inc\sbtstmfcdoc.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\inc\sbtstmfccview.h</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\inc\stdafx.h</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">header file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\res\sbtstmfc.clw</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">class wizard file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\res\sbtstmfc.ico</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">icon for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\res\sbtstmfc.rc</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">resource file for the test
+         program</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\res\sbtstmfcDoc.ico</FONT>
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">icon for the document</FONT>
+      
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\res\toolbar.bmp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">toolbar bitmap</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\src\build.bat</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">batch file to build the demo
+         from a MS-DOS prompt</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\src\sbtstmfc.mak</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Makefile for the demo</FONT>
+      
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\src\MainFrm.cpp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\src\sbtstmfc.cpp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\src\sbDoc.cpp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\src\sbView.cpp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top WIDTH=473>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\demos\sbtstmfc\src\stdafx.cpp</FONT>
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">source file</FONT>
+      </TD></TR>
+</TABLE><BR>
+
+<A NAME="SpaceWare Help Files"></A><B><FONT SIZE="+1" FACE="Arial"
+COLOR="#0000AF">SpaceWare Help Files</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">The help files are in HTML format and
+must be viewed with Netscape 2.0 or higher.</FONT></P>
+
+<P><TABLE BORDER=0>
+   <TR>
+      <TD WIDTH=224>
+         <P><B><FONT SIZE="-1" FACE="Arial">Help</FONT></B><FONT
+         SIZE="-1" FACE="Arial"> </FONT><B><FONT SIZE="-1"
+         FACE="Arial">Files</FONT></B>
+      </TD><TD>
+         <P>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\Copyrt.htm</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">copyright information for
+         the SDK</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\Demos.htm </FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">information about the
+         demos</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\DevInfo.htm
+         </FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">information about the
+         Spaceball</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\graphics</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">folder containing graphics
+         for the help files</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\Index.htm </FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">opening page for the help
+         files</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\doc\InputFun.htm</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">information about the input
+         functions</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\doc\InputLib.htm</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">information about the Input
+         Library</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1"
+         FACE="Arial">%SDK%\doc\Integrat.htm</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">information about
+         integrating the Spaceball into your application</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\MathLib.htm</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">information about the Math
+         Library</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\Overview.htm
+         </FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">an overview of the
+         SDK</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\Scoring.htm</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">checklist for evaluating the
+         Spaceball "feel"</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\SupPlatf.htm
+         </FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">list of platforms supported
+         by the SDK</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\TandT.htm</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">tips and techniques for
+         integrating the Spaceball into your application</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\TechSup.htm</FONT>
+      
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">how to contact Spacetec's
+         Technical Support</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\toc.htm</FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">table of contents for the
+         help file</FONT>
+      </TD></TR>
+   <TR>
+      <TD WIDTH=224>
+         <P><FONT SIZE="-1" FACE="Arial">%SDK%\doc\Welcome.htm
+         </FONT>
+      </TD><TD>
+         <P><FONT SIZE="-1" FACE="Arial">part of the opening
+         page</FONT>
+      </TD></TR>
+</TABLE></P>
+</BODY>
+</HTML>

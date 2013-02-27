@@ -1,0 +1,199 @@
+<html>
+
+<head>
+<title>Handlers</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="classes.html"><img width="96" height="20" border="0"
+    src="images/navlt.gif" alt="Classes"></a> </td>
+    <td width="96" align="left"><a href="dynaui.html"><img width="64" height="20" border="0"
+    src="images/navrt.gif" alt="Interfaces"></a> </td>
+    <td width="384" align="right"><a href="index.html"><img width="230" height="20" border="0"
+    src="images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>Handlers</h3>
+    <p>Formally, handlers are plug-in classes that manage persistent instance data through
+    callbacks identified in the activation function. Less formally, handlers are Layout
+    plug-ins that respond to events. The user associates a handler with a specific object,
+    surface or effect, and Layout calls the handler's functions at specific points during the
+    animation and rendering of that scene element.</p>
+    <p>To see how this works, we'll walk through some example source code for a particular
+    handler plug-in (blotch.p, a ShaderHandler), examining fragments of plug-in code more or
+    less in the order Layout makes use of them.</p>
+    <p><strong>Handler Activation</strong></p>
+    <p>As with any plug-in file, the blotch.p source code includes a server description that
+    lists what plug-ins the .p file contains and what their activation functions are. (See the
+    <a href="server.html">common elements</a> page for more about .p files, server
+    descriptions and activation functions.) The Blotch example contains a shader, called
+    &quot;Demo_Blotch,&quot; and its interface.</p>
+    <pre>
+   ServerRecord ServerDesc[] = {
+      { &quot;ShaderHandler&quot;,   &quot;Demo_Blotch&quot;, BlotchActivate },
+      { &quot;ShaderInterface&quot;, &quot;Demo_Blotch&quot;, Interface },
+      { NULL }
+   };</pre>
+    <p>When Layout loads blotch.p, it looks at this server description and finds the
+    activation function <tt>BlotchActivate</tt>, which it then calls.</p>
+    <pre>
+   XCALL_( static int )
+   BlotchActivate( long version, GlobalFunc *global,
+      LWShaderHandler *local, void *serverData )
+   {
+      if ( version != LWSHADERHANDLER_VERSION )
+         return ( AFUNC_BADVERSION );
+
+      local-&gt;inst-&gt;create   = Create;
+      local-&gt;inst-&gt;destroy  = Destroy;
+      local-&gt;inst-&gt;copy     = Copy;
+      local-&gt;inst-&gt;load     = Load;
+      local-&gt;inst-&gt;save     = Save;
+      local-&gt;inst-&gt;descln   = DescLn;
+
+      local-&gt;item-&gt;useItems = UseItems;
+      local-&gt;item-&gt;changeID = ChangeID;
+
+      local-&gt;rend-&gt;init     = Init;
+      local-&gt;rend-&gt;cleanup  = Cleanup;
+      local-&gt;rend-&gt;newTime  = NewTime;
+
+      local-&gt;evaluate       = Evaluate;
+      local-&gt;flags          = Flags;
+
+      return AFUNC_OK;
+   }</pre>
+    <p><tt>Create</tt>, <tt>Destroy</tt>, <tt>Copy</tt> and so on are all functions in
+    blotch.c. They are the plug-in's <em>handler functions</em> (or <em>event callbacks</em>),
+    and the activation function tells Layout where they all are. The plug-in won't actually do
+    any work until Layout starts calling the plug-in's handler functions. Layout doesn't care
+    what names you give these functions in your source code, as long as you make the correct
+    assignments to the members of the <tt>local</tt> structure.</p>
+    <p>Each handler class is passed a different structure as the <tt>local</tt> argument to
+    its activation function (shaders receive an LWShaderHandler, for example), but the
+    structures for all classes begin with a pointer to the basic handler functions for
+    managing instance data.</p>
+    <p><strong>Instance Data</strong></p>
+    <p>Like any shader, Blotch can be attached to any number of surfaces in the scene. The way
+    a handler distinguishes between these different <em>instances</em> of itself is through
+    its instance data. The functions that manage instance data are contained in an <tt>LWInstanceFuncs</tt>
+    structure, a pointer to which is the first element of every handler structure.</p>
+    <pre>
+   typedef struct st_LWInstanceFuncs {
+      void         *priv;
+      LWInstance   (*create)  (void *priv, void *context, LWError *);
+      void         (*destroy) (LWInstance);
+      LWError      (*copy)    (LWInstance, LWInstance from);
+      LWError      (*load)    (LWInstance, const LWLoadState *);
+      LWError      (*save)    (LWInstance, const LWSaveState *);
+      const char * (*descln)  (LWInstance);
+   } LWInstanceFuncs;</pre>
+    <p>Blotch's instance data looks like this:</p>
+    <pre>
+   typedef struct st_BlotchInstance {
+      float color[ 3 ];
+      float center[ 3 ];
+      float radius;
+      float softness;
+      float r2, piOverR;
+   } BlotchInstance;</pre>
+    <p>Blotch's <tt>Create</tt> function allocates memory for a <tt>BlotchInstance</tt> and
+    initializes its contents, and the <tt>Destroy</tt> function frees the memory allocated by <tt>Create</tt>.
+    </p>
+    <pre>
+   XCALL_( static LWInstance )
+   Create( void *priv, void *context, LWError *err )
+   {
+      BlotchInstance *bi;
+
+      bi = calloc( 1, sizeof( BlotchInstance ));
+      if ( !bi ) {
+         *err = &quot;Couldn't initialize Blotch!&quot;;
+         return NULL;
+      }
+      bi-&gt;color[ 0 ] = 0.4;
+      bi-&gt;radius     = 1.0;
+      bi-&gt;softness   = 0.5;
+
+      return ( LWInstance ) bi;
+   }
+
+
+   XCALL_( static void )
+   Destroy( BlotchInstance *bi )
+   {
+      free( bi );
+   }</pre>
+    <p>The <tt>Copy</tt> function in Blotch just duplicates the contents of the instance data
+    structure. Be careful when copying instance data that contains pointers. In most cases you
+    won't want to copy over the pointers of the <tt>to</tt> instance, so you'll need to copy
+    instance values individually, and for the pointer values, copy the contents of the memory
+    they point to.</p>
+    <pre>   XCALL_( static LWError )
+   Copy( BlotchInstance *to, BlotchInstance *from )
+   {
+      *to = *from;
+      return NULL;
+   }</pre>
+<pre>
+   XCALL_( static LWError )
+   Load( BlotchInstance *bi, const LWLoadState *ls )
+   {
+      ls->readFP( ls->readData, bi->color, 3 );
+      ls->readFP( ls->readData, bi->center, 3 );
+      ls->readFP( ls->readData, &bi->radius, 1 );
+      ls->readFP( ls->readData, &bi->softness, 1 );
+      return NULL;
+   }
+
+   XCALL_( LWError )
+   Save( BlotchInstance *bi, const LWSaveState *ss )
+   {
+      ss->writeFP( ss->writeData, bi->color, 3 );
+      ss->writeFP( ss->writeData, bi->center, 3 );
+      ss->writeFP( ss->writeData, &bi->radius, 1 );
+      ss->writeFP( ss->writeData, &bi->softness, 1 );
+      return NULL;
+   }</pre>
+
+<p><strong>Definitions</strong></p>
+    <dl>
+      <dt><tt>create( priv, context, error )</tt></dt>
+      <dd>Called when the user selects your plug-in on the interface, and when Layout loads a
+        scene or an object file that refers to your plug-in. You allocate and initialize a data
+        structure (the instance data) that helps you keep track of this specific invocation of
+        your plug-in, and return a pointer to this data. Your instance data should include
+        whatever the rest of your plug-in needs to know or remember while performing its tasks. If
+        you can't create an instance, set the error argument to an error message string and return
+        NULL. <dl>
+          <dt><br>
+            <tt>priv</tt></dt>
+          <dd>An opaque pointer that you pass to certain functions you can call from your Create
+            function.</dd>
+          <dt><tt>context</tt></dt>
+          <dd>What this contains will vary depending on the plug-in class. Many classes receive an
+            item ID in this argument that tells the plug-in which item (object, bone, light, camera)
+            the plug-in will be associated with.</dd>
+          <dt><tt>error</tt></dt>
+          <dd>You return error messages through this argument when your Create function fails.</dd>
+        </dl>
+      </dd>
+      <dt><tt><br>destroy( instance )</tt></dt><dd>Description.</dd>
+      <dt><tt><br>copy( to, from )</tt></dt><dd>Description.</dd>
+      <dt><tt><br>load( instance, loadstate )</tt></dt><dd>Description.</dd>
+      <dt><tt><br>save( instance, savestate )</tt></dt><dd>Description.</dd>
+      <dt><tt><br>descln( instance )</tt></dt><dd>Description.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

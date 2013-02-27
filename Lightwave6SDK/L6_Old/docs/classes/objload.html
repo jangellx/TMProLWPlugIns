@@ -1,0 +1,209 @@
+<html>
+
+<head>
+<title>Classes: ObjectLoader</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="me.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="MeshDataEdit"></a> </td>
+    <td width="96" align="left"><a href="objrep.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ObjectReplacement"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+
+<h3>ObjectLoader</h3>
+<pre>
+typedef struct st_LWObjectImport {
+   int         result;
+   const char *filename;
+   LWMonitor  *monitor;
+   char       *failedBuf;
+   int         failedLen;
+   void       *data;
+   void       (*done)    (void *);
+   void       (*layer)   (void *, short int lNum, const char *name,
+                            LWFVector pivot);
+   LWPntID    (*point)   (void *, const LWFVector xyz);
+   void       (*vmap)    (void *, LWID type, int dim, const char *name);
+   void       (*vmapVal) (void *, LWPntID point, float *val);
+   LWPolID    (*polygon) (void *, LWID type, int flags, int numPts,
+                            const LWPntID *);
+   void       (*polTag)  (void *, LWPolID polygon, LWID type,
+                            const char *tag);
+   void       (*surface) (void *, const char *, const char *, int,
+                            void *);
+} LWObjectImport;
+
+#define LWOBJIM_OK    0
+#define LWOBJIM_NOREC    1
+#define LWOBJIM_BADFILE  2
+#define LWOBJIM_ABORTED  3
+#define LWOBJIM_FAILED   99
+</pre>
+<p>
+When Layout or Modeler encounter a foreign object file which they cannot
+parse, they will call an &quot;ObjectLoader&quot; class
+server to import it.  All the loaders defined for the
+host will be activated in sequence, and the first one to recognize the file
+will load it.  The order in which loaders are called is not defined,
+although it may be alphabetical by server name.
+<p>
+At activate, an ObjectImport structure is passed to a plug-in object loader
+as its local data, and the loader should attempt to parse the input file
+given by the filename field.
+If it cannot open or recognize the file the loader should set the
+`result' field to the appropriate code and return.
+<p>
+If it recognizes the file type it should send the mesh and surface data to
+the host by calling the callbacks.  The `data' field is
+an opaque pointer to some internal state for the host and should be the
+first argument to every callback.  The `monitor' field will contain a
+pointer to a monitor which can be used to track the progress of loading.
+The monitor should not be used unless the object format is recognized.
+<p>
+
+<pre>
+/*
+ * The activation function of the server is passed an LWObjectImport
+ * structure as its local data which includes the filename of the object
+ * to load.  The loader attempts to parse the input file and calls the
+ * embedded callbacks to insert the data into LightWave.  It indicates
+ * its success or failure by setting the 'result' field, and the optional
+ * failedBuf.
+ *
+ * result   set by the server to one of the LWOBJIM values below.
+ *
+ * filename the filename of the object to load.
+ *
+ * monitor  progress monitor that can be used to track the import
+ *    process.
+ *
+ * failedBuf   string buffer for the server to store a human-readable
+ *    error message if the result code is LWOBJIM_FAILED.
+ *
+ * data     private data pointer to be passed to all the embedded
+ *    function callbacks.
+ *
+ * done     called when object import is complete.
+ *
+ * layer start a new layer in the import data.  The layer is
+ *    qualified by an index number, a name string and a pivot
+ *    point.
+ *
+ * point add a new point to the current layer.  The point is given
+ *    by an XYZ position and the function returns a void pointer
+ *    as point identifier.
+ *
+ * vmap     select a VMAP for assigning data to points, creating a new
+ *    VMAP if it does not yet exist.  The VMAP is defined by a
+ *    type, dimension and name.
+ *
+ * vmapVal  set a vector for a point into the currently selected VMAP.
+ *    The vector should have the same dimension as the VMAP.
+ *
+ * polygon  add a new polygon to the current layer.  The polygon is
+ *    defined by a type code, type-specific flags and a list of
+ *    point identifiers.
+ *
+ * polTag   associate a tag string to the given polygon.  The tag
+ *    string has a type, the most common being 'SURF'.
+ *
+ * surface  add a new surface to this object.  The surface is defined by
+ *    the base name, the reference name, and a block of raw surface
+ *    data.
+ */
+</pre>
+
+<a name="S2.2.1"><h3>2.2.1. Sending Mesh Data</h3></a>
+
+Sending mesh data to the host involves calling the functions provided in
+the ObjectImport structure in a semi-sequential order.  The basics are
+to start the data transfer, send the points, define surface names, send the
+polygons, assign surface parameters to names, and complete the transfer.
+<p>
+<dl>
+<dt>Begin
+<dd>Callback `begin' is called to mark the start of new mesh data.  The
+second argument is for special information and should normally be null.
+(It might be possible to call this more than once, although `done'
+would have to be called before calling `begin' a second time.)
+<dt>Points
+<dd>Callback `numPoints' is called with the total number of points.  Then
+`points' is called with 1 or more point coordinates until the total
+number of points is reached.  Points are numbered from zero in the order
+added, and that implicit index is used to create polygons.  All
+points must be added before any polygons may be created.
+<dt>Surfaces
+<dd>The callback `surfIndex' is called with a surface name to get a surface
+ID number for that surface.  This ID number is used to create polygons.
+The function may optionally return a boolean flag to indicate if this
+is the first time this surface name has been given an ID.
+<dt>Polygons
+<dd>For each polygon, the `polygon' function is called with a list of point
+indices for the polygon, the number of points, mode flags and a surface
+index.  The mode flags word is a collection of bits.
+If the CURVE bit is set, this is a curve rather than a face.  If
+the DETAIL bit is set, then this polygon is a detail of the last
+top-level polygon.  If the STARTCC or ENDCC bits are set, then this curve
+has start and/or end points which are continuity control points.
+
+</dl>
+<dl>
+<dt>Surface Data
+<dd>A block of raw surface parameters may be assigned to a name at any time
+by calling the `surfData' call with the surface name and byte block.
+<dt>Done
+<dd>Callback `done' is called when data transfer is complete.
+
+</dl>
+If a failure occurs partway through loading a file, the loader can set
+the result field and return without having to do any other cleanup.
+<p>
+
+<pre>
+/*
+ * The server must set the 'result' field to one of these following values
+ * before it returns.
+ *
+ * OK    indicates successful parsing of the object file.
+ *
+ * BADFILE  indicates that the loader could not open the file.
+ *
+ * NOREC indicates that the loader could open the file but could
+ *    not recognize the format.
+ *
+ * ABORTED  indicates the that the user manually aborted the load.
+ *
+ * Any other failure is indicated by the generic FAILED value.  In this case,
+ * the loader may also place a human-readable error message into the buffer
+ * pointed to by `failedBuf,' provided that `failedLen' is non-zero.
+ */
+</pre>
+
+<a name="S2.2.3"><h3>2.2.3. Macintosh Clipboard Import</h3></a>
+
+In Modeler on the Macintosh a special filename is employed to use object
+loader plugins when pasting from the system clipboard.  If the filename
+passed to the object loader is &quot;((::clipboard::))&quot;, then the loader should
+look for its data in the system scrap.  This name is chosen to be impossible
+(or at least extremely unlikely) as a filename on the Macintosh.
+<p>
+
+</td></tr></table>
+
+</body>
+
+</html>

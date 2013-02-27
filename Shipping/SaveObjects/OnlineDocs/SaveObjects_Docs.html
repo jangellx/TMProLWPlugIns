@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- SaveObjects Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="TMP-BG.gif">
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=SaveObjects border=0 height=131 src ="PROG-SaveObjects.gif" width=233 ></p>
+	<P align=justify>
+	<br><STRONG>SaveObjects</STRONG> is a plug-in for Lightwave 
+      6.0 or greater. It provides many more options for saving objects from Layout.
+	  The file contains six Generic plug-ins:
+	  <A href="#SaveObjects"><STRONG>SaveObjects</STRONG></A>, the core plug-in,
+	  <A href="#BackupAndSaveObject"><STRONG>Backup And Save Object</STRONG></A>,
+	  <A href="#ReplaceWithBackupObject"><STRONG>Replace With Backup Object</STRONG></A>,
+	  <A href="#SaveNewObjectRevision"><STRONG>Save New Object Revision</STRONG></A>,
+	  <A href="#ReplaceWithNextObjectRevision"><STRONG>Replace With Next Object Revision</STRONG></A> and
+	  <A href="#ReplaceWithPreviousObjectRevision"><STRONG>Replace With Previous Object Revision</STRONG></A>,
+      This plug-in requires Lightwave 6.0 or greater.</P>
+
+	<P align=justify>To install SaveObjects, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy SaveObjects.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add SaveObjects.p. Layout should report that six plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave config and ensure that everything works properly.
+	  <LI>The next time you run Layout, you can launch 
+        the <STRONG>SaveObjects</STRONG> plug-ins from 
+        the Generics pop-up in the Plug-in Options Panel, or assign them to keys 
+        or buttons on the interface with Configure Keys and Configure Menus.  
+        Please refer to your Lightwave documentation for more information.  The plug-ins will be
+        prefixed with TM_P under the Plugins heading of the Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+	<P><STRONG>SaveObjects</STRONG>  includes the following plugins:</P>
+
+	<br><HR width="90%">
+	<a name="#SaveObjects"></a><STRONG>  </STRONG>
+	<H3 align=center>Save Objects
+	<HR width="40%"></H3>
+	
+    <P align=justify><STRONG>Save Objects</STRONG>, the core plug-in,
+	provides an interface for selecting and saving objects.  It includes features for
+	optionally overwriting read-only files, as well as setting the files to read-only
+	or read-write after they have been saved.  A series of versioning features allow
+	for creating backups, incrementing revisions, revision backups and duplicating the
+	object on disk.</P>
+
+	<center>
+    <p align=center><IMG align=center alt="SaveObjects Interface" border=0 height=538 src="SaveObjects-Main.jpg" width=455></p>
+    </center>
+
+	<P align=justify>After running <b>Save Objects</b>, you should see an interface similar to the one above.
+	In simplest terms, <b>Save Objects</b> is used by marking the objects you want to save, choosing a <i>Post
+	Save File Mode</i>, a <i>Versioning Mode</i>, maybe enabling <i>Save Read-Only Objects</i> and finally
+	clicking <i>Save Marked Objects</i> to begin processing.  Clicking <i>Continue</i> will exit the plug-in
+	without doing anything.  The <i>?</i> button at the top-right will open the <i>About Save Objects</i>
+	panel.</P>
+	
+	<P align=justify>The lister contains four columns detailing objects from the scene.  Which objects are
+	listed is determined by the <i>Limit To</i> pop-up.  Clones and null objects are automatically culled
+	out of the list, so you don't have to worry about them. The first column is used to mark an object for saving.
+	You can click in this column to mark or unmark an objects.  The second column displays the object's name.
+	The third column shows if this object is read-only on disk.  The final column is specific to the versioning
+	mode, and will display the latest revision number on disk, or show if there's a duplicate or backup exists.</P>
+
+	<P align=justify>
+    <IMG align=right alt="Limit To Popup" border=0 height=65 src="SaveObjects-LimitTo.jpg" width=121 hspace=15>
+	The <i>Limit To</i> pop-up allows you to limit which objects are shown in the lister.  The
+	options are <i>All Object</i>, meaning all objects will be displayed in the lister, <i>Selected Objects</i>,
+    which limits the display to just the objects selected within Layout, and <i>Current Object</i>, which shows
+	only the most recently selected item in Layout.  Clones and null objects will never be displayed.  Note that
+	changing the <i>Limit To</i> mode will unmark any previously marked objects.</P>
+
+	<P align=justify>If <i>Alpha</i> is active, the lister will be sorted alphabetically.  Otherwise, the
+	objects are listed in natural order, meaning the same order the objects were loaded into Layout</P>
+
+	<P align=justify><i>Refresh</i> can be used to update the columns of the lister, in case something has
+	changed on disk between since the last time the list was refreshed.</P>
+
+    <P align=justify>
+    <IMG align=right alt="Mark Objects To Save Popup" border=0 height=155 src="SaveObjects-Mark.jpg" width=136 hspace=15>
+	The <i>Mark Objects To Save</i> pop-up allows you to quickly mark objects to be saved from basic criteria.
+    Only objects that are marked will actually be processed when <i>Save Marked Objects</i> is clicked.  You can also
+	click in the <i>Save</i> column in the lister to mark individual objects to save.</P>
+
+    <P align=justify>
+	Use <i>Mark All</i> to mark all objects for saving, and <i>Unmark All</i> to save nothing.  <i>Mark Read Only</i> and
+	<i>Unmark Read Only</i> will mark or unmark objects that are read-only on disk.  <i>Mark Read/Write</i> and
+	<i>Unmark Read/Write</i> will mark or unmark objects that can be both read and written on disk.  <i>Invert Marked</i>
+	will set all marked objects to unmarked, and visa-versa.
+	</P>
+
+    <P align=justify>
+    <IMG align=right alt="Post-Save File Mode Popup" border=0 height=65 src="SaveObjects-FileAttrib.jpg" width=149 hspace=15>
+	The <i>Post-Save File Mode</i> pop-up determines what the read-only state of any object will be after it has
+	been saved.  It can be set to <i>Read-Only</i>, thus write protecting the file on disk, or <i>Read/Write</i>,
+	allowing you to save over, rename and delete the object without having to change it's fine attributes.
+	The final mode, <i>Previous State</i>, will return the object to it's previous file mode after saving it;
+	for example, if the object was originally read-only, it will again be read-only after it is saved.
+	Note that this state affects all files saved or modified by the <i>Versioning Mode</i>, including backups
+	and duplicates.  If a particular <i>Versioning Mode</i> doesn't modify the original object, it's attributes
+	won't be affected.</P>
+
+    <P align=justify>
+	<i>Save Read-Only Objects</i>, when enabled, allows read-only objects to be overwritten.  If this is disabled,
+	only objects listed as read/write will be saved.</P>
+
+    <P align=justify>
+    <IMG align=right alt="SaveObjects Interface" border=0 height=110 src="SaveObjects-Versioning.jpg" width=150 hspace=15>
+	<i>Versioing Mode</i> provides alternate ways to save your objects.  The default mode, <i>Disabled</i>, does
+	nothing special; it simply saves the object to disk, just like saving an object from Layout.  The <i>Rev/Backup</i>
+	column of the lister will change depending on the mode selected.</P>
+
+	<a name="#BackupOriginal"></a>
+    <P align=justify><i>Backup Original</i> will rename the original object on disk to end in .lwo-bu, then save the
+	object from Layout to disk under the original name.  If a backup already exists on disk, it will be deleted before
+	the original object is renamed.  Since the backup's name ends in .lwo-bu, it won't show up in the normal <i>Load Object</i>
+	file requests from Layout, so it won't clutter up your view too much.  When this <i>Versioning Mode</i> is selected,
+	the <i>Rev/Backup</i> column of the lister will display <i>Backed Up</i> if a backup exists on disk.</p>
+
+	<a name="#NewRevision"></a>
+    <P align=justify><i>New Revision</i> will a new, uniquely-reivisioned object to disk.  The <i>Min. Digits</i> field
+	determines both the minimum number of digits that will be saved, and the minimum number of digits that must already
+	exist at the end of the object's name for it to be considered a revision.  For example, if the object is named
+	Test2.lwo and <i>Min. Digits</i> is set to 2, then no revision will be recognized.  If the object was named Test02.lwo,
+	however, then a revision of 02 will be found.  The latest revision number found on disk will be displayed in the
+	<i>Rev/Backup</i> column of the lister, even if that number is greater than that currently loaded into Layout.
+	If no revisions exist, the column will show <i>(none)</i>.  Note that the original object will not be modified
+	in any way.</P>
+
+	<P align=justify>The following table shows how revisions are added to objects based on their name and
+	<i>Min. Digits</i>.  Of signifigance is that if the name ends in digit, but it isn't considered part 
+	of the revision due to <i>Min Digits</i>, then a dash will be insterted before the revision is added.<p>
+    <table cellpadding=5 border=1 align=center>
+	  <tr><td>Object Name</td>    <td>            Min. Digits</td>  <td>              Latest Revision</td>  <td>Output Name    </td></tr>
+	  <tr><td>Test.lwo    </td>   <td align=right>          3</td>  <td align=right>           (none)</td>  <td>Test001.lwo    </td></tr>
+	  <tr><td>Test.lwo    </td>   <td align=right>          3</td>   <td align=right>             005</td>  <td>Test006.lwo    </td></tr>
+	  <tr><td>Test006.lwo </td>   <td align=right>          3</td>   <td align=right>             006</td>  <td>Test007.lwo    </td></tr>
+	  <tr><td>Test20.lwo  </td>   <td align=right>          2</td>   <td align=right>              20</td>  <td>Test21.lwo     </td></tr>
+	  <tr><td>Test20.lwo  </td>   <td align=right>          3</td>   <td align=right>          (none)</td>  <td>Test20-001.lwo </td></tr>
+	</table>
+
+    <P align=justify><i>Revision Backup</i> is similar to the <i>New Revision</i> mode.  Instead of creating
+	a new revision in the same directory as the original object, it creates the new revision in the directory
+	specified by the <i>Path</i> field, as well as saving over the original object.  This means that the object
+	in the "main" directory will have the same name and always be the most recent version, but revisions
+	will also be stored in the backup directory specified in the <i>Path</i> field.  Note that
+	if <i>Path</i> is a relative path, meaning that it has no drive part, the revision will be saved in a
+	new directory relative to the object's original directory.  If the path is absolute, then all the revisions
+	for the marked objects will go there.  If the path doesn't exist, it will automatically be created.
+	If no revisions exist for the object at <i>Path</i>, the original object is also revisioned by coping it
+	to the backup path as revision 0.</P>
+
+    <P align=justify><i>Duplicate</i> and <i>Duplicate And Replace</i> will create a duplicate object.  The
+	object can have a <i>Prefix</i> or <i>Suffix</i> added to it, and can be duplicated to a different
+	location via the <i>Path</i> field.  Relative and absolute paths acts similarly to <i>Revision Backup</i>
+	mode.  In <i>Duplicate</i> mode, the object is saved under a new name, but the object in Layout isn't
+	replaced, similar to Layout's built-in <i>Save Object Copy</i> command.  <i>Duplicate And Replace</i>
+	will save the object in a new path and replace the object in Layout with it.  Note that neither of
+	these modes affect the original object in any way.
+
+    <P align=justify>As mentioned above, <i>Min. Digits</i>, <i>Path</i>, <i>Prefix</i> and <i>Suffix</i>
+	are used by specific <i>Versioning Mode</i>s.  The following table outlines which modes use which
+	fields:</p>
+
+	<table cellpadding=5 border=1 align=center>
+	  <tr><td>                     </td> <td>             Min. Digits</td> <td>             Path</td>  <td>             Prefix</td> <td>             Suffix</td></tr>
+	  <tr><td>Disabled             </td> <td align=center>          -</td> <td align=center>   -</td>  <td align=center>     -</td> <td align=center>     -</td></tr>
+	  <tr><td>Backup Original      </td> <td align=center>          -</td> <td align=center>   -</td>  <td align=center>     -</td> <td align=center>     -</td></tr>
+	  <tr><td>New Revision         </td> <td align=center>        Yes</td> <td align=center>   -</td>  <td align=center>     -</td> <td align=center>     -</td></tr>
+	  <tr><td>Revision Backup      </td> <td align=center>        Yes</td> <td align=center> Yes</td>  <td align=center>     -</td> <td align=center>     -</td></tr>
+	  <tr><td>Duplicate            </td> <td align=center>          -</td> <td align=center> Yes</td>  <td align=center>   Yes</td> <td align=center>   Yes</td></tr>
+	  <tr><td>Duplicate And Replace</td> <td align=center>          -</td> <td align=center> Yes</td>  <td align=center>   Yes</td> <td align=center>   Yes</td></tr>
+	</table>
+
+	<P align=justfy>When you have all your objects marked and options set, click <i>Save Marked Objects</i>
+	to start saving.  If something is wrong, such as all files are read-only but <i>Save Read-Only Objects</i>
+	is disabled, you will be presented with an error message and the status field will turn red.  If some
+	other error occurs to a particular object during processing, an object-specific error message will appear,
+	but processing will continue.  As objects are saved, the status field draws a progress bar and displays
+	the name of the object that is currently being saved.  You can then click <i>Continue</i> to return to
+	Layout.</P>
+
+	<br><HR width="90%">
+	<a name="#BackupAndSaveObject"></a>
+	<a name="#ReplaceWithBackupObject"></a>
+	<H3 align=center>
+	Backup And Save Object<br>
+	Replace With Backup Object
+	<HR width="40%"></H3>
+
+	<P align=justify><STRONG>Backup And Save Object</STRONG> operates very similar to
+	the <a href="#BackupOriginal"><i>Backup</i></a> versioning mode in <b>Save Objects</b>.
+	Upon launching, it will rename the original object to end in .lwo-bu, deleting any
+	existing .lwo-bu first, and then save the object from Layout over with the original
+	name.  This means that you will always have the previous version of your object as
+	a backup of your object. Since the backup's name ends in .lwo-bu, Layout's <i>Load
+	Object</i> file requester won't show them, so they won't clutter up your view.  This
+	plug-in has no interface; it operates as soon as you select it.</P>
+
+	<P align=justify><STRONG>Replace With Backup Object</STRONG> will look for a .lwo-bu
+	object on disk.  If it exists, the original .lwo and the .lwo-bu's filenames will be
+	swapped, and the object will be reloaded.  This has the net effect of loading the backup
+	back into Layout, but with the same name as the original.  You can repeatedly swap back
+	and forth between the original and the backup by calling <b>Replace With Backup Object</b>
+	over and over again.  This plug-in has no interface;  it operates as soon as you select it.
+	If the backup doesn't exist, an error message will appear to let you know.</P>
+	
+	<br><HR width="90%">
+	<a name="#SaveNewObjectRevision"></a>
+	<a name="#ReplaceWithNextObjectRevision"></a>
+	<a name="#ReplaceWithPreviousObjectRevision"></a>
+	<H3 align=center>
+	Save New Object Revision<br>
+	Replace With Next Object Revision<br>
+	Replace With Previous Object Revision<br>
+	<HR width="40%"></H3>
+
+    <P align=justify><b>Save New Object Revision</b> operates similarly to the <i>New Revision</i>
+	versioning mode in <b>Save Objects</b>, with two as the hard-coded mimimum number of digits.
+	See the <a href="#NewRevision"><i>New Revision</i></a> documention above for specific details.
+	This plug-in has no interface;  it operates as soon as it is run.</P>
+
+    <P align=justify><b>Replace With Next Object Revision</b> will load the next object revision from
+	disk, if one exists.  The rules for determining the revision are the same as those for the
+	<a href="#NewRevision"><i>New Revision</i></a> versioning mode in <b>Save Objects</b>.  If no
+	revision immediatly follows the current revision, an error message pops up to let you know and
+	the original object remains in memory.  This plug-in has no interface;  it operates as soon as
+	it is run.</P>
+
+    <P align=justify><b>Replace With Previous Object Revision</b> will load the previous object
+	revision from disk, if one exists.  The rules for determining the revision are the same as those
+	for the <a href="#NewRevision"><i>New Revision</i></a> versioning mode in <b>Save Objects</b>.
+	If no revision immediatly follows the current revision, an error message pops up to let you know
+	and the original object remains in memory.  This plug-in has no interface;  it operates as soon
+	as it is run.</P>
+
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2001 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

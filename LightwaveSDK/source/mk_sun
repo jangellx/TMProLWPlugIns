@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cp sun/serv_u.c .
+make -f sun/makefile -u
+rm -f serv_u.c
+rm -f *.o

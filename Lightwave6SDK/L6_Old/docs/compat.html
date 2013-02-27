@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<title>Compatibility</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="dynaui.html"><img width="96" height="20" border="0"
+    src="images/navlt.gif" alt="Interfaces"></a> </td>
+    <td width="96" align="left"><a href="intro.html"><img width="64" height="20" border="0"
+    src="images/navrt.gif" alt="Introduction"></a> </td>
+    <td width="384" align="right"><a href="index.html"><img width="230" height="20" border="0"
+    src="images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+<h3>Compatibility</h3>
+
+<p>This is where we discuss version and compatibility issues.</p>
+
+<p>Inspire, VTNT LW</p>
+
+<p>Each release of LightWave since the introduction of the plug-in architecture has
+enhanced the capabilities of the plug-in interface. Classes and globals are added and
+some server structures are extended. Version numbers for the server classes distinguish
+the different capabilities. Extended globals get new names in each release.</p>
+
+<p>These design components combine to produce a plug-in architecture that enables existing
+plug-ins to continue to function without change--indeed, without even the need to recompile
+--as LightWave's plug-in interface is endowed with new features. This is important; plug-in
+developers can take advantage of new interface capabilities at their liesure, while their
+plug-ins continue to function.</p>
+
+<p>The version number for all classes in release 4.0 was 1. In 5.0 many of the handler classes
+(and their associated interface classes) were bumped up to version 2. In LightWave 5.5, the
+version for anything new is 3. When Layout activates a handler, it first tries passing
+version 3. If the server only supports a version 1 or 2 interface, then its activation function
+should return AFUNC_BADVERSION, and Layout will try version 2 and finally version 1.</p>
+
+</td></tr></table>
+
+</body>
+
+</html>

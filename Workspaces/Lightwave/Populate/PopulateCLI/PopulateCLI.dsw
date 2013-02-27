@@ -1,0 +1,185 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "CLIBase"=..\..\..\..\Projects\Portable\CLIBase\CLIBase.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Configfstream"=..\..\..\..\Projects\Portable\Configfstream\Configfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name pfstream
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DirTools"=..\..\..\..\Projects\Portable\DirTools\DirTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name StringTools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FreeKey"=..\..\FreeKey\FreeKey.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageLister"=..\..\ImageLister\ImageLister.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Populate"=..\Populate\Populate.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "PopulateCLI"=.\PopulateCLI.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CLIBase
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Populate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name bfstream
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DirTools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Configfstream
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "StringTools"=..\..\..\..\Projects\Portable\StringTools\StringTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "UberNull"=..\..\UberNull\UberNull\UberNull.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "UberNull_CLI"=..\..\UberNull\UberNull_CLI\UberNull_CLI.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "bfstream"=..\..\..\..\Projects\Portable\bfstream\bfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name StringTools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "pfstream"=..\..\..\..\Projects\Portable\pfstream\pfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

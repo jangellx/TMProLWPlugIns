@@ -1,0 +1,34 @@
+#
+# Server library and startup module -- MSVC 2.0
+#  This is a command-line makefile, not a project makefile.
+#
+UINC    = ..\include
+ULIB    = ..\lib
+
+!IF "$(CPU)" == "i386"
+CFMACH	= -D_X86_=1
+!ENDIF
+
+!IF "$(CPU)" == "MIPS"
+CFMACH	= -D_MIPS_=1
+!ENDIF
+
+!IF "$(CPU)" == "ALPHA"
+CFMACH  = -D_ALPHA_=1
+!ENDIF
+
+CFLAGS  = -c -W3 /I $(UINC) $(CFMACH) -DWIN32 -D_WIN32 -DDEBUG /Ox /MTd
+
+.c.obj:
+	cl $(CFLAGS) $*.c
+
+SERVLIB_O = slib3.obj slib2.obj slib1.obj
+
+all : $(ULIB)\server.lib $(ULIB)\serv_w.obj
+
+$(ULIB)\server.lib : $(SERVLIB_O)
+    -del $(ULIB)\server.lib
+    lib /out:$(ULIB)\server.lib $(SERVLIB_O)
+
+$(ULIB)\serv_w.obj : serv_w.obj
+    copy serv_w.obj $(ULIB)\serv_w.obj

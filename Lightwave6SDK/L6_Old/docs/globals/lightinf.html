@@ -1,0 +1,127 @@
+<html>
+
+<head>
+<title>Globals: LW Light Info 2</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="iteminfo.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="LW Item Info 2"></a> </td>
+    <td width="96" align="left"><a href="locale.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="Locale Info"></a> </td>
+    <td width="96" align="left"><a href="../globals.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Globals"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>&quot;LW Light Info 2&quot;</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 6.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout</small></p>
+    <p>The light info global returns functions for getting light-specific information about
+    any of the lights in a scene. Use the <a href="iteminfo.html">item info</a> global to get
+    the light list and for generic item information. The information returned by these
+    functions is read-only.</p>
+    <p><strong>Global Call</strong></p>
+    <pre>   LWLightInfo *lightinfo;
+   lightinfo = global( &quot;LW Light Info&quot;, GFUSE_TRANSIENT );</pre>
+    <p>The global function returns a pointer to an LWLightInfo.</p>
+    <pre>   typedef struct st_LWLightInfo {
+      void         (*ambient)    (LWTime, LWDVector color);
+      int          (*type)       (LWItemID);
+      void         (*color)      (LWItemID, LWTime, LWDVector color);
+      int          (*shadowType) (LWItemID);
+      void         (*coneAngles) (LWItemID, double *radius, double *edge);
+      unsigned int (*flags)      (LWItemID);
+      double       (*range)      (LWItemID);
+   } LWLightInfo;</pre>
+    <dl>
+      <dt><tt>ambient( time, color )</tt> </dt>
+      <dd>Returns the color of the global ambient light for the scene at the given time. The RGB
+        levels include the effect of the user's intensity setting for the ambient light.</dd>
+      <dt><tt><br>
+        lighttype = type( light )</tt> </dt>
+      <dd>Returns the type of the light as one of the following values. <blockquote>
+          <p><tt>LWLIGHT_DISTANT<br>
+          LWLIGHT_POINT<br>
+          LWLIGHT_SPOT<br>
+          LWLIGHT_LINEAR<br>
+          LWLIGHT_AREA</tt></p>
+        </blockquote>
+      </dd>
+      <dt><tt>color( time, light, rgb )</tt> </dt>
+      <dd>Sets the <tt>rgb</tt> argument to the color of the light (with intensity factored in) at
+        the given time. </dd>
+      <dt><tt><br>
+        shadowtype = shadowType( light )</tt> </dt>
+      <dd>Returns the shadow type for the light as one of the following values. <blockquote>
+          <p><tt>LWLSHAD_OFF<br>
+          LWLSHAD_RAYTRACE<br>
+          LWLSHAD_MAP </tt></p>
+        </blockquote>
+      </dd>
+      <dt><tt>coneAngles( light, radius, edge )</tt> </dt>
+      <dd>Returns the cone angles for spotlights. <tt>radius</tt> receives an angle that is half
+        the total light cone angle, and <tt>edge</tt> receives the angular width of the soft edge.
+      </dd>
+      <dt><tt><br>
+        settings = flags( light )</tt> </dt>
+      <dd>Returns flag bits for settings related to the light. <blockquote>
+          <p><tt>LWLFL_LIMITED_RANGE<br>
+          LWLFL_NO_DIFFUSE<br>
+          LWLFL_NO_SPECULAR<br>
+          LWLFL_NO_CAUSTICS<br>
+          LWLFL_LENS_FLARE<br>
+          LWLFL_VOLUMETRIC </tt></p>
+        </blockquote>
+      </dd>
+      <dt><tt>dist = range( light )</tt> </dt>
+      <dd>Returns the range or nominal distance for the light. The interpretation of this value
+        depends on the falloff type. If falloff is linear, the value is the distance at which the
+        intensity of the light is 0.0. For inverse distance falloff types, the value is the
+        distance at which the intensity equals the user's intensity setting for the light. When
+        there's no falloff, the return value is undefined. </dd>
+      <dt>&nbsp;</dt>
+      <p><strong>Example</strong></p>
+      <p>This code fragment collects information about the first light.</p>
+      <pre>   #include &lt;lwserver.h&gt;
+   #include &lt;lwrender.h&gt;
+
+   LWItemInfo *iteminfo;
+   LWLightInfo *ltinfo;
+   LWItemID id;
+   LWTime t = 3.0;          /* seconds */
+   LWDVector color;
+   double range, radius, edge;
+   int lighttype, shadowtype;
+   unsigned int flags;
+
+   iteminfo = global( &quot;LW Item Info 2&quot;, GFUSE_TRANSIENT );
+   ltinfo   = global( &quot;LW Light Info 2&quot;, GFUSE_TRANSIENT );
+
+   if ( iteminfo &amp;&amp; ltinfo ) {
+      id = iteminfo-&gt;first( LWI_LIGHT, NULL );
+      lighttype  = ltinfo-&gt;type( id );
+      shadowtype = ltinfo-&gt;shadowType( id );
+      flags      = ltinfo-&gt;flags( id );
+      ltinfo-&gt;color( id, t, color );
+
+      if ( type == LWLIGHT_SPOT )
+         ltinfo-&gt;coneAngles( id, &amp;radius, &amp;edge );
+      if ( flags &amp; LWLFL_LIMITED_RANGE )
+         range = ltinfo-&gt;range( id );
+   }</pre>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

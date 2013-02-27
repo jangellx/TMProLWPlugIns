@@ -1,0 +1,62 @@
+               LIGHTWAVE 3D LAYERED OBJECT FILE FORMAT
+
+                          by Stuart Ferguson
+                           revised  10/4/95
+
+
+Introduction
+
+  The "Layered Object" LWLO file format is used by Modeler to save an
+  editing session which includes multiple layers of data, some active
+  and some in the background.  This IFF format file is nearly
+  identical to the normal LWOB format object file, so this document
+  assumes that the reader is familiar with the LWOB format.
+
+  The IFF form-type is LWLO for "LightWave Layered Object" and it
+  contains the same PNTS, SRFS, POLS, CRVS and SURF chunks as LWOB
+  files.  Unlike the LWOB format, however, the LWLO file may contain
+  any number of PNTS, POLS and CRVS chunks, with each one describing
+  the contents of a single layer.  Layers are described by the LAYR
+  chunk.
+
+
+LAYR Chunk
+
+  An LAYR chunk must precede each set of PNTS, POLS and CRVS data
+  chunks and indicates to which layer those data belong.  An LAYR
+  chunk consists of two unsigned short values and a string.  The first
+  is the layer number which should be from 1 to 10 to operate
+  correctly in Modeler.  This restriction may be lifted in future
+  versions of the format.  The second value is a bitfield where only
+  the lowest order bit is defined and all others should be zero.  This
+  bit is one if this is an active layer and zero if it is a background
+  layer.  The string which follows is the name of the layer and should
+  be null-terminated and padded to even length.
+
+
+Schematic Example
+
+  The file is read just like any LWOB format file except that each time
+  a LAYR chunk is encountered, the subsequent PNTS, POLS and CRVS data
+  chunks are redirected to the indicated layer.  The SRFS and SURF
+  chunks are read normally.  Below is a simplified example which shows
+  a typical file and the order of reading.
+
+    FORM LWLO       -- tag identifies file type and size
+        SRFS ...    -- surface name chunk gives name mappings
+                        for subsequent POLS chunks
+        LAYR        -- first layer starts
+            0003        layer 3 which is active and called "noname"
+            0001
+            6E 6F 6E 61 6D 65 00 00
+        PNTS ...    -- data in layer 3
+        POLS ...
+        LAYR        -- second layer starts
+            0006        layer 6, background, called "Foo"
+            0000
+            46 6F 6F 00
+        PNTS ...    -- data in layer 6
+        POLS ...
+        CRVS ...
+        SURF ...    -- surface description
+                    -- end implied by file length

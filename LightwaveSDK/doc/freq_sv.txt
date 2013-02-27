@@ -1,0 +1,176 @@
+
+Standard Request Plug-ins -- Stuart Ferguson 2/27/97
+
+1      Introduction
+
+2      File Dialogs
+    2.1    Activation Parameters
+      (1)    Public types
+      (2)    Public types
+    2.2    Process
+    2.3    File Types
+      (3)    Public types
+
+3      Color Dialogs
+  (4)    Public types
+
+
+1    Introduction
+
+LightWave makes some of its more common requests from the user using
+standard dialogs.  These dialogs (or "requesters") are used for
+getting files and paths for saving and loading, and for getting color
+choices.  By default, the standard system dialogs are used, but these
+can be overridden by plugins of the right class.
+
+
+2    File Dialogs
+
+The file dialog server class is "FileRequester" and the version is 3.
+Version 1 was used in LightWave verisons 4.0 and 5.0, but no third
+party plugin file dialogs were written so that version has been
+obsoleted.
+
+The activation function for a file requester server performs the
+entire operation at once.  The host passes a local structure defining
+the request, the server opens a requester and gets a reply from the
+user and returns that result back to the calling host.
+
+A file requester should respect the current directory of the caller
+when processing the request and should leave it unchanged.  It should
+also allow the user to specify relative path names as well as fully
+qualified ones.  (Both of these issues have to be specially coded when
+using the Windows common file dialogue.)
+
+
+2.1    Activation Parameters
+
+The local struct contains a set of values set mainly by the host to
+specify the request and to receive results.
+
+ reqType     This is one of the FREQ_* values below and defines the
+	     type of file request being made by the host.  LOAD lets
+	     the user pick a single existing file for reading.  SAVE
+	     lets the user pick a single file, existing or not, for
+	     writing.  DIRECTORY lets the user pick a directory which
+	     will later be used to locate files.  MULTILOAD lets the
+	     user pick one or more existing files for reading.
+
+    (1)  Public types
+
+	#define FREQ_LOAD        1
+	#define FREQ_SAVE        2
+	#define FREQ_DIRECTORY   3
+	#define FREQ_MULTILOAD   4
+	. . .
+
+ result      This is the return code from the request.  A value of 0
+	     indicates that the user canceled the request, and a value
+	     of 1 indicates that the request was completed and a file
+	     was selected.
+
+ title       This is a possible title for the dialog to help remind
+	     the user what they are supposed to select.
+
+ fileType    This string is the name of the type of file being
+	     requested.  In addition to being a descriptive name for
+	     the user, this is also a key that can be used to get a
+	     filename pattern for files that can be read and for the
+	     default type for a new file.
+
+ path, baseName, fullName
+	     These character buffers are provided by the caller to
+	     receive the name of the selected file.  The path is the
+	     absolute or relative path for the file and does not
+	     include the filename.  BaseName is the name of the file
+	     without any path, and fullName is the combined result
+	     name.
+
+ bufLen      This is the minimum length of the three buffers above.
+
+ pickName    This is an optional callback which the host provides for
+	     the MULTILOAD request type.  It will be called for each
+	     selected file and if it returns a non-zero value the file
+	     processing should halt.
+
+    (2)  Public types
+	. . .
+	typedef struct st_FileReq_Local {
+		int              reqType, result;
+		const char      *title;
+		const char      *fileType;
+		char            *path;
+		char            *baseName;
+		char            *fullName;
+		int              bufLen;
+		int            (*pickName) (void);
+	} FileReq_Local;
+	. . .
+
+
+2.2    Process
+
+The host first sets the request type, the title string and file type
+in the local struct.  The host also sets the path and baseName buffers
+to contain an initial path and filename for the dialog.  It sets the
+path, baseName and fullName pointers and the bufLen is set to a value
+that will not overrun any of the provided buffers.  If this is a
+MULTILOAD request type, the host also sets the pickName callback.  It
+then passes this structure to the server through the Activation
+function.
+
+At this point the server displays the dialog to the user and allows
+him to make a choice starting from the initial path and filename.  If
+the user cancels the request, the result is set to 0 and the server
+exits without doing anything else.  For any of the single selection
+requests (LOAD, SAVE and DIRECTORY), the users' choice of file is
+written to the path, baseName and fullName buffers, the result is set
+to 1 and the server exits.
+
+In the MULTILOAD case, the users' choices of files are written to the
+path, baseName and fullName buffers one at a time and pickName is
+called for each.  This must be done even if only one file was
+selected.  The path buffer should be left containing at least one path
+for the multiple selection and the result should be set to 1 for
+success before the server exits.
+
+
+2.3    File Types
+
+The host provides a global function to get filename patterns from file
+type strings, returned by ID "File Type Pattern".  This function takes
+a file type string and returns a pattern used to match files of the
+given type.  If the type is unknown, or the string is null, a generic
+wildcard is returned to match all files on the system which will vary
+depending on the host filesystem.
+
+    (3)  Public types
+	. . .
+	typedef const char      *FileTypeFunc (const char *);
+	. . .
+
+On Windows, the file types are of the form "*.xxx" and are separated
+by semicolons.  On the Mac, the file types are four-character file
+types, also separated by semicolons.  For those two systems, the
+default type for a new file is the first file type in the string.  On
+Unix, the file type is most likely a regular expression but may vary.
+
+
+3    Color Dialogs
+
+The color dialog server class is "ColorPicker" and the version is 3.
+
+The interface is extremely simple.  The host sets the initial RGB
+value for the color and passes that to the Activation function for the
+server.  The server displays a color dialog to the user and sets the
+result to zero if the user cancels and one of the user picks a new
+color.  The host can provide an optional hint about a title for the
+request.
+
+    (4)  Public types
+	. . .
+	typedef struct st_ColorPick_Local {
+		const char      *title;
+		int              red, green, blue;
+		int              result;
+	} ColorPick_Local;

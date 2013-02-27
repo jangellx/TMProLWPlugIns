@@ -1,0 +1,86 @@
+Compiling Plug-ins Under Borland C++ v4.52
+    Provided by Michal Koc (infect@polbox.com)
+    (edited by Bob Hood)
+
+I have been using both VC++ and BC4.52 . If you want to compile plug-ins
+under BC 4.52, you just have to change serv_w.c.  To alter the file, you
+should change the following structure declaration found in that file:
+
+        ModuleDescriptor _mod_descrip = {
+	        MOD_SYSSYNC,
+	        MOD_SYSVER,
+	        MOD_MACHINE,
+	        Startup,
+	        Shutdown,
+	        ServerDesc
+        };
+
+to this:
+
+        #ifdef BORLAND
+        ModuleDescriptor mod_descrip = {
+        #else
+        ModuleDescriptor _mod_descrip = {
+        #endif
+	        MOD_SYSSYNC,
+	        MOD_SYSVER,
+	        MOD_MACHINE,
+	        Startup,
+	        Shutdown,
+	        ServerDesc
+        };
+
+You must also define "BORLAND" in your compile so that the definition
+added to serv_w.c (above) is activated.
+
+Next, you should compile all C files found in the 'source' directory
+into one library file.
+
+      serv_w.c
+      slib1.c
+      slib2.c
+      slib3.c
+      slib4.c
+
+Here are step-by-step instuctions:
+
+I. Compiling libraries
+    1. Choose projest/newproject...
+          -set project path and target name
+          -set Target Type to Static Library (for .dll) [.lib]
+          -in Standard Libraries mark Static
+          -set Platform to Win32
+          -set Target Model to GUI
+    2. Add nodes with files:
+          -serv_w.c    (altered as described above)
+          -slib1.c
+          -slib2.c
+          -slib3.c
+          -slib4.c
+    3. Options/project...
+          -Directories : set include and lib paths
+          -Compiler/Defines add _WIN32 , _X86_ and BORLAND
+          -Compiler/Code Generation set Unsigned Characters and fastthis
+          -32-bit Compiler set Processor and Data aligment to 8 bytes
+    4. Compile project..
+
+II. Compiling plug-in
+    1. Choose projest/newproject...
+          -set project path and target name
+          -set Target Type to Dynamic Library [.dll]
+          -in Standard Libraries mark Dynamic
+          -set Platform to Win32
+          -set Target Model to GUI
+    2. In "def" file write 
+         EXPORTS _mod_descrip
+    3. Add nodes with your own source files
+    4. Add node with library file (lib\server.lib)
+    5. Remove unused nodes
+    6. Options/project...
+          -Directories : set include and lib paths
+          -Compiler/Defines add _WIN32 and _X86_
+          -Compiler/Code Generation set Unsigned Characters and fastthis
+          -32-bit Compiler set Processor and Data aligment to 8 bytes
+    7. Compile project..
+                                                
+

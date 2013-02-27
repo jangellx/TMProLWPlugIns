@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd vsformat
+make -f sun/makefile
+cd ../laymon
+make -f sun/makefile
+cd ../gradient
+make -f sun/makefile
+cd ..

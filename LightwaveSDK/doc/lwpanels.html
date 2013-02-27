@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Global Panel Services Plugin</TITLE>
+   <META NAME="Author" CONTENT="Arnie Cachelin">
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META NAME="Classification" CONTENT="Software Documentation">
+   <META NAME="Description" CONTENT="Lightwave3D user interface plugin for programmers">
+   <META NAME="KeyWords" CONTENT="Lightwave3D, plugin">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#C0C0C0" LINK="#FF0000" VLINK="#800080" ALINK="#0000FF">
+
+<H1 ALIGN=CENTER><IMG SRC="lwlogo001.gif" ALT="logo" HSPACE=5 VSPACE=5 HEIGHT=80 WIDTH=64 ALIGN=CENTER>Lightwave3D
+Panel Services:<IMG SRC="lwlogo001.gif" ALT="logo" HSPACE=5 VSPACE=5 HEIGHT=80 WIDTH=64 ALIGN=CENTER></H1>
+
+<H2 ALIGN=CENTER><I>User-Interface functions for plugins.</I> 
+<HR width="100%"></H2>
+
+<P><FONT SIZE=+1>Lightwave3D panel services are a set of routines for creating
+user interface panels within plugins. Interface code will work on all supported
+Lightwave3D platforms and match the look of the Lightwave3D interface.
+In addition, basic drawing routines are provided. Lwpanels.p is a global-class
+plug-in. This means that its functions are only available to other plug-ins,
+not to end users. To call lwpanels.p from a plug-in file, you must first
+get access to its functions by calling the global function with the name
+for the plug-in service, in this case &quot;LWPanelServices&quot;. If the
+plug-in is loaded in LW, the global function will return the address of
+a LWPanelFuncs structure, which has pointers to all the available functions.
+The definitions for this and other necessary structures are in the file
+<A HREF="../include/lwpanel.h">lwpanel.h</A>, which must be #included in your source.</FONT></P>
+
+<H4><I><FONT SIZE=+3>Panels</FONT></I></H4>
+
+<P><FONT SIZE=+1>The LWPanelFuncs structure has the following functions:</FONT></P>
+
+<DT><B><FONT SIZE=+2>LWPanelID create(char *title, void *data)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Create a panel. The data pointer is provided for client
+use, as it will be passed to all the callback functions.</FONT></DD>
+
+<DT><B><FONT SIZE=+2>void destroy(LWPanelID panID)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Free the panel and all its controls.</FONT></DD>
+
+<DT><B><FONT SIZE=+2>int open(LWPanelID panID, int flags)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Open the panel. The size, position, should already be
+set and controls all added and positioned. Set bits in flags to determine
+whether there will be a cancel button (PANF_CANCEL), whether the panel
+will block all other input waiting to be closed (PANF_BLOCKING).</FONT></DD>
+
+<DT><B><FONT SIZE=+2>int handle(LWPanelID panID, int EventMode)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>For panels opened in a non-blocking mode, this function
+handles all the accumulated input. It returns -1 if the user has closed
+the panel, or 0 otherwise. If the EventMode specified has the EVNT_BLOCKING
+bit set, this function will not return until the panel is closed.</FONT></DD>
+
+<DT><B><FONT SIZE=+2>void draw(LWPanelID panID, DrMode mode)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Draw or redraw the panel and its controls. Use any of
+the enumerated DrMode types.</FONT></DD>
+
+<DT><B><FONT SIZE=+2>void close(LWPanelID)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Close the panel. It can be reopened.</FONT></DD>
+
+<DT><B><FONT SIZE=+2>void get(LWPanelID, pTag tag, void *value);</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Query a panel for the value specified by the tag. This
+is the only way of getting information about a panel. The value argument
+should point to the appropriate data type (integer or address). Use the
+following tags:</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_X, PAN_Y, PAN_W, PAN_H -- Panel position and size.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_MOUSEX, PAN_MOUSEY -- Mouse position at last event,
+relative to Panel position</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_TITLE -- Panel title</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_LWINSTANCE -- Some LWInstance data (or whatever)
+which you previously stashed there</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_PANFUN -- The original LWPanelFuncs, provided for
+convenience.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_VERSION -- Return the API version for LWPanels, which
+is useful for checking whether features exist before using them. A version
+of 0 indicates that the version predates this tag, I started at 7.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_HOSTDISPLAY -- The panel's 'Window', a pointer to
+the platform specific window handle, (e.g. HWND on Windows). (API v11)</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_QUALIFIERS -- Return an integer with bits set according
+to the keyboard qualifiers (IQ_SHIFT, IQ_CTRL, etc.). Call this in keyboard
+event callbacks. </FONT></DD>
+
+<DT><B><FONT SIZE=+2>void set(LWPanelID, pTag tag, void *value);</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Set specified value for panel. This is the only way to
+position or size the panel, or attach callbacks. The value argument should
+point to the appropriate data type (integer or address). Use the following
+tags:</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_X, PAN_Y, PAN_W, PAN_H -- Panel position and size.
+To ensure compatibility across all displays, the maximum panel size is
+limited to 640x480 (at 0,0). Sorry.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_TITLE -- Panel title, initially set by create().</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_USERDATA -- Data passed to callbacks.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_USERDRAW -- Draw callback function, if initialized,
+this function will be called whenever the panel is drawn.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_USEROPEN -- Open callback function, if initialized,
+this function will be called whenever the panel is opened.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_USERCLOSE -- Close callback function, if initialized,
+this function will be called whenever the panel is closed.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_USERKEYS -- Keyboard callback function, if initialized,
+this function will be called upon keyboard input.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_USERKEYUPS -- Keyboard callback function, if initialized,
+this function will be called upon key up events.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_MOUSEBUTTON -- Mouse click callback function, if
+initialized, this function will be called upon mouse button up or down
+events.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_MOUSEMOVE -- Mouse move callback function, if initialized,
+this function will be called upon mouse move events after a button down
+event and before the next up event.</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_RESULT -- Set this to pass results when closing panels
+manually. (API v11)</FONT></DD>
+
+<DD><FONT SIZE=+1>PAN_TO_FRONT -- Set this to manually pop the panel to
+the front. This kludge is sometimes needed after other windows are opened
+from within a plugin. (API v14)</FONT></DD>
+
+<DT><B><FONT SIZE=+1>LWControl *addControl(LWPanelID pan, char *type, LWPanControlDesc
+*data, char *label)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Add a control element to a panel. The type of control
+is determined both by the value of the type string and the LWPanControlDesc
+structure.</FONT></DD>
+
+<PRE><B><FONT SIZE=+1>  <I>      Type string             Value type       ControlDesc type
+
+</I>        ButtonControl           LWT_INTEGER
+        BoolControl             LWT_INTEGER
+        BoolButtonControl       LWT_INTEGER
+        TextControl             LWT_INTEGER      LWPanTextDesc
+        EditControl             LWT_STRING       LWPanStringDesc
+        InfoControl             LWT_STRING
+        FileControl             LWT_STRING       LWPanStringDesc
+        FileButtonControl       LWT_STRING       LWPanStringDesc
+        NumControl              LWT_INTEGER
+        NumInfoControl          LWT_INTEGER
+        FloatControl            LWT_FLOAT
+        FloatInfoControl        LWT_FLOAT
+        FVecControl             LWT_VFLOAT
+        FVecInfoControl         LWT_VFLOAT
+        VecControl              LWT_VINT
+        VecInfoControl          LWT_VINT
+        RGBControl              LWT_VINT
+        HSVControl              LWT_VINT
+        RGBVecControl           LWT_VINT
+        ChoiceControl           LWT_INTEGER      LWPanChoiceDesc
+        PopupControl            LWT_INTEGER      LWPanChoiceDesc
+        PopDownControl          LWT_INTEGER      LWPanChoiceDesc
+        CustomPopupControl      LWT_POPUP        LWPanPopupDesc
+        PercentControl          LWT_FLOAT        LWPanRangeDesc
+        SliderControl           LWT_INTEGER      LWPanRangeDesc
+        VSlideControl           LWT_INTEGER      LWPanRangeDesc
+        HSlideControl           LWT_INTEGER      LWPanRangeDesc
+        UnboundSlideControl     LWT_INTEGER      LWPanRangeDesc
+        MiniSliderControl       LWT_INTEGER      LWPanRangeDesc
+        AreaControl             LWT_INTEGER      LWPanAreaDesc
+        CanvasControl           LWT_INTEGER      LWPanAreaDesc
+        BorderControl           LWT_INTEGER      LWPanAreaDesc
+        OpenGLControl           LWT_INTEGER      LWPanAreaDesc
+        LWListControl           LWT_INTEGER      LWPanLWItemDesc
+        DragButtonControl       LWT_INTEGER      LWPanAreaDesc
+        DragAreaControl         LWT_INTEGER      LWPanAreaDesc
+        ListBoxControl          LWT_POPUP        LWPanListboxDesc</FONT></B>
+
+</PRE>
+
+<P><FONT SIZE=+1>Controls are stacked as they are added, and remain in
+that order internally regardless of any onscreen repositioning. A control's
+initial position will be determined by the vertical position and height
+of the previous control. As a consequence, controls may be moved up into
+multiple columns as they are created so subsequent rows will created in
+the right position automatically. Controls may most easily be added by
+using the supplied preprocessor macros in LWPanel.h (i.e. SLIDER_CTL),
+which initialize the appropriate LWPanControlDesc values for you.</FONT></P>
+
+<DT><B><FONT SIZE=+1>LWControl *nextControl(LWPanelID pan, LWControlID
+ctl)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Returns the next control, or the first if ctl is NULL,
+or NULL if there are no controls at all.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>DrawFuncs *drawFuncs</FONT></B></DT>
+
+<DD><FONT SIZE=+1>A DrawFuncs structure, brimming with useful functions
+for drawing on your panels. More below.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void *user_data</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Just a spare pointer you may use for anything.</FONT></DD>
+
+<DL>
+<DT><B><FONT SIZE=+1>GlobalFunc *globalFun</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Put your global pointer in here for convenient access.</FONT></DD>
+</DL>
+
+<H4><I><FONT SIZE=+1>Controls</FONT></I></H4>
+
+<P><FONT SIZE=+1>The LWControl structure has the following elements:</FONT></P>
+
+<DT><B><FONT SIZE=+1>void draw(LWControlID ctl, DrMode mode)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Draw the control in the given mode.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void get(LWControlID ctl, cTag tag, DynaValue *val)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Get a value from a control. It will be returned as the
+appropriate DynaValue type (pointers = LWT_INTEGER)</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void set(LWControlID ctl, cTag tag, DynaValue *val)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Set a value for a control. It will be returned as the
+appropriate DynaValue type (pointers = LWT_INTEGER)</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void *priv_data</FONT></B></DT>
+
+<DD><FONT SIZE=+1>System-critical internal data, DO NOT TOUCH.</FONT></DD>
+
+<P><FONT SIZE=+1>Like the LWPanelFuncs structure, the LWControl structure
+is accessed only through its get() and set() member functions using a set
+of tags. Unlike the LWPanelFuncs, control values use DynaValues rather
+than generic pointers in get() and set(). For each of the named control
+types (i.e. &quot;BoolControl&quot; ) there is an associated data type
+(i.e. LWT_INTEGER). This is the type of the DynaValue which must be used
+to get and set the value of the control. Other types may be used to set
+other control attributes. Again, a set of macros has been provided (e.g.
+SET_INT) to make this slightly prettier to code (though these should be
+used with care, as they are not functions, and rely on side-effects). Most
+controls get user input, and thus generate 'events'. If a UserEvent callback
+function has been installed (by using set() with CTL_USEREVENT), then it
+will be called for each event, and passed the LWControl, and a pointer
+to the data you provided to the panel create() call or re-set() with CTL_USERDATA.
+An exception to this is the OpenGL Control, which gets no input, and whose
+only 'event' is a redraw. The UserEvent function should, in this case,
+do your rendering. Note that to cause ANY control to draw, including OpenGL
+controls, you should call that control's draw() member function.</FONT></P>
+
+<P><FONT SIZE=+1>The following tags can be used with LWControls:</FONT></P>
+
+<PRE><FONT SIZE=+1>        CTL_VALUE         -- Control's main value, maybe a vector or other composite value type
+        CTL_X, CTL_Y  -- Control's position, including margin
+        CTL_LABEL         -- The text next to the the control
+        CTL_USERDRAW  -- Callback function for control redraws
+        CTL_USEREVENT -- Callback for events
+        CTL_USERDATA  -- Pointer handed back to callbacks
+        CTL_ACTIVATE -- Set only, to actvate/enter string controls   API 10 and later
+       (these are read-only)
+        CTL_HOTX, CTL_HOTY, CTL_HOTW, CTL_HOTH -- Clickable 'hot' area of control
+        CTL_LABELWIDTH          -- Width of label area.
+        CTL_FLAGS               -- CTLF_ bits
+        CTL_W, CTL_H            -- Size of control
+        CTL_MOUSEX, CTL_MOUSEY  -- Mouse position at last event.
+        CTL_PANEL, CTL_PANFUN   -- Originating LWPanelID and LWPanelFuncs, for convenience
+        CTL_RANGEMIN, CTL_RANGEMAX --  Get/set slider range params  API 10 and later</FONT>
+</PRE>
+
+<H4><I><FONT SIZE=+1>DrawFuncs</FONT></I></H4>
+
+<P><FONT SIZE=+1>The DrawFuncs struct below is your access to graphics
+routines provided as a complimentary gift to users of the LW Panel Services.
+One important thing to note about drawing on panels is that it must take
+place within a draw callback, (either for the panel, or for an individual
+control). This is because the system can and will redraw your window at
+its whim, and the draw callbacks are the only way to follow this. </FONT></P>
+
+<DT><B><FONT SIZE=+1>void drawPixel(LWPanelID pan,int c,int x,int y)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Call this to draw a pixel with color c at (x,y).</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void drawRGBPixel(LWPanelID pan,int r,int g,int b,int
+x,int y)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Call this to draw a pixel with true color r,g,b at (x,y).</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void drawLine(LWPanelID pan,int c,int x1,int y1,int
+x2,int y2)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Call this to draw a line with color c from (x1,y1) to
+(x2,y2).</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void drawBox(LWPanelID pan,int c,int x,int y,int w,int
+h)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Call this to draw a box with color c at (x,y) with dimensions
+of w by h.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void drawRGBBox(LWPanelID pan,int r,int g,int b,int
+x,int y,int w,int h)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Call this to draw a box with true color r,g,b at (x,y)
+with dimensions of w by h.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void drawBorder(LWPanelID pan,int indent,int x,int
+y,int w,int h)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Call this to draw a border inside the given rectangle,
+if indent is 0, then the border will appear raised. If h is 0, the border
+is specially rendered as a horizontal divider.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>int textWidth(LWPanelID pan,char *txt)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Return the width of the given string in pixels.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>void drawText(LWPanelID pan,char *txt,int c,int x,int
+y)</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Draw the given string at (x,y) in color c.</FONT></DD>
+
+<DT><B><FONT SIZE=+1>const DisplayMetrics *dispMetrics()</FONT></B></DT>
+
+<DD><FONT SIZE=+1>Return the ever-handy display metrics structure, which
+tells you how big and deep your display is, and other stuff too!</FONT></DD>
+
+<P><FONT SIZE=+1>The colors used by these functions, and the DisplayMetrics
+definition can be found in <A HREF="../include/lwpanel.h">lwpanel.h.</A></FONT></P>
+
+<P>
+<HR width="100%"></P>
+
+</BODY>
+</HTML>

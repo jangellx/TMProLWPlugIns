@@ -1,0 +1,58 @@
+<html>
+
+<head>
+<title>Classes: ProceduralTextureHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="pxlfilt.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="PixelFilterHandler"></a> </td>
+    <td width="96" align="left"><a href="scenecvt.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="SceneConverter"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+
+<h3>ProceduralTextureHandler</h3>
+
+<pre>
+typedef struct st_LWTextureHandler {
+   LWInstanceFuncs *inst;
+   LWItemFuncs     *item;
+   LWRenderFuncs   *rend;
+   double          (*evaluate) (LWInstance, LWTextureAccess *);
+   unsigned int    (*flags)    (LWInstance);
+} LWTextureHandler;
+
+LWTEXF_GRAD      1
+LWTEXF_SLOWPREVIEW  2
+LWTEXF_AXIS      4
+LWTEXF_AALIAS       8
+
+LWTXEF_VECTOR      (1<<0)
+LWTXEF_AXISX    (1<<1)
+LWTXEF_AXISY    (1<<2)
+LWTXEF_AXISZ    (1<<3)
+
+typedef struct st_LWTextureAccess {
+   double pos[3];
+   double spotSize;
+   double txGrad[3];
+   int    flags;
+} LWTextureAccess;
+</pre>
+</td></tr></table>
+</body>
+
+</html>

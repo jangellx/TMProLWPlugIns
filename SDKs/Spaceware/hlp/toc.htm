@@ -1,0 +1,513 @@
+<!--This file created 10:34 AM  5/29/98 by Claris Home Page version 2.0-->
+<HTML>
+<HEAD>
+   <BASE TARGET="right">
+   <TITLE>SpaceWare SDK 1.0 for Windows</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 2.0">
+   <X-SAS-WINDOW TOP=38 BOTTOM=533 LEFT=4 RIGHT=822>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"><!--This file created 5:28 PM  4/3/98 by Claris Home Page version 2.0--><!--This file created 11:40 AM  4/3/98 by Claris Home Page version 2.0-->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<H1><FONT COLOR="#0000AF">Table of Contents</FONT></H1>
+
+<P><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Overview.htm">SpaceWare SDK
+Overview</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="SupPlatf.htm">Supported
+Platforms</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;</FONT><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Installation</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="Install.htm">Installing the
+SDK</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Install.htm#Changes in this Release">Changes
+in This Release</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Install.htm#Files Installed">Files
+Installed</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Install.htm#SpaceWare DLLs">SpaceWare
+DLLs</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Install.htm#SpaceWare Libraries">SpaceWare
+Libraries</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Install.htm#SpaceWare Include Files">SpaceWare
+Include Files</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Install.htm#SpaceWare Demo Files">SpaceWare
+Demo Files</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Install.htm#SpaceWare Help Files">SpaceWare
+Help Files</A></FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Device Information</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="DevInfo.htm#PSInfo">PowerSensor
+Information</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="DevInfo.htm#SB_Buttons">Spaceball
+Buttons</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="DevInfo.htm#DataSup">Data
+Supplied</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="DevInfo.htm#HowUsed">How Data
+Should be Used</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="DevInfo.htm#WhyAATM">Why
+ArbitraryAxistoMatrix</A></FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Integrating the Spaceball
+Device</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="Integrat.htm">Integration
+Basics</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Integrat.htm#Lib Files for App">Library Files
+for Applications</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Integrat.htm#Five Basic Functions">Five Basic
+Functions</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Integrat.htm#Spaceball Events">Spaceball
+Events</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Integrat.htm#SB Button Returns">Spaceball
+Button Returns</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Integrat.htm#SB Driver  Menu">Spaceball Driver
+Menu</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Integrat.htm#SB Utility Funct">Spaceball
+Utility Functions</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="Integrat.htm#Code Samples">Code
+Samples</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Integrat.htm#Win32">Win32</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Integrat.htm#MFC">MFC</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Integrat.htm#Building the Lib">Building the
+Libraries</A></FONT></P>
+
+<P><FONT SIZE="-1"
+FACE="Arial"><A HREF="Demos.htm">Demos</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Demos.htm#Building the Demos">Building the
+Demos</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Demos.htm#CityFly">CityFly</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="Demos.htm#Widget World">Widget
+World</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Demos.htm#sbtest32">sbtest32</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="Demos.htm#sbtestmfc">sbtstmfc</A></FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial"
+COLOR="#000000"><A HREF="TandT.htm">Tips and
+Techniques</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="TandT.htm#Common Problems">Common
+Problems</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="TandT.htm#Tuning">Tuning</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="Scoring.htm">Scoring</A></FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm">SpaceWare Input
+Library</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpaceWare Library Definitions a">Library
+Definitions and Structures</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiButtonData Structure">SiButtonData
+Structures</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiDevInfo Structure">SiDevInfo
+Structure</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiDevID Type">SiDevID
+Type</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiGetEventData Structure">SiGetEventData
+Structure</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiHdl Type">SiHdl
+Type</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiOpenData Structure">SiOpenData
+Structure</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwEvent Structure">SiSpwEvent
+Structure</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwEvent Types">SiSpwEvent
+Types</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwHandler Structure">SiSpwHandler
+Structure</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwHandlers Structure">SiSpwHandlers
+Structure</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiVerInfo Structure">SiVerInfo
+Structure</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpaceWare Data Offsets">SpaceWare
+Data Offsets</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpaceWare Device Type">SpaceWare
+Device Types</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpaceWare UI Mode Setting">SpaceWare
+UI Mode Settings</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#Special Button Definition">Special
+Button Definitions</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpwErrorVal">SpwErrorVal</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpwRetVal Enumueration">SpwRetVal
+Enumeration</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial" COLOR="#008000"><A HREF="InputFun.htm">SpaceWare
+Functions</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiBeep">SiBeep</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiButtonPressed">SiButtonPressed</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiButtonReleased">SiButtonReleased</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiClose">SiClose</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiDispatch">SiDispatch</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGetDeviceID">SiGetDeviceID</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGetDeviceInfo">SiGetDeviceInfo</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGetDriverInfo">SiGetDriverInfo</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGetEvent">SiGetEvent</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGetEventWinInit">SiGetEventWinInit</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGetLibraryInfo">SiGetLibraryInfo</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGetNumDevices">SiGetNumDevices</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiGrabDevice">SiGrabDevice</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiInitialize">SiInitialize</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiOpen">SiOpen</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiOpenWinInit">SiOpenWinInit</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiReleaseDevice">SiReleaseDevice</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiRezero">SiRezero</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiSetTypeMask (Obsolete)">SiSetTypeMask
+(Obsolete)</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiSetUiMode">SiSetUiMode</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SiTerminate">SiTerminate</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputFun.htm#SpwErrorString">SpwErrorString</A></FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm">Math Library</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#Math Library Philosophy">Math
+Library Philosophy</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#The Coordinate System">The
+Coordinate System</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#Math Library Structures/Definit">Math
+Library Structures/Definition</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#Matrix">Matrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp; </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#Math Library Functions">Math
+Library Functions</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_ArbitraryAxisToMatrix">SPW_ArbitraryAxisToMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_CompareMatrices">SPW_CompareMatrices</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_CopyMatrix">SPW_CopyMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_CrossProduct">SPW_CrossProduct</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_DotProduct">SPW_DotProduct</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_GetMatrixScale">SPW_GetMatrixScale</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_GetTranslationMatrix">SPW_GetTranslationMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_HighValuePassFilter">SPW_HighValuePassFilter</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_InitilizeMatrix">SPW_InitializeMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_InvertMatrix">SPW_InvertMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_LookAtUpVectorToMatrix">SPW_LookAtUpVectorToMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_MakeIdentityMatrix">SPW_MakeIdentityMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_MatrixDeterminant">SPW_MatrixDeterminant</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_MatrixToArbitraryAxis">SPW_MatrixToArbitraryAxis</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_MatrixToLookAtUpVector">SPW_MatrixToLookAtUpVector</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_Mult13x33">SPW_Mult13x33</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_Mult14x44">SPW_Mult14x44</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_Mult33x33">SPW_Mult33x33</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_Mult44x44">SPW_Mult44X44</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_MultFull14x44">SPW_MultFull14x44</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_NormalizeVector">SPW_NormalizeVector</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_OrthoNormMatrix">SPW_OrthoNormMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_PrintMatrix">SPW_PrintMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_PrintSpaceballData">SPW_PrintSpaceballData</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_PrintVector">SPW_PrintVector</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_ScaleMatrix">SPW_ScaleMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_TransposeMatrix">SPW_TransposeMatrix</A></FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">&nbsp;&nbsp;&nbsp; </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="MathLib.htm#SPW_VectorLength">SPW_VectorLength</A></FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="TechSup.htm">Technical Support
+Services</A></FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="Copyrt.htm">Copyright Information</A></FONT>
+</P>
+</BODY>
+</HTML>

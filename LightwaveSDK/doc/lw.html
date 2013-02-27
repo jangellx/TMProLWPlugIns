@@ -1,0 +1,4608 @@
+<html><head>
+<title>lw</title></head>
+<body>
+
+LightWave 3D Animation and Modeling Plug-ins -- Stuart Ferguson 1/29/97
+<p>
+Updated 03.23.98 by Bob Hood
+<p>
+<ul>
+<br>
+<li>1.  <a href="#S1">Introduction</a>
+<ul>
+<li>1.1.  <a href="#S1.1">Past and Future Compatibility</a>
+<li>1.2.  <a href="#S1.2">Classes</a>
+<li>1.3.  <a href="#S1.3">Globals</a>
+</ul>
+<br>
+<li>2.  <a href="#S2">Common Server Classes</a>
+<ul>
+<li>2.1.  <a href="#S2.1">Utility Servers</a>
+<li>2.2.  <a href="#S2.2">Object Import</a>
+<li>(1) <a href="#S2.2">Common Server Classes</a>
+<ul>
+<li>2.2.1.  <a href="#S2.2.1">Sending Mesh Data</a>
+<li>(2) <a href="#S2.2.1">Common Server Classes</a>
+<li>2.2.2.  <a href="#S2.2.2">Result Codes</a>
+<li>(3) <a href="#S2.2.2">Common Server Classes</a>
+<li>2.2.3.  <a href="#S2.2.3">Macintosh Clipboard Import</a>
+</ul>
+</ul>
+<br>
+<li>3.  <a href="#S3">Common Globals</a>
+<ul>
+<li>3.1.  <a href="#S3.1">Utility Globals</a>
+<li>3.2.  <a href="#S3.2">File Dialog</a>
+<li>(4) <a href="#S3.2">Common Globals</a>
+<li>(5) <a href="#S3.2">Common Globals</a>
+<li>3.3.  <a href="#S3.3">User Messages</a>
+<li>(6) <a href="#S3.3">Common Globals</a>
+<li>3.4.  <a href="#S3.4">System ID</a>
+<li>(7) <a href="#S3.4">Common Globals</a>
+<li>3.5.  <a href="#S3.5">Product Information</a>
+<li>(8) <a href="#S3.5">Retrieving the product's build value</a>
+<li>(9) <a href="#S3.5">Common Globals</a>
+<li>3.6.  <a href="#S3.6">Locale Information</a>
+<li>(10) <a href="#S3.6">Retrieving the product's current language</a>
+<li>(11) <a href="#S3.6">&quot;Downgrading&quot; locale support</a>
+<li>(12) <a href="#S3.6">Common Globals</a>
+<li>3.7.  <a href="#S3.7">Directory Information</a>
+<li>(13) <a href="#S3.7">Directory Selector list</a>
+<li>(14) <a href="#S3.7">Retrieving the &quot;Content&quot; directory</a>
+<li>(15) <a href="#S3.7">Common Globals</a>
+</ul>
+<br>
+<li>4.  <a href="#S4">Modeling Datatypes</a>
+<ul>
+<li>4.1.  <a href="#S4.1">Dynamic Types</a>
+<li>(16) <a href="#S4.1">Modeling Base Types</a>
+<li>(17) <a href="#S4.1">Modeling Types</a>
+<li>(18) <a href="#S4.1">Modeling Types</a>
+<li>(19) <a href="#S4.1">Modeling Types</a>
+<li>(20) <a href="#S4.1">Modeling Types</a>
+<li>(21) <a href="#S4.1">Modeling Types</a>
+<li>(22) <a href="#S4.1">Modeling Types</a>
+<li>(23) <a href="#S4.1">Modeling Types</a>
+<li>(24) <a href="#S4.1">Modeling Types</a>
+<li>4.2.  <a href="#S4.2">Element Operation Filters</a>
+<ul>
+<li>4.2.1.  <a href="#S4.2.1">Layer Filters</a>
+<li>(25) <a href="#S4.2.1">Modeling Base Types</a>
+<li>4.2.2.  <a href="#S4.2.2">Element Filters</a>
+<li>(26) <a href="#S4.2.2">Modeling Base Types</a>
+</ul>
+</ul>
+<br>
+<li>5.  <a href="#S5">Modeling Server Classes</a>
+<ul>
+<li>5.1.  <a href="#S5.1">Mesh Editing</a>
+<li>(27) <a href="#S5.1">Modeling Base Types</a>
+<ul>
+<li>5.1.1.  <a href="#S5.1.1">Activation and Local Data</a>
+<li>(28) <a href="#S5.1.1">Modeling Servers</a>
+<li>5.1.2.  <a href="#S5.1.2">Getting Element Information</a>
+<li>(29) <a href="#S5.1.2">Modeling Types</a>
+<li>5.1.3.  <a href="#S5.1.3">PointInfo</a>
+<li>(30) <a href="#S5.1.3">Modeling Base Types</a>
+<li>5.1.4.  <a href="#S5.1.4">PolygonInfo</a>
+<li>(31) <a href="#S5.1.4">Modeling Base Types</a>
+<li>(32) <a href="#S5.1.4">Modeling Types</a>
+<li>5.1.5.  <a href="#S5.1.5">Main Data Struct</a>
+<li>(33) <a href="#S5.1.5">Modeling Types</a>
+<li>(34) <a href="#S5.1.5">Modeling Types</a>
+<li>5.1.6.  <a href="#S5.1.6">Error Codes</a>
+<li>(35) <a href="#S5.1.6">Modeling Base Types</a>
+<li>5.1.7.  <a href="#S5.1.7">Query Functions</a>
+<li>(36) <a href="#S5.1.7">Mesh Edit Count functions</a>
+<li>(37) <a href="#S5.1.7">Modeling Types</a>
+<li>(38) <a href="#S5.1.7">Mesh Edit Query functions</a>
+<li>5.1.8.  <a href="#S5.1.8">Element Traversal</a>
+<li>(39) <a href="#S5.1.8">Modeling Base Types</a>
+<li>(40) <a href="#S5.1.8">Mesh Edit Enumeration functions</a>
+<li>5.1.9.  <a href="#S5.1.9">Creating New Elements</a>
+<li>(41) <a href="#S5.1.9">Modeling Base Types</a>
+<li>(42) <a href="#S5.1.9">Mesh Edit Create functions</a>
+<li>5.1.10.  <a href="#S5.1.10">Modifying Existing Elements</a>
+<li>(43) <a href="#S5.1.10">Mesh Edit Modify functions</a>
+</ul>
+<li>5.2.  <a href="#S5.2">Command Sequencing</a>
+<li>(44) <a href="#S5.2">Modeling Types</a>
+<ul>
+<li>5.2.1.  <a href="#S5.2.1">Command Activation</a>
+<li>(45) <a href="#S5.2.1">Modeling Types</a>
+<li>(46) <a href="#S5.2.1">Modeling Servers</a>
+<li>5.2.2.  <a href="#S5.2.2">Commands</a>
+<li>5.2.3.  <a href="#S5.2.3">External Activation on Windows</a>
+<li>(47) <a href="#S5.2.3">Trigger code</a>
+</ul>
+</ul>
+<br>
+<li>6.  <a href="#S6">Modeling Globals</a>
+<ul>
+<li>6.1.  <a href="#S6.1">Dynamic Conversion</a>
+<li>(48) <a href="#S6.1">Modeling Globals</a>
+<li>(49) <a href="#S6.1">Modeling Types</a>
+<li>(50) <a href="#S6.1">Modeling Types</a>
+<li>6.2.  <a href="#S6.2">Dynamic Input Dialog</a>
+<li>(51) <a href="#S6.2">Modeling Globals</a>
+<ul>
+<li>6.2.1.  <a href="#S6.2.1">Dialog Usage</a>
+<li>(52) <a href="#S6.2.1">Modeling Types</a>
+<li>6.2.2.  <a href="#S6.2.2">Control Descriptors</a>
+<li>(53) <a href="#S6.2.2">Modeling Types</a>
+<li>(54) <a href="#S6.2.2">Modeling Types</a>
+<li>(55) <a href="#S6.2.2">Modeling Types</a>
+<li>(56) <a href="#S6.2.2">Modeling Types</a>
+</ul>
+<li>6.3.  <a href="#S6.3">Dynamic Monitor</a>
+<li>(57) <a href="#S6.3">Modeling Globals</a>
+<li>6.4.  <a href="#S6.4">Custom Commands</a>
+<li>(58) <a href="#S6.4">Modeling Globals</a>
+<li>6.5.  <a href="#S6.5">Modeler Internal State</a>
+<li>(59) <a href="#S6.5">Modeling Globals</a>
+<li>6.6.  <a href="#S6.6">Surfaces List</a>
+<li>(60) <a href="#S6.6">Modeling Globals</a>
+<li>6.7.  <a href="#S6.7">Outline Font List</a>
+<li>(61) <a href="#S6.7">Modeling Globals</a>
+</ul>
+<br>
+<li>7.  <a href="#S7">Animation Datatypes</a>
+<ul>
+<li>7.1.  <a href="#S7.1">Coordinate and Range Scales</a>
+<li>(62) <a href="#S7.1">Animation Types</a>
+<li>7.2.  <a href="#S7.2">Items and Properties</a>
+<li>(63) <a href="#S7.2">Animation Types</a>
+<li>(64) <a href="#S7.2">Animation Types</a>
+<li>(65) <a href="#S7.2">Animation Types</a>
+<li>7.3.  <a href="#S7.3">Time</a>
+<li>(66) <a href="#S7.3">Animation Types</a>
+<li>7.4.  <a href="#S7.4">Errors</a>
+<li>(67) <a href="#S7.4">Animation Types</a>
+<li>7.5.  <a href="#S7.5">Instances and Handlers</a>
+<li>(68) <a href="#S7.5">Animation Types</a>
+<ul>
+<li>7.5.1.  <a href="#S7.5.1">Instance Persistence</a>
+<li>(69) <a href="#S7.5.1">Animation Types</a>
+<li>(70) <a href="#S7.5.1">Animation Types</a>
+<li>7.5.2.  <a href="#S7.5.2">Handler Functions</a>
+<li>7.5.3.  <a href="#S7.5.3">Interface Server</a>
+</ul>
+</ul>
+<br>
+<li>8.  <a href="#S8">Animation Server Classes</a>
+<ul>
+<li>8.1.  <a href="#S8.1">Utilities</a>
+<li>8.2.  <a href="#S8.2">Image Post Processing</a>
+<ul>
+<li>8.2.1.  <a href="#S8.2.1">Input Buffers</a>
+<li>(71) <a href="#S8.2.1">Animation Servers</a>
+<li>8.2.2.  <a href="#S8.2.2">Filter Access</a>
+<li>(72) <a href="#S8.2.2">Animation Servers</a>
+<li>8.2.3.  <a href="#S8.2.3">Handler</a>
+<li>(73) <a href="#S8.2.3">Animation Servers</a>
+</ul>
+<li>8.3.  <a href="#S8.3">Pixel Post Processing</a>
+<ul>
+<li>8.3.1.  <a href="#S8.3.1">Filter Access</a>
+<li>(74) <a href="#S8.3.1">Animation Servers</a>
+<li>8.3.2.  <a href="#S8.3.2">Handler</a>
+<li>(75) <a href="#S8.3.2">Animation Servers</a>
+</ul>
+<li>8.4.  <a href="#S8.4">Procedural Texture</a>
+<ul>
+<li>8.4.1.  <a href="#S8.4.1">Shader Access</a>
+<li>(76) <a href="#S8.4.1">Animation Servers</a>
+<li>8.4.2.  <a href="#S8.4.2">Geometric Parameters</a>
+<li>(77) <a href="#S8.4.2">Read-only shader parameters</a>
+<li>8.4.3.  <a href="#S8.4.3">Modifiable Parameters</a>
+<li>(78) <a href="#S8.4.3">Modifiable shader parameters</a>
+<li>8.4.4.  <a href="#S8.4.4">Special Rendering Functions</a>
+<li>(79) <a href="#S8.4.4">Special rendering functions</a>
+<li>8.4.5.  <a href="#S8.4.5">Instance</a>
+<li>(80) <a href="#S8.4.5">Animation Servers</a>
+<li>(81) <a href="#S8.4.5">Animation Servers</a>
+</ul>
+<li>8.5.  <a href="#S8.5">Procedural Displacement Map</a>
+<ul>
+<li>8.5.1.  <a href="#S8.5.1">Displacement Access</a>
+<li>(82) <a href="#S8.5.1">Animation Servers</a>
+<li>8.5.2.  <a href="#S8.5.2">Handler</a>
+<li>(83) <a href="#S8.5.2">Animation Servers</a>
+<li>(84) <a href="#S8.5.2">Animation Servers</a>
+</ul>
+<li>8.6.  <a href="#S8.6">Procedural Item Animation</a>
+<ul>
+<li>8.6.1.  <a href="#S8.6.1">Item Motion Access</a>
+<li>(85) <a href="#S8.6.1">Animation Servers</a>
+<li>8.6.2.  <a href="#S8.6.2">Handler</a>
+<li>(86) <a href="#S8.6.2">Animation Servers</a>
+<li>(87) <a href="#S8.6.2">Animation Servers</a>
+</ul>
+<li>8.7.  <a href="#S8.7">Procedural Object Replacement</a>
+<ul>
+<li>8.7.1.  <a href="#S8.7.1">Object Replacement Access</a>
+<li>(88) <a href="#S8.7.1">Animation Servers</a>
+<li>(89) <a href="#S8.7.1">Animation Servers</a>
+<li>8.7.2.  <a href="#S8.7.2">Handler</a>
+<li>(90) <a href="#S8.7.2">Animation Servers</a>
+<li>(91) <a href="#S8.7.2">Animation Servers</a>
+</ul>
+<li>8.8.  <a href="#S8.8">Frame Buffers</a>
+<li>(92) <a href="#S8.8">Animation Servers</a>
+<li>8.9.  <a href="#S8.9">Animation Output</a>
+<li>(93) <a href="#S8.9">Animation Servers</a>
+<li>8.10.  <a href="#S8.10">Scene Conversion</a>
+<li>(94) <a href="#S8.10">Animation Servers</a>
+<li>8.11.  <a href="#S8.11">General Function</a>
+<li>(95) <a href="#S8.11">Animation Servers</a>
+</ul>
+<br>
+<li>9.  <a href="#S9">Animation Globals</a>
+<ul>
+<li>9.1.  <a href="#S9.1">Item Information</a>
+<li>(96) <a href="#S9.1">Animation Types</a>
+<li>(97) <a href="#S9.1">Animation Globals</a>
+<li>9.2.  <a href="#S9.2">Object Information</a>
+<li>(98) <a href="#S9.2">Animation Types</a>
+<li>(99) <a href="#S9.2">Animation Globals</a>
+<li>9.3.  <a href="#S9.3">Bone Information</a>
+<li>(100) <a href="#S9.3">Animation Types</a>
+<li>(101) <a href="#S9.3">Animation Globals</a>
+<li>9.4.  <a href="#S9.4">Light Information</a>
+<li>(102) <a href="#S9.4">Animation Types</a>
+<li>(103) <a href="#S9.4">Animation Types</a>
+<li>(104) <a href="#S9.4">Animation Types</a>
+<li>(105) <a href="#S9.4">Animation Globals</a>
+<li>9.5.  <a href="#S9.5">Camera Information</a>
+<li>(106) <a href="#S9.5">Animation Globals</a>
+<li>9.6.  <a href="#S9.6">Scene Information</a>
+<li>(107) <a href="#S9.6">Animation Types</a>
+<li>(108) <a href="#S9.6">Animation Globals</a>
+<li>(109) <a href="#S9.6">Animation Globals</a>
+<li>9.7.  <a href="#S9.7">Image List Information</a>
+<li>(110) <a href="#S9.7">Animation Types</a>
+<li>(111) <a href="#S9.7">Animation Globals</a>
+<li>9.8.  <a href="#S9.8">Compositing Information</a>
+<li>(112) <a href="#S9.8">Animation Globals</a>
+<li>9.9.  <a href="#S9.9">Backdrop Information</a>
+<li>(113) <a href="#S9.9">Animation Globals</a>
+<li>9.10.  <a href="#S9.10">Fog Information</a>
+<li>(114) <a href="#S9.10">Animation Globals</a>
+<li>(115) <a href="#S9.10">Animation Globals</a>
+<li>(116) <a href="#S9.10">Animation Globals</a>
+<li>9.11.  <a href="#S9.11">Global Rendering Memory Pool</a>
+<li>(117) <a href="#S9.11">Animation Types</a>
+<li>(118) <a href="#S9.11">Animation Globals</a>
+<li>9.12.  <a href="#S9.12">Global Memory Pool</a>
+</ul>
+<br>
+<li>10.  <a href="#S10">Files</a>
+<li>(119) <a href="#S10">Common LightWave Header</a>
+<li>(120) <a href="#S10">LightWave Modeler Plug-in Header</a>
+<li>(121) <a href="#S10">LightWave Rendering and Animation Plug-in Header</a>
+</ul>
+
+<hr>
+<a name="S1"><h1>1. Introduction</h1></a>
+
+This document describes the plug-in interfaces defined for the LightWave 
+3D animation and modeling programs.  The two programs which make up the
+LightWave 3D suite each have different plug-in interfaces to allow access
+to their internal state and functions, as well as some common interfaces
+which are shared between the two.  These common interfaces are the subject
+of the first portion of this document.  After the common interfaces, the
+plug-in interfaces specific to modeling and animation are described.
+<p>
+The reader should be familiar with the basic concepts of the LightWave
+plug-in design, such as server classes, local data, and global data.
+These are described in the document entitled &quot;LightWave Plug-in
+Architecture,&quot; and should be considered a prerequsite to this document.
+In addition, some of the common server classes are defined in other
+documents which will be referenced.
+<p>
+The LightWave animation program will be called 'Layout' and the modeling
+program will be called 'Modeler' throughout this document.
+<p>
+<ul>
+<ul>
+<li>1.1.  <a href="#S1.1">Past and Future Compatibility</a>
+<li>1.2.  <a href="#S1.2">Classes</a>
+<li>1.3.  <a href="#S1.3">Globals</a>
+</ul>
+</ul>
+
+<a name="S1.1"><h2>1.1. Past and Future Compatibility</h2></a>
+
+Each release of LightWave since the introduction of the plug-in
+architecture has enhanced the capabilities of the plug-in interface.
+Classes and globals are added and some server structures are extended.
+Version numbers for the server classes distinguish the different
+capabilities.  Extended globals get new names in each release.
+<p>
+These design components combine to produce a plug-in architecture
+that enables existing plug-ins to continue to function without change--indeed,
+without even the need to recompile--as LightWave's plug-in interface is endowed
+with new features.  This is important; plug-in developers can take advantage
+of new interface capabilities at their liesure, while their plug-ins
+continue to function.
+<p>
+This document is a design specification for the LightWave 5.5/Inspire 1.0
+release. Features specific to these versions are marked in the document,
+and new server capabilites are indicated by a change in the version number.
+Servers designed to work with versions of LightWave up through 5.0 will
+still function when used with version 5.5.
+<p>
+The pre-release is no longer specifically supported since users will at
+this point at least all have LightWave 4.0.  Amiga and MIPS plugin
+information continues to be present in this document even though those
+systems are no longer supported in version 5.5 of LightWave.
+<p>
+
+<a name="S1.2"><h2>1.2. Classes</h2></a>
+
+The version number for all classes in release 4.0 was 1.  In 5.0 many of the
+handler classes (and their associated interface classes) were bumped up to
+version 2.  In LightWave 5.5, the version for anything new will be 3.  When
+Layout activates a handler, it first tries passing version 3.  If the server
+only supports a version 1 or 2 interface, then its activation function should
+return AFUNC_BADVERSION, and Layout will try version 2 and finally version 1.
+<p>
+Whenever a server class is described in this document, it will have a line
+like this:
+<p>
+CLASS: &quot;ServerClassName&quot; (4.0/5.5)
+<p>
+The name in quotes is the name of the class as found in the ClassName
+string.  The release names in parenthesis are the release when the class 
+was first introduced and all releases in which it was changed.  So this 
+hypothetical class has versions 1 and 3, since it was introduced in 4.0 
+and changed in version 5.5.
+<p>
+You may also encounter entries whose introduction or update coincides with
+a specific build of the application.  These
+<p>
+
+<a name="S1.3"><h2>1.3. Globals</h2></a>
+
+All the globals present in 4.0 and 5.0 are still available along with 
+the new ones added for version 5.5.  Globals present only in 5.0 or 5.5
+have unique names and therefore attempts to request them from older
+versions of LightWave will return a null pointer.  This includes globals
+which are entirely new as well as those that simply have extended fields.
+<p>
+A global is described in the document with a line like this:
+<p>
+GLOBAL: &quot;Global Name&quot; (5.0[250])
+<p>
+The name in quotes is the name of the global as should be passed to the 
+global function.  The release name in parenthsis is the release when the
+global was first introduced.  It will be available in that release and
+all subsequent releases.  If a specific build number applies to a revision,
+it will immediately follow the revision, and will be contained between
+square brackets.
+<p>
+
+<hr>
+<a name="S2"><h1>2. Common Server Classes</h1></a>
+
+These are the common server classes defined for both programs in the
+LightWave 3D suite.  There are interfaces for these server classes present
+in Layout and Modeler and any plug-in of one of these classes may be 
+shared by both programs.
+<p>
+<ul>
+<ul>
+<li>2.1.  <a href="#S2.1">Utility Servers</a>
+<li>2.2.  <a href="#S2.2">Object Import</a>
+</ul>
+</ul>
+
+<a name="S2.1"><h2>2.1. Utility Servers</h2></a>
+
+CLASS: &quot;FileRequester&quot; (4.0)
+<p>
+CLASS: &quot;ImageLoader&quot; (4.0)
+<p>
+These utility server classes
+are used by both LightWave and Modeler.  The interfaces for these server
+classes are defined in the &quot;File Requester Plug-ins&quot; and &quot;LightWave 
+Images&quot; documents.
+<p>
+
+<a name="S2.2"><h2>2.2. Object Import</h2></a>
+
+CLASS: &quot;ObjectLoader&quot; (4.0)
+<p>
+When Modeler encounters a foreign object file that it cannot
+parse, it will call an &quot;ObjectLoader&quot; class server to import
+it.  All the loaders defined for the host will be activated in
+sequence, and the first one to recognize the file will load it.
+The order in which loaders are called is not defined, although
+it may be alphabetical by server name.
+<p>
+At activate, an ObjectImport structure is passed to a plug-in object loader
+as its local data, and the loader should attempt to parse the input file 
+given by the filename field.  If it cannot open or recognize the file
+the loader should set the `result' field to the appropriate code and return.
+<p>
+If it recognizes the file type it should send the mesh and surface data to
+the host by calling the callbacks.  The `data' field is
+an opaque pointer to some internal state for the host and should be the 
+first argument to every callback.  The `monitor' field will contain a 
+pointer to a monitor which can be used to track the progress of loading.
+The monitor should not be used unless the object format is recognized.
+<p>
+<dl><dd><h4>(1) Common Server Classes</h4></dl>
+<pre>
+	    typedef struct st_ObjectImport {
+		    int               result;
+		    const char       *filename;
+		    Monitor          *monitor;
+		    char             *failedBuf;
+		    int               failedLen;
+
+		    void             *data;
+		    void            (*begin) (void *, void *);
+		    void            (*done) (void *);
+		    void            (*numPoints) (void *, int total);
+		    void            (*points) (void *, int numPts,
+					       const float *xyz);
+		    int             (*surfIndex) (void *, const char *name,
+						  int *firstTime);
+		    void            (*polygon) (void *, int numPts, int surf,
+						int flags,
+						const unsigned short *);
+		    void            (*surfData) (void *, const char *name,
+						 int size, void *data);
+	    } ObjectImport;
+	    <a href="#S2.2.1">. . .</a></pre>
+
+It should be noted that Layout does not call on ObjectImport class
+servers at all.
+<p>
+<ul>
+<ul>
+<li>2.2.1.  <a href="#S2.2.1">Sending Mesh Data</a>
+<li>2.2.2.  <a href="#S2.2.2">Result Codes</a>
+<li>2.2.3.  <a href="#S2.2.3">Macintosh Clipboard Import</a>
+</ul>
+</ul>
+
+<a name="S2.2.1"><h3>2.2.1. Sending Mesh Data</h3></a>
+
+Sending mesh data to the host involves calling the functions provided in
+the ObjectImport structure in a semi-sequential order.  The basics are
+to start the data transfer, send the points, define surface names, send the 
+polygons, assign surface parameters to names, and complete the transfer.
+<p>
+<dl>
+<dt>Begin
+<dd>Callback `begin' is called to mark the start of new mesh data.  The
+second argument is for special information and should normally be null.
+(It might be possible to call this more than once, although `done'
+would have to be called before calling `begin' a second time.)
+<dt>Points
+<dd>Callback `numPoints' is called with the total number of points.  Then
+`points' is called with 1 or more point coordinates until the total
+number of points is reached.  Points are numbered from zero in the order
+added, and that implicit index is used to create polygons.  All
+points must be added before any polygons may be created.
+<dt>Surfaces
+<dd>The callback `surfIndex' is called with a surface name to get a surface
+ID number for that surface.  This ID number is used to create polygons.
+The function may optionally return a boolean flag to indicate if this
+is the first time this surface name has been given an ID.
+<dt>Polygons
+<dd>For each polygon, the `polygon' function is called with a list of point
+indices for the polygon, the number of points, mode flags and a surface
+index.  The mode flags word is a collection of bits.
+If the CURVE bit is set, this is a curve rather than a face.  If
+the DETAIL bit is set, then this polygon is a detail of the last
+top-level polygon.  If the STARTCC or ENDCC bits are set, then this curve
+has start and/or end points which are continuity control points.
+
+</dl>
+<dl><dd><h4>(2) Common Server Classes</h4></dl>
+<pre>
+	    <a href="#S2.2">. . .</a>
+	    #define OBJPOLF_FACE      0
+	    #define OBJPOLF_CURVE    (1&lt;&lt;0)
+	    #define OBJPOLF_DETAIL   (1&lt;&lt;1)
+	    #define OBJPOLF_STARTCC  (1&lt;&lt;2)
+	    #define OBJPOLF_ENDCC    (1&lt;&lt;3)
+	    <a href="#S2.2.2">. . .</a></pre>
+
+<dl>
+<dt>Surface Data
+<dd>A block of raw surface parameters may be assigned to a name at any time
+by calling the `surfData' call with the surface name and byte block.
+<dt>Done
+<dd>Callback `done' is called when data transfer is complete.
+
+</dl>
+If a failure occurs partway through loading a file, the loader can set
+the result field and return without having to do any other cleanup.
+<p>
+
+<a name="S2.2.2"><h3>2.2.2. Result Codes</h3></a>
+
+The loader must set the `result' field to one of these following values before
+it returns.  OK indicates successful parsing of the object file.  BADFILE
+indicates that the loader could not open the file.  NOREC indicates that
+the loader could not recognize the format, and ABORTED indicates the that the
+user manually aborted the load.
+Any other failure is indicated by the generic FAILED value.  In this case, the
+loader may also place a human-readable error message into the buffer
+pointed to by `failedBuf,' provided that `failedLen' is non-zero.
+<p>
+<dl><dd><h4>(3) Common Server Classes</h4></dl>
+<pre>
+	    <a href="#S2.2.1">. . .</a>
+	    #define OBJSTAT_OK       0
+	    #define OBJSTAT_NOREC    1
+	    #define OBJSTAT_BADFILE  2
+	    #define OBJSTAT_ABORTED  3
+	    #define OBJSTAT_FAILED   99</pre>
+
+
+<a name="S2.2.3"><h3>2.2.3. Macintosh Clipboard Import</h3></a>
+
+In Modeler on the Macintosh a special filename is employed to use object 
+loader plugins when pasting from the system clipboard.  If the filename 
+passed to the object loader is &quot;((::clipboard::))&quot;, then the loader should
+look for its data in the system scrap.  This name is chosen to be impossible
+(or at least extremely unlikely) as a filename on the Macintosh.
+<p>
+
+<hr>
+<a name="S3"><h1>3. Common Globals</h1></a>
+
+This section contains descriptions of the data pointers which can be
+accessed by passing specific global ID strings to the global functions
+of both Modeler and Layout.  Common servers can access these globals
+regardless of which program they are running under.
+<p>
+<ul>
+<ul>
+<li>3.1.  <a href="#S3.1">Utility Globals</a>
+<li>3.2.  <a href="#S3.2">File Dialog</a>
+<li>3.3.  <a href="#S3.3">User Messages</a>
+<li>3.4.  <a href="#S3.4">System ID</a>
+<li>3.5.  <a href="#S3.5">Product Information</a>
+<li>3.6.  <a href="#S3.6">Locale Information</a>
+<li>3.7.  <a href="#S3.7">Directory Information</a>
+</ul>
+</ul>
+
+<a name="S3.1"><h2>3.1. Utility Globals</h2></a>
+
+GLOBAL: &quot;Host Display Info&quot; (4.0)
+<p>
+This global returns a HostDisplayInfo structure
+initialized for the host application's main window.
+This structure is described in the &quot;LightWave Plug-in Architecture&quot;
+document and defined in the `hdisp.h' header file.
+<p>
+GLOBAL: &quot;File Type Pattern&quot; (4.0)
+<p>
+This global returns a file type function used
+to get filename filters for different file types.  This is used by the
+file requester class primarily and is described in the &quot;File Requester
+Plug-ins&quot; document.
+<p>
+
+<a name="S3.2"><h2>3.2. File Dialog</h2></a>
+
+GLOBAL: &quot;File Request 2&quot; (5.5)
+<p>
+This global returns a
+'FileActivateFunc' pointer.  The version and local pointer will be 
+passed directly to the file requester plugin used by the host.  Since 
+the version passed may not match that supported by the plugin, the
+caller should be careful to check the return value.
+<p>
+<dl><dd><h4>(4) Common Globals</h4></dl>
+<pre>
+	    typedef int             FileActivateFunc (int version,
+					    struct st_FileReq_Local *);
+	    . . .</pre>
+
+GLOBAL: &quot;File Request&quot; (4.0)
+<p>
+This global returns a `FileReqFunc' pointer.
+Servers can use this function to request filenames from users with the
+same file requester used by the host.  The `hail' string is the title of the request
+and the `name' &amp; `path' buffers should be filled in with the starting
+base name and path for the request.  These buffers will be modified
+and the `fullName' buffer filled with the final complete name for the
+user-selected file.  `bufLen' is the length of all the passed buffers.
+The function returns 0 if the user elected to cancel, 1 if they hit Ok,
+and negative values for any errors.
+<p>
+<dl><dd><h4>(5) Common Globals</h4></dl>
+<pre>
+	    . . .
+	    typedef int             FileReqFunc (const char *hail, char *name,
+						 char *path, char *fullName,
+						 int buflen);
+	    <a href="#S3.3">. . .</a></pre>
+
+In version 5.0 a small addition was made to this interface.  If the filename
+is preceded by a '&gt;' or '&lt;' character, the file dialog can be forced to
+present the file for saving or loading, respectively.
+<p>
+
+<a name="S3.3"><h2>3.3. User Messages</h2></a>
+
+GLOBAL: &quot;Info Messages&quot; (4.0)
+<p>
+This global returns a pointer to a MessageFunc 
+structure which provides simple functions for displaying messages to the user.
+The functions will display different types of messages, each with one 
+or two lines of text.  The second string argument can
+be null for one-line messages.
+<p>
+<dl><dd><h4>(6) Common Globals</h4></dl>
+<pre>
+	    <a href="#S3.2">. . .</a>
+	    typedef struct st_MessageFuncs {
+		    void            (*info)    (const char *, const char *);
+		    void            (*error)   (const char *, const char *);
+		    void            (*warning) (const char *, const char *);
+	    } MessageFuncs;
+	    <a href="#S3.4">. . .</a></pre>
+
+
+<a name="S3.4"><h2>3.4. System ID</h2></a>
+
+GLOBAL: &quot;System ID&quot; (5.0)
+<p>
+This global returns a 32-bit unsigned value (cast as a
+&quot;void *&quot; to be returned from the global function) which is the ID for
+the system.  The 4 high-order bits of this longword indicate the
+type of the host which is either interactive Layout, interactive Modeler
+or non-interactive ScreamerNet render module.  The low-order bits of
+the longword are the serial number of this particular copy of LightWave.
+<p>
+Each unique serial number represents a LightWave license, so a plug-in
+installed on a particular machine can use this value to lock that
+installation to the LightWave license.  If the serial number is zero,
+then there is no license, or LightWave cannot provide a serial
+number for that system.  ScreamerNet modules will often return a zero
+serial number indicating that there is no license locking on the
+render module.  Starting in 5.00z3, ScreamerNet modules return their
+node number as serial number to allow the different nodes to be
+identified, although they may still return zero if no node number is
+specified (e.g. SN III).
+<p>
+<dl><dd><h4>(7) Common Globals</h4></dl>
+<pre>
+	    <a href="#S3.3">. . .</a>
+	    #define LWSYS_TYPEBITS          0xF0000000
+	    #define LWSYS_SERIALBITS        0x0FFFFFFF
+
+	    #define LWSYS_LAYOUT            0x00000000
+	    #define LWSYS_MODELER           0x10000000
+	    #define LWSYS_SCREAMERNET       0x20000000
+	    <a href="#S3.5">. . .</a></pre>
+
+
+<a name="S3.5"><h2>3.5. Product Information</h2></a>
+
+GLOBAL: &quot;Product Info&quot; (5.5[250])
+<p>
+This global returns a 32-bit unsigned value (cast as a &quot;void *&quot; to be
+returned from the global function) which contains information pertaining
+to the product.
+<p>
+The first four bits of this longword indicate the product.  This can
+be one of:  LWINF_PRODLW for LightWave 3D, LWINF_PRODINSP3D for Inspire 3D,
+and LWINF_PRODOTHER for other LightWave-based products.
+<p>
+Four bits each are used for the major and minor revision of the product.
+<p>
+Twelve bits are used to contain the current patch level (or build) of
+the product, providing a range of values between zero (0) and 4095.  This
+value can be used, in conjunction with any of the other version values
+available to the plug-in, to &quot;lock&quot; plug-ins to very specific releases of
+the product.  The combination of version and build values can provide a
+plug-in with the power to require crucial product/patch levels.  The format
+of this area is dependent entirely upon the product; it can hold any
+interpreted value that can be contained within the numeric range 0 to 4095.
+<p>
+Plug-in developers can use this information to restrict operation of their
+software to a particular product (i.e., prevent operation under Inspire 3D).
+A plug-in can return AFUNC_BADAPP when you wish to prevent your software from
+being successfully loaded into an unsupported application.  Returning this
+value in versions of the application that understand it will cause the
+application to display an error message informing the user about the
+programmed restrictions.
+<p>
+The AFUNC_BADAPP value can be returned in previous releases of LightWave
+without adverse effect.  Under Modeler, no error message is printed, so
+your plug-in should display an appropriate message.  Layout will display
+an &quot;Activation failed:...&quot; message following the failure.
+<p>
+The code fragment below could be used to retrieve and test the major, minor
+and build values from the Product Information bit fields:
+<p>
+<dl><dd><h4>(8) Retrieving the product's build value</h4></dl>
+<pre>
+	    XCALL_(int) Activate(long version,
+							GlobalFunc *g,
+							ModCommand *l,
+							void *serverData)
+		{
+			unsigned long   prodinfo;
+			int             build;
+			int             major,minor;
+			...
+			prodinfo = (unsigned long)(*global)(&quot;Product Info&quot;,GFUSE_TRANSIENT);
+
+			major = LWINF_GETMAJOR(prodinfo);
+			minor = LWINF_GETMINOR(prodinfo);
+			build = LWINF_GETBUILD(prodinfo);
+
+			if((prodinfo &amp; LWINF_PRODUCT) == LWINF_PRODLWAV) {              
+				if((major &lt; 5) || ((major &gt;= 5) &amp;&amp; (minor &lt; 5)))
+					goto badlwbuild;
+				else if(((major == 5) &amp;&amp; (minor == 5)) &amp;&amp; (build &lt; 250))
+					goto badlwbuild;
+			}
+			else if((prodinfo &amp; LWINF_PRODUCT) == LWINF_PRODINSP3D) {
+				/* Inspire 3D is currently at (major == 1/minor == 0), */
+				/* but it's build matches LightWave                    */
+
+				if(build &lt; 250) {
+				(*msg-&gt;error)
+				(
+				&quot;Due to internal dependencies, this plug-in requires at&quot;,
+				&quot;least Inspire 3D v1.0 (build 250) to function properly.&quot;
+				);
+				return(AFUNC_BADAPP);
+				}
+			}
+			else {
+				/* We don't support &quot;other&quot; products right now */
+
+				return(AFUNC_BADAPP);
+			}
+			...
+		badlwbuild:
+			(*msg-&gt;error)
+			(
+			&quot;Due to internal dependencies, this plug-in requires at&quot;,
+			&quot;least LightWave 3D v5.5 (build 250) to function properly.&quot;
+			);
+			return(AFUNC_BADAPP);
+			...</pre>
+
+The remaining 8 high-order bits are currently unused and reserved for
+future expansion.
+<p>
+<dl><dd><h4>(9) Common Globals</h4></dl>
+<pre>
+	    <a href="#S3.4">. . .</a>
+	    #define LWINF_PRODUCT           0x0000000F
+	    #define LWINF_BUILD                     0x0000FFF0
+	    #define LWINF_MINORREV          0x000F0000
+	    #define LWINF_MAJORREV          0x00F00000
+	    #define LWINF_RESERVED          0xFF000000
+
+	    #define LWINF_PRODLWAV          0x00000001
+	    #define LWINF_PRODINSP3D        0x00000002
+	    #define LWINF_PRODOTHER         0x00000004
+
+	    #define LWINF_GETMAJOR(x)       (((x) &amp; LWINF_MAJORREV) &gt;&gt; 20)
+	    #define LWINF_GETMINOR(x)       (((x) &amp; LWINF_MINORREV) &gt;&gt; 16)
+	    #define LWINF_GETBUILD(x)       (((x) &amp; LWINF_BUILD) &gt;&gt; 4)
+	    <a href="#S3.6">. . .</a></pre>
+
+
+<a name="S3.6"><h2>3.6. Locale Information</h2></a>
+
+GLOBAL: &quot;Locale Info&quot; (5.5[250])
+<p>
+This global returns a 32-bit unsigned value (returned as a &quot;void *&quot;) which
+contains information related to the locale in which the product is
+operating.
+<p>
+The low-order 16 bits of this longword will hold the language identifier
+for the current locale.
+<p>
+Checking the current language in use by the product could be accomplished
+with the following code:
+<p>
+<dl><dd><h4>(10) Retrieving the product's current language</h4></dl>
+<pre>
+	    XCALL_(int) Activate(long version,
+							GlobalFunc *g,
+							ModCommand *l,
+							void *serverData)
+		{
+			unsigned long   locale;
+			...
+			locale = (unsigned long)(*global)(&quot;Locale Info&quot;,
+						GFUSE_TRANSIENT);
+
+			switch(locale &amp; LWLOC_LANGID)
+			{
+				case LWLOC_GERMAN:
+					...
+			}
+			...</pre>
+
+In some cases, locale values can be &quot;downgraded&quot; in order to offer
+close variants for locales not explicitly supported by the plug-in.
+By masking out the high-order bits of the locale, those values that
+have associated downgrades can be detected (note the bit patterns
+between LWLOC_USENGLISH and LWLOC_UKENGLISH).  In cases where there
+is no associated downgrade, the following bit-masking code would
+simply return the original locale value:
+<p>
+<dl><dd><h4>(11) &quot;Downgrading&quot; locale support</h4></dl>
+<pre>
+	    ...
+	    locale = (locale &amp; 0x3F) | 0x0400;
+	    ...</pre>
+
+The upper 16 bits of the &quot;Locale Info&quot; value are currently unused,
+and are reserved for future expansion.
+<p>
+<dl><dd><h4>(12) Common Globals</h4></dl>
+<pre>
+	    <a href="#S3.5">. . .</a>
+	    #define LWLOC_LANGID            0x0000FFFF
+	    #define LWLOC_RESERVED          0xFFFF0000
+
+	    #define LWLOC_GERMAN            0x00000407
+	    #define LWLOC_USENGLISH         0x00000409
+	    #define LWLOC_UKENGLISH         0x00000809
+	    #define LWLOC_FRENCH            0x0000040c
+	    #define LWLOC_ITALIAN           0x00000410
+	    #define LWLOC_JAPANESE          0x00000411
+	    #define LWLOC_RUSSIAN           0x00000419
+	    #define LWLOC_SWEDISH           0x0000041D
+	    <a href="#S3.7">. . .</a></pre>
+
+
+<a name="S3.7"><h2>3.7. Directory Information</h2></a>
+
+GLOBAL: &quot;Directory Info&quot; (5.5)
+<p>
+This global provides access the application's current operating directories.
+Directory paths are requested by providing a string-literal &quot;directory
+selector&quot; to the function.  Directory availability will vary by environment
+(i.e., Modeler does not utilize a &quot;Content&quot; directory).  In situations where a
+directory selector is not appropriate, the return value will be NULL.
+<p>
+You should be aware that, in some cases, directory information returned by
+this function will be more current than values found in the application's
+configuration file.  For instance, Layout's &quot;Content&quot; directory may have been
+redirected by the user during the current session, however the configuration
+file will not reflect the new location until Layout terminates.
+<p>
+The following directory selectors are recognized by the Directory
+Info interface function under the indicated application:
+<p>
+<dl><dd><h4>(13) Directory Selector list</h4></dl>
+<pre>
+	    &quot;Fonts&quot;           Modeler
+	    &quot;Macros&quot;          Modeler
+	    &quot;Install&quot;         Layout/Modeler   (NewTek Installation Directory)
+	    &quot;Objects&quot;         Layout/Modeler
+	    &quot;Images&quot;          Layout/Modeler
+	    &quot;Motions&quot;         Layout/Modeler
+	    &quot;Temp&quot;            Layout/Modeler
+	    &quot;Plugins&quot;         Layout/Modeler
+	    &quot;Settings&quot;        Layout/Modeler   (Location of alternate configurations)
+	    &quot;Content&quot;         Layout
+	    &quot;Scenes&quot;          Layout
+	    &quot;Hierarchies&quot;     Layout
+	    &quot;Surfaces&quot;        Layout
+	    &quot;Output&quot;          Layout
+	    &quot;Animations&quot;      Layout
+	    &quot;Envelopes&quot;       Layout
+	    &quot;Previews&quot;        Layout
+	    &quot;Command&quot;         Layout</pre>
+
+The code fragment below could be used to retrieve the current value
+in Layout's &quot;Content&quot; directory setting.
+<p>
+<dl><dd><h4>(14) Retrieving the &quot;Content&quot; directory</h4></dl>
+<pre>
+	    DirInfoFunc *dirInfo;
+	    const char  *content;
+	    ...
+	    dirInfo = (*global)(&quot;Directory Info&quot;,GFUSE_TRANSIENT);
+	    content = (*dirInfo)(&quot;Content&quot;);</pre>
+
+<dl><dd><h4>(15) Common Globals</h4></dl>
+<pre>
+	    <a href="#S3.6">. . .</a>
+	    typedef    const char *DirInfoFunc (const char *);</pre>
+
+
+<hr>
+<a name="S4"><h1>4. Modeling Datatypes</h1></a>
+
+The servers and globals for Modeler share a set of type and value
+definitions.  These are basic to an understanding of the Modeler servers
+and globals.
+<p>
+<ul>
+<ul>
+<li>4.1.  <a href="#S4.1">Dynamic Types</a>
+<li>4.2.  <a href="#S4.2">Element Operation Filters</a>
+</ul>
+</ul>
+
+<a name="S4.1"><h2>4.1. Dynamic Types</h2></a>
+
+Dynamic Values are values of variable type.  Unlike normal C types which
+have a fixed interpretation, dynamic values have a type which can vary
+according to what is needed.  The possible types for a dymamic value are
+given by the following definitions.
+<p>
+<dl><dd><h4>(16) Modeling Base Types</h4></dl>
+<pre>
+	    typedef int             DynaType;
+	    #define DY_NULL         0
+	    #define DY_STRING       1
+	    #define DY_INTEGER      2
+	    #define DY_FLOAT        3
+	    #define DY_DISTANCE     4
+	    #define DY_VINT         5
+	    #define DY_VFLOAT       6
+	    #define DY_VDIST        7
+	    #define DY_BOOLEAN      8
+	    #define DY_CHOICE       9
+	    #define DY_SURFACE      10
+	    #define DY_FONT         11
+	    #define DY_TEXT         12
+	    #define DY_LAYERS       13
+	    #define DY_CUSTOM       14
+	    #define DY__LAST        DY_CUSTOM
+	    <a href="#S4.2.1">. . .</a></pre>
+
+A dynamic value datatype is a structure whose first field
+is a DynaType code for the type of the value, followed by varient
+fields which hold the value in a form appropriate to the given type.
+The different varient forms of value encoding are listed here.
+<p>
+DY_STRING  and 
+DY_SURFACE  type values contain a pointer to a string 
+buffer and a buffer size.  If the buffer size is zero, the buffer 
+is read-only.
+<p>
+<dl><dd><h4>(17) Modeling Types</h4></dl>
+<pre>
+	    typedef struct st_DyValString {
+		    DynaType         type;
+		    char            *buf;
+		    int              bufLen;
+	    } DyValString;
+	    . . .</pre>
+
+Integer values are used for types 
+DY_INTEGER, 
+DY_BOOLEAN  (zero or non-zero),
+DY_CHOICE  (0 - n-1), 
+DY_FONT  (font number 0 to n-1) and 
+DY_LAYERS  (bit mask for
+layer set).  The default value is only used in dialogs as the reset value.
+<p>
+<dl><dd><h4>(18) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DyValInt {
+		    DynaType         type;
+		    int              value;
+		    int              defVal;
+	    } DyValInt;
+	    . . .</pre>
+
+Floating point values are used for types 
+DY_FLOAT  and 
+DY_DISTANCE  (distance
+measure in meters).  The default value is again used when resetting a 
+dialog.
+<p>
+<dl><dd><h4>(19) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DyValFloat {
+		    DynaType         type;
+		    double           value;
+		    double           defVal;
+	    } DyValFloat;
+	    . . .</pre>
+
+The 
+DY_VINT  type is an integer vector with three components.  The single
+default value resets all three components of the vector when used in a
+dialog.
+<p>
+<dl><dd><h4>(20) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DyValIVector {
+		    DynaType         type;
+		    int              val[3];
+		    int              defVal;
+	    } DyValIVector;
+	    . . .</pre>
+
+Floating point three-component vectors are used for the types 
+DY_VFLOAT  and
+DY_VDIST, with the latter being distances encoded in meters.
+<p>
+<dl><dd><h4>(21) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DyValFVector {
+		    DynaType         type;
+		    double           val[3];
+		    double           defVal;
+	    } DyValFVector;
+	    . . .</pre>
+
+The custom dynamic type, 
+DY_CUSTOM, is used to encode values which do not fit
+one of the standard types.  The meaning of the fields following the type for
+a custom value are defined by agreement between the sender and receiver and
+are usually a set of 4-byte numbers and pointers, although they can be anything.
+Usually anywhere a custom value is required, an alternate string form can also
+be accepted.
+<p>
+<dl><dd><h4>(22) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DyValCustom {
+		    DynaType         type;
+		    int              val[4];
+	    } DyValCustom;
+	    . . .</pre>
+
+A DynaValue type is the union of all possible value type varients plus the
+type code itself which is the only field set for DY_NONE and 
+DY_TEXT  types.
+<p>
+<dl><dd><h4>(23) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef union un_DynaValue {
+		    DynaType         type;
+		    DyValString      str;
+		    DyValInt         intv;
+		    DyValFloat       flt;
+		    DyValIVector     ivec;
+		    DyValFVector     fvec;
+		    DyValCustom      cust;
+	    } DynaValue;
+	    . . .</pre>
+
+Error codes returned from the dynamic data type functions.
+<p>
+<dl><dd><h4>(24) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    #define DYERR_NONE                0
+	    #define DYERR_MEMORY            (-1)
+	    #define DYERR_BADTYPE           (-2)
+	    #define DYERR_BADSEQ            (-3)
+	    #define DYERR_BADCTRLID         (-4)
+	    #define DYERR_TOOMANYCTRL       (-5)
+	    #define DYERR_INTERNAL          (-6)
+	    <a href="#S5.1.2">. . .</a></pre>
+
+
+<a name="S4.2"><h2>4.2. Element Operation Filters</h2></a>
+
+At any given moment Modeler holds some set of layers, each containing
+a potentially large collection of point and polygon elements.  The user selects
+which subset of elements are to be affected by an operation by picking
+layers as active and inactive, and selecting elements in those layers
+with the element selection tools.  Plug-in operations can decide what
+elements to operate on as a function of the user's selections.
+<p>
+<ul>
+<ul>
+<li>4.2.1.  <a href="#S4.2.1">Layer Filters</a>
+<li>4.2.2.  <a href="#S4.2.2">Element Filters</a>
+</ul>
+</ul>
+
+<a name="S4.2.1"><h3>4.2.1. Layer Filters</h3></a>
+
+EltOpLayer codes are used to select which layers will be affected by an
+operation. 
+<p>
+<dl>
+<dt>PRIMARY
+<dd>The primary layer is the single active layer that is affected by mesh
+edits.
+<dt>FG
+<dd>The foreground layers are those which are active and displayed.
+<dt>BG
+<dd>The background layers are those which are inactive but still displayed.
+<dt>SELECT
+<dd>Select layers are all displayed layers, foreground and background.
+<dt>ALL
+<dd>All layers are all layers in the modeler system whether they contain
+data or not.
+<dt>EMPTY
+<dd>Empty layers are those with no data elements in them.
+<dt>NONEMPTY
+<dd>Non-empty layers are any layers which contain some data.
+<dt>Individual Layers
+<dd>In addition to the defined values, codes from 101 to
+110 can be used to select the individual layers 1 through 10.
+
+</dl>
+<dl><dd><h4>(25) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S4.1">. . .</a>
+	    typedef int              EltOpLayer;
+	    #define OPLYR_PRIMARY    0
+	    #define OPLYR_FG         1
+	    #define OPLYR_BG         2
+	    #define OPLYR_SELECT     3
+	    #define OPLYR_ALL        4
+	    #define OPLYR_EMPTY      5
+	    #define OPLYR_NONEMPTY   6
+	    <a href="#S4.2.2">. . .</a></pre>
+
+
+<a name="S4.2.2"><h3>4.2.2. Element Filters</h3></a>
+
+EltOpSelect is a selection mode to pick elements from the selected layers
+for operations.
+<p>
+<dl>
+<dt>GLOBAL
+<dd>All elements, whether selected or unselected, will be affected by
+the operation.
+<dt>USER
+<dd>Only those elements selected by the user will be affected.  This includes
+the implicit selection of all elements when nothing is explicitly selected,
+and selections by volume.
+<dt>DIRECT
+<dd>Elements selected directly with the point or polygon selection tools will 
+be affected.  This is the case for both points and polygons regardless of
+the current select mode.
+
+</dl>
+<dl><dd><h4>(26) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S4.2.1">. . .</a>
+	    typedef int              EltOpSelect;
+	    #define OPSEL_GLOBAL     0
+	    #define OPSEL_USER       1
+	    #define OPSEL_DIRECT     2
+	    <a href="#S5.1">. . .</a></pre>
+
+
+<hr>
+<a name="S5"><h1>5. Modeling Server Classes</h1></a>
+
+There are two types of servers defined for Modeler which can perform
+modeling operations.  Mesh Edit servers can perform a single mesh data
+editing operation by affecting the data elements at a fairly low level.
+Command Sequence servers can execute a sequence of editing operations,
+including most of those accessable to the user as well as low-level 
+mesh edits.
+<p>
+<ul>
+<ul>
+<li>5.1.  <a href="#S5.1">Mesh Editing</a>
+<li>5.2.  <a href="#S5.2">Command Sequencing</a>
+</ul>
+</ul>
+
+<a name="S5.1"><h2>5.1. Mesh Editing</h2></a>
+
+CLASS: &quot;MeshDataEdit&quot; (4.0)
+<p>
+This class provides the capability of editing 
+existing layer data though low-level point and polygon operations.  The
+available MeshDataEdit servers in a Modeler session are presented to the
+user in the &quot;Custom&quot; popup in the &quot;Tools&quot; menu.
+Editing is done through functions which operate on elements represented
+by opaque pointers.  The editing state itself is also maintained as an
+opaque pointer and is the first argument to most of the calls.
+<p>
+<dl><dd><h4>(27) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S4.2.2">. . .</a>
+	    typedef struct st_Vertex        *PntID;
+	    typedef struct st_Polygon       *PolID;
+	    typedef struct st_EditState     *EditStateRef;
+	    <a href="#S5.1.3">. . .</a></pre>
+
+A mesh edit operation is a single undoable modification to layer data.
+The server starts the operation and is given an EditStateRef pointer to
+refer to the ongoing state of the edit operation.  The server may then
+add new elements and modify or delete existing elements.  As the server
+requests changes, those are logged by the host but will not be applied
+until the operation is complete.  At any time the server may abort the
+operation and the pending changes will be discarded, or it can accept
+the changes and they will be applied as the last step before the server
+exits.
+<p>
+<ul>
+<ul>
+<li>5.1.1.  <a href="#S5.1.1">Activation and Local Data</a>
+<li>5.1.2.  <a href="#S5.1.2">Getting Element Information</a>
+<li>5.1.3.  <a href="#S5.1.3">PointInfo</a>
+<li>5.1.4.  <a href="#S5.1.4">PolygonInfo</a>
+<li>5.1.5.  <a href="#S5.1.5">Main Data Struct</a>
+<li>5.1.6.  <a href="#S5.1.6">Error Codes</a>
+<li>5.1.7.  <a href="#S5.1.7">Query Functions</a>
+<li>5.1.8.  <a href="#S5.1.8">Element Traversal</a>
+<li>5.1.9.  <a href="#S5.1.9">Creating New Elements</a>
+<li>5.1.10.  <a href="#S5.1.10">Modifying Existing Elements</a>
+</ul>
+</ul>
+
+<a name="S5.1.1"><h3>5.1.1. Activation and Local Data</h3></a>
+
+Upon activation, a mesh edit server gets a `MeshEditBegin' function pointer
+as its local data. To initiate the mesh editing operation, the server calls 
+this function and gets back a `MeshEditOp' which contains the data for
+the edit as well as pointers to all the editing functions.  This can be
+called only once for each activation.
+<p>
+<dl><dd><h4>(28) Modeling Servers</h4></dl>
+<pre>
+	    typedef MeshEditOp *    MeshEditBegin (int pntBuf, int polBuf,
+						    <a href="#S4.2.2">EltOpSelect</a>);
+	    <a href="#S5.2.1">. . .</a></pre>
+
+The first two arguments to the function are the client data sizes (in bytes)
+for points and polygons, respectively.  If non-zero, the host will allocate
+a block of memory for each and every point and polygon for the exclusive use
+of this edit operation.  These client data buffers can be used to associate
+any information with specific points and polygons for the course of the edit
+operation, and will be freed when the operation completes.
+The third argument is the selection option and determines what elements are 
+initially selected.
+<p>
+
+<a name="S5.1.2"><h3>5.1.2. Getting Element Information</h3></a>
+
+Servers can get information about existing elements by reading them out
+into special information structures.
+The PointInfo and PolygonInfo structures are used to hold information 
+about points and polygons, respectively. Every element has an ID, a
+userData pointer, a layer number and flags.
+<p>
+<dl>
+<dt>PntID or PolID
+<dd>This uniquely identifies each element and is the reference used for 
+manipulating them.
+<dt>userData
+<dd>This is a pointer to a memory block which has been allocated for the client
+specifically for this element according to the requested size in the call
+to MeshEditBegin.  This is an area where the client can store
+computed values for points and polygon while it operates on them.
+<dt>layer
+<dd>This is just the number of the layer where the
+element is located (0-9 currently).
+<dt>flags
+<dd>All elements have flags bits for
+selection and deletion.  The PPDF_SELECT bit is set if the element matched the
+selection criterion from the start of the edit, and the PPDF_DELETE bit is set
+if the element has been deleted in this session.
+
+</dl>
+<dl><dd><h4>(29) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S4.1">. . .</a>
+	    #define PPDF_SELECT     (1&lt;&lt;0)
+	    #define PPDF_DELETE     (1&lt;&lt;1)
+	    <a href="#S5.1.4">. . .</a></pre>
+
+Except for the memory pointed to by the userData pointer, the
+contents of info structures or the data they reference are read-only
+and cannot be modified.  Any attempts to do so will either be futile
+or catastrophic.
+<p>
+
+<a name="S5.1.3"><h3>5.1.3. PointInfo</h3></a>
+
+In addition to the common parts, a PointInfo struct also includes the
+point position as a triple of floating point numbers for the X, Y and Z
+coordinates.
+<p>
+<dl><dd><h4>(30) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S5.1">. . .</a>
+	    typedef struct st_PointInfo {
+		    <a href="#S5.1">PntID</a>            pnt;
+		    void            *userData;
+		    int              layer;
+		    int              flags;
+		    double           position[3];
+	    } PointInfo;
+	    <a href="#S5.1.4">. . .</a></pre>
+
+
+<a name="S5.1.4"><h3>5.1.4. PolygonInfo</h3></a>
+
+In addition to the common parts of the info structure, a PolygonInfo struct
+encodes the polygon shape
+as the number of points and an array of their IDs.  The surface assigned to
+the polygon is given by a name string.
+<p>
+<dl><dd><h4>(31) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S5.1.3">. . .</a>
+	    typedef struct st_PolygonInfo {
+		    <a href="#S5.1">PolID</a>            pol;
+		    void            *userData;
+		    int              layer;
+		    int              flags;
+		    int              numPnts;
+		    const <a href="#S5.1">PntID</a>     *points;
+		    const char      *surface;
+	    } PolygonInfo;
+	    <a href="#S5.1.6">. . .</a></pre>
+
+Polygons also have some additional flag bits.
+CCEND and CCSTART are set if the polygon has
+continuity points at either end.  CURVE is set if this is a curve (it
+is a face if this is clear).  DETAIL is set if the polygon is a detail.
+<p>
+<dl><dd><h4>(32) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S5.1.2">. . .</a>
+	    #define PPDF_CCEND      (1&lt;&lt;2)
+	    #define PPDF_CCSTART    (1&lt;&lt;3)
+	    #define PPDF_CURVE      (1&lt;&lt;4)
+	    #define PPDF_DETAIL     (1&lt;&lt;5)
+	    <a href="#S5.1.5">. . .</a></pre>
+
+
+<a name="S5.1.5"><h3>5.1.5. Main Data Struct</h3></a>
+
+When the `MeshEditBegin' function starts an edit operation, it returns a
+MeshEditOp structure which the client uses to execute the edit.  This
+structure contains a few data fields and a large set of function fields.
+<p>
+<dl><dd><h4>(33) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S5.1.4">. . .</a>
+	    typedef struct st_MeshEditOp {
+		    <a href="#S5.1">EditStateRef</a>      state;
+		    int               layerNum;
+		    void            (*done) (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1.6">EDError</a>, int selm);
+
+		    <a href="#S5.1.7">&lt;Mesh Edit Count functions&gt;</a>
+		    <a href="#S5.1.8">&lt;Mesh Edit Enumeration functions&gt;</a>
+		    <a href="#S5.1.7">&lt;Mesh Edit Query functions&gt;</a>
+		    <a href="#S5.1.9">&lt;Mesh Edit Create functions&gt;</a>
+		    <a href="#S5.1.10">&lt;Mesh Edit Modify functions&gt;</a>
+	    } MeshEditOp;
+	    . . .</pre>
+
+<dl>
+<dt>state
+<dd>The internal state of the edit is maintained in the private `state' field
+which is the first argument to every function.
+<dt>layerNum
+<dd>Points and polygons may only be modified if they belong to the primary 
+active layer which is given by this layer number.  The primary layer is
+the lowest numbered foreground layer.  All new data will be added to
+this layer and changes attempted on data in other layers will fail.
+<dt>done
+<dd>The `done' function completes the edit.  If the error code is EDERR_NONE,
+the edit operation will complete and the cumulative edits will be applied
+to the data.  If an actual error code is passed, the edit will abort and
+any changes made will be discarded.  The `selm' argument is bit flags which
+provide info on how to alter the selection based on editing changes.
+A value of zero
+leaves all directly selected elements selected after the edit.  The
+CLEARCURRENT hint bit set will clear the current selected elements, and
+the SELECTNEW hint bit set will cause any newly created elements to become
+selected.  Hints will not override selection settings made by the user,
+and only when elements are explicitly selected will new selections be
+made.  The force bits will always force direct selection of the points
+and/or polygons created by this operation regardless of current user
+selections.
+
+</dl>
+<dl><dd><h4>(34) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    #define EDSELM_CLEARCURRENT     (1&lt;&lt;0)
+	    #define EDSELM_SELECTNEW        (1&lt;&lt;1)
+	    #define EDSELM_FORCEVRTS        (1&lt;&lt;2)
+	    #define EDSELM_FORCEPOLS        (1&lt;&lt;3)
+	    <a href="#S5.1.7">. . .</a></pre>
+
+<dl>
+<dt>Other functions
+<dd>The remaining functions allow for examining the state of the mesh data and
+modifying it.  All changes for a given edit operation must be made 
+through these functions.  No data structures may be modified directly.
+
+</dl>
+As changes are made they are buffered through the
+undo mechanism, so they are not reflected in the data until the operation
+is complete.  For example, if a MeshDataEdit client reads the coordinates
+of a point and changes them (correctly using the `pntMove' function) and
+reads the coordinates again, they will be the same as the first time.
+The coordinates will not change until the edits are sucessfully applied
+using the `done' function.
+<p>
+
+<a name="S5.1.6"><h3>5.1.6. Error Codes</h3></a>
+
+Errors are integer codes returned from functions and passed to the `done'
+function.  The exceptions are functions which create new elements in which
+case an error is signaled by a null return value.  The BADLAYER
+error will be returned for an attempt to operate on data not in the
+primary edit layer.  BADSURF will be returned for an illegal surface
+name.  BADARGS is the catch-all for other invalid arguments.
+<p>
+<dl><dd><h4>(35) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S5.1.4">. . .</a>
+	    typedef int             EDError;
+	    #define EDERR_NONE      0
+	    #define EDERR_NOMEMORY  1
+	    #define EDERR_BADLAYER  2
+	    #define EDERR_BADSURF   3
+	    #define EDERR_USERABORT 4
+	    #define EDERR_BADARGS   5
+	    <a href="#S5.1.8">. . .</a></pre>
+
+
+<a name="S5.1.7"><h3>5.1.7. Query Functions</h3></a>
+
+Clients can get a count of the number of points or polygons in specific
+layers.  The `mode' argument to the count functions specify all the 
+elements, only the selected elements or only the elements deleted in 
+this edit session.
+<p>
+<dl><dd><h4>(36) Mesh Edit Count functions</h4></dl>
+<pre>
+	    int             (*pointCount) (<a href="#S5.1">EditStateRef</a>, <a href="#S4.2.1">EltOpLayer</a>, int mode);
+	    int             (*polyCount)  (<a href="#S5.1">EditStateRef</a>, <a href="#S4.2.1">EltOpLayer</a>, int mode);</pre>
+
+<dl><dd><h4>(37) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S5.1.5">. . .</a>
+	    #define EDCOUNT_ALL              0
+	    #define EDCOUNT_SELECT           1
+	    #define EDCOUNT_DELETE           2
+	    <a href="#S5.2">. . .</a></pre>
+
+Given a point or polygon ID, the client can get info for that
+element.  The returned info pointer is only valid until the next call 
+to an info function (including enumeration).  The normal vector for
+a polygon may also be found given its ID.  The `polyNormal' function 
+returns zero if the polygon has fewer than 3 vertices, or the normal is
+degenerate for some reason.  If it returns 1, then the normal
+has been written to the caller's vector.
+<p>
+<dl><dd><h4>(38) Mesh Edit Query functions</h4></dl>
+<pre>
+	    <a href="#S5.1.3">PointInfo</a> *     (*pointInfo)  (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PntID</a>);
+	    <a href="#S5.1.4">PolygonInfo</a> *   (*polyInfo)   (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PolID</a>);
+	    int             (*polyNormal) (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PolID</a>, double[3]);</pre>
+
+There is only one of each of the PointInfo and PolygonInfo structs for
+every usage.  The same pointer is returned from each query call and passed
+to the enumeration functions, so the client must copy any information
+needed before calling the query function again.
+<p>
+
+<a name="S5.1.8"><h3>5.1.8. Element Traversal</h3></a>
+
+The client can traverse all the elements in a layer or combination of
+layers by passing a callback to be called for each element.  
+These enumeration functions (given by the prototypes below) take as
+arguments a client data pointer which can be arbitrary, and the
+info structure for the current element.  If the client returns
+an error code (or any non-zero value for that matter) from this
+function, the scan will be aborted and that code will be returned.
+<p>
+<dl><dd><h4>(39) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S5.1.6">. . .</a>
+	    typedef <a href="#S5.1.6">EDError</a>         PointScanFunc (void *, const <a href="#S5.1.3">PointInfo</a> *);
+	    typedef <a href="#S5.1.6">EDError</a>         PolyScanFunc (void *, const <a href="#S5.1.4">PolygonInfo</a> *);
+	    <a href="#S5.1.9">. . .</a></pre>
+
+The following functions initiate a scan of points or polygons in layer data.  The 
+client provides an enumeration callback and client data pointer as well as
+specifying which layers to include in the scan.  The function will be called
+for each point and polygon in order.  If the selection mode used to begin
+this edit was DIRECT, the order of the selected elements is the same as
+the order that the user selected them.  In other select modes, the order
+is the creation order for points and undefined for polygons.  The return
+value is EDERR_NONE (0) if the scan completed, and the non-zero error code
+returned by the enumeration callback if the scan was aborted.
+<p>
+<dl><dd><h4>(40) Mesh Edit Enumeration functions</h4></dl>
+<pre>
+	    <a href="#S5.1.6">EDError</a>         (*pointScan) (<a href="#S5.1">EditStateRef</a>, PointScanFunc *,
+					  void *, <a href="#S4.2.1">EltOpLayer</a>);
+	    <a href="#S5.1.6">EDError</a>         (*polyScan)  (<a href="#S5.1">EditStateRef</a>, PolyScanFunc *,
+					  void *, <a href="#S4.2.1">EltOpLayer</a>);</pre>
+
+
+<a name="S5.1.9"><h3>5.1.9. Creating New Elements</h3></a>
+
+A new data element is added by calling the appropriate function, which
+creates the new element but does not add it to the layer until the
+edit is completed.  Polygons are created from lists of PntIDs which can
+be the IDs of pre-existing points or of points created in this session,
+as long as the existing ones are in the primary layer.
+<p>
+<dl>
+<dt>addPoint
+<dd>New points are created by passing a vector of X, Y and Z coordinates
+to this function.
+<dt>addPoly
+<dd>Polygons are created from a surface name (or null for default), 
+number of points and point list.  The first, second and last points
+are used to compute the polygon normal.
+<dt>addCurve
+<dd>Curves are created the same way as polygons except that they have
+an additional flag value which may have PPDF_CCSTART and/or END set.
+Closed curves must have both of these bits set and have the first and
+last two points overlapping.
+<dt>addQuad and addTri
+<dd>These two functions create quadrangles and triangles using the default 
+surface and obeying the user's new data options with respect to two-sided 
+and triangles only.  These are used by operations which create new
+objects from scratch, like the sphere or box tools in Modeler.
+<dt>addPatch
+<dd>This will add a set of polygons to create a polygonal patch from bounding 
+curves obeying the user's new data options.  It takes the number of 
+divisions in the C and R directions, the length/knot flags in the C and R 
+directions, and three or four boundary curve descriptions.  Each boundary
+curve is a curve-type polygon and the indices of the start and end knots
+of the curve to be used for patching.
+
+</dl>
+<dl><dd><h4>(41) Modeling Base Types</h4></dl>
+<pre>
+	    <a href="#S5.1.8">. . .</a>
+	    typedef struct st_PBoundCv {
+		    <a href="#S5.1">PolID</a>            curve;
+		    int              start, end;
+	    } PBoundCv;</pre>
+
+<dl><dd><h4>(42) Mesh Edit Create functions</h4></dl>
+<pre>
+	    <a href="#S5.1">PntID</a>           (*addPoint) (<a href="#S5.1">EditStateRef</a>, double *xyz);
+	    <a href="#S5.1">PolID</a>           (*addPoly)  (<a href="#S5.1">EditStateRef</a>, const char *surf,
+					 int numPnt, const <a href="#S5.1">PntID</a> *);
+	    <a href="#S5.1">PolID</a>           (*addCurve) (<a href="#S5.1">EditStateRef</a>, const char *surf,
+					 int numPnt, const <a href="#S5.1">PntID</a> *, int flags);
+	    <a href="#S5.1.6">EDError</a>         (*addQuad)  (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PntID</a>, <a href="#S5.1">PntID</a>,
+					 <a href="#S5.1">PntID</a>, <a href="#S5.1">PntID</a>);
+	    <a href="#S5.1.6">EDError</a>         (*addTri)   (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PntID</a>, <a href="#S5.1">PntID</a>, <a href="#S5.1">PntID</a>);
+	    <a href="#S5.1.6">EDError</a>         (*addPatch) (<a href="#S5.1">EditStateRef</a>, int nr, int nc, int lr,
+					 int lc, PBoundCv *r0, PBoundCv *r1,
+					 PBoundCv *c0, PBoundCv *c1);</pre>
+
+
+<a name="S5.1.10"><h3>5.1.10. Modifying Existing Elements</h3></a>
+
+These functions are used to alter existing data.  If
+called with elements created in this edit session they will
+return BADLAYER.
+<p>
+<dl>
+<dt>remPoint, remPoly
+<dd>Remove existing data elements.  These will remove points and polygons
+from the current data set.  The PPDF_DELETE flag bit will be set for these
+elements after this function is called.
+<dt>pntMove
+<dd>Move a point.  The point will be moved to the new coordinates.
+<dt>polSurf
+<dd>Change polygon surface.  The polygon will be altered to use
+the new named surface.
+<dt>polPnts
+<dd>Change point list.  The polygon will be changed to have a new
+set of points given by the list of IDs.  The PntIDs may be for
+existing points or points created this session, but should not
+refer to points that will be deleted.
+<dt>polFlags
+<dd>Change polygon attributes.  The first mask is the set of attributes
+to change and the second is their new values.  Only PPDF_CCEND and
+PPDF_CCSTART may currently be modified.
+
+</dl>
+<dl><dd><h4>(43) Mesh Edit Modify functions</h4></dl>
+<pre>
+	    <a href="#S5.1.6">EDError</a>         (*remPoint) (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PntID</a>);
+	    <a href="#S5.1.6">EDError</a>         (*remPoly)  (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PolID</a>);
+	    <a href="#S5.1.6">EDError</a>         (*pntMove) (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PntID</a>, const double *);
+	    <a href="#S5.1.6">EDError</a>         (*polSurf) (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PolID</a>, const char *);
+	    <a href="#S5.1.6">EDError</a>         (*polPnts) (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PolID</a>, int, const <a href="#S5.1">PntID</a> *);
+	    <a href="#S5.1.6">EDError</a>         (*polFlag) (<a href="#S5.1">EditStateRef</a>, <a href="#S5.1">PolID</a>, int mask, int value);</pre>
+
+
+<a name="S5.2"><h2>5.2. Command Sequencing</h2></a>
+
+CLASS: &quot;CommandSequence&quot; (4.0)
+<p>
+These servers can execute a sequence of Modeler 
+commands and/or mesh edits.  CommandSequence servers are presented to the
+user in the &quot;Custom&quot; popup in the &quot;Objects&quot; menu, and the user has the
+ability to configure the server to take different string arguments.  The
+argument string selected by the user is passed to the server at activation.
+<p>
+Modeling commands are identified by unique case-insensitive names and by
+unique integer codes.  Codes may be looked up given the command string.
+<p>
+<dl><dd><h4>(44) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S5.1.7">. . .</a>
+	    typedef int             CommandCode;
+	    <a href="#S5.2.1">. . .</a></pre>
+
+Commands are executed by passing the command code and a list of arguments
+in the form of DynaValues.  The values can have any type which is can be
+converted to the required type of each positional argument.  A command
+sequence server can execute any sequence of commands and may combine
+them with mesh edit operations as well.
+<p>
+<ul>
+<ul>
+<li>5.2.1.  <a href="#S5.2.1">Command Activation</a>
+<li>5.2.2.  <a href="#S5.2.2">Commands</a>
+<li>5.2.3.  <a href="#S5.2.3">External Activation on Windows</a>
+</ul>
+</ul>
+
+<a name="S5.2.1"><h3>5.2.1. Command Activation</h3></a>
+
+A CommandSequence server gets a ModCommand structure passed to its
+activation function.  The activation function performs the sequence
+of commands and mesh edits and returns when complete.
+<p>
+<dl>
+<dt>data
+<dd>Internal host data passed as the first argument to the `lookup' and 
+`execute' functions.
+<dt>argument
+<dd>String argument to this command as set in the custom command list.
+<dt>lookup
+<dd>Function which converts a command name to a command code for use with
+the `execute' function.  This is a separate step so that the string
+lookup does not have to be done on every command invocation.
+Case is not significant.  Since the
+codes are fixed for a session, they can be looked up the first time the
+server is used and cached after that.
+<dt>execute
+<dd>Function which performs the modeling function.  Takes a command code as
+found by `lookup' and an array of DynaValue arguments.  Which elements 
+to be affected by the command can be selected using the EltOpSelect mode.
+If non-null, the result pointer will be written with the return value
+of the command.  Commands with no result will write DY_NULL on this value.
+The return value is zero for success and an error code for failure.  Some
+possible codes are listed below:
+
+</dl>
+<dl><dd><h4>(45) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S5.2">. . .</a>
+	    typedef int             CSError;
+	    #define CSERR_NONE      0
+	    #define CSERR_MEMORY    1
+	    #define CSERR_IO        2
+	    #define CSERR_USRABORT  4
+	    #define CSERR_ARGCOUNT  2901
+	    #define CSERR_ARGTYPE   2902
+	    #define CSERR_ARGVALUE  2903
+	    #define CSERR_OPFAILURE 2904
+	    #define CSERR_BADSEL    2905
+	    <a href="#S6.1">. . .</a></pre>
+
+CSERR_MEMORY is returned when any out-of-memory condition is encountered.
+CSERR_IO will result when any external I/O fails; for instance, the saving
+of object mesh to disk.  CSERR_USRABORT can occur in situations where lengthy
+processing by a command has been terminated by the user.  When the required
+number of arguments wrong, CSERR_ARGCOUNT will be returned.  Arguments that
+are of the wrong 'DynaType' will generate the CSERR_ARGTYPE value.
+CSERR_ARGVALUE is returned when an arguments value does not fall within a
+range expected by the function.  Should the operation fail, CSERR_OPFAILURE
+will result.  Finally, when the selection of data is not considered
+appropriate by the function, the CSERR_BADSEL will be returned.
+<p>
+<dl>
+<dt>editBegin
+<dd>This function can be used as described in the secion on mesh editing to
+start a mesh edit operation from a command sequence server.  Any edit
+operation must be complete before more commands are executed.
+
+</dl>
+<dl><dd><h4>(46) Modeling Servers</h4></dl>
+<pre>
+	    <a href="#S5.1.1">. . .</a>
+	    typedef struct st_ModCommand {
+		    void             *data;
+		    const char       *argument;
+		    CommandCode     (*lookup)  (void *, const char *cmdName);
+		    CSError         (*execute) (void *, CommandCode cmd,
+						int argc, const <a href="#S4.1">DynaValue</a> *argv,
+						<a href="#S4.2.2">EltOpSelect</a>, <a href="#S4.1">DynaValue</a> *result);
+		    MeshEditBegin    *editBegin;
+	    } ModCommand;</pre>
+
+
+<a name="S5.2.2"><h3>5.2.2. Commands</h3></a>
+
+Here follows a complete list of the commands supported by the command mode
+interface and their arguments.  Optional arguments are listed in square
+brackets.  A more complete description of each command may be found in the
+Modeler ARexx documentation.
+<p>
+<dl>
+<dt>NEW
+<dd>clearview&lt;bool&gt;         (5.5)
+<dt>UNDO, DELETE, CUT, COPY, PASTE
+<dd><dt>LOAD, SAVE
+<dd>filename&lt;string&gt;
+<dt>SETLAYER, SETBLAYER
+<dd>mask&lt;layers&gt;
+<dt>SURFACE
+<dd>name&lt;string&gt;
+<dt>FIXEDFLEX
+<dd>axis&lt;X|Y|Z&gt;, start&lt;dist&gt;, end&lt;dist&gt;, [ease&lt;i;o&gt;]
+<dt>AUTOFLEX
+<dd>axis&lt;X|Y|Z&gt;, direction&lt;+|-&gt;, [ease&lt;i;o&gt;]
+<dt>DEFORMREGION
+<dd>radius&lt;vector&gt;, [center&lt;vector&gt;, axis&lt;X|Y|Z&gt;]
+<dt>MOVE, SHEAR, MAGNET
+<dd>offset&lt;vector&gt;
+<dt>ROTATE, TWIST, VORTEX
+<dd>angle&lt;float&gt;, axis&lt;X|Y|Z&gt;, [center&lt;vector&gt;]
+<dt>SCALE, TAPER, POLE
+<dd>factor&lt;vector&gt;, [center&lt;vector&gt;]
+<dt>BEND
+<dd>angle&lt;float&gt;, direction&lt;float&gt;, [center&lt;vector&gt;]
+<dt>JITTER
+<dd>radius&lt;vector&gt;, [type&lt;GAUSSIAN|UNIFORM|NORMAL|RADIAL&gt;, center&lt;vector&gt;]
+<dt>SMOOTH
+<dd>[iterations&lt;int&gt;, strength&lt;float&gt;]
+<dt>QUANTIZE
+<dd>size&lt;vector&gt;
+<dt>MERGEPOINTS
+<dd>[mindist&lt;dist&gt;]
+<dt>MAKEBOX
+<dd>lowcorner&lt;vector&gt;, highcorner&lt;vector&gt;, [nsegments&lt;vector&gt;]
+<dt>MAKEBALL
+<dd>radius&lt;vector&gt;, nsides&lt;int&gt;, nsegments&lt;int&gt;, [center&lt;vector&gt;]
+<dt>MAKETESBALL
+<dd>radius&lt;vector&gt;, level&lt;int&gt;, [center&lt;vector&gt;]
+<dt>MAKEDISC, MAKECONE
+<dd>radius&lt;vector&gt;, top&lt;dist&gt;, bottom&lt;dist&gt;, axis&lt;X|Y|Z&gt;,
+nsides&lt;int&gt;, [nsegments&lt;int&gt;, center&lt;vector&gt;]
+<dt>MAKETEXT
+<dd>text&lt;string&gt;, index&lt;number&gt;, [cornertype&lt;SHARP|BUFFERED&gt;,
+spacing&lt;number&gt;, scale&lt;number&gt;, axis&lt;X|Y|Z&gt;, pos&lt;vector&gt;]
+<dt>LATHE
+<dd>axis&lt;X|Y|Z&gt;, nsides&lt;int&gt;, [center&lt;vector&gt;,
+endangle&lt;float&gt;, startangle&lt;float&gt;, offset&lt;dist&gt;]
+<dt>EXTRUDE
+<dd>axis&lt;X|Y|Z&gt;, extent&lt;dist&gt;, [nsegments&lt;int&gt;]
+<dt>MIRROR
+<dd>axis&lt;X|Y|Z&gt;, plane&lt;dist&gt;
+<dt>PATHCLONE, PATHEXTRUDE
+<dd>filename&lt;string&gt;, [step&lt;float&gt;, start&lt;float&gt;, end&lt;float&gt;]
+<dt>RAILCLONE, RAILEXTRUDE
+<dd>segments&lt;int&gt;, [divs&lt;KNOTS|LENGTHS&gt;, flags&lt;o;s&gt;, strength&lt;float&gt;]
+<dt>AXISDRILL
+<dd>operation&lt;CORE|TUNNEL|SLICE|STENCIL&gt;, axis&lt;X|Y|Z&gt;, [surface&lt;string&gt;]
+<dt>SOLIDDRILL
+<dd>operation&lt;CORE|TUNNEL|SLICE|STENCIL&gt;, [surface&lt;string&gt;]
+<dt>BOOLEAN
+<dd>operation&lt;UNION|SUBTRACT|INTERSECT|ADD&gt;
+<dt>BEVEL
+<dd>inset&lt;dist&gt;, shift&lt;dist&gt;
+<dt>SHAPEBEVEL
+<dd>pattern&lt;custom&gt;
+
+<dd>The patten for a shapebevel is either a string containing pairs of
+inset / shift values, or a custom dynavalue with the val[0] field
+set to the number of pairs, and the val[1] field cast to a pointer
+to an array of doubles holding the pairs.
+<dt>SMOOTHSHIFT
+<dd>offset&lt;dist&gt;, [maxangle&lt;float&gt;]
+<dt>FLIP, TRIPLE, FREEZECURVES
+<dd><dt>ALIGNPOLS, REMOVEPOLS, UNIFYPOLS
+<dd><dt>CHANGESURFACE
+<dd>surface&lt;string&gt;
+<dt>SUBDIVIDE
+<dd>mode&lt;FLAT|SMOOTH|METAFORM&gt;, [maxangle&lt;float&gt;]
+<dt>FRACSUBDIVIDE
+<dd>mode&lt;FLAT|SMOOTH|METAFORM&gt;, fractal&lt;float&gt;, [maxangle&lt;float&gt;])
+<dt>SEL_POINT
+<dd>action&lt;SET|CLEAR&gt;
+
+<dd>action, VOLUME, lo&lt;vector&gt;, hi&lt;vector&gt;
+
+<dd>action, CONNECT
+
+<dd>action, NPEQ, npol&lt;int&gt;
+
+<dd>action, NPLT, npol&lt;int&gt;
+
+<dd>action, NPGT, npol&lt;int&gt;
+<dt>SEL_POLYGON
+<dd>action&lt;SET|CLEAR&gt;
+
+<dd>action, VOLEXCL, lo&lt;vector&gt;, hi&lt;vector&gt;
+
+<dd>action, VOLINCL, lo&lt;vector&gt;, hi&lt;vector&gt;
+
+<dd>action, CONNECT
+
+<dd>action, NVEQ, nvert&lt;int&gt;
+
+<dd>action, NVLT, nvert&lt;int&gt;
+
+<dd>action, NVGT, nvert&lt;int&gt;
+
+<dd>action, SURFACE, surface&lt;string&gt;
+
+<dd>action, FACE
+
+<dd>action, CURVE
+
+<dd>action, NONPLANAR, [limit&lt;float&gt;]
+<dt>SEL_INVERT
+<dd><dt>SEL_HIDE
+<dd>state&lt;SELECTED|UNSELECTED&gt;
+<dt>SEL_UNHIDE
+<dd><dt>CMDSEQ
+<dd>name&lt;string&gt;, [arg&lt;string&gt;]
+<dt>PLUGIN
+<dd>module&lt;string&gt;, [class&lt;string&gt;, name&lt;string&gt;, username&lt;string&gt;]
+
+</dl>
+New for 5.0:
+<p>
+<dl>
+<dt>REDO
+<dd><dt>MORPHPOLS
+<dd>segments&lt;int&gt;
+
+</dl>
+Can only be done in OPSEL_USER or OPSEL_DIRECT modes.
+<p>
+<dl>
+<dt>MERGEPOLS, WELDPOINTS
+<dd>Can only be done in OPSEL_USER or OPSEL_DIRECT modes.
+<dt>SPLITPOLS, SKINPOLS
+<dd>Can only be done in OPSEL_USER or OPSEL_DIRECT modes.
+<dt>DETACHDETAILS
+<dd><dt>SMOOTHCURVES
+<dd>Can only be done in OPSEL_USER or OPSEL_DIRECT modes.
+<dt>TOGGLECCSTART, TOGGLECCEND, TOGGLEPATCHES
+<dd><dt>MAKE4PATCH
+<dd>perpendicular&lt;number&gt;, parallel&lt;number&gt;
+
+</dl>
+Positive numbers indicate division based on knots, negative numbers
+indicate length.  Can only be done in OPSEL_USER or OPSEL_DIRECT modes.
+<p>
+
+<a name="S5.2.3"><h3>5.2.3. External Activation on Windows</h3></a>
+
+When Modeler is running under Windows, CommandSequence class servers in
+the program can be triggered by other Windows programs.  The Modeler main
+window looks for messages with a code created by the function 
+RegisterWindowMessage() with the string &quot;LWM CmdSeq Trigger&quot;.  This
+message code is unique throughout the Windows session and the arguments
+of this message describe the server to activate.  The first argument (wp)
+should be null, and the second argument (lp) should be two global atoms
+containing the CommandSequence server name and argument string, combined
+with the MAKELONG() macro.
+<p>
+The following Windows function triggers a server in Modeler given the handle
+to Modeler's main window.  Atoms are created to pass the server name and
+argument (if any) and the message is posted to Modeler's window.  If the
+PostMessage fails, this function frees the atoms, otherwise Modeler will
+free them when it processes the message.  The message code could be looked
+up only one time if multiple messages are to be sent, and SendMessage could
+be used for synchronous triggering.
+<p>
+<dl><dd><h4>(47) Trigger code</h4></dl>
+<pre>
+		    static void
+	    TriggerModeler (
+		    HWND                     wnd,
+		    const char              *server,
+		    const char              *argument)
+	    {
+		    UINT                     msg;
+		    ATOM                     name, arg;
+
+		    msg = RegisterWindowMessage (&quot;LWM CmdSeq Trigger&quot;);
+
+		    name = GlobalAddAtom (server);
+		    if (argument &amp;&amp; argument[0])
+			    arg = GlobalAddAtom (argument);
+		    else
+			    arg = 0;
+
+		    if (!PostMessage (wnd, msg, NULL, MAKELONG (name, arg))) {
+			    GlobalDeleteAtom (name);
+			    if (arg)
+				    GlobalDeleteAtom (arg);
+		    }
+	    }</pre>
+
+
+<hr>
+<a name="S6"><h1>6. Modeling Globals</h1></a>
+
+This section contains descriptions of the global data pointers
+which can be accessed from Modeler's global function.
+<p>
+<ul>
+<ul>
+<li>6.1.  <a href="#S6.1">Dynamic Conversion</a>
+<li>6.2.  <a href="#S6.2">Dynamic Input Dialog</a>
+<li>6.3.  <a href="#S6.3">Dynamic Monitor</a>
+<li>6.4.  <a href="#S6.4">Custom Commands</a>
+<li>6.5.  <a href="#S6.5">Modeler Internal State</a>
+<li>6.6.  <a href="#S6.6">Surfaces List</a>
+<li>6.7.  <a href="#S6.7">Outline Font List</a>
+</ul>
+</ul>
+
+<a name="S6.1"><h2>6.1. Dynamic Conversion</h2></a>
+
+GLOBAL: &quot;LWM: Dynamic Conversion&quot; (4.0)
+<p>
+This returns a DynaConvertFunc which
+can be used to translate a dynamic type element to another type.  An error 
+may be returned if the conversion cannot be performed, and hints may be 
+provided when converting strings to integer bitfield or choice values.
+<p>
+<dl><dd><h4>(48) Modeling Globals</h4></dl>
+<pre>
+	    typedef int             DynaConvertFunc (const <a href="#S4.1">DynaValue</a> *,
+						     <a href="#S4.1">DynaValue</a> *,
+						     const DynaStringHint *);
+	    <a href="#S6.2">. . .</a></pre>
+
+String hints are choice hints and/or bitfield hints.
+The choice hint is list of strings and 
+values used when converting between 
+<a href="#S4.1">DY_STRING</a>  and 
+<a href="#S4.1">DY_CHOICE</a>  types.
+The pairs
+indicate a mapping between choice values and strings.  The list is 
+terminated with a null item string.  The bitfield hint is a list of 
+character codes and bit values used when converting between 
+<a href="#S4.1">DY_STRING</a> and 
+<a href="#S4.1">DY_INTEGER</a>  types.  If the character (upper or lower case) is present 
+in the string, the bit value will be ORed into the result, and visa-versa.
+The list is terminated with a zero bitval.
+<p>
+<dl><dd><h4>(49) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S5.2.1">. . .</a>
+	    typedef struct st_DyChoiceHint {
+		    const char      *item;
+		    int              value;
+	    } DyChoiceHint;
+
+	    typedef struct st_DyBitfieldHint {
+		    char             code;
+		    int              bitval;
+	    } DyBitfieldHint;
+	    . . .</pre>
+
+Either field in the string hint structure may be null.
+<p>
+<dl><dd><h4>(50) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DynaStringHint {
+		    DyChoiceHint    *chc;
+		    DyBitfieldHint  *bits;
+	    } DynaStringHint;
+	    <a href="#S6.2.1">. . .</a></pre>
+
+
+<a name="S6.2"><h2>6.2. Dynamic Input Dialog</h2></a>
+
+GLOBAL: &quot;LWM: Dynamic Request&quot; (4.0)
+<p>
+This returns a set of functions for 
+creating and displaying a simple dialog.  The dialogs that can be
+created with this interface are like simple forms.  There is a title
+and a series of lines each with a label and a control for a single
+value.  The controls are described by DynaValues, with the DynaType
+determining the type of control and the value determining its setting.
+The user can change the value of the controls while the dialog is
+displayed.
+<p>
+<dl><dd><h4>(51) Modeling Globals</h4></dl>
+<pre>
+	    <a href="#S6.1">. . .</a>
+	    typedef struct st_DynaReqFuncs {
+		    DynaRequestID   (*create)   (const char *);
+		    int             (*addCtrl)  (DynaRequestID, const char *,
+						 DyReqControlDesc *);
+		    <a href="#S4.1">DynaType</a>        (*ctrlType) (DynaRequestID, int);
+		    int             (*valueSet) (DynaRequestID, int, <a href="#S4.1">DynaValue</a> *);
+		    int             (*valueGet) (DynaRequestID, int, <a href="#S4.1">DynaValue</a> *);
+		    int             (*post)     (DynaRequestID);
+		    void            (*destroy)  (DynaRequestID);
+	    } DynaReqFuncs;
+	    <a href="#S6.3">. . .</a></pre>
+
+<ul>
+<ul>
+<li>6.2.1.  <a href="#S6.2.1">Dialog Usage</a>
+<li>6.2.2.  <a href="#S6.2.2">Control Descriptors</a>
+</ul>
+</ul>
+
+<a name="S6.2.1"><h3>6.2.1. Dialog Usage</h3></a>
+
+The basic idea is to create a dialog, set up its controls, set their
+values, post the dialog window, read out the modified values and destroy
+the dialog.  The set/post/get cycle may be done any number of times
+once the dialog is created.
+<p>
+<dl>
+<dt>create
+<dd>Create is used to allocate an instance of a dynamic request dialog with a 
+given title string.  Multiple dialogs can be allocated at the same
+time, although only one may be displayed at once.  The create function
+returns an ID which is used throughout the rest of the interface.
+
+</dl>
+<dl><dd><h4>(52) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S6.1">. . .</a>
+	    typedef struct st_DynaRequest   *DynaRequestID;
+	    <a href="#S6.2.2">. . .</a></pre>
+
+<dl>
+<dt>addCtrl
+<dd>Controls are added to the dialog starting from the top.  The function
+takes a label and a description (below) and returns an index number for
+the new control which is used to set and get its value.  The description
+contains the control type and other information necessary for its display.
+<dt>ctrlType
+<dd>This function just returns the type of a control given its index.
+<dt>valueSet
+<dd>Calling this function with a control index and a DynaValue sets the
+given control to that value.  The type of the value does not have to
+be the same as the control as long as the one can be converted to the
+other.  Note that any &quot;default&quot; fields in the DynaValue will be used
+to reset the control if the user selects &quot;Reset.&quot;
+<dt>valueGet
+<dd>This function is the opposite of the above, reading out the value of
+the control into the provided DynaValue.
+<dt>post
+<dd>Once the dialog is created and the proper values are set, this function
+displays the dialog window and allows the user to change the values.  It returns
+zero if the user presses &quot;Cancel&quot; to dismiss the requester and one if the
+user presses &quot;Ok.&quot;
+<dt>destroy
+<dd>When all interaction is done, a call to destroy frees all resources and
+completes the process.
+
+</dl>
+
+<a name="S6.2.2"><h3>6.2.2. Control Descriptors</h3></a>
+
+Controls in a dynamic request dialog are determined primarily by a DynaType for
+the type of data being edited, however for some types additional settings 
+may be required for correct display of the value.
+<p>
+Controls of type 
+<a href="#S4.1">DY_STRING</a>  have a width, in characters, of the input
+field.  This is an average width on systems with variable pitch fonts.
+<p>
+<dl><dd><h4>(53) Modeling Types</h4></dl>
+<pre>
+	    <a href="#S6.2.1">. . .</a>
+	    typedef struct st_DyReqStringDesc {
+		    <a href="#S4.1">DynaType</a>         type;
+		    int              width;
+	    } DyReqStringDesc;
+	    . . .</pre>
+
+Controls of type 
+<a href="#S4.1">DY_CHOICE</a>  present a set of labeled buttons for the
+user to select between.  The descriptor contains a pointer to an
+array of strings (terminated with a null pointer) for the labels of
+the choice items.  If the vertical flag is true, the choices will
+be set in a vertical layout, otherwise they will be horizontal.
+<p>
+<dl><dd><h4>(54) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DyReqChoiceDesc {
+		    <a href="#S4.1">DynaType</a>         type;
+		    const char     **items;
+		    int              vertical;
+	    } DyReqChoiceDesc;
+	    . . .</pre>
+
+The 
+<a href="#S4.1">DY_TEXT</a>  control type is a constant control for displaying lines
+of text.  The text lines are contained in an array of strings (terminated
+with a null pointer).
+<p>
+<dl><dd><h4>(55) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DyReqTextDesc {
+		    <a href="#S4.1">DynaType</a>         type;
+		    const char     **text;
+	    } DyReqTextDesc;
+	    . . .</pre>
+
+The control descriptor is the union of all these varient records plus the
+DynaType alone.  If there is no special descriptive data for a type, then
+only the type code is needed to create a control of that type.
+<p>
+<dl><dd><h4>(56) Modeling Types</h4></dl>
+<pre>
+	    . . .
+	    typedef union un_DyReqControlDesc {
+		    <a href="#S4.1">DynaType</a>         type;
+		    DyReqStringDesc  string;
+		    DyReqChoiceDesc  choice;
+		    DyReqTextDesc    text;
+	    } DyReqControlDesc;</pre>
+
+
+<a name="S6.3"><h2>6.3. Dynamic Monitor</h2></a>
+
+GLOBAL: &quot;LWM: Dynamic Monitor&quot; (4.0)
+<p>
+This returns a structure holding functions
+which can be used to create a monitor for providing feedback on the progress
+of an operation and allow user to abort it.  Monitors are described in the
+&quot;LightWave Plug-in Architecture&quot; document and are declared in the `moni.h'
+header file.
+<p>
+<dl>
+<dt>create
+<dd>Clients create a monitor instance with header and optional footer text.
+Once created, the monitor object can be used as described in the above
+referenced document.
+The create func may return null if the Modeler bar graph is already in
+use, since there can be only one.
+<dt>destroy
+<dd>When done, the monitor must be destroyed by calling this function.  This
+must be called whether the operation was completed or not.
+
+</dl>
+<dl><dd><h4>(57) Modeling Globals</h4></dl>
+<pre>
+	    <a href="#S6.2">. . .</a>
+	    typedef struct st_DynaMonitorFuncs {
+		    Monitor *       (*create) (const char *, const char *);
+		    void            (*destroy) (Monitor *);
+	    } DynaMonitorFuncs;
+	    <a href="#S6.4">. . .</a></pre>
+
+
+<a name="S6.4"><h2>6.4. Custom Commands</h2></a>
+
+GLOBAL: &quot;LWM: Custom Commands&quot; (4.0)
+<p>
+This returns a set of functions
+for manipulating the custom commands and function key mappings.  These
+may be changed by a server, but there should be some provision for 
+setting them back to the user's defaults when complete.
+<p>
+<dl>
+<dt>listAdd
+<dd>Adds an new custom command to the list.  The name will be the string that
+the user sees in the custom popup, the server is the internal server name
+of the CommandSequence plug-in to activate, and the arg string is the
+argument that will be passed to that plug-in.  This returns false if the
+new item could not be added.
+<dt>listRem
+<dd>Removes a entry from the custom list given its name.
+<dt>funGet
+<dd>Gets the server and argument strings for the current association with
+function key N.  The bufLen is the length of the string buffers.  This 
+returns false if the key is not assigned.
+<dt>funSet
+<dd>Sets the server to activate and the argument to pass when the given 
+function key is pressed.
+
+</dl>
+<dl><dd><h4>(58) Modeling Globals</h4></dl>
+<pre>
+	    <a href="#S6.3">. . .</a>
+	    typedef struct st_CustomCommandFuncs {
+		    int             (*listAdd) (const char *name,
+						const char *server,
+						const char *arg);
+		    void            (*listRem) (const char *name);
+		    int             (*funGet) (int n, char *server,
+					       char *arg, int bufLen);
+		    void            (*funSet) (int n, const char *server,
+					       const char *arg);
+	    } CustomCommandFuncs;
+	    <a href="#S6.5">. . .</a></pre>
+
+For ARexx scripts on the Amiga Modeler, the server name is &quot;$REXX&quot; and the
+argument is the script name.
+<p>
+
+<a name="S6.5"><h2>6.5. Modeler Internal State</h2></a>
+
+GLOBAL: &quot;LWM: State Query&quot; (4.0)
+<p>
+This global returns a set of functions for 
+querying Modeler's global state.  It can be queried at any time although 
+it may only be altered at specific times.
+<p>
+<dl>
+<dt>numLayers
+<dd>This returns total number of data layers in Modeler.
+<dt>layerMask
+<dd>This returns bits describing the set of layers included in each of
+the possible EltOpLayer selections.  If the set includes
+layer 1 then bit 0 is set, if it includes layer 2 bit 1
+is set, and so forth.
+<dt>surface
+<dd>This returns the name of the default surface.
+<dt>bbox
+<dd>This returns the number of points in the given layer, and if
+minmax is a non-null pointer, it is treated as an array of 6 doubles and
+is filled with the bounding box
+information for the layer (x0, x1, y0, y1, z0, z1).
+
+</dl>
+<dl><dd><h4>(59) Modeling Globals</h4></dl>
+<pre>
+	    <a href="#S6.4">. . .</a>
+	    typedef struct st_StateQueryFuncs {
+		    int             (*numLayers) (void);
+		    unsigned int    (*layerMask) (<a href="#S4.2.1">EltOpLayer</a>);
+		    const char *    (*surface) (void);
+		    unsigned int    (*bbox) (<a href="#S4.2.1">EltOpLayer</a>, double *minmax);
+	    } StateQueryFuncs;
+	    <a href="#S6.6">. . .</a></pre>
+
+
+<a name="S6.6"><h2>6.6. Surfaces List</h2></a>
+
+GLOBAL: &quot;LWM: Surface List&quot; (4.0)
+<p>
+This global returns a set of functions which 
+can be used to read and modify Modeler's surface list. Clients may add, 
+rename and modify the contents of surfaces at any time, but there is no 
+capability to remove them.  Note that adding surfaces or renaming them 
+will alter the relative order of surfaces in the list.
+<p>
+<dl>
+<dt>next
+<dd>This returns the name of the surface after the given one.  If the
+argument is null, it returns the first surface.  If the argument is 
+the last surface in the list, it returns null.
+<dt>create
+<dd>This creates a surface of the given name with no data.
+<dt>rename
+<dd>This changes the name of a surface, reordering it in the list.
+<dt>getData
+<dd>This returns the size and contents of the surface data parameters
+for the named surface.
+<dt>setData
+<dd>This resets the data parameter block to the given size and contents.
+
+</dl>
+<dl><dd><h4>(60) Modeling Globals</h4></dl>
+<pre>
+	    <a href="#S6.5">. . .</a>
+	    typedef struct st_SurfaceListFuncs {
+		    const char *    (*next)    (const char *name);
+		    void            (*create)  (const char *name);
+		    void            (*rename)  (const char *name,
+						const char *newName);
+		    void *          (*getData) (const char *name, int *size);
+		    void            (*setData) (const char *name, int size,
+						void *data);
+	    } SurfaceListFuncs;
+	    <a href="#S6.7">. . .</a></pre>
+
+
+<a name="S6.7"><h2>6.7. Outline Font List</h2></a>
+
+GLOBAL: &quot;LWM: Font List&quot; (4.0)
+<p>
+This ID returns a set of functions for
+reading and modifying Modeler's font list.  The list may be modified at
+any time, but keep in mind that altering the list may affect stored font
+choices in your dialogs, if any.
+<p>
+<dl>
+<dt>count
+<dd>This returns the total number of fonts in the list.
+<dt>index
+<dd>This returns the list index for a named font, -1 if not found.
+<dt>name
+<dd>This returns the name of a font given its list index, null if
+out of range.
+<dt>load
+<dd>This loads the given file as a Type-1 font and returns the new
+list index.  The fonts at this old index and above are all shifted
+up.  It returns -1 for errors.
+<dt>clear
+<dd>This removes the font at the given index from the list, shifting all the
+others down.
+
+</dl>
+<dl><dd><h4>(61) Modeling Globals</h4></dl>
+<pre>
+	    <a href="#S6.6">. . .</a>
+	    typedef struct st_FontListFuncs {
+		    int             (*count) (void);
+		    int             (*index) (const char *name);
+		    const char *    (*name)  (int index);
+		    int             (*load)  (const char *filename);
+		    void            (*clear) (int index);
+	    } FontListFuncs;</pre>
+
+
+<hr>
+<a name="S7"><h1>7. Animation Datatypes</h1></a>
+
+The servers and globals for Layout share a set of type and value
+definitions which are basic to understanding concepts behind the Layout
+servers and globals.
+<p>
+<ul>
+<ul>
+<li>7.1.  <a href="#S7.1">Coordinate and Range Scales</a>
+<li>7.2.  <a href="#S7.2">Items and Properties</a>
+<li>7.3.  <a href="#S7.3">Time</a>
+<li>7.4.  <a href="#S7.4">Errors</a>
+<li>7.5.  <a href="#S7.5">Instances and Handlers</a>
+</ul>
+</ul>
+
+<a name="S7.1"><h2>7.1. Coordinate and Range Scales</h2></a>
+
+There are several conventions used to interpret different types of values
+within LightWave and throughout this external interface.
+<p>
+<dl>
+<dt>positions
+<dd>Positions are always given as an array of three doubles which
+are the X, Y and Z coordinates (respectively) of a position
+with respect to some known coordinate system.  This system is
+always listed along with the vector (usually object or world).
+<dt>directions
+<dd>Direction vectors, such as normals, are also an X Y Z array of
+doubles, but are normalized to be unit vectors.  The coordinate
+system for these is also always listed.
+<dt>rotations
+<dd>Rotations are arrays of three doubles representing the Euler
+angles (heading, pitch and bank, respectively) of an item in
+some coordinate system.  Angles are represented in radians.
+<dt>colors
+<dd>Colors are given as an array of three doubles giving the
+intensities of the red, green and blue componenets of the color,
+respectively.  The values are scaled so that 0.0 is the minimum
+intensity and 1.0 is the maximum, although out-of-range values
+are allowed.
+<dt>percentages
+<dd>Values which are represented on the LightWave user interface as
+percentages are represented internally as doubles scaled from
+0.0 to 1.0.  A luminosity of 65.7%, for example, would be held
+internally as the floating point value 0.657.
+
+</dl>
+Floating point values with a nominal range of 0.0 to 1.0 will sometimes be
+converted to single-byte values for storing in image buffers.  Colors and
+alphas are converted this way for final image output and other values are 
+used this way internally.
+The floating point value is clipped to be strictly within the
+0.0 to 1.0 range and is then scaled and converted to a BufferValue type so
+that 0.0 is 0 and 1.0 is 255.
+<p>
+<dl><dd><h4>(62) Animation Types</h4></dl>
+<pre>
+	    typedef unsigned char     BufferValue;
+	    <a href="#S7.2">. . .</a></pre>
+
+
+<a name="S7.2"><h2>7.2. Items and Properties</h2></a>
+
+A LightWave item is anything which can be keyframed in the layout interface.
+All objects, lights, bones and cameras in LightWave are items and have a
+unique LWItemID value.
+<p>
+<dl><dd><h4>(63) Animation Types</h4></dl>
+<pre>
+	    <a href="#S7.1">. . .</a>
+	    typedef void *           LWItemID;
+	    #define LWITEM_NULL      ((LWItemID) 0)
+	    . . .</pre>
+
+Types of items are given by LWItemType codes.
+<p>
+<dl><dd><h4>(64) Animation Types</h4></dl>
+<pre>
+	    . . .
+	    typedef int              LWItemType;
+	    #define LWI_OBJECT       0
+	    #define LWI_LIGHT        1
+	    #define LWI_CAMERA       2
+	    #define LWI_BONE         3
+	    . . .</pre>
+
+All items have a set of vector parameters which servers can read (and
+sometimes write) using property codes.
+<p>
+<dl>
+<dt>POSITION
+<dd>item location in its parent's coordinates.
+<dt>ROTATION
+<dd>item rotation in its parent's coordinates.
+<dt>SCALING
+<dd>item X, Y and Z scaling factors relative to its parent.
+<dt>RIGHT, UP, FORWARD
+<dd>+X, +Y and +Z direction vectors, respectively, for the item in
+world coordinates.  These three concatenated together are the transformation
+matrix for the item.
+<dt>PIVOT
+<dd>item pivot point in its own coordinates.
+<dt>W_POSITION
+<dd>item location in world coordinates.
+<dt>W_RIGHT, W_UP, W_FORWARD
+<dd>+X, +Y and +Z direction vectors, respectively, for the world in
+item coordinates.  These three concatenated together are the inverse
+transformation matrix for the item (5.0 Only).
+
+</dl>
+<dl><dd><h4>(65) Animation Types</h4></dl>
+<pre>
+	    . . .
+	    typedef int              LWItemParam;
+	    #define LWIP_POSITION    1
+	    #define LWIP_RIGHT       2
+	    #define LWIP_UP          3
+	    #define LWIP_FORWARD     4
+	    #define LWIP_ROTATION    5
+	    #define LWIP_SCALING     6
+	    #define LWIP_PIVOT       7
+	    #define LWIP_W_POSITION  8
+	    #define LWIP_W_RIGHT     9
+	    #define LWIP_W_UP        10
+	    #define LWIP_W_FORWARD   11
+	    <a href="#S7.3">. . .</a></pre>
+
+
+<a name="S7.3"><h2>7.3. Time</h2></a>
+
+Time values in LightWave are given in two ways.  A frame number is
+the index of a single image (typically the current image) in the output
+sequence of still images that make up the animation.  A time value
+is the precise instant of an event in seconds.  Assuming a scene
+rendered at 30 frames per second and without motion blur (or with a blur
+length of zero), frame N is a snapshot of the animation at a time in
+seconds of N/30.  If there is motion blur, then some events in frame
+N will be from times slightly before N/30 seconds, and if the motion
+blur length is greater than 100%, then some events may even overlap
+with the times of events in previous frames.
+<p>
+<dl><dd><h4>(66) Animation Types</h4></dl>
+<pre>
+	    <a href="#S7.2">. . .</a>
+	    typedef int              LWFrame;
+	    typedef double           LWTime;
+	    <a href="#S7.4">. . .</a></pre>
+
+
+<a name="S7.4"><h2>7.4. Errors</h2></a>
+
+Server functions return errors to LightWave by returning a string pointer.
+A null string pointer indicates no error, and a non-null pointer points
+to an error string.  The string will be displayed for the user and, except
+where otherwise indicated, the user will have the option to ignore the
+error and continue with the operation.
+<p>
+<dl><dd><h4>(67) Animation Types</h4></dl>
+<pre>
+	    <a href="#S7.3">. . .</a>
+	    typedef const char *     LWError;
+	    <a href="#S7.5">. . .</a></pre>
+
+
+<a name="S7.5"><h2>7.5. Instances and Handlers</h2></a>
+
+Most LightWave plug-ins are &quot;handlers&quot; which manage &quot;instances.&quot;  An
+instance is a specific collection of user settings for a texture, image
+filter, etc., which persist across sessions by being stored in scene and
+object files.  A `LWInstance' is any longword value which identifies a
+specific instance for a specific server, usually a pointer to allocated
+memory.
+<p>
+<dl><dd><h4>(68) Animation Types</h4></dl>
+<pre>
+	    <a href="#S7.4">. . .</a>
+	    typedef void *           LWInstance;
+	    <a href="#S7.5.1">. . .</a></pre>
+
+<ul>
+<ul>
+<li>7.5.1.  <a href="#S7.5.1">Instance Persistence</a>
+<li>7.5.2.  <a href="#S7.5.2">Handler Functions</a>
+<li>7.5.3.  <a href="#S7.5.3">Interface Server</a>
+</ul>
+</ul>
+
+<a name="S7.5.1"><h3>7.5.1. Instance Persistence</h3></a>
+
+Instances have to load and save their data to and from ASCII scene files
+and binary object files, and sometimes both, so the data read/write
+mechanism provides servers with functions to read and write data in both
+these formats.  The `read' function reads bytes from the source and
+returns the number of bytes read.  The `write' function writes bytes to
+the output and tracks any errors internally.
+The format of the file is given by `ioMode' code, either OBJECT or SCENE.
+<p>
+<dl><dd><h4>(69) Animation Types</h4></dl>
+<pre>
+	    <a href="#S7.5">. . .</a>
+	    #define LWIO_OBJECT      0
+	    #define LWIO_SCENE       1
+	    . . .</pre>
+
+If the mode is OBJECT, the format is binary and no scene-specific
+information should be stored.  The read and write functions deal in raw
+bytes which can have any value from 0 to 255.  They read or write the 
+number of bytes requested using the passed buffer.
+<p>
+If the mode is SCENE, the format is ASCII and bytes stored must be in
+the extended ASCII range of 32 to 255.  Values outside this range are
+ignored or undefined.  The read and write functions in this case deal with
+lines.  The write function writes a line at a time and looks for a null
+terminator in the input rather than the length.  The read function can
+read partial lines if a length less then or equal to the total line
+length is requested.  If the length is greater than the remaining line
+length, the length is returned and the buffer is null-terminated.  The
+read function returns -1 for the actual end of input, since a read
+length of zero is valid for a blank line.
+<p>
+<dl><dd><h4>(70) Animation Types</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_LWLoadState {
+		    int               ioMode;
+		    void             *readData;
+		    int             (*read) (void *readData, char *buf,
+					     int len);
+	    } LWLoadState;
+
+	    typedef struct st_LWSaveState {
+		    int               ioMode;
+		    void             *writeData;
+		    void            (*write) (void *writeData, char *buf,
+					      int len);
+	    } LWSaveState;
+	    <a href="#S9.1">. . .</a></pre>
+
+Plug-in clients which write instance data must do their own versioning so
+they can read old forms of their own data, and their own bit twiddling
+to read and write binary data on machines with different byte order and
+floating point formats.  Clients must also make sure they do not read past
+the end of their own data.  This last restriction may be lifted in future 
+versions.
+<p>
+
+<a name="S7.5.2"><h3>7.5.2. Handler Functions</h3></a>
+
+A server manages its instances by providing LightWave with functions to
+create, destroy, load and save them.  The server activation function gets
+a handler structure which it initializes with the standard instance
+handler functions listed here, plus whatever else is required by the
+specific class of plug-in.
+<p>
+<dl>
+<dt>create
+<dd>create a default instance.  Any failure should return a null pointer 
+and optionally set the error value.  The LWItemID, if provided and
+non-null, is the item to which the instance will apply.
+<dt>destroy
+<dd>dispose of an instance.
+<dt>copy
+<dd>copy the contents of the &quot;from&quot; instance to the &quot;to&quot; instance.  The
+LWItemID, if provided and non-null, is the item to which the new
+instance will apply.
+<dt>load
+<dd>read an instance description from a file into an already
+created instance.
+<dt>save
+<dd>write an instance description to a file.
+<dt>descln
+<dd>return a string that briefly summarizes the settings for this instance.
+This will be displayed on the interface as a visual aid for the user
+to see how instances in a scene are configured.  The string should 
+persist after being returned.
+<dt>useItems
+<dd>return an array of items used by this instance.  Some instances use the
+parameters of items (such as the position of objects, for example) to 
+control their behavior.  If this is the case, Layout needs to know about
+it in order to update the instance when items it uses change.  The array
+is terminated by LWITEM_NULL, and the handler can return a null pointer
+if it does not use any items.
+<dt>changeID
+<dd>notification about a change in item IDs.  This function is called if the
+IDs of items is going to change for any reason.  The null-terminated
+item array passed to this function is of the form &quot;old-1, new-1, old-2, new-2, ...&quot;
+where the old ID is the value that is changing and the new ID is its new
+value.  Clients should be careful to renumber each item only once.
+
+</dl>
+The create function should create a default instance which can then be
+modified by the interface function.  The load and copy functions will
+overwrite existing instances with new values read from a file or a
+source instance.
+<p>
+The descln function is new for the version 5.0 release.  The useItems and
+changeID functions are new for version 5.5.
+<p>
+
+<a name="S7.5.3"><h3>7.5.3. Interface Server</h3></a>
+
+There is often another server associated with a handler and that is the
+&quot;Interface&quot; server.  The activation function for the interface server
+is called with a LWInstance as its local data.  The server will then
+allow the user to edit the instance description and return.  The
+interface server is just another function that operates on instances of
+a specific type, but it is separate from the other instance handler
+functions for two reasons.  The first is that the user interface code
+is frequently the largest and least often used part of a handler, so it
+makes sense to allow it to be loaded separately only when needed.  The
+second is to permit plug-in authors to easily make &quot;render-only&quot; versions
+of their plug-in servers for rendering accelerators or packaging bundles.
+<p>
+For example, if the plug-in type was &quot;XXX&quot;, there would be two classes of
+server, &quot;XXXHandler&quot; and &quot;XXXInterface&quot;.  Then for a specific server of
+the XXX type, called &quot;MyXXX&quot;, there would be a MyXXX defined for the
+XXXHandler class which would provide all the normal handler functions,
+and there would also be a MyXXX server of the XXXInterface class which
+would perform the user interface.
+<p>
+
+<hr>
+<a name="S8"><h1>8. Animation Server Classes</h1></a>
+
+The many server classes for Layout provide a wide range of capabilities 
+and extentions to basic LightWave rendering and animation.  Since there
+are so many servers there may be multiple ways to accomplish the same
+effect, some better than others.
+<p>
+<ul>
+<ul>
+<li>8.1.  <a href="#S8.1">Utilities</a>
+<li>8.2.  <a href="#S8.2">Image Post Processing</a>
+<li>8.3.  <a href="#S8.3">Pixel Post Processing</a>
+<li>8.4.  <a href="#S8.4">Procedural Texture</a>
+<li>8.5.  <a href="#S8.5">Procedural Displacement Map</a>
+<li>8.6.  <a href="#S8.6">Procedural Item Animation</a>
+<li>8.7.  <a href="#S8.7">Procedural Object Replacement</a>
+<li>8.8.  <a href="#S8.8">Frame Buffers</a>
+<li>8.9.  <a href="#S8.9">Animation Output</a>
+<li>8.10.  <a href="#S8.10">Scene Conversion</a>
+<li>8.11.  <a href="#S8.11">General Function</a>
+</ul>
+</ul>
+
+<a name="S8.1"><h2>8.1. Utilities</h2></a>
+
+CLASS: &quot;ImageSaver&quot; (4.0)
+<p>
+This class, described in the &quot;LightWave Images&quot; document, is
+used by Layout to save output images in different formats.
+<p>
+
+<a name="S8.2"><h2>8.2. Image Post Processing</h2></a>
+
+CLASS: &quot;ImageFilterHandler&quot; (4.0/5.0/5.5/5.6)
+<p>
+CLASS: &quot;ImageFilterInterface&quot; (4.0/5.0/5.5/5.6)
+<p>
+This handler is used to apply image post processing (filtering)
+effects to the final rendered image.  Each filter is applied after
+all the antialiasing and motion blur passes are complete, and the
+server modifying the red, green, blue and alpha values of the
+final image.
+<p>
+<ul>
+<ul>
+<li>8.2.1.  <a href="#S8.2.1">Input Buffers</a>
+<li>8.2.2.  <a href="#S8.2.2">Filter Access</a>
+<li>8.2.3.  <a href="#S8.2.3">Handler</a>
+</ul>
+</ul>
+
+<a name="S8.2.1"><h3>8.2.1. Input Buffers</h3></a>
+
+In addition to looking at the RGBA of the image, the server can compute
+its effects based on a potentially large set of full-image
+buffers, given by the LWBUF codes below.  Each of these is a full-screen
+array of 0-255 BufferValues indicating the presence or absence of that
+particular attribute for each pixel in the final image.
+<p>
+<dl>
+<dt>RED, GREEN, BLUE and ALPHA
+<dd>These buffers are the outputs of the rendering pass and are the base
+which should be modified by the server.  These are always provided to
+every image filter.
+<dt>SPECIAL
+<dd>This value is assigned by the user on a surface by surface basis which
+is used only for this filter.  This is designed to be used to activate
+the post processing effect for specific surfaces, and user-assigned
+percentages show up here as 0-255 values in the buffer.
+<dt>LUMINOUS..RAW_BLUE
+<dd>These eight buffers are the raw values of the surface parameters before
+shading.
+<dt>SHADING
+<dd>This buffer is a picture of the diffuse shading applied to the raw shapes
+in the image.
+<dt>SHADOW
+<dd>This indicates where shadows are falling in the final image.  It may also
+be thought of as an illuminations map, showing what parts of the image are
+visible to the lights in the scene.
+<dt>GEOMETRY
+<dd>The value in this buffer is computed from the dot-product of the surface
+normal with the eye vector.  It reveals something about the underlying
+shape of the objects in the image.  Where this buffer is 255 (or 1.0) the
+surface is facing directly toward the camera, and where this buffer is 0,
+the surface is edge-on to the camera.
+<dt>DEPTH
+<dd>The depth buffer is a map of the distance of each pixel from the camera
+plane.  This buffer is different from all the others because it is floating
+point, and because it is not anti-aliased or motion-blured.  The current
+implementation also requires that the frame be rendered in a single segment 
+in order for the depth buffer to be available.
+<dt>DIFFSHADE and SPECSHADE
+<dd>These are very similar to the LWBUF_SHADING buffer, but 
+store the amount of diffuse shading only or the amount of specular 
+shading only, rather than adding them together.  The specular shading 
+buffer is particularly useful for locating the highlights in an image.
+They should not be confused with the LWBUF_DIFFUSE and LWBUF_SPECULAR 
+buffers, which simply store the surface coefficients before any shading 
+calculations.
+
+</dl>
+<dl><dd><h4>(71) Animation Servers</h4></dl>
+<pre>
+	    #define LWBUF_SPECIAL    0
+
+	    #define LWBUF_LUMINOUS   1
+	    #define LWBUF_DIFFUSE    2
+	    #define LWBUF_SPECULAR   3
+	    #define LWBUF_MIRROR     4
+	    #define LWBUF_TRANS      5
+	    #define LWBUF_RAW_RED    6
+	    #define LWBUF_RAW_GREEN  7
+	    #define LWBUF_RAW_BLUE   8
+
+	    #define LWBUF_SHADING    9
+	    #define LWBUF_SHADOW     10
+	    #define LWBUF_GEOMETRY   11
+	    #define LWBUF_DEPTH      12
+
+	    #define LWBUF_DIFFSHADE  13
+	    #define LWBUF_SPECSHADE  14
+
+	    #define LWBUF_RED        32
+	    #define LWBUF_GREEN      33
+	    #define LWBUF_BLUE       34
+	    #define LWBUF_ALPHA      35
+	    <a href="#S8.2.2">. . .</a></pre>
+
+
+<a name="S8.2.2"><h3>8.2.2. Filter Access</h3></a>
+
+At each frame that the filter is active, the server will get the image to
+process.  It reads the contents of the image buffers and writes new RGB and
+Alpha data to the output buffer and exits when it has processed the entire
+frame.  This processing is done using a `FilterAccess' structure which
+contains data fields and functions.
+<p>
+<dl>
+<dt>width, height
+<dd>This is the total size of the input and output image buffers.  Filters
+cannot change the image size and all buffers are the same size.
+<dt>frame
+<dd>This is the frame number of this final image.  In the case of stereoscopic
+rendering, the image filter will be called for the same frame number twice
+in a row, first for the left image and then for the right image.
+<dt>start, end
+<dd>These two times are the start and end times for the frame.
+The times are the same unless the frame has motion-blur, in which case
+the difference between them is the &quot;exposure time&quot; for the frame.
+<dt>bufLine, fltLine
+<dd>The functions allow access to the input buffers and return pointers to a 
+line of the buffer of the given type.  For y=0, the top line of the buffer 
+is returned; for y=1 the second to the top line, etc.  `bufLine' returns 
+lines from byte-encoded buffers and `fltLine' returns lines from float-encoded
+buffers (currently only LWBUF_DEPTH).  Invalid type codes return null pointers.
+<dt>setRGB, setAlpha
+<dd>The output buffers must be set using these functions which set the final 
+value at a pixel location.  The input RGBA buffers do not change as the
+output buffers are modified.  A filter must set every pixel in the output
+image even if it does not alter the value, but it can set them in any order.
+<dt>monitor
+<dd>This monitor can be used by the server to update the host about its
+progress through the frame.  As with all monitors, the number of steps
+should be kept fairly low since checking for abort can have significant
+overhead on some systems.  Every line or every other line should be about
+right.
+
+</dl>
+<dl><dd><h4>(72) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.2.1">. . .</a>
+	    typedef struct st_FilterAccess {
+		    int               width, height;
+		    <a href="#S7.3">LWFrame</a>           frame;
+		    <a href="#S7.3">LWTime</a>            start, end;
+		    <a href="#S7.1">BufferValue</a> *   (*bufLine) (int type, int y);
+		    float *         (*fltLine) (int type, int y);
+		    void            (*setRGB)   (int x, int y, <a href="#S7.1">BufferValue</a>[3]);
+		    void            (*setAlpha) (int x, int y, <a href="#S7.1">BufferValue</a>);
+		    Monitor          *monitor;
+	    } FilterAccess;
+	    <a href="#S8.2.3">. . .</a></pre>
+
+
+<a name="S8.2.3"><h3>8.2.3. Handler</h3></a>
+
+The activation function for an image filter gets passed a blank handler
+structure as its local data which the server must fill in.  In addition
+to the normal instance functions, it must also provide a `process'
+function and `flags' function.
+<p>
+<dl>
+<dt>process
+<dd>This is the function which filters a single frame given an instance and the 
+access structure.  As mentioned previously, when stereoscopic rendering is
+enabled, this function will be invoked twice (consecutively) for each frame,
+first for the left image and then for the right.
+<dt>flags
+<dd>This returns a set of bits representing the buffers this instance wants
+at processing time, where the bit numbers are the LWBUF values above.  
+Only buffers 0-14 need to be specified this way since the R, G, B and 
+Alpha buffers are always provided.  Undefined bits should be clear by default.
+
+</dl>
+<dl><dd><h4>(73) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.2.2">. . .</a>
+	    typedef struct st_ImageFilterHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    void            (*process) (<a href="#S7.5">LWInstance</a>,
+						const <a href="#S8.2.2">FilterAccess</a> *);
+		    unsigned int    (*flags) (<a href="#S7.5">LWInstance</a>);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S7.2">LWItemID</a> *);
+	    } ImageFilterHandler;
+	    <a href="#S8.3.1">. . .</a></pre>
+
+This handler is version 3.  Version 2 lacks the useItems and changeID
+functions, and the DIFFSHADE and SPECSHADE buffers.  Version 1 lacks the
+descln function.
+<p>
+
+<a name="S8.3"><h2>8.3. Pixel Post Processing</h2></a>
+
+CLASS: &quot;PixelFilterHandler&quot; (5.0/5.5)
+<p>
+CLASS: &quot;PixelFilterInterface&quot; (5.0/5.5)
+<p>
+This handler applys image post processing effects to individual 
+pixels in the rendered image.  This
+differs from image filtering in that pixel filtering happens before pixels
+are antialiased and motion blured.  Thus the effects added by pixel filtering
+have the advantage of being antialiased and motion blured using the same
+mechanism that LightWave uses on objects.  The disadvantage of pixel filters
+as opposed to image filters is that they can only affect a single sample at
+a time, so warps and convolutions are impossible.
+<p>
+Pixel filters have access to all the same special buffers as image post
+process filters, but only a pixel at a time.
+<p>
+<ul>
+<ul>
+<li>8.3.1.  <a href="#S8.3.1">Filter Access</a>
+<li>8.3.2.  <a href="#S8.3.2">Handler</a>
+</ul>
+</ul>
+
+<a name="S8.3.1"><h3>8.3.1. Filter Access</h3></a>
+
+For each pixel in the rendered image, the pixel filter will get called
+with a PixelAccess struct.  Because the sampling of the output image is
+adaptive, pixel positions may be evaluated in any order, multiple times,
+or not at all.
+<p>
+<dl>
+<dt>sx, sy
+<dd>Sample coordinates in the final image.  These are floating point values that
+indicate the position of the sample on some idealized continously valued
+image.  The integer screen pixel coordinate is just these values truncated.
+<dt>bufVal, fltVal
+<dd>The functions allow access to the input buffers and copy values into a
+location specified by the caller.  `Num' values are returned, starting
+with the type specified.  To get the RGB value of the source pixel,
+for example, the client would call `bufVal' with type LWBUF_RED and num
+3, with the destination pointing to enough space to store 3 values.
+The `fltVal' function must be called with LWBUF_DEPTH and a num of 1.
+Invalid buffer types return undefined values.
+<dt>setRGBA
+<dd>The output pixel must be set using this function which sets the red, green,
+blue and alpha values all at once.
+
+</dl>
+The access structure also provides pointers to the special `illuminate'
+and `rayTrace' functions.  These are described in the section on procedural
+textures (shaders).
+<p>
+<dl><dd><h4>(74) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.2.3">. . .</a>
+	    typedef struct st_PixelAccess {
+		    double            sx, sy;
+		    void            (*bufVal) (int type, int num, <a href="#S7.1">BufferValue</a> *);
+		    void            (*fltVal) (int type, int num, float *);
+		    void            (*setRGBA) (<a href="#S7.1">BufferValue</a>[4]);
+		    <a href="#S8.4.4">&lt;Special rendering functions&gt;</a>
+	    } PixelAccess;
+	    <a href="#S8.3.2">. . .</a></pre>
+
+
+<a name="S8.3.2"><h3>8.3.2. Handler</h3></a>
+
+The activation function for the server gets passed a blank handler struct
+which must be filled in to specify each of the following functions.
+<p>
+<dl>
+<dt>init
+<dd>Called at the start of rendering a sequence of frames.
+<dt>cleanup
+<dd>Called when current sequence is complete.
+<dt>newTime
+<dd>Called at the start of each new time within the current sequence.  When
+stereoscopic rendering is enabled, this function will be invoked twice
+(consecutively) for each frame, first for the left image and then for
+the right.
+<dt>evaluate
+<dd>Called to compute the filtering of each affected pixel within the
+current timestep.
+<dt>flags
+<dd>Returns a bit mask indicating which special buffers are required, just
+like Image Filters.  The additional flag LWPFF_RAYTRACE must also be set
+if the server intends to call the special `rayTrace' function.
+
+</dl>
+<dl><dd><h4>(75) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.3.1">. . .</a>
+	    typedef struct st_PixelFilterHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    <a href="#S7.4">LWError</a>         (*init) (<a href="#S7.5">LWInstance</a>);
+		    void            (*cleanup) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*newTime) (<a href="#S7.5">LWInstance</a>, <a href="#S7.3">LWFrame</a>, <a href="#S7.3">LWTime</a>);
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S8.3.1">PixelAccess</a> *);
+		    unsigned int    (*flags) (<a href="#S7.5">LWInstance</a>);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S7.2">LWItemID</a> *);
+	    } PixelFilterHandler;
+
+	    #define LWPFF_RAYTRACE  (1&lt;&lt;31)
+	    <a href="#S8.4.1">. . .</a></pre>
+
+This handler is version 3.  Version 2 lacks the useItems and changeID
+callbacks, the DIFFSHADE and SPECSHADE buffers, and the rayCast and 
+rayShade raytracing functions in the access structure.  There is no 
+version 1 for this handler.
+<p>
+
+<a name="S8.4"><h2>8.4. Procedural Texture</h2></a>
+
+CLASS: &quot;ShaderHandler&quot; (4.0/5.0/5.5)
+<p>
+CLASS: &quot;ShaderInterface&quot; (4.0/5.0/5.5)
+<p>
+This handler can modify
+the attributes of a pixel as it is being rendered.  These are sometimes
+called &quot;procedural textures,&quot; but in the LightWave implementation they are
+quite a bit more powerful than that.  Since it is called on a per-pixel 
+basis, this interface is designed for speed.
+<p>
+As LightWave goes through the process of converting abstract 3D surfaces
+into imagery, it breaks surfaces down into tiny patches which each get a
+uniform color.  Computing the color of these tiny spots is done by starting
+from a set of basic surface parameters which are approximately constant 
+over the patch: base color, surface normal, luminosity, diffuse reflection, 
+specular reflection, reflectivity, transparency, refractive index and 
+roughness (or glossiness).
+From these values LightWave's illumination calculation computes the color and
+intensity of reflected light and transmitted light and determines the
+color of the spot as seen from the given viewpoint.  Plug-in shaders can
+either alter the base parameters and let LightWave do the rendering calculation,
+or they can perform the illumination themselves and compute the preceived color
+directly.
+<p>
+<ul>
+<ul>
+<li>8.4.1.  <a href="#S8.4.1">Shader Access</a>
+<li>8.4.2.  <a href="#S8.4.2">Geometric Parameters</a>
+<li>8.4.3.  <a href="#S8.4.3">Modifiable Parameters</a>
+<li>8.4.4.  <a href="#S8.4.4">Special Rendering Functions</a>
+<li>8.4.5.  <a href="#S8.4.5">Instance</a>
+</ul>
+</ul>
+
+<a name="S8.4.1"><h3>8.4.1. Shader Access</h3></a>
+
+The spot evaluation function is called for every visible spot on a surface
+with a `ShaderAccess' structure describing the spot to be shaded.
+The access structure contains some values which are
+read-only and some which are meant to be modified.  The read-only
+values describe the geometry of the pixel being shaded.  The read-write
+values describe the current parameters of this pixel and should
+be modified in place to affect the final look of the spot.  Since shaders
+may be layered, these properties may be altered many more times before
+final rendering.  The access structure also contains special functions
+usable only while rendering.
+<p>
+<dl><dd><h4>(76) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.3.2">. . .</a>
+	    typedef struct st_ShaderAccess {
+		    <a href="#S8.4.2">&lt;Read-only shader parameters&gt;</a>
+		    <a href="#S8.4.3">&lt;Modifiable shader parameters&gt;</a>
+		    <a href="#S8.4.4">&lt;Special rendering functions&gt;</a>
+	    } ShaderAccess;
+	    <a href="#S8.4.5">. . .</a></pre>
+
+
+<a name="S8.4.2"><h3>8.4.2. Geometric Parameters</h3></a>
+
+The spot parameters are read-only and describe the local geometry of the
+spot being shaded.
+<p>
+<dl>
+<dt>sx, sy
+<dd>Spot location in the final image in pixel coordinates with 
+(0,0) at the upper-left.
+<dt>oPos, wPos
+<dd>Spot position in object coordinates and world coordinates.
+<dt>gNorm
+<dd>Geometric normal in world coordinates.  This is the raw polygonal normal
+at the spot, unperturbed by smoothing or bump mapping.
+<dt>spotSize
+<dd>Approximate spot diameter.  This is a very approximate value since spots
+on a surface viewed on edge are long and thin.  This can be used to compute
+texture antialiasing.
+<dt>raySource
+<dd>Origin of the incoming viewing ray in world coordinates.  Often this will be
+the camera but it does not have to be.
+<dt>rayLength
+<dd>The distance the viewing ray traveled in free space to reach this spot.
+<dt>cosine
+<dd>This is the cosine of the angle between the viewing ray and the surface
+normal at this spot.  It indicates how glancing the view is and gives a
+measure of how approximate the spot size is.
+<dt>oXfrm, wXfrm
+<dd>Object to world and world to object transformation matrices.  This can
+be computed other ways, but are included here for speed and are intended 
+to be used primarily for directional vectors.
+<dt>objID
+<dd>The object being shaded.  A single shader instance can be shared between
+multiple objects, so this may be different for each evaluation.  For sample
+sphere rendering the ID will refer to an object not in the current scene.
+<dt>polNum
+<dd>The polygon number of the object being shaded.  While this will be the
+polygon number for normal mesh objects, it may represent other sub-object
+information in non-mesh objects.
+
+</dl>
+<dl><dd><h4>(77) Read-only shader parameters</h4></dl>
+<pre>
+	    int              sx, sy;
+	    double           oPos[3], wPos[3];
+	    double           gNorm[3];
+	    double           spotSize;
+	    double           raySource[3];
+	    double           rayLength;
+	    double           cosine;
+	    double           oXfrm[9],  wXfrm[9];
+	    <a href="#S7.2">LWItemID</a>         objID;
+	    int              polNum;</pre>
+
+
+<a name="S8.4.3"><h3>8.4.3. Modifiable Parameters</h3></a>
+
+These parameters are used by the renderer to compute the perceived
+color at the spot and may be modified by the shader.  The shader must return
+the correct flags for any value it will modify or the change will not
+take effect (see below).
+<p>
+<dl>
+<dt>wNorm
+<dd>Surface normal in world coordinates.  Modifying this makes the surface
+look bumpy without altering the geometry (bump mapping).  The shader 
+needs to renormalize the vector after perturbation.
+<dt>color
+<dd>Base color of the spot.
+<dt>luminous
+<dd>Percentage luminosity.
+<dt>diffuse
+<dd>Percentage diffuse reflection.
+<dt>specular
+<dd>Percentage specular reflection.
+<dt>mirror
+<dd>Percentage reflectivity.
+<dt>transparency
+<dd>Percentage transparency.
+<dt>eta
+<dd>Index of refraction.
+<dt>roughness
+<dd>Surface roughness, often expressed as the inverse of glossiness.
+
+</dl>
+<dl><dd><h4>(78) Modifiable shader parameters</h4></dl>
+<pre>
+	    double           wNorm[3];
+	    double           color[3];
+	    double           luminous;
+	    double           diffuse;
+	    double           specular;
+	    double           mirror;
+	    double           transparency;
+	    double           eta;
+	    double           roughness;</pre>
+
+To set the perceived color directly a shader can set all the parameters
+to zero except for luminous which is 1.0 and color which is the output
+color of the spot.
+<p>
+
+<a name="S8.4.4"><h3>8.4.4. Special Rendering Functions</h3></a>
+
+These special functions are provided to shaders only in the context of
+rendering.  They cannot be called any other time since they depend very
+strongly on the state of the host renderer.  They can be accessed from
+some other handler classes as well.
+<p>
+<dl>
+<dt>illuminate
+<dd>This function returns the light ray
+(color and direction) hitting the given position from the given light
+at the current instant.  The return value is zero if the light does not
+illuminate the given world coordinate position at all.  The color
+includes effects from shadows (if any), falloff, spotlight cones and
+transparent objects between the light and the point.
+<dt>rayTrace
+<dd>This function may be called to trace a ray from the a given location in a
+given direction (in world coordinates).  The return value is the length
+of the ray (or -1.0 if infinite) and the color coming from that
+direction.  The direction used is the outgoing direction and must
+be normalized to be a unit vector.
+<dt>rayCast
+<dd>This is a quicker version of the rayTrace function which only returns the
+distance to the nearest surface (or -1.0).  It performs neither shading
+nor recursive raytracing.
+<dt>rayShade
+<dd>This function traces a ray to the nearest surface and evaluates the basic
+surface parameters and any shaders on that surface.  The ShaderAccess 
+structure passed (and owned) by the client is filled in with the result and 
+no more processing is done.
+
+</dl>
+<dl><dd><h4>(79) Special rendering functions</h4></dl>
+<pre>
+	    int             (*illuminate) (<a href="#S7.2">LWItemID</a> light,
+					   const double position[3],
+					   double direction[3],
+					   double color[3]);
+	    double          (*rayTrace) (const double position[3],
+					 const double direction[3],
+					 double color[3]);
+	    double          (*rayCast) (const double position[3],
+					const double direction[3]);
+	    double          (*rayShade) (const double position[3],
+					 const double direction[3],
+					 struct st_<a href="#S8.4.1">ShaderAccess</a> *);</pre>
+
+All these functions are available in version 3 of handlers.  In versions
+1 and 2, only the illuminate and rayTrace functions are available.
+<p>
+
+<a name="S8.4.5"><h3>8.4.5. Instance</h3></a>
+
+A shader instance may store its data in an object (in the case of a
+surface texture) or in a scene (in the case of a clip map) so the
+save/load functions should be prepared to deal with both cases.
+<p>
+<dl>
+<dt>init
+<dd>Called at the start of rendering a sequence of frames.
+<dt>cleanup
+<dd>Called when current sequence is complete.
+<dt>newTime
+<dd>Called at the start of each new time within the current sequence.
+<dt>evaluate
+<dd>Called to compute the shading of each affected pixel within the current time.
+<dt>flags
+<dd>Returns a word containing status bits for the instance.
+Undefined flag bits should be clear by default.
+The first nine LWSHF bits should be set only if the shader instance is
+going to modify that particular attribute.  RAYTRACE must be set if 
+the shader intends to use the `rayTrace' function.
+
+</dl>
+<dl><dd><h4>(80) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.4.1">. . .</a>
+	    #define LWSHF_NORMAL    (1&lt;&lt;0)
+	    #define LWSHF_COLOR     (1&lt;&lt;1)
+	    #define LWSHF_LUMINOUS  (1&lt;&lt;2)
+	    #define LWSHF_DIFFUSE   (1&lt;&lt;3)
+	    #define LWSHF_SPECULAR  (1&lt;&lt;4)
+	    #define LWSHF_MIRROR    (1&lt;&lt;5)
+	    #define LWSHF_TRANSP    (1&lt;&lt;6)
+	    #define LWSHF_ETA       (1&lt;&lt;7)
+	    #define LWSHF_ROUGH     (1&lt;&lt;8)
+	    #define LWSHF_RAYTRACE  (1&lt;&lt;10)
+	    . . .</pre>
+
+<dl><dd><h4>(81) Animation Servers</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_ShaderHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    <a href="#S7.4">LWError</a>         (*init) (<a href="#S7.5">LWInstance</a>);
+		    void            (*cleanup) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*newTime) (<a href="#S7.5">LWInstance</a>, <a href="#S7.3">LWFrame</a>, <a href="#S7.3">LWTime</a>);
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>, <a href="#S8.4.1">ShaderAccess</a> *);
+		    unsigned int    (*flags) (<a href="#S7.5">LWInstance</a>);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S7.2">LWItemID</a> *);
+	    } ShaderHandler;
+	    <a href="#S8.5.1">. . .</a></pre>
+
+This handler is version 3.  Version 2 lacks the useItems and changeID
+functions, and the rayCast and rayShade raytracing functions in the access
+structure.  Version 1 lacks the descln function.
+<p>
+
+<a name="S8.5"><h2>8.5. Procedural Displacement Map</h2></a>
+
+CLASS: &quot;DisplacementHandler&quot; (4.0/5.0/5.5)
+<p>
+CLASS: &quot;DisplacementInterface&quot; (4.0/5.0/5.5)
+<p>
+This server is called upon before rendering to modify the geometry
+of an object.  This is done not only during rendering but also during
+interactive previewing in the Layout window.  This means that a server
+should always be prepared to process a displacement instance at any
+time.
+<p>
+<ul>
+<ul>
+<li>8.5.1.  <a href="#S8.5.1">Displacement Access</a>
+<li>8.5.2.  <a href="#S8.5.2">Handler</a>
+</ul>
+</ul>
+
+<a name="S8.5.1"><h3>8.5.1. Displacement Access</h3></a>
+
+At its core a displacement handler takes point coordinates and moves them
+for each timestep.  The access structure for a displacement map gets 
+the position of the point to displace in two ways.
+<p>
+<dl>
+<dt>oPos
+<dd>This is the point location in object coordinates and is read-only.  The
+server may use this in computations, but moving it has no effect.
+<dt>source
+<dd>This is the location to be transformed in place by the displacement.
+If this is not a world-coordinate displacement,
+then the source coordinates are the in the object coordinate system but
+have been already displaced by any morphing or boning applied to the
+object, and may differ from the object coordinates.  If the displacment
+is in world coordinates (see `flags' below), then the source 
+coordinates are morphed, boned and transformed by object motion 
+(i.e. they are world coordinates).
+
+</dl>
+<dl><dd><h4>(82) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.4.5">. . .</a>
+	    typedef struct st_DisplacementAccess {
+		    double           oPos[3];
+		    double           source[3];
+	    } DisplacementAccess;
+	    <a href="#S8.5.2">. . .</a></pre>
+
+
+<a name="S8.5.2"><h3>8.5.2. Handler</h3></a>
+
+The handler functions for a displacement map are the same as a shader
+except for the lack of `init' and `cleanup' functions.  The `newTime'
+function also has a parameter for the ID of the object being affected
+by the displacement.  The LWDMF_WORLD bit should be set in the `flags'
+return value if the displacement will take place in world coordinates.
+<p>
+The LWDMF_BEFOREBONES flag causes plug-in displacement to 
+occur before bones affect an object.  This should not be used with the 
+LWDMF_WORLD flag.
+<p>
+<dl><dd><h4>(83) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.5.1">. . .</a>
+	    typedef struct st_DisplacementHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *, <a href="#S7.2">LWItemID</a>);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to,
+					     <a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    <a href="#S7.4">LWError</a>         (*newTime) (<a href="#S7.5">LWInstance</a>, <a href="#S7.2">LWItemID</a>,
+						<a href="#S7.3">LWFrame</a>, <a href="#S7.3">LWTime</a>);
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>,
+						 <a href="#S8.5.1">DisplacementAccess</a> *);
+		    unsigned int    (*flags) (<a href="#S7.5">LWInstance</a>);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S7.2">LWItemID</a> *);
+	    } DisplacementHandler;
+
+	    #define LWDMF_WORLD             (1&lt;&lt;0)
+	    #define LWDMF_BEFOREBONES       (1&lt;&lt;1)
+	    . . .</pre>
+
+This handler is version 3.  The version 2 handler lacks the useItems and 
+changeID functions and ignores the BEFOREBONES flag bit.  The version 1 
+handler is listed below.
+<p>
+<dl><dd><h4>(84) Animation Servers</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_DisplacementHandler_V1 {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    <a href="#S7.4">LWError</a>         (*newTime) (<a href="#S7.5">LWInstance</a>, <a href="#S7.2">LWItemID</a>,
+						<a href="#S7.3">LWFrame</a>, <a href="#S7.3">LWTime</a>);
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>,
+						 <a href="#S8.5.1">DisplacementAccess</a> *);
+		    unsigned int    (*flags) (<a href="#S7.5">LWInstance</a>);
+	    } DisplacementHandler_V1;
+	    <a href="#S8.6.1">. . .</a></pre>
+
+
+<a name="S8.6"><h2>8.6. Procedural Item Animation</h2></a>
+
+CLASS: &quot;ItemMotionHandler&quot; (4.0/5.0/5.5)
+<p>
+CLASS: &quot;ItemMotionInterface&quot; (4.0/5.0/5.5)
+<p>
+This handler is used to
+apply animation behavior to any item in a scene which can be
+keyframed.  After the keyframe position of the item is computed, the
+item motion server can alter the keyframed motion or replace it with a
+completely different one.  Motions will be evaluated both during
+rendering and while interactively laying out a scene.
+<p>
+<ul>
+<ul>
+<li>8.6.1.  <a href="#S8.6.1">Item Motion Access</a>
+<li>8.6.2.  <a href="#S8.6.2">Handler</a>
+</ul>
+</ul>
+
+<a name="S8.6.1"><h3>8.6.1. Item Motion Access</h3></a>
+
+At each time instant and for each affected item, the motion evaluation
+function will be called with an access structure holding the ID of the
+item and the time instant for which the motion should be computed.  The
+server can query keyframe parameters for the item and set its own
+values for the current time.
+<p>
+<dl>
+<dt>item
+<dd>This is set to the ID for the item to be affected by the procedural motion.
+<dt>frame, time
+<dd>This is set to the current instant for which the motion should be evaluated.
+<dt>getParam
+<dd>Returns a motion parameter for the item at any given
+time.  Only the POSITION, ROTATION and SCALING parameters may be
+queried.
+<dt>setParam
+<dd>Used by the evaluation function to set the computed motion of the item at
+the current time.  Only the POSITION, ROTATION and SCALING parameters may 
+be set.
+
+</dl>
+<dl><dd><h4>(85) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.5.2">. . .</a>
+	    typedef struct st_ItemMotionAccess {
+		    <a href="#S7.2">LWItemID</a>          item;
+		    <a href="#S7.3">LWFrame</a>           frame;
+		    <a href="#S7.3">LWTime</a>            time;
+		    void            (*getParam) (<a href="#S7.2">LWItemParam</a>, <a href="#S7.3">LWTime</a>,
+						 double vector[3]);
+		    void            (*setParam) (<a href="#S7.2">LWItemParam</a>,
+						 const double vector[3]);
+	    } ItemMotionAccess;
+	    <a href="#S8.6.2">. . .</a></pre>
+
+
+<a name="S8.6.2"><h3>8.6.2. Handler</h3></a>
+
+The handler for item motions adds only the `evaluate' function to the
+standard set of handler functions.  This computes the motion for an item 
+at a given timestep, and may be called at any time.
+<p>
+<dl><dd><h4>(86) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.6.1">. . .</a>
+	    typedef struct st_ItemMotionHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *, <a href="#S7.2">LWItemID</a>);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to,
+					     <a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S8.6.1">ItemMotionAccess</a> *);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S7.2">LWItemID</a> *);
+	    } ItemMotionHandler;
+	    . . .</pre>
+
+This handler is version 3.  Version 2 lacks the useItems and changeID
+functions.  Version 1 is included below.  In versions 1 and 2, the getParam
+function only returned motion parameters that were explicitly keyframed,
+preventing item motion handlers from interacting.  This limitation was
+lifted in version 3.
+<p>
+<dl><dd><h4>(87) Animation Servers</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_ItemMotionHandler_V1 {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S8.6.1">ItemMotionAccess</a> *);
+	    } ItemMotionHandler_V1;
+	    <a href="#S8.7.1">. . .</a></pre>
+
+
+<a name="S8.7"><h2>8.7. Procedural Object Replacement</h2></a>
+
+CLASS: &quot;ObjReplacementHandler&quot; (4.0/5.0/5.5)
+<p>
+CLASS: &quot;ObjReplacementInterface&quot; (4.0/5.0/5.5)
+<p>
+This handler allows another type of animation which can replace the entire
+object geometry at every single step.  Replacement is done by object
+name, so the server evaluation function can provide a new object name
+to load for each subframe timestep, or it can only load a new object
+periodically, allowing the same geometry to persist for a length of time.
+<p>
+Filenames are used instead of direct mesh replacement for generality.
+An object replacement server could use a series of prebuilt objects,
+like character heads for example, to do expressions or lip-syncing by
+providing the name of the correct head at each step.  Some animation
+could be done very efficiently using a combination of object
+replacement and object import servers.  The replacement server could
+write a brief description file for the parameters of a timestep
+(positions and sizes of metaballs, for example) which the object
+import server could then convert into a complete mesh while loading.
+A simple form of this server could be used to replace objects with
+nulls when they are not visible in the scene.
+<p>
+<ul>
+<ul>
+<li>8.7.1.  <a href="#S8.7.1">Object Replacement Access</a>
+<li>8.7.2.  <a href="#S8.7.2">Handler</a>
+</ul>
+</ul>
+
+<a name="S8.7.1"><h3>8.7.1. Object Replacement Access</h3></a>
+
+The access structure passed to the evaluation function contains
+information about the currently loaded object and the next timestep.
+The server compares the current settings and the next step and
+provides a new filename if a different object should be loaded for
+the next timestep to be evaluated.
+If the currently loaded geometry can be used for the new
+frame and time, then the new filename can be set to null.
+<p>
+<dl>
+<dt>objectID
+<dd>Item ID for the object whose geometry may be replaced by this server.
+<dt>curFrame, curTime, newFrame, newTime
+<dd>The frame and time values for the currently loaded geometry and the
+next step.  New geometry should be loaded if the object needs to look
+different at the two different times.  The times may not be sequential,
+since network rendering can cause the renderer to jump around between
+non-sequential times.
+<dt>curType, newType
+<dd>The type of the geometry currently loaded and needed for the next timestep.
+The server can provide different geometry for
+interactive previewing and actual rendering by examining this value.
+OBJREP_NONE is only used when there is no geometry loaded at all for 
+the current time.
+
+</dl>
+<dl><dd><h4>(88) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.6.2">. . .</a>
+	    #define OBJREP_NONE      0
+	    #define OBJREP_PREVIEW   1
+	    #define OBJREP_RENDER    2
+	    . . .</pre>
+
+<dl>
+<dt>curFilename
+<dd>This is set to the object geometry file currently loaded, and may be null
+if there is no geometry loaded.
+<dt>newFilename
+<dd>This is the filename of a new object file to be loaded as the geometry for
+this item at the new timestep, and is the only field set by the server.  
+It should only be set if the new geometry differs from that currently
+loaded, since loading new geometry incurs significant overhead.
+
+</dl>
+<dl><dd><h4>(89) Animation Servers</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_ObjReplacementAccess {
+		    <a href="#S7.2">LWItemID</a>         objectID;
+		    <a href="#S7.3">LWFrame</a>          curFrame, newFrame;
+		    <a href="#S7.3">LWTime</a>           curTime,  newTime;
+		    int              curType,  newType;
+		    const char      *curFilename;
+		    const char      *newFilename;
+	    } ObjReplacementAccess;
+	    <a href="#S8.7.2">. . .</a></pre>
+
+
+<a name="S8.7.2"><h3>8.7.2. Handler</h3></a>
+
+In addition to the normal handler functions, the server provids an 
+`evaluate' function which is called for each affected object at each
+timestep to get new geometry.  This function can be called at any time
+while rendering or setting up animations.
+<p>
+<dl><dd><h4>(90) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.7.1">. . .</a>
+	    typedef struct st_ObjReplacementHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *, <a href="#S7.2">LWItemID</a>);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to,
+					     <a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>,
+						 <a href="#S8.7.1">ObjReplacementAccess</a> *);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>,
+						 const <a href="#S7.2">LWItemID</a> *);
+	    } ObjReplacementHandler;
+	    . . .</pre>
+
+This handler is version 3.  Version 2 lacks the useItems and changeID
+functions.  Version 1 is included below.
+<p>
+<dl><dd><h4>(91) Animation Servers</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_ObjReplacementHandler_V1 {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    void            (*evaluate) (<a href="#S7.5">LWInstance</a>,
+						 <a href="#S8.7.1">ObjReplacementAccess</a> *);
+	    } ObjReplacementHandler_V1;
+	    <a href="#S8.8">. . .</a></pre>
+
+
+<a name="S8.8"><h2>8.8. Frame Buffers</h2></a>
+
+CLASS: &quot;FrameBufferHandler&quot; (4.0/5.0/5.5)
+<p>
+CLASS: &quot;FrameBufferInterface&quot; (4.0/5.0/5.5)
+<p>
+This handler is used 
+to display the output of rendering as each frame is completed.  This is 
+for the user to view, so the frame buffer should also be able to 
+pause waiting for user input.
+<p>
+A frame buffer is an instance, but it may be very limited.  The built-
+in frame buffers have no UI and no stored state.
+<p>
+<dl>
+<dt>open
+<dd>Open display at the given size.
+<dt>close
+<dd>Close display and end display transations.
+<dt>begin
+<dd>Start a new frame.
+<dt>write
+<dd>Write a new line of RGB and alpha data to the
+framebuffer.  Lines always come from top to bottom and
+there are always enough to fill the width and height of
+the requested display.
+<dt>pause
+<dd>Display the buffer to the user and wait for their signal
+to continue before returning.
+
+</dl>
+The sequence of calls for rendering to the frame buffer can be
+visualized as a regular expression:
+<p>
+open, (begin, (write)H, pause?)*, close
+<p>
+Any number of frames may be displayed in a session (even zero).  Write 
+will always be called for all the lines in the image and pause is optional.
+<p>
+<dl><dd><h4>(92) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.7.2">. . .</a>
+	    typedef struct st_FrameBufferHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    <a href="#S7.4">LWError</a>         (*open) (<a href="#S7.5">LWInstance</a>, int w, int h);
+		    void            (*close) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*begin) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*write) (<a href="#S7.5">LWInstance</a>,
+					      const <a href="#S7.1">BufferValue</a> *R,
+					      const <a href="#S7.1">BufferValue</a> *G,
+					      const <a href="#S7.1">BufferValue</a> *B,
+					      const <a href="#S7.1">BufferValue</a> *alpha);
+		    void            (*pause) (<a href="#S7.5">LWInstance</a>);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.2">LWItemID</a> *);
+	    } FrameBufferHandler;
+	    <a href="#S8.9">. . .</a></pre>
+
+This handler is version 3.  Version 2 lacks the useItems and changeID
+fucntions.  Version 1 lacks the descln function.
+<p>
+
+<a name="S8.9"><h2>8.9. Animation Output</h2></a>
+
+CLASS: &quot;AnimSaverHandler&quot; (4.0/5.0/5.5)
+<p>
+CLASS: &quot;AnimSaverInterface&quot; (4.0/5.0/5.5)
+<p>
+This handler is used to write 
+out animations.  The scheme is nearly identical to framebuffers, except 
+that there is no `pause' function and in addition to the image size, 
+LightWave will also pass a filename for the animation file.
+<p>
+<dl><dd><h4>(93) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.8">. . .</a>
+	    typedef struct st_AnimSaverHandler {
+		    <a href="#S7.5">LWInstance</a>      (*create) (<a href="#S7.4">LWError</a> *);
+		    void            (*destroy) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*copy) (<a href="#S7.5">LWInstance</a> from, <a href="#S7.5">LWInstance</a> to);
+		    <a href="#S7.4">LWError</a>         (*load) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWLoadState</a> *);
+		    <a href="#S7.4">LWError</a>         (*save) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.5.1">LWSaveState</a> *);
+
+		    <a href="#S7.4">LWError</a>         (*open) (<a href="#S7.5">LWInstance</a>, int w, int h,
+					     const char *filename);
+		    void            (*close) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*begin) (<a href="#S7.5">LWInstance</a>);
+		    <a href="#S7.4">LWError</a>         (*write) (<a href="#S7.5">LWInstance</a>,
+					      const <a href="#S7.1">BufferValue</a> *R,
+					      const <a href="#S7.1">BufferValue</a> *G,
+					      const <a href="#S7.1">BufferValue</a> *B,
+					      const <a href="#S7.1">BufferValue</a> *alpha);
+
+		    const char *    (*descln) (<a href="#S7.5">LWInstance</a>);
+
+		    const <a href="#S7.2">LWItemID</a>* (*useItems) (<a href="#S7.5">LWInstance</a>);
+		    void            (*changeID) (<a href="#S7.5">LWInstance</a>, const <a href="#S7.2">LWItemID</a> *);
+	    } AnimSaverHandler;
+	    <a href="#S8.10">. . .</a></pre>
+
+This handler is version 3.  Version 2 lacks the useItems and changeID
+functions.  Version 1 lacks the descln function.
+<p>
+
+<a name="S8.10"><h2>8.10. Scene Conversion</h2></a>
+
+CLASS: &quot;SceneConverter&quot; (4.0)
+<p>
+This class is used in import foreign scene formats.
+When the user selects a file to load as a scene, LightWave first attempts
+to load it directly as an LWSC format file.  If it cannot, it will pass
+the filename to each scene converter in sequence.  The scene converter
+will attempt to read the file and rewrite it as an LWSC file.  After 
+successful translation the server will pass the name of the new scene
+back to LightWave.  The file will be loaded and the server will be called
+back again to delete the translated scene file.
+<p>
+<dl>
+<dt>filename
+<dd>Filename of foreign scene file.  This is set by the host before activating
+the server.  This is the file to try to parse.
+<dt>readFailure
+<dd>If the server can recognize the format but cannot parse the file for some
+reason, it should set this error return value.
+<dt>tmpScene
+<dd>If the server sucessfully parses the foreign scene file, it should write a
+translation of that scene as a LWSC format file and return the name of this
+translation scene in this field.
+<dt>deleteTmp
+<dd>After reading the temporary scene file set above, the host will call back
+this delete function to dispose of the file and any other temporary state.
+The `tmpScene' and `deleteTmp' fields should be set as a pair before the 
+server returns.
+
+</dl>
+<dl><dd><h4>(94) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.9">. . .</a>
+	    typedef struct st_SceneConverter {
+		    const char       *filename;
+		    <a href="#S7.4">LWError</a>           readFailure;
+		    const char       *tmpScene;
+		    void            (*deleteTmp) (const char *tmpScene);
+	    } SceneConverter;
+	    <a href="#S8.11">. . .</a></pre>
+
+When the server is called, only `filename' will be set.  It then must set
+the other three fields to one of the following configurations:
+<p>
+<dl>
+<dt>readFailure and tmpScene both null
+<dd>This indicates that the server was unable to recognize the file format
+and no translation was done.  LightWave will simply try the next translator.
+<dt>readFailure set, tmpScene null
+<dd>This indicates that the file format was recognized, but that a failure
+of some kind occured during translation.  LightWave will display this
+error and will stop attempting to translate the file.
+<dt>readFailure null, tmpScene set
+<dd>This indicates successful translation.  LightWave will read `tmpScene' 
+as an LWSC file and then will call the `deleteTmp' function to dispose of
+it.  Note that if tmpScene is set, deleteTmp must be set as well.
+
+</dl>
+
+<a name="S8.11"><h2>8.11. General Function</h2></a>
+
+CLASS: &quot;LayoutGeneric&quot; (4.0/5.0)
+<p>
+This class is provided for general layout functionality
+which does not fit into any of the previous server or handler categories.
+Servers of this class can be activated by the user from the Layout
+interface to perform non-rendering functions, such as configuring external
+devices, performing calculations, etc.  Other arbitrary scene manipulation
+can be done by altering the file for the current scene.
+<p>
+<dl>
+<dt>saveScene
+<dd>This causes Layout to save the current scene as an LWSC file with
+the given filename.
+<dt>loadScene
+<dd>This causes Layout to replace the current scene in memory with the
+one given by a physical and logical file name.  The `file' will be 
+opened and loaded, but `name' will be used for display to the user 
+and for subsequent saving.
+
+</dl>
+<dl><dd><h4>(95) Animation Servers</h4></dl>
+<pre>
+	    <a href="#S8.10">. . .</a>
+	    typedef struct st_LayoutGeneric {
+		    int             (*saveScene) (const char *file);
+		    int             (*loadScene) (const char *file,
+						  const char *name);
+	    } LayoutGeneric;</pre>
+
+This is the local data for version 2 of this server.  Version 1 of
+the server exists, but the local data is not used.
+<p>
+
+<hr>
+<a name="S9"><h1>9. Animation Globals</h1></a>
+
+This section contains descriptions of the global data pointers
+which can be accessed from LightWave's global function.  Most of these
+return structures containing function pointers, which can be used any
+time to get information about the state of the system.  A few of these
+globals return structures which contain values, like the information
+structs for scenes and compositing.  In that case, the global must be
+acquired before being read in order to sync the values in the struct
+with the current state.
+<p>
+<ul>
+<ul>
+<li>9.1.  <a href="#S9.1">Item Information</a>
+<li>9.2.  <a href="#S9.2">Object Information</a>
+<li>9.3.  <a href="#S9.3">Bone Information</a>
+<li>9.4.  <a href="#S9.4">Light Information</a>
+<li>9.5.  <a href="#S9.5">Camera Information</a>
+<li>9.6.  <a href="#S9.6">Scene Information</a>
+<li>9.7.  <a href="#S9.7">Image List Information</a>
+<li>9.8.  <a href="#S9.8">Compositing Information</a>
+<li>9.9.  <a href="#S9.9">Backdrop Information</a>
+<li>9.10.  <a href="#S9.10">Fog Information</a>
+<li>9.11.  <a href="#S9.11">Global Rendering Memory Pool</a>
+<li>9.12.  <a href="#S9.12">Global Memory Pool</a>
+</ul>
+</ul>
+
+<a name="S9.1"><h2>9.1. Item Information</h2></a>
+
+GLOBAL: &quot;LW Item Info 2&quot; (5.0)
+<p>
+GLOBAL: &quot;LW Item Info&quot; (4.0)
+<p>
+This global returns functions for traversing the
+entire set of items in the scene and getting information about all
+of them.  This information is common to all items.  Any information
+specific to certain item types is given by separate global functions.
+<p>
+<dl>
+<dt>first
+<dd>Returns the ID of the first item of a given type.  If type is
+LWI_BONE, the second argument is the ID of the boned object.
+If there are no items of this type this returns LWITEM_NULL.
+<dt>next
+<dd>Returns the next item of the same type as the argument.  If there
+are no more, this returns LWITEM_NULL.
+<dt>firstChild
+<dd>Returns the first child item of the parent item.  It returns
+LWITEM_NULL if none.
+<dt>nextChild
+<dd>Returns the next child item given a parent item and the previous
+child.  It returns LWITEM_NULL if that was the last one.
+<dt>parent
+<dd>Returns the item's parent, if any, and LWITEM_NULL if none.
+<dt>target
+<dd>Returns the item's target, if any, and LWITEM_NULL if none.
+<dt>goal
+<dd>Returns the item's goal, if any, and LWITEM_NULL if none.
+<dt>type
+<dd>Returns the type of an arbitrary item.
+<dt>name
+<dd>Returns the name of the item as it appears to the user.
+<dt>param
+<dd>Returns vector parameters from an item using a LWItemParam
+code to identify the parameter desired.  The value is written
+to the vector array for the given time.
+<dt>limits
+<dd>Returns upper and lower bounds on vector parameters.  These may be limits
+set by the user on joint angles or ranges of movement.  LWVECF
+flag bits are returned to indicate which of the three vector
+indicies contain limits.  Any bits unset are unbounded.
+
+</dl>
+<dl><dd><h4>(96) Animation Types</h4></dl>
+<pre>
+	    <a href="#S7.5.1">. . .</a>
+	    #define LWVECF_0        (1&lt;&lt;0)
+	    #define LWVECF_1        (1&lt;&lt;1)
+	    #define LWVECF_2        (1&lt;&lt;2)
+	    <a href="#S9.2">. . .</a></pre>
+
+<dl>
+<dt>getTag
+<dd>Returns the value of a string tag for a specific item.  The tags are
+numbered starting at 1, and calls to this function with an out of range
+tag number return a null pointer.  Tags strings are stored with the item
+in the scene file.
+<dt>setTag
+<dd>This sets the value of a specific numbered tag for an item.  If the index
+references an existing tag, its value will be replaced with the new string.
+If the tag number is zero, a new tag string will be added to the item.
+
+</dl>
+<dl><dd><h4>(97) Animation Globals</h4></dl>
+<pre>
+	    typedef struct st_LWItemInfo {
+		    <a href="#S7.2">LWItemID</a>        (*first)  (<a href="#S7.2">LWItemType</a>, <a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.2">LWItemID</a>        (*next)   (<a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.2">LWItemID</a>        (*firstChild) (<a href="#S7.2">LWItemID</a> parent);
+		    <a href="#S7.2">LWItemID</a>        (*nextChild) (<a href="#S7.2">LWItemID</a> parent, <a href="#S7.2">LWItemID</a> prevChild);
+		    <a href="#S7.2">LWItemID</a>        (*parent) (<a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.2">LWItemID</a>        (*target) (<a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.2">LWItemID</a>        (*goal)   (<a href="#S7.2">LWItemID</a>);
+		    <a href="#S7.2">LWItemType</a>      (*type)   (<a href="#S7.2">LWItemID</a>);
+		    const char *    (*name)   (<a href="#S7.2">LWItemID</a>);
+		    void            (*param)  (<a href="#S7.2">LWItemID</a>, <a href="#S7.2">LWItemParam</a>, <a href="#S7.3">LWTime</a>,
+					       double vector[3]);
+		    unsigned int    (*limits) (<a href="#S7.2">LWItemID</a>, <a href="#S7.2">LWItemParam</a>,
+					       double min[3], double max[3]);
+
+		    const char *    (*getTag) (<a href="#S7.2">LWItemID</a>, int);
+		    void            (*setTag) (<a href="#S7.2">LWItemID</a>, int, const char *);
+	    } LWItemInfo;
+	    <a href="#S9.2">. . .</a></pre>
+
+The older global, &quot;LW Item Info&quot;, is defined for 4.0 and 5.0 and returns 
+the same structure above but lacks getTag and setTag.
+<p>
+
+<a name="S9.2"><h2>9.2. Object Information</h2></a>
+
+GLOBAL: &quot;LW Object Info&quot; (4.0)
+<p>
+This global returns functions for object-specific information.
+<p>
+<dl>
+<dt>filename
+<dd>Returns the filename for the object file.
+<dt>numPoints, numPolygons
+<dd>Returns the number of points and polygons in the object mesh.
+<dt>shadowOpts
+<dd>Returns bits for shadow options, as below.
+
+</dl>
+<dl><dd><h4>(98) Animation Types</h4></dl>
+<pre>
+	    <a href="#S9.1">. . .</a>
+	    #define LWOSHAD_SELF     (1&lt;&lt;0)
+	    #define LWOSHAD_CAST     (1&lt;&lt;1)
+	    #define LWOSHAD_RECEIVE  (1&lt;&lt;2)
+	    <a href="#S9.3">. . .</a></pre>
+
+<dl>
+<dt>dissolve
+<dd>Returns the object dissolve percentage as a function of time.
+
+</dl>
+<dl><dd><h4>(99) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.1">. . .</a>
+	    typedef struct st_LWObjectInfo {
+		    const char *    (*filename) (<a href="#S7.2">LWItemID</a>);
+		    int             (*numPoints) (<a href="#S7.2">LWItemID</a>);
+		    int             (*numPolygons) (<a href="#S7.2">LWItemID</a>);
+		    unsigned int    (*shadowOpts) (<a href="#S7.2">LWItemID</a>);
+		    double          (*dissolve) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>);
+	    } LWObjectInfo;
+	    <a href="#S9.3">. . .</a></pre>
+
+
+<a name="S9.3"><h2>9.3. Bone Information</h2></a>
+
+GLOBAL: &quot;LW Bone Info&quot; (4.0)
+<p>
+This global returns functions for getting bone-specific information.
+<p>
+<dl>
+<dt>flags
+<dd>Returns a set of flag bits for the given bone, as follows.
+
+</dl>
+<dl><dd><h4>(100) Animation Types</h4></dl>
+<pre>
+	    <a href="#S9.2">. . .</a>
+	    #define LWBONEF_ACTIVE          (1&lt;&lt;0)
+	    #define LWBONEF_LIMITEDRANGE    (1&lt;&lt;1)
+	    <a href="#S9.4">. . .</a></pre>
+
+<dl>
+<dt>restParam
+<dd>This gets vector parameters for the rest position of a given bone.
+Parameters of the animated bone can be read from the normal item info
+functions.
+<dt>restLength
+<dd>This gets the special rest length parameter of the given bone.
+<dt>limits
+<dd>For limited range bones, this gets the inner and outer limit radii
+for the bone.  Influence areas are in the shape of a cylinder with
+hemispherical ends centered at the tips of the bone.
+
+</dl>
+<dl><dd><h4>(101) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.2">. . .</a>
+	    typedef struct st_LWBoneInfo {
+		    unsigned int    (*flags) (<a href="#S7.2">LWItemID</a>);
+		    void            (*restParam) (<a href="#S7.2">LWItemID</a>, <a href="#S7.2">LWItemParam</a>,
+						  double vector[3]);
+		    double          (*restLength) (<a href="#S7.2">LWItemID</a>);
+		    void            (*limits) (<a href="#S7.2">LWItemID</a>, double *inner,
+					       double *outer);
+	    } LWBoneInfo;
+	    <a href="#S9.4">. . .</a></pre>
+
+
+<a name="S9.4"><h2>9.4. Light Information</h2></a>
+
+GLOBAL: &quot;LW Light Info 2&quot; (5.5)
+<p>
+GLOBAL: &quot;LW Light Info&quot; (4.0)
+<p>
+These globals return functions for getting light-specific information.
+<p>
+<dl>
+<dt>ambient
+<dd>Returns the ambient light color (with intensity factored in) at the given
+time.  There is no light ID needed since this is global to the scene.
+<dt>type
+<dd>Returns the type of the given light as one of the following values.
+
+</dl>
+<dl><dd><h4>(102) Animation Types</h4></dl>
+<pre>
+	    <a href="#S9.3">. . .</a>
+	    #define LWLIGHT_DISTANT  0
+	    #define LWLIGHT_POINT    1
+	    #define LWLIGHT_SPOT     2
+	    #define LWLIGHT_LINEAR   3
+	    #define LWLIGHT_AREA     4
+	    . . .</pre>
+
+<dl>
+<dt>color
+<dd>Returns the light color (with intensity factored in) at the given time.
+<dt>shadowType
+<dd>Returns the shadow type for the given light as one of the following values.
+
+</dl>
+<dl><dd><h4>(103) Animation Types</h4></dl>
+<pre>
+	    . . .
+	    #define LWLSHAD_OFF      0
+	    #define LWLSHAD_RAYTRACE 1
+	    #define LWLSHAD_MAP      2
+	    . . .</pre>
+
+<dl>
+<dt>coneAngles
+<dd>Returns the cone angles for spotlights.  Radius is half the total light
+code angle and edge is the angular width of the soft edge.
+<dt>flags
+<dd>Returns flag bits for settings related to the light.
+
+</dl>
+<dl><dd><h4>(104) Animation Types</h4></dl>
+<pre>
+	    . . .
+	    #define LWLFL_LIMITED_RANGE      (1&lt;&lt;0)
+	    #define LWLFL_NO_DIFFUSE         (1&lt;&lt;1)
+	    #define LWLFL_NO_SPECULAR        (1&lt;&lt;2)
+	    <a href="#S9.6">. . .</a></pre>
+
+<dl>
+<dt>range
+<dd>Returns the range of the light if the limited-range flag bit is set, 
+otherwise undefined.
+
+</dl>
+<dl><dd><h4>(105) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.3">. . .</a>
+	    typedef struct st_LWLightInfo {
+		    void            (*ambient) (<a href="#S7.3">LWTime</a>, double color[3]);
+		    int             (*type) (<a href="#S7.2">LWItemID</a>);
+		    void            (*color) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>, double color[3]);
+		    int             (*shadowType) (<a href="#S7.2">LWItemID</a>);
+		    void            (*coneAngles) (<a href="#S7.2">LWItemID</a>, double *radius,
+						   double *edge);
+		    unsigned int    (*flags) (<a href="#S7.2">LWItemID</a>);
+		    double          (*range) (<a href="#S7.2">LWItemID</a>);
+	    } LWLightInfo;
+	    <a href="#S9.5">. . .</a></pre>
+
+The older global &quot;Light Info&quot; lacks the flags and range functions.  
+&quot;Light Info 2&quot; was actually first available in version 5.00z3.
+<p>
+
+<a name="S9.5"><h2>9.5. Camera Information</h2></a>
+
+GLOBAL: &quot;LW Camera Info&quot; (4.0)
+<p>
+This global returns functions for accessing information
+specific to the camera.  A camera has an ID which must be passed to these
+functions in anticipation of multiple cameras per scene.
+<p>
+<dl>
+<dt>zoomFactor
+<dd>Returns the zoom factor for the camera at the given time.
+<dt>focalLength
+<dd>Returns the focal length of the camera lens at the given time.  Focal
+length is expressed in millimeters.
+<dt>focalDistance
+<dd>Returns the distance to the focal plane of the camera at the
+given time.
+<dt>fStop
+<dd>Returns the F-Stop number at the given time.
+<dt>blurLength
+<dd>Returns the blur length as a fraction of the frame time for the given
+time.
+<dt>fovAngles
+<dd>Returns the camera field of view angles at the given time.  These are
+angles in radians centered around the camera direction.
+
+</dl>
+<dl><dd><h4>(106) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.4">. . .</a>
+	    typedef struct st_LWCameraInfo {
+		    double          (*zoomFactor) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>);
+		    double          (*focalLength) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>);
+		    double          (*focalDistance) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>);
+		    double          (*fStop) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>);
+		    double          (*blurLength) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>);
+		    void            (*fovAngles) (<a href="#S7.2">LWItemID</a>, <a href="#S7.3">LWTime</a>,
+						  double *horizontal,
+						  double *vertical);
+	    } LWCameraInfo;
+	    <a href="#S9.6">. . .</a></pre>
+
+
+<a name="S9.6"><h2>9.6. Scene Information</h2></a>
+
+GLOBAL: &quot;LW Scene Info 2&quot; (5.0)
+<p>
+GLOBAL: &quot;LW Scene Info&quot; (4.0)
+<p>
+This global returns a block of information
+about the scene itself.  This is all strictly read-only.
+<p>
+<dl>
+<dt>name
+<dd>User's name for the scene.
+<dt>filename
+<dd>Filename of the scene file.
+<dt>numPoints, numPolygons
+<dd>Total number of points and polygons for all the objects in the scene.
+<dt>renderType
+<dd>This can be one of the following values.
+
+</dl>
+<dl><dd><h4>(107) Animation Types</h4></dl>
+<pre>
+	    <a href="#S9.4">. . .</a>
+	    #define LWRTYPE_WIRE            0
+	    #define LWRTYPE_QUICK           1
+	    #define LWRTYPE_REALISTIC       2
+	    <a href="#S9.7">. . .</a></pre>
+
+<dl>
+<dt>renderOpts
+<dd>This is a combination of bits for different rendering options.
+EVENFIELDS is set only if field rendering is on and the first line of
+the output image is from the field that comes first in time.
+
+</dl>
+<dl><dd><h4>(108) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.5">. . .</a>
+	    #define LWROPT_SHADOWTRACE      (1&lt;&lt;0)
+	    #define LWROPT_REFLECTTRACE     (1&lt;&lt;1)
+	    #define LWROPT_REFRACTTRACE     (1&lt;&lt;2)
+	    #define LWROPT_FIELDS           (1&lt;&lt;3)
+	    #define LWROPT_EVENFIELDS       (1&lt;&lt;4)
+	    #define LWROPT_MOTIONBLUR       (1&lt;&lt;5)
+	    #define LWROPT_DEPTHOFFIELD     (1&lt;&lt;6)
+	    #define LWROPT_LIMITEDREGION    (1&lt;&lt;7)
+	    . . .</pre>
+
+<dl>
+<dt>frameStart, frameEnd, frameStep
+<dd>The range of frames defined for the scene.
+<dt>framesPerSecond
+<dd>Number of frames per real-time second.  This will be 30 for video (even
+field rendered), and 24 for film.
+<dt>frameWidth, frameHeight
+<dd>Final output image size in pixels.
+<dt>pixelAspect
+<dd>Pixel aspect ratio as pixel-width / pixel-height.  Values greater than
+one mean short wide pixels and values less than one mean tall thin pixels.
+<dt>minSamplesPerPixel, maxSamplesPerPixel
+<dd>Limits on number of samples per pixel in the final image.  Because of
+different rendering techniques and adaptive sampling it is impossible
+to compute a precise number of antialiasing samples at any pixel, but
+this gives a range for the current rendering options.
+<dt>limitedRegion
+<dd>The location of the limited region area, given as x0, y0, x1, y1.
+<dt>recursionDepth
+<dd>The maximum recursion depth for raytracing.
+
+</dl>
+<dl><dd><h4>(109) Animation Globals</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_LWSceneInfo {
+		    const char      *name;
+		    const char      *filename;
+		    int              numPoints;
+		    int              numPolygons;
+		    int              renderType;
+		    int              renderOpts;
+		    <a href="#S7.3">LWFrame</a>          frameStart;
+		    <a href="#S7.3">LWFrame</a>          frameEnd;
+		    <a href="#S7.3">LWFrame</a>          frameStep;
+		    double           framesPerSecond;
+		    int              frameWidth;
+		    int              frameHeight;
+		    double           pixelAspect;
+		    int              minSamplesPerPixel;
+		    int              maxSamplesPerPixel;
+		    int              limitedRegion[4];      /* x0, y0, x1, y1 */
+
+		    int              recursionDepth;
+	    } LWSceneInfo;
+	    <a href="#S9.7">. . .</a></pre>
+
+The older global ID &quot;LW Scene Info&quot; is defined for 4.0 and 5.0 and 
+lacks the recursionDepth field.
+<p>
+
+<a name="S9.7"><h2>9.7. Image List Information</h2></a>
+
+GLOBAL: &quot;LW Image List&quot; (4.0)
+<p>
+This global returns functions for traversing 
+LightWave's image list and accessing values in the image.  Images
+are identified by an abstract data type.
+<p>
+<dl><dd><h4>(110) Animation Types</h4></dl>
+<pre>
+	    <a href="#S9.6">. . .</a>
+	    typedef void *           LWImageID;
+	    <a href="#S9.11">. . .</a></pre>
+
+<dl>
+<dt>first
+<dd>Returns the first image in the list, null if none.
+<dt>next
+<dd>Returns the next image after the given one, null if none.
+<dt>load
+<dd>Loads a file as an image, adds it to the list and returns it.
+<dt>name
+<dd>Returns the user's name for an image.
+<dt>filename
+<dd>Returns the filename for the loaded image.  This is the
+value that should be stored for later retrieval of the
+image using `load.'  If the ID refers to an
+image sequence, the frame number will be used to construct the
+appropriate image filename.
+<dt>isColor
+<dd>Returns true if the image has color data or false if
+only greyscale.
+<dt>needAA
+<dd>This needs to be called by shaders that want to use the &quot;spot&quot; functions
+to access values in the image in the course of their shading calculations.
+This function can only be called from a shader's `init' function.
+<dt>size
+<dd>Returns the width and height of the image in pixels.
+<dt>luma
+<dd>Returns the greyscale value of the image from 0-255.  If
+this is a color source image the value returned is the
+NTSC luminence.
+<dt>RGB
+<dd>Returns the RGB color of the image from 0-255 at the given pixel.
+<dt>lumaSpot, RGBSpot
+<dd>Returns the floating point greyscale or color value of the
+image for a spot of the given diameter at the given
+center in the image.  These functions can only be called during the
+spot evaluation function of a shader, and `needAA' must have been 
+called during the shader's initialization.  If the spot size is small and
+`blend' is true, the color value will be interpolated
+from between image pixels.
+<dt>clear
+<dd>Removes the image from the scene, clearing all references.
+
+</dl>
+<dl><dd><h4>(111) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.6">. . .</a>
+	    typedef struct st_LWImageList {
+		    LWImageID       (*first) (void);
+		    LWImageID       (*next) (LWImageID);
+		    LWImageID       (*load) (const char *);
+		    const char *    (*name) (LWImageID);
+		    const char *    (*filename) (LWImageID, <a href="#S7.3">LWFrame</a>);
+		    int             (*isColor) (LWImageID);
+		    void            (*needAA) (LWImageID);
+		    void            (*size) (LWImageID, int *w, int *h);
+		    <a href="#S7.1">BufferValue</a>     (*luma) (LWImageID, int x, int y);
+		    void            (*RGB)  (LWImageID, int x, int y,
+					     <a href="#S7.1">BufferValue</a>[3]);
+		    double          (*lumaSpot) (LWImageID, double x, double y,
+						 double spotSize, int blend);
+		    void            (*RGBSpot)  (LWImageID, double x, double y,
+						 double spotSize, int blend,
+						 double[3]);
+		    void            (*clear) (LWImageID);
+	    } LWImageList;
+	    <a href="#S9.8">. . .</a></pre>
+
+
+<a name="S9.8"><h2>9.8. Compositing Information</h2></a>
+
+GLOBAL: &quot;LW Compositing Info&quot; (4.0)
+<p>
+This global returns a structure describing the
+state of the built-in compositing function.  The three ImageID's are the
+background image, the foreground image and the foreground alpha image.
+<p>
+<dl><dd><h4>(112) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.7">. . .</a>
+	    typedef struct st_LWCompInfo {
+		    LWImageID        bg;
+		    LWImageID        fg;
+		    LWImageID        fgAlpha;
+	    } LWCompInfo;
+	    <a href="#S9.9">. . .</a></pre>
+
+
+<a name="S9.9"><h2>9.9. Backdrop Information</h2></a>
+
+GLOBAL: &quot;LW Backdrop Info&quot; (5.5)
+<p>
+This global returns a function for querying the backdrop info.  The color 
+returned is what is seen in the direction given by ray at infinity.
+<p>
+<dl><dd><h4>(113) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.8">. . .</a>
+	    typedef struct st_LWBackdropInfo {
+		    void            (*backdrop) (<a href="#S7.3">LWTime</a>, const double ray[3],
+						 double color[3]);
+	    } LWBackdropInfo;
+	    <a href="#S9.10">. . .</a></pre>
+
+
+<a name="S9.10"><h2>9.10. Fog Information</h2></a>
+
+GLOBAL: &quot;LW Fog Info&quot; (5.5)
+<p>
+This global allows access to the parameters for fog.  The fog type and
+flags will only be updated when the global is acquired.
+<p>
+<dl>
+<dt>type
+<dd>Fog has one of these types.  The non-linear types have a different
+distribution of fog between the min and max distances.
+
+</dl>
+<dl><dd><h4>(114) Animation Globals</h4></dl>
+<pre>
+	    <a href="#S9.9">. . .</a>
+	    #define LWFOG_NONE               0
+	    #define LWFOG_LINEAR             1
+	    #define LWFOG_NONLINEAR1         2
+	    #define LWFOG_NONLINEAR2         3
+	    . . .</pre>
+
+<dl>
+<dt>flags
+<dd>The only fog flag is the background fog setting.  If true, the fog color
+is based on the backdrop color (&quot;LW Backdrop info&quot;) and the color value
+returned from this struct should be ignored.
+
+</dl>
+<dl><dd><h4>(115) Animation Globals</h4></dl>
+<pre>
+	    . . .
+	    #define LWFOGF_BACKGROUND       (1&lt;&lt;0)
+	    . . .</pre>
+
+<dl><dd><h4>(116) Animation Globals</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_LWFogInfo {
+		    int               type;
+		    int               flags;
+		    double          (*minDist) (<a href="#S7.3">LWTime</a>);
+		    double          (*maxDist) (<a href="#S7.3">LWTime</a>);
+		    double          (*minAmt) (<a href="#S7.3">LWTime</a>);
+		    double          (*maxAmt) (<a href="#S7.3">LWTime</a>);
+		    void            (*color) (<a href="#S7.3">LWTime</a>, double col[3]);
+	    } LWFogInfo;
+	    . . .</pre>
+
+
+<a name="S9.11"><h2>9.11. Global Rendering Memory Pool</h2></a>
+
+GLOBAL: &quot;Global Render Memory&quot; (4.0)
+<p>
+This global returns functions for accessing the
+Global Rendering Pool.  This is shared memory that can be used while
+rendering.  This has two main uses:  The first is for read-only tables,
+like trig or random noise lookup tables which can be shared by textures.
+The second is for communication areas for textures that wish to cooperate
+in terms of sharing computed values on a per-pixel basis.  LightWave does
+nothing to manage this shared pool expect to clear it out after rendering.
+<p>
+The memory chunks are pointers to blocks of memory of different sizes.
+They are identified by arbitrary null-terminated character strings.
+<p>
+<dl><dd><h4>(117) Animation Types</h4></dl>
+<pre>
+	    <a href="#S9.7">. . .</a>
+	    typedef void *          MemChunk;</pre>
+
+<dl>
+<dt>first, next
+<dd>These functions allow traversal of the memory chunks in the list (pool).
+Clients can use these functions if they need to search for more complex
+critera than just ID.
+<dt>ID, size
+<dd>These return the ID string and size of a memory chunk given a pointer
+to the memory.
+<dt>find
+<dd>This returns a pointer to a memory chunk which matches the given ID.  Multiple
+chunks may be created with the same ID, so this returns the first one.
+<dt>create
+<dd>This creates a memory chunk with the given size and ID and returns a 
+pointer to the memory.  For chunks to be unique it is best to try to find
+the ID before calling this function.
+
+</dl>
+<dl><dd><h4>(118) Animation Globals</h4></dl>
+<pre>
+	    . . .
+	    typedef struct st_GlobalPool {
+		    MemChunk        (*first) (void);
+		    MemChunk        (*next) (MemChunk);
+		    const char *    (*ID)   (MemChunk);
+		    int             (*size) (MemChunk);
+		    MemChunk        (*find)   (const char *ID);
+		    MemChunk        (*create) (const char *ID, int size);
+	    } GlobalPool;</pre>
+
+
+<a name="S9.12"><h2>9.12. Global Memory Pool</h2></a>
+
+GLOBAL: &quot;Global Memory&quot; (5.5[253])
+<p>
+This global is identical in structure and function to &quot;Global Render Memory&quot;
+inasmuch as it allows a plug-in to allocate chunks of memory that can be
+shared with other plug-ins.  However, the memory allocated from this global
+will not be released by Layout automatically when the current rendering
+operation is complete.  Memory allocated from this global will only be
+released when the current scene is cleared.
+<p>
+
+<hr>
+<a name="S10"><h1>10. Files</h1></a>
+
+Three header files describe the whole set of LightWave servers and globals.
+`lwbase.h' is for the declarations common to both Layout and Modeler, `lwmod.h'
+is for Modeler only and `lwran.h' is for Layout only (Rendering and ANimation).
+<p>
+<dl><dd><h4>(119) Common LightWave Header</h4></dl>
+<pre>
+	    /*
+	     * LWSDK Header File
+	     * Copyright 1995,1997,1998  NewTek, Inc.
+	     */
+	    #ifndef LW_BASE_H
+	    #define LW_BASE_H
+
+	    #include &lt;moni.h&gt;
+	    #include &lt;plug.h&gt;
+
+	    <a href="#S2.2">&lt;Common Server Classes&gt;</a>
+	    <a href="#S3.2">&lt;Common Globals&gt;</a>
+
+	    #endif</pre>
+
+<dl><dd><h4>(120) LightWave Modeler Plug-in Header</h4></dl>
+<pre>
+	    /*
+	     * LWSDK Header File
+	     * Copyright 1995,1997,1998  NewTek, Inc.
+	     */
+	    #ifndef LW_MOD_H
+	    #define LW_MOD_H
+
+	    #include &lt;lwbase.h&gt;
+
+	    <a href="#S4.1">&lt;Modeling Base Types&gt;</a>
+	    <a href="#S4.1">&lt;Modeling Types&gt;</a>
+	    <a href="#S5.1.1">&lt;Modeling Servers&gt;</a>
+	    <a href="#S6.1">&lt;Modeling Globals&gt;</a>
+
+	    #endif</pre>
+
+<dl><dd><h4>(121) LightWave Rendering and Animation Plug-in Header</h4></dl>
+<pre>
+	    /*
+	     * LWSDK Header File
+	     * Copyright 1995,1997,1998  NewTek, Inc.
+	     */
+	    #ifndef LW_RAN_H
+	    #define LW_RAN_H
+
+	    #include &lt;lwbase.h&gt;
+
+	    <a href="#S7.1">&lt;Animation Types&gt;</a>
+	    <a href="#S8.2.1">&lt;Animation Servers&gt;</a>
+	    <a href="#S9.1">&lt;Animation Globals&gt;</a>
+
+	    #endif</pre>
+
+</body></html>

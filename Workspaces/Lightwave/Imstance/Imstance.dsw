@@ -1,0 +1,71 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Imstance"=.\Imstance.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LW6Server
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name VecMath
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "L6_SDK_CPP_WRAPPERS"=..\..\..\Projects\Lightwave\L6_SDK_CPP_WRAPPERS\L6_SDK_CPP_WRAPPERS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LW6Server"=..\..\..\Projects\Lightwave\LW6Server\LW6Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VecMath"=..\..\..\Projects\Lightwave\VecMath\VecMath.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

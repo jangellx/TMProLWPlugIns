@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<title>Classes: LayoutGeneric</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="itemmot.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="ItemMotionHandler"></a> </td>
+    <td width="96" align="left"><a href="master.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="MasterHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+<h3>LayoutGeneric</h3>
+<pre>
+typedef struct st_LWLayoutGeneric {
+   int           (*saveScene) (const char *file);
+   int           (*loadScene) (const char *file, const char *name);
+   void          *data;
+   LWCommandCode (*lookup) (void *, const char *cmdName);
+   int           (*execute) (void *, LWCommandCode cmd, int argc,
+                    const DynaValue *argv, DynaValue *result);
+   int           (*evaluate) (void *, const char *command);
+} LWLayoutGeneric;
+
+</pre>
+<p>
+This class is provided for general layout functionality
+which does not fit into any of the previous server or handler categories.
+Servers of this class can be activated by the user from the Layout
+interface to perform non-rendering functions, such as configuring external
+devices, performing calculations, etc.  Other arbitrary scene manipulation
+can be done by altering the file for the current scene.
+<p>
+<dl>
+<dt>saveScene
+<dd>This causes Layout to save the current scene as an LWSC file with
+the given filename.
+<dt>loadScene
+<dd>This causes Layout to replace the current scene in memory with the
+one given by a physical and logical file name.  The `file' will be
+opened and loaded, but `name' will be used for display to the user
+and for subsequent saving.
+
+</td></tr></table>
+
+
+
+</body>
+
+</html>

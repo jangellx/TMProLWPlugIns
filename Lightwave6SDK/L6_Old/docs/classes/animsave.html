@@ -1,0 +1,94 @@
+<html>
+
+<head>
+<title>Classes: AnimSaverHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="animload.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="AnimLoaderHandler"></a> </td>
+    <td width="96" align="left"><a href="brdf.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="BRDFHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+
+<h3>AnimSaverHandler<br>
+AnimSaverInterface</h3>
+<p>Animation savers write out a sequence of rendered images as an animation file.</p>
+
+    <p><strong>Background</strong></p>
+    <p>Anim savers add frames to the animation file as each frame is rendered. The rendered
+    image is passed to the saver in the same way it's passed to <a href="framebuf.html">frame
+    buffer display</a> plug-ins, except that there is no pause function call after each frame,
+    and animation savers are initially given a filename.</p>
+
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>
+   XCALL_( int ) MyAnimSaver( long version, GlobalFunc *global,
+      LWAnimSaverHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to an anim saver's activation function is an
+    LWAnimSaverHandler.</p>
+    <pre>
+   typedef struct st_LWAnimSaverHandler {
+      LWInstanceFuncs *inst;
+      LWItemFuncs     *item;
+      int              type;
+      LWError         (*open)  (LWInstance, int w, int h,
+                                const char *filename);
+      void            (*close) (LWInstance);
+      LWError         (*begin) (LWInstance);
+      LWError         (*write) (LWInstance,
+                                const void *R,
+                                const void *G,
+                                const void *B,
+                                const void *alpha);
+   } LWAnimSaverHandler;</pre>
+    <p>The first two member of this structure point to the standard
+    <a href="../handler.html">handler functions</a>. In addition to these, an anim loader also
+    provides functions for opening and closing the file and for writing a frame, and it
+    specifies what type of data it wants to receive.</p>
+<dl>
+      <dt><tt>type</tt></dt>
+      <dd>The type of pixel data Layout should send to the <tt>write</tt> function. This can
+      be one of the following.<blockquote>
+         <tt><p>LWIMTYP_RGB24<br>
+         LWIMTYP_GREY8<br>
+         LWIMTYP_GREYFP<br>
+         LWIMTYP_RGBFP<br>
+         LWIMTYP_RGBA32<br>
+         LWIMTYP_RGBAFP</tt></p></blockquote></dd>
+      <dt><tt>open( instance, w, h, filename )</tt></dt>
+      <dd>Open the file. This function receives the width and height of the frame in pixels,
+      and the name of the file. It's called when rendering starts.</dd>
+      <dt><tt>close( instance )</tt></dt>
+      <dd>Close the file. This is called when rendering is complete.</dd>
+      <dt><tt>begin( instance )</tt></dt>
+      <dd>Layout calls this to signal that it's about to send a new frame.</dd>
+      <dt><tt>write( instance, R, G, B, alpha )</tt></dt>
+      <dd>Called by Layout to send a new scanline. The scanlines for each frame are
+      sent in order from top to bottom. The buffer arguments point to arrays of
+      color channel values. There are exactly <tt>w</tt> values for each channel,
+      one for each pixel in a scanline.</dd>
+</dl>
+
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD.</p>
+
+</td></tr></table>
+</body>
+
+</html>

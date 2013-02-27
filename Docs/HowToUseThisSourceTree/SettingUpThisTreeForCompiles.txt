@@ -1,0 +1,98 @@
+
+--- How to get the TM Productions project files to compile ------
+
+This document explains how to set up the TM Productions source code to compile on the
+Intel and Alpha platforms.  It is assumed that you have VSS and MSVC++ 5.0 or 6.0
+installed, and that you've already gotten latest and setup your working folders.
+
+- DIRECTORY STRUCTURE -------------------------------------------
+The directory structure is set up as follows:
+
+- Bin          Executable binary files.  You can check these in if you want; either
+                 way they will get overwritten when you recompile.
+  - AXP        Alpha-platform Windows/MS-DOS compiles
+    - Debug    Debug versions of Alpha executables
+    - Release  Release versions of Alpha executables
+  - x86        Intel-platform Windows/MS-DOS compiles
+    - Debug    Debug versions of Intel executables
+    - Release  Release versions of Intel executables
+- Docs         Documentation for the programs, as provided for the end user.
+  - Programs   Documentation for executable programs, as provided for end users.
+                 Each program should have it's own directory.
+  - Libraries  Documentation for programmers on how to use linker libraries within
+               programs.
+- Lib          Some linker libraries can be found here, and others don'r.  Use this
+                 if you need it.  As with Binaries, these will be overwritten when
+                 you recompile.
+  - AXP        Alpha-platform Windows/MS-DOS compiles
+    - Debug    Debug versions of Alpha linker libraries
+    - Release  Release versions of Alpha linker libraries
+  - x86        Intel-platform Windows/MS-DOS compiles
+    - Debug    Debug versions of Intel linker libraries
+    - Release  Release versions of Intel linker libraries
+- LightwaveSDK The Lightwave Plug-in SDK from NewTek, slightly modified
+  - doc	       Lightwave SDK documentation
+  - include    Lightwave SDK includes
+  - lib        Lightwave SDK linker libraries
+  - sample     Sample Lightwave Plug-ins
+  - source     Lightwave linker library source
+  - support    Lightwave SDK support files
+- Projects     MSVC++ Projects that, when compiled, become linker libraries
+  - Lightwave  Lightwave linker libraries
+  - Portable   Portable linker libraries, containing no platform-specific code, or
+                 code that is #ifdef'ed for different platforms
+- Shipping     Final release versions of programs, including all executables,
+                 installers and documentation the end user may require.  Each
+                 program should have it's own directory.
+- Workspaces   MSVC++ Workspaces and their specific projects that, when compiled,
+                 become executable programs or plug-ins for other programs.
+  - Lightwave  Lightwave plug-ins and stand-alone programs
+  - Portable   Entirely prortable programs.  Generally these are programs that only
+                 run from the command line.
+
+- SETUP MSVC++ --------------------------------------------------
+All projects were created with MSVC++ 5.0 or 6.0, so be sure you have one of these.
+
+Required Setup:
+
+- Run MSVC++
+- Select the menu item Tools/Options
+- Click the Directories Tab
+  - Add the following Include paths:
+    - <working dir>\Projects
+    - <working dir>\LightwaveSDK\include
+    For example, f:\TMProductions_SourceTree\Projects
+  - Add the following Directory paths:
+    - <working dir>\Lib
+    - <working dir>\LightwaveSDK\lib
+    For example, f:\TMProductions_SourceTree\Lib
+- Click the Source Options tab
+  - Enable "Check out source file(s) when edited", if you like.  If deselected, you
+      will have to manually check out files before editing.
+  - Disable "Check in files when closing the workspace".  This should NOT be active,
+      since if you quit MSVC++ for the night and have only partially completed your
+      changes, unfinished code will be entered into the database.
+  - Everything else do what you like with.
+- Other Suggestions
+  - Under the InfoViewer tab, enable "Always syncronize topic and TOC".  You'll know
+      why this is good when you need it.
+  - Under the Format tab, change the colors to:
+    - Comments:    Foreground dark blue, background yellow
+    - Numbers:     Foreground dark blue, background automatic
+    - Strings:     Foreground red, background automatic
+  - Under the Tabs tab:
+    - Select C/C++ from the File Type pop-up.
+    - Change the Tab Size and Indent Size to 2.  All my code is set to 2.
+    - Turn on Insert Spaces.  This keeps the coding looking the same no matter what
+        the tab size is set to.
+
+You should now be able to compile all programs and linker libraries.
+
+- Using linker libraries in workspaces ---------------------------
+The easiest way to add a library to a program is to insert the library into the
+program's workspace, and set the library's project as a dependancy of the program's
+project.
+
+For example, you have a workspace called Test.  It includes the project Test, which
+compiles into a 
+

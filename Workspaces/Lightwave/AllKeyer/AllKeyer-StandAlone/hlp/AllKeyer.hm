@@ -1,0 +1,25 @@
+// MAKEHELP.BAT generated Help Map file.  Used by ALLKEYER.HPJ. 
+ 
+// Commands (ID_* and IDM_*) 
+HIDM_ABOUTBOX                           0x10010
+HID_ABOUTBOX                            0x10064
+HID_PAUSE                               0x103F8
+HID_ABORT                               0x103F9
+HID_SKIP                                0x103FA
+HIDM_SAVE_SETTINGS                      0x18003
+ 
+// Prompts (IDP_*) 
+ 
+// Resources (IDR_*) 
+HIDR_ABOUTBOX                           0x20064
+HIDR_MAINFRAME                          0x20080
+HIDR_MAIN_MENU                          0x20087
+HIDR_ACCELERATORS                       0x2008C
+ 
+// Dialogs (IDD_*) 
+HIDD_ABOUTBOX                           0x20064
+HIDD_ALLKEYER_DIALOG                    0x20066
+HIDD_ALLKEYER_MAIN                      0x20066
+HIDD_ALLKEYER_PROCESSING                0x20082
+ 
+// Frame Controls (IDW_*) 

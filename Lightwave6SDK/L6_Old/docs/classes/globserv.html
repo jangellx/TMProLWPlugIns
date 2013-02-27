@@ -1,0 +1,59 @@
+<html>
+
+<head>
+<title>Classes: Global</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="framebuf.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="FrameBufferHandler"></a> </td>
+    <td width="96" align="left"><a href="imgfilt.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ImageFilterHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+<h3>Global</h3>
+<pre>
+typedef struct st_GlobalService {
+   const char *id;
+   void       *data;
+} GlobalService;
+</pre>
+The server class given by the name &quot;Global&quot; is special in that it allows
+multiple plug-in servers to share common data or routines.  In fact, the
+members of the Gobal class are extensions to the set of ID strings that
+can be passed to the &quot;global&quot; function.
+<p>
+When a server calls the global function with an ID string,
+the host can service the request itself or has the option
+of pass unrecognized ID's to Global class servers of the same name.  For
+example, if the ID is &quot;Mambo Functions,&quot; the host may recognize this
+itself and return a pointer value.  If it does not recognize it, it may
+attempt to activate a server of class &quot;Global&quot; with name &quot;Mambo Functions.&quot;
+If such a server exists, it may be locked or unlocked, depending on the
+use type of the global request, and it will be called to get the value of
+the global pointer for the orignal requester.
+<p>
+The activation function of a Global server is called with a GlobalService
+structure which will be initialized with the ID string for the request.
+The server must fill in the data pointer with a value which will be
+returned to the client, which may be null if the server wishes to deny
+the request.  The string is passed as data so that the same
+activation function may be used for multiple servers.
+<p>
+
+</td></tr></table>
+</body>
+
+</html>

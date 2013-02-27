@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- MIDIChannel Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="../../images/logo/TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=MIDIChannel border=0 height=131 src ="PROG-MIDIChannel.gif" width=239 ></p>
+	<P align=justify>
+	<br><STRONG>MIDIChannel</STRONG> is a 
+	  channel handelr plug-in for Lightwave 6.0 or greater. It allows you to
+    drive animation channels with the information from a MIDI file.
+    This plug-in requires Lightwave 6.0 or greater.</P>
+
+	<P align=justify>To install MIDIChannel, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy MIDIChannel.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add MIDIChannel.p. Layout should report that one plug-in has been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        the <STRONG>MIDIChannel</STRONG> plug-in from the Modifiers tab
+        of the Graph Editor.  Please refer to your Lightwave documentation
+        for more information.</LI>
+	</UL>
+	<br>
+
+  <p align=center><IMG alt="MIDI Channel Interface" border=0 height=447 src="MIDICHannel-Main.jpg" width=314></p>
+
+ 	<P align=justify><b>MIDI Channel</b> allows you to use the information from a MIDI file
+  to drive your animation.  Upon applying <b>MIDI Channel</b> to a channel in Layout's
+  Graph Editor and double-clicking it's entry, it will open an interface similar to the
+  one above.  All of the controls will be ghosted until you select a MIDI file via the
+  <i>MIDI File</i> button.
+
+ 	<P align=justify>After loading a MIDI file, the you will want to pick a <i>Track</i> and
+  a <i>Channel</i>.  There can be any number of tracks in a MIDI file, and up to 16 channels
+  per track.  <b>MIDI Channel</b> supports all Format 0, 1 and 2 MIDI file formats.  Note
+  that first track of Format 1 MIDI files is a special tempo track and does not contain any
+  note information.</P>
+  
+  <P align=justify>
+  <IMG align=right alt="Paremeter Popup" border=0 height=50 src="MIDICHannel-Parameter.jpg" width=103 hspace=15>
+  The <i>Parameter</i> pop-up determines the kind of data this channel will
+  handle.  This can be either Note On/Off events or Note Velocity (how quickly the note was
+  pressed or released).  MIDI notes and velocities have a range of 0 to 127.  Normally, notes
+  can overloap in a MIDI file, but this is impossible in an animation channel, which can only
+  display a single value at a time.  Thus <b>MIDI Channel</b> displays only the most recently
+  "On" note at a particular time, skipping "Off" events if there are any notes still playing.
+  You can adjust the range of notes using other options described below to limit this effect.</P>
+  
+ 	<P align=justify><i>Start Time</i> shifts the start time of the MIDI file in a similar manner
+  to how you can shift the start time of imagse sequences in the Image Editor.  If set to one
+  second, the MIDI file won't start the Layout time is at one second.</P>
+
+ 	<P align=justify><i>Value Offset</i> allows you to shift the values returned by <b>MIDI Channel</b>.
+  This occurs after <i>Value Scale</i> has been applied. Note that if this plug-in is applied to a
+  rotation channel, it returns values in radians, not degrees.  There are 57.295 radians (180/pi)
+  per degree, should you want to do the conversion.</P>
+
+ 	<P align=justify><i>Value Scale</i> allows you to scale the values returned by <b>MIDI Channel</b>.
+  The scale factor is applied before <i>Value Offset</i>.</P>
+
+ 	<P align=justify>If <i>Additive</i> is checked, the values returned by <b>MIDI Channel</b> are added
+  to the existing channel's values.  If disabled, then the plug-in will replace the original data.</P>
+
+ 	<P align=justify><i>Low Note</i> and <i>High Note</i> allow you to narrow the range of the notes
+  that the plug-in will output to the aniamtion channel.  You can use this to create a player piano
+  by limited the Low and High range to the same value, incrementing it for each successive key on
+  the keyboard.</P>
+
+ 	<P align=justify><i>Parameter Shift</i> acts just like <i>Value Offset</i>, but occurs before
+  <i>Value Scale</i>.</P>
+
+ 	<P align=justify><i>Parameter Off Level</i> allows you to set the "off", meaning the value the
+  graph will have when no notes are playing.</P>
+
+ 	<P align=justify><i>Parameter Decay</i> lets you adjust how long it takes for a note to die out
+  after the key has been released (ie: a "Note Off" event has occured).</P>
+
+ 	<P align=justify><i>Parameter On Ease</i> lets you adjust how long it takes for a note to go
+  from an off state to a completely on state, acting as a ramping effect leading up to the "Note On"
+  event at the end of the ramp.</P>
+
+ 	<P align=justify>The <i>About</i> button gives you some information about the plug-in.</P>
+
+  <H3 align=center><b>Revision History</b>
+  <HR width=50%></H3>
+	<ul>
+	  <li><b>04-22-01</b>  First public release</li>
+  </ul>
+
+ 	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http:\\www.tmproductions.com\Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http:\\www.tmproductions.com\Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- ContentDirector Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="../../images/logo/TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt="Content Director" border=0 height=131 src ="PROG-ContentDirector.gif" width=241 ></p>
+	<P align=justify>
+	<br><STRONG>Content Director</STRONG>
+	  is a plug-in that for managing content directories in Lightwave 6 or greater.  It provides an interface
+	  for selecting the current content directory from a list of common directories, as well as tools to edit
+	  the list, and can even create new content directory structures from scratch.</P>
+
+	<P align=justify>To install <b>Content Director</b>, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy ContentDirector.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add ContentDirector.p. Layout should report that two plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        <STRONG>Content Director</STRONG> plug-in from 
+        the Generics pop-up in the Plug-in Options Panel, or assign it to a key 
+        or button on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.  The plug-in will be
+		prefixed with TM_P under the Plugins heading of the Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+
+	<hr width="90%">
+	
+	<P align=justify><STRONG>Content Director</STRONG> has two main modes.  The first mode is for quickly selecting
+	   which content directory you want.  You should see an interface similar to the one below after activating
+	   <b>Content Director</b>.  Simply select the content directory from the list and hit <i>Continue</i>, and
+	   the content directory will be changed.
+
+    <p align=center><IMG alt="Content Director Interface" border=0 height=348 src="ContentDirector-Main2.jpg" width=526></p>
+
+	<P align=justify>The <i>Current Content</i> fields present the current content directory set in Layout.
+     If the content directory matches one of the entries in the list, it's name will be displayed in the
+	   field to the left.  The <i>Select</i> button will select the current content dir if it exists in the
+	   list.</P>
+
+	<P align=justify>The list shows all the available content directories.  The QCD column shows which of the
+     fields is marked for <strong>QuickCD</strong>, providing one-click access to changing that content directory through the
+     <strong>QuickCD</strong> generic plug-in.  The comment column displays the comment for this directory.  This is just some
+     meaningful name for you to remember which path is used for what purpose.  The from column shows if this content directory's
+     path is from an environment variable or a specific directory.  The next column is the path for
+     this content directory.  The Exists column displays a check if the path exists, and is empty if it doesn't.</P>
+
+    <P align=justify>The <i>About</i> button, as you'd expect, will present some information about this plug-in.</P>
+
+	<P align=justify><i>Modify Dirs</i> switches <b>Content Director</b> into it's second mode.  When active,
+	   a series of new buttons and edit controls will appear, allowing you to modify the contents of the list.
+	   The expanded interface should look like the image below.</P>
+
+    <p align=center><IMG alt="Content Director Modify Dirs Interface" border=0 height=469 src="ContentDirector-Modify2.jpg" width=524></p>
+
+    <P align=justify>New content directories can be added to the list with the <i>Add</i> button.  The new
+	   entry will be selected so you can start editing it immediatly. You can add the current content
+	   directory as a new entry with the <i>Add Current</i> button.</P>
+
+    <P align=justify><i>Duplicate</i> will make a copy of the selected entry, providing a base for
+	   creating new content directories.</P>
+
+    <P align=justify><i>Remove</i> will remove an entry from the list and select the previous entry.</P>
+
+	<P align=justify><i>Shift Up</i> and <i>Shift Down</i> allow you to change the ordering of items in
+	   the list, shifting the selected item one step up or down the list, respectivly.</P>
+
+	<P align=justify>The edit fields under the list provide options for changing entries in the list.
+	   The <i>Comment</i> field lets you give each content directory 
+      a meaningful name so you can easilly identify the projects associated with this directory.</P>
+      <P align=justify>
+       <IMG align=right alt  ="Path From Popup" border=0 height=50 hspace=15 src="ContentDirector-PathFrom.jpg" width=100 > The
+     popup and edit fields underneath are for picking the 
+     content directory itself. If set to <EM>Specific Dir</EM>, 
+     the field will represent the path to the content directory; clicking 
+     the button to it's right will open a directory requester for selecting a 
+     path.; If set to <EM>Env Var</EM>, this is the name of an environment 
+     variable. The popup to the right of the field will list all environment variables on your system. You
+	   can use the  <i>Test Path</i> button to make sure the directory exists.</P>
+
+	<P align=justify>The <EM>Mark as QuickCD's path</EM> 
+      check&nbsp;will mark this path for use by <STRONG>QuickCD</STRONG>.&nbsp; 
+      One use for this feature is to make <STRONG>QuickCD</STRONG> your 
+      StartupCommand and use an environment variable for the content directory's 
+      path.&nbsp; Each time you start Layout, the content directory will 
+      automatically be set to match the environment variable.</P>
+      <P align=justify>Normally, <b>Content Director</b> stores it's configuration file in the same directory
+	   as Lightwave's config.  To make content directory management easier at large facilities, it can instead
+	   use a shared config.  In shared mode, the local config contains only the name of the shared config, and
+	   all the entries are loaded from the shared file.  The configuration file is automatically saved when
+	   the panel is closed.  To keep users from saving over a shared config, you can make the shared config
+	   file Read-Only.  If the file cannot be opened (ie: because it is Read-Only), <b>Content Director</b> will not save it's configs.</P>
+
+	<P align=justify>
+       <IMG align=right alt  ="Config From Popup" border=0 height=50 hspace=15 src="ContentDirector-Config.jpg" width=115 >
+	   The <i>Config From</i> pop-up lets you choose where the configuration file is saved.  The
+	   default <i>Local</i> mode stores all the data in a file named ContentDirector.cfg in the same directory
+	   as the Lightwave config.</P>
+
+	<P align=justify>Setting the <i>Config From</i> pop-up to <i>Shared</i> mode activates the <i>Shared Config Path</i>
+	   field.  This lets you pick where the shared config exists.  In larger facilities, this would normally be a network
+	   drive that all users can access.  Settings will be loaded from and saved to this path, with the local config
+	   storing only the shared config's name.</P>
+
+	<P align=justify><i>Reload</i> will restore the original config file from disk, canceling any changes made to
+	   the content directories.  Which config is loaded is determined by the current state of the <i>Config Form</i>
+       pop-up.</P>
+
+   	<P align=justify>At the very bottom of the interface is the <i>Status Field</i>, which provides updates on the
+	   current state of <b>Content Directory</b>.  The <i>Set Content Directory</i> button will change the current
+	   content directory to the one selected in the list immediately, but without closing the panel.  Note that
+	   hitting <i>Continue</i> will also change the content directory to the currently selected entry.</P>
+
+	<P align=justify>Note that if you have the Options Panel in Layout open and then use <b>Content Director</b> to
+	   change the content directory, the Options Panel will still display the old content directory.  The path
+	   really has changed, though; the Options Panel just hasn't updated it's display.  Closing and re-opeing the
+	   Options Panel will show the corret path.</P>
+
+	<br><br>
+    <H3 align=center>Creating New Content Directory Structures
+    <HR width="50%"></H3>
+
+	<P align=justify>The <i>Create</i> button is the gateway to creating completely new content directory structures
+	   from scratch.  This allows you not only create the content directory itself, but also any combination of
+	   directories and sub-directories within.  After clicking <i>Create</i>, you should see an interface like
+	   the one below.</P>
+
+    <p align=center><IMG alt="Content Director Create Interface" border=0 height=152 src="ContentDirector-Create.jpg" width=499></p>
+
+	<P align=justify><i>Create Root</i> specifies the path to the new content directory.  If it doesn't exist, it
+	   will automatically be created with the rest of the directories.</P>
+
+   	<P align=justify>When enabled, <i>Add To List</i> will add the newly-created content directory to the main
+	   content directory list.  The comment will be the same as the content directory's name, and it will
+	   automatically be selected in the list.</P>
+
+   	<P align=justify>
+       <IMG align=right alt   ="Content Director Create Interface" border=0 height=65 hspace=15 src="ContentDirector-Base.jpg" width=87 ></P>
+	   The <i>Base</i> pop-up lets you decide what sub-directories should be created in the content
+	   directory.  <i>Root Only</i> will create only the <i>Root Dir</i>, if it doesn't already exist.
+	   <i>Default</i> will create the 
+      standard set of directories within the root: Scenes, Objects, Images, 
+      Motions, Envelopes, Surfaces and Previews.
+      <P></P>
+
+    <P align=justify>The <i>Template</i> <i>Base</i> mode allows you to specify an exact directory
+	   configuration via a text file.  This file contains a simple header as it's first line ("ContentDirectorTemplate 1")
+	   followed by any number of directories to create with any number of sub-directories.  Each directory to create
+	   must be on a seperate line, although compound directories are allowed (such as "Scenes/Tests")  Any leading
+	   or trailing white space (tabs or spaces) on the line will be removed before the directory is created.  A template
+	   should not contain any absolute paths, meaning there should be no paths containing drive specifications like
+	   "C:\".  Any line starting with a semi-colon will be considered a comment and will be skipped.</P>
+
+    <P align=justify>The <i>Template</i> field to the right of the <i>Base</i> pop-up allows you to select the
+	   template file you want to use.  For an example of how to create a template, click the Create Example button.
+	   This will generate a file like the following:</P>
+
+
+<table align=center border=1><tr><td width="5%"></td><td>
+<pre>
+ContentDirectorTemplate 1
+; This is a comment.  Any line that starts with a semi-colon is a comment.
+;  The first line of a Content Director Template must be exactly as above,
+;  containing first the word ContentDirectorTemplate, and then the number
+;  1 (one).  The number is the version of the template, which may change
+;  as more feature are added in the future.
+;
+; Insert the names of the directories you want to create after these
+;  comments.  The paths should be relative to the content directory, so no
+;  drive letters.  Sub-directories can also be specified, such as
+;  Scenes/Test.  All blank and commented lines will be skipped. All leading
+;  and trailing white space will be removed before creating any directories.
+;  Each directory must otherwise be on it's own line.
+
+; Default Directories
+Scenes
+Objects
+Images
+Motions
+Envelopes
+Surfaces
+Previews
+</pre>
+</td><td width="5%"></td></tr></table>
+	   
+	<P align=justify>After the options are set the way you like, click <i>Create Dirs</i> to build the content
+	   directory structure.  The status field to the left will fill as directories are created, and will turn
+	   red when reporting an error.  Click continue to close return to the main interface.</P>
+	   
+    <H3 align=center><b>Revision History</b>
+	  <HR width="50%"></H3>
+	  <ul>
+	    <li><b>07-02-01</b>
+		  <ul>
+		    <li>Added <strong>QuickCD</strong> and environment variable support
+      </ul>
+
+	    <li><b>02-01-01</b>
+		  <ul>
+		    <li>Added the <i>Create</i> button and associated panel 
+  			<li>Made the list a little taller so the <i>Create</i> button would fit</li>
+		  </ul>
+	    <li><b>01-30-01</b>  Fixed a crashing bug when using <i>Add Current</i> when no 
+        items already exist in the list. 
+	    <li><b>01-21-01</b>  First Public Release</li>
+	  </ul>
+
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright ©2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font>
+      <P></P>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

@@ -1,0 +1,196 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "CLIBase"=..\..\..\..\Projects\Portable\CLIBase\CLIBase.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Configfstream"=..\..\..\..\Projects\Portable\Configfstream\Configfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name pfstream
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DirTools"=..\..\..\..\Projects\Portable\DirTools\DirTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name StringTools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FreeKey"=..\..\FreeKey\FreeKey.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageLister"=..\..\ImageLister\ImageLister.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LW_SDK_CPP_Wrappers"=..\..\..\..\Projects\Lightwave\LW_SDK_CPP_Wrappers\LW_SDK_CPP_Wrappers.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Populate"=..\Populate\Populate.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CLIBase
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DirTools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Configfstream
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name bfstream
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PopulatePlugin"=.\PopulatePlugin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Populate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LW_SDK_CPP_Wrappers
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "StringTools"=..\..\..\..\Projects\Portable\StringTools\StringTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Workspaces/Lightwave/Batarang", MRBAAAAA
+    ..\..\Batarang
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "UberNull_PlugIn"=..\..\UberNull\UberNull_PlugIn\UberNull_PlugIn.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Workspaces/Lightwave/UberNull/UberNull_PlugIn", XPBAAAAA
+    ..\..\ubernull\ubernull_plugin
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "bfstream"=..\..\..\..\Projects\Portable\bfstream\bfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name StringTools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "pfstream"=..\..\..\..\Projects\Portable\pfstream\pfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

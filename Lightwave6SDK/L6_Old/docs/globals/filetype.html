@@ -1,0 +1,81 @@
+<html>
+
+<head>
+<title>Globals: File Type Pattern</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="filereq2.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="File Request 2"></a> </td>
+    <td width="96" align="left"><a href="foginfo.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="LW Fog Info"></a> </td>
+    <td width="96" align="left"><a href="../globals.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Globals"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>&quot;File Type Pattern&quot;</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 5.5 - 6.0, Inspire 1.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout, Modeler</small></p>
+    <p>This global returns a function that allows plug-ins to retrieve file name pattern
+    strings. These can be used to initialize the file name filter for a <a
+    href="filereq2.html">file request</a>.</p>
+    <p><strong>Global Call</strong></p>
+    <pre>   LWFileTypeFunc *filetypes;
+   filetypes = global( &quot;File Type Pattern&quot;, GFUSE_TRANSIENT );</pre>
+    <p>The global function returns a pointer to an LWFileTypeFunc.</p>
+    <pre>   typedef const char * LWFileTypeFunc (const char *type);</pre>
+    <p>The <tt>type</tt> argument identifies the kind of file you want a pattern string for.
+    It can be any of the strings in the list below.</p>
+    <p>Pattern strings are platform-specific. Under Windows, the string is a list of wildcard
+    extensions separated by semicolons, e.g. <tt>*.iff;*.tga</tt> for images. On the Mac, the
+    string is a list of 4-character file types, also separated by semicolons. The Unix string
+    is most likely to use some form of regular expression.</p>
+    <div align="center"><center><table border="0" cellpadding="4" cellspacing="0">
+      <tr>
+        <td width="150" valign="top"><em><strong>Layout</strong></em><br>
+        <tt>&quot;Animations&quot;<br>
+        &quot;Command&quot;<br>
+        &quot;Envelopes&quot;<br>
+        &quot;Previews&quot;<br>
+        &quot;Scenes&quot;<br>
+        &quot;Surfaces&quot;</tt></td>
+        <td width="150" valign="top"><em><strong>Modeler</strong></em><br>
+        <tt>&quot;Macros&quot;<br>
+        &quot;PSFonts&quot;<br>
+        </tt></td>
+        <td width="150" valign="top"><em><strong>Both</strong></em><br>
+        <tt>&quot;Images&quot;<br>
+        &quot;Motions&quot;<br>
+        &quot;Objects&quot;<br>
+        &quot;Plugins&quot;<br>
+        &quot;Settings&quot;</tt></td>
+      </tr>
+    </table>
+    </center></div><p><strong>Example</strong></p>
+    <p>This code fragment obtains the pattern string for image files.</p>
+    <pre>   #include &lt;lwserver.h&gt;
+   #include &lt;lwhost.h&gt;
+
+   char *imgpat;
+   LWFileTypeFunc *filetypes;
+
+   filetypes = global( &quot;File Type Pattern&quot;, GFUSE_TRANSIENT );
+   if ( filetypes )
+      imgpat = filetypes( &quot;Images&quot; );
+   ...
+</pre>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

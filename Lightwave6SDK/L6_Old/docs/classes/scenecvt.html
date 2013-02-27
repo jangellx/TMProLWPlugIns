@@ -1,0 +1,87 @@
+<html>
+
+<head>
+<title>Classes: SceneConverter</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="texture.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="ProceduralTextureHandler"></a> </td>
+    <td width="96" align="left"><a href="shader.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ShaderHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+<h3>SceneConverter</h3>
+<pre>
+typedef struct st_LWSceneConverter {
+   const char *filename;
+   LWError     readFailure;
+   const char *tmpScene;
+   void       (*deleteTmp) (const char *tmpScene);
+} LWSceneConverter;
+</pre>
+<p>
+This class is used in import foreign scene formats.
+When the user selects a file to load as a scene, LightWave first attempts
+to load it directly as an LWSC format file.  If it cannot, it will pass
+the filename to each scene converter in sequence.  The scene converter
+will attempt to read the file and rewrite it as an LWSC file.  After
+successful translation the server will pass the name of the new scene
+back to LightWave.  The file will be loaded and the server will be called
+back again to delete the translated scene file.
+<p>
+<dl>
+<dt>filename
+<dd>Filename of foreign scene file.  This is set by the host before activating
+the server.  This is the file to try to parse.
+<dt>readFailure
+<dd>If the server can recognize the format but cannot parse the file for some
+reason, it should set this error return value.
+<dt>tmpScene
+<dd>If the server sucessfully parses the foreign scene file, it should write a
+translation of that scene as a LWSC format file and return the name of this
+translation scene in this field.
+<dt>deleteTmp
+<dd>After reading the temporary scene file set above, the host will call back
+this delete function to dispose of the file and any other temporary state.
+The `tmpScene' and `deleteTmp' fields should be set as a pair before the
+server returns.
+
+</dl>
+
+When the server is called, only `filename' will be set.  It then must set
+the other three fields to one of the following configurations:
+<p>
+<dl>
+<dt>readFailure and tmpScene both null
+<dd>This indicates that the server was unable to recognize the file format
+and no translation was done.  LightWave will simply try the next translator.
+<dt>readFailure set, tmpScene null
+<dd>This indicates that the file format was recognized, but that a failure
+of some kind occured during translation.  LightWave will display this
+error and will stop attempting to translate the file.
+<dt>readFailure null, tmpScene set
+<dd>This indicates successful translation.  LightWave will read `tmpScene'
+as an LWSC file and then will call the `deleteTmp' function to dispose of
+it.  Note that if tmpScene is set, deleteTmp must be set as well.
+
+</dl>
+
+
+</td></tr></table>
+
+</body>
+
+</html>

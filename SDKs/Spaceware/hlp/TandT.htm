@@ -1,0 +1,196 @@
+<!--This file created 11:05 AM  4/7/98 by Claris Home Page version 2.0-->
+<HTML>
+<HEAD>
+   <TITLE>Tips &amp; Techniques</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 2.0">
+   <X-SAS-WINDOW TOP=56 BOTTOM=583 LEFT=9 RIGHT=936>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"><!--This file created 2:31 PM  4/6/98 by Claris Home Page version 2.0-->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<P><A HREF="Demos.htm"><IMG SRC="graphics/prev1.gif"
+ALT="graphics/prev1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0
+ALIGN=bottom></A><A HREF="Scoring.htm"><IMG SRC="graphics/next1.gif"
+ALT="graphics/next1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0 ALIGN=bottom></A></P>
+
+<H1><FONT COLOR="#0000AF">Tips &amp; Techniques</FONT></H1>
+
+<P><A NAME="Common Problems"></A><B><FONT FACE="Arial"
+COLOR="#000080">Common Problems</FONT></B></P>
+
+<UL>
+   <LI><FONT SIZE="-1" FACE="Arial">You receive an error message
+   stating: </FONT><FONT SIZE="-1"
+   FACE="Times New Roman">“</FONT><FONT SIZE="-1" FACE="Arial">ERROR:
+   an OS type must be defined -- e.g. OS_WIN32</FONT><FONT SIZE="-1"
+   FACE="Times New Roman">”</FONT><FONT SIZE="-1" FACE="Arial">. This
+   means that OS_WIN32 has not been defined for your project. To add
+   this definition, go to </FONT><B><FONT SIZE="-1"
+   FACE="Arial">Build &gt; Settings &gt; C/C++ &gt;
+   Preprocessor</FONT></B><FONT SIZE="-1" FACE="Arial">. In the
+   Preprocessor Definitions section, add the definition. Adding this
+   to your project settings should clear up the problem.</FONT><BR>
+   
+   <BR>
+   
+   
+   
+   <LI><FONT SIZE="-1" FACE="Arial">You receive errors with si.h.
+   Double check that OS_WIN32 is defined for your project.</FONT><BR>
+   
+   <BR>
+   
+   
+   
+   <LI><FONT SIZE="-1" FACE="Arial">You get any one of the following
+   unresolved symbols error messages when linking:</FONT>
+   
+   <P><FONT SIZE="-1"
+   FACE="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   __imp__timeBeginPeriod</FONT><BR>
+   
+   <FONT SIZE="-1"
+   FACE="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   __imp__timeEndPeriod</FONT><BR>
+   
+   <FONT SIZE="-1"
+   FACE="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   __imp__timeGetTime</FONT></P>
+   
+   <P><FONT SIZE="-1" FACE="Arial">This means you are not linking
+   with winmm.lib. Add winmm.lib to the link libraries in your
+   project settings.</FONT><BR>
+   
+   <BR>
+   
+   </P>
+   
+   <LI><FONT SIZE="-1" FACE="Arial"
+   COLOR="#008000"><A HREF="InputFun.htm#SiOpen">SiOpen</A></FONT><FONT
+   SIZE="-1" FACE="Arial"> returns a NULL SiHdl. Check to make sure
+   that a Spaceball is connected and that the SpaceWare driver has
+   been installed. Run one of the demos which ships with the driver
+   to make sure that the driver is configured properly. Next, verify
+   that siappdll.dll and siappdld.dll are in the Windows system
+   directory (or system32 directory for Windows NT). Check that a
+   valid window handle is being passed to </FONT><FONT SIZE="-1"
+   FACE="Arial"
+   COLOR="#008000"><A HREF="InputFun.htm#SiOpenWinInit">SiOpenWinInit</A></FONT><FONT
+   SIZE="-1" FACE="Arial"> and from there into SiOpen. If you are
+   still having problems, try printing out the error message returned
+   from SiOpen as follows:</FONT>
+   
+   <P><B><FONT FACE="Courier New">&nbsp;&nbsp; MessageBox (hWnd,
+   SpwErrorString&nbsp;<BR>
+   
+   &nbsp;&nbsp; (SpwErrorVal),"Spaceball</FONT></B> <B><FONT
+   FACE="Courier New">Error",MB_OK);</FONT></B><BR>
+   
+   <BR>
+   
+   <FONT SIZE="-1" FACE="Arial">where hWnd is the window you are
+   passing into </FONT><FONT SIZE="-1" FACE="Arial"
+   COLOR="#000000">SiOpenWinInit</FONT><FONT SIZE="-1"
+   FACE="Arial">.</FONT></P>
+</UL>
+
+<P><FONT SIZE="-1" FACE="Arial">&nbsp;</FONT></P>
+
+<P><A NAME="Tuning"></A><B><FONT FACE="Arial"
+COLOR="#000080">Tuning</FONT></B></P>
+
+<P><FONT SIZE="-1" FACE="Arial">The Spaceball is designed to be a
+very intuitive device. To ensure that the Spaceball is as simple to
+use as possible, it is vital that the mappings and tuning be
+optimized for your specific application. To accomplish this, you will
+need to adjust the values of the Spaceball data to match your
+application.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">This is done by multiplying or
+dividing the input data by a constant value, much the same as you
+would normally do with mouse or keyboard data. Sometimes it is
+desirable to provide a sensitivity value which can be adjusted by the
+user. See the </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Demos.htm#CityFly">CityFly</A></FONT><FONT
+SIZE="-1" FACE="Arial"> demo program for an example of this
+functionality.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">Here are a few questions to ask
+yourself about the tuning:</FONT></P>
+
+<OL>
+   <LI><FONT SIZE="-1" FACE="Arial">Can you move along each
+   individual axis without drifting or getting unwanted motion (for
+   example, moving forward and backward without rotating)?</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Can you move predictably (rotate
+   90 or 180 degrees, for example)?</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Can you keep the object on screen
+   while moving around?</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Can you perform a multi-axis
+   movement (move and turn at the same time)?</FONT>
+   
+   <LI><FONT SIZE="-1" FACE="Arial">Can you mix movements easily
+   (move diagonally, for example)?</FONT>
+</OL>
+
+<P><FONT SIZE="-1" FACE="Arial">Refer to </FONT><FONT SIZE="-1"
+FACE="Arial"><A HREF="Scoring.htm">Scoring</A></FONT><FONT SIZE="-1"
+FACE="Arial"> for more information about fine-tuning the Spaceball
+device in your application.</FONT></P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+</BODY>
+</HTML>

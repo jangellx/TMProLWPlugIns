@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- AlphaObjects Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="../../images/logo/TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=AlphaObjects border=0 height=131 src ="PROG-AlphaObjects.gif" width=252 ></p>
+	<P align=justify>
+	<br><STRONG>AlphaObjects</STRONG> is a 
+	  plug-in for Lightwave 6.0 or greater. It allows you to quicky and easily
+    create alpha-only objects for a variety of situations, including shadow
+    catchers and matte objects.  This plug-in requires Lightwave 6.0 or greater.</P>
+
+	<P align=justify>To install AlphaObjects, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy AlphaObjects.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add AlphaObjects.p. Layout should report that two plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        the <STRONG>AlphaObjects</STRONG> plug-ins from 
+        the Generics pop-up in the Plug-in Options Panel, or assign them to keys 
+        or buttons on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.   The plug-ins will be
+        the prefixed with TM_P under the Plugins heading of the 
+        Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+	<P><STRONG>AlphaObjects</STRONG> includes the following plugins:</P>
+
+	<br><HR width="90%">
+	<a name="AlphaObjects"></a>
+	<H3 align=center>Alpha Objects<br>
+	<HR width="40%"></H3>
+
+  <p align=center><IMG alt="Alpha Objects Interface" border=0 height=535 src="AlphaObjects-Main.jpg" width=473></p>
+	
+ 	<P align=justify>The <b>Alpha Objects</b> generic plug-in is the core of this package.  It
+  actually creates new objects with different alphas. To use <b>Alpha Objects</b>, you must
+  first select the objects you want to affect.  Once you have some selected, activating the
+  plug-in will open an interface like the one above.</P>
+
+ 	<P align=justify>
+  <IMG align=right alt="Limit To Popup" border=0 height=50 src="AlphaObjects-LimitTo.jpg" width=206 hspace=15>
+  The <em>Limit To</em> popup allows you to batch modify all surfaces of all selected objects,
+  or just select surfaces of a single object.</P>  
+
+ 	<P align=justify>
+  <!--IMG align=right alt="Sort By Popup" border=0 height=50 src="../../Images/Products/AlphaObjects-SortBy.jpg" width=68 hspace=15-->
+  The <em>Sort By</em> popup can be used to sort the items by name or by their new alpha mode.
+  </P>
+
+ 	<P align=justify>
+  <IMG align=right alt="Surface As Popup" border=0 height=290 src="AlphaObjects-SurfaceAs.jpg" width=343 hspace=15>
+  The currently selected entry in the list can have it's alpha mode changed by using the <em>Surface
+  As</em> popup.  As well as performing no change and selecting from a number of presets, you can
+  select as specific surface to replace the others.  Although there is the illusion of multiple
+  selection in the list, multi-select doesn't actually work due to limitations to LWPanels.
+  </P>
+
+ 	<P align=justify>
+  When the <em>From Surface</em> mode is selected, the <em>Surface File</em> field can be used to
+  pick a .srf file.
+  </P>
+
+ 	<P align=justify>
+  <!--IMG align=right alt="Suffix With Popup" border=0 height=289 src="lphaObjects-Preset.jpg" width=171 hspace=15-->
+  The <em>Output Path</em> field is used to set a common path to output all the newly created alpha
+  objects to.  If this is blank, the objects will be created in the same directoy as the originals.
+  These objects will have a suffix added to the end of their name based on the <em>Suffix With</em>
+  field.  The popup to it's right allows you to select from a number of presets, including custom
+  presets created with <strong>Alpha Objects Config</strong>.  Selecting an entry from this popup
+  will set all the fields.
+  </P>
+
+ 	<P align=justify>
+  By default, the new alpha objects will be written to disk, but the original objects will stay in the
+  scene.  If <em>Replace currently load objects with new objects</em> is checked, the new alpha objects
+  will be loaded in place of those in the scene file.
+  </P>
+
+
+	<br><HR width="90%">
+	<a name="AlphaObjects Config"></a>
+	<H3 align=center>Alpha Objects Config<br>
+	<HR width="40%"></H3>
+
+  <p align=center><IMG alt="Alpha Objects Config" border=0 height=514 src="AlphaObjects-Config.jpg" width=762></p>
+
+ 	<P align=justify>
+  <strong>Alpha Objects Config</strong> can be used to customize the the presets popup list.  The
+  entries in the list represent different presets, which are shown in the preset popup by suffix.
+  The leftmost column represents the generic plug-in that this preset maps to.  The second column
+  is the mode, followed by the output path and the suffix of the generated file.
+  </P>
+
+ 	<P align=justify>
+  The buttons on the right of the list allow dividers to be inserted and removed, and allow entries
+  to be shifted up and down the list.
+  </P>
+
+ 	<P align=justify>
+  By default, the configuration file is stored on the local machine, but larger studios can share
+  the config using the <em>Config From</em> popup and the <em>Shared Config Path</em>.  The settings
+  can be reloaded using the <em>Reload</em> button.
+  </p>
+
+ 	<br><HR width="90%">
+	<H3 align=center>Replacement Generics<br>
+	<HR width="40%"></H3>
+
+ 	<P align=justify>
+  Also included are a series of preset replacement generics, plus a dozen user replacement generics.
+  These replace the existing file with another of the same name in the same directory, but with a
+  different suffix, thus allowing quick swaps between the original objects and various alpha objects.
+  The suffixs match those set in <strong>Alpha Objects Configure</strong>
+  </P>
+  
+  <H3 align=center><b>Revision History</b>
+  <HR width=50%></H3>
+	<ul>
+	  <li><b>04-22-01</b>  First public release</li>
+  </ul>
+
+ 	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

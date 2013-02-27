@@ -1,0 +1,146 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Configfstream"=..\..\..\Projects\Portable\Configfstream\Configfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name pfstream
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DirTools"=..\..\..\Projects\Portable\DirTools\DirTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DynArray"=..\..\..\Projects\Portable\DynArray\DynArray.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Image"=..\..\..\Projects\Portable\Image\Image.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LW_SDK_CPP_Wrappers"=..\..\..\Projects\Lightwave\LW_SDK_CPP_Wrappers\LW_SDK_CPP_Wrappers.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Palettizer"=..\Palettizer\Palettizer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simplify"=.\Simplify.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LW_SDK_CPP_Wrappers
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DirTools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name StringTools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynArray
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Image
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Configfstream
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "StringTools"=..\..\..\Projects\Portable\StringTools\StringTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pfstream"=..\..\..\Projects\Portable\pfstream\pfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

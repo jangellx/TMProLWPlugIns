@@ -1,0 +1,16 @@
+#!/bin/csh
+
+cd blotch
+make -f irix/makefile -u
+cd ../superblotch
+make -f irix/makefile -u
+cd ../lazypnts
+make -f irix/makefile -u
+cd ../motdump
+make -f irix/makefile -u
+cd ../negative
+make -f irix/makefile -u
+cd ../zor
+make -f irix/makefile -u
+cd ..
+rm */so_locations

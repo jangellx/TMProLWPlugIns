@@ -1,0 +1,159 @@
+<html>
+
+<head>
+<title>Classes: ImageSaver</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="imgload.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="ImageLoader"></a> </td>
+    <td width="96" align="left"><a href="itemmot.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ItemMotionHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>ImageSaver</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 6.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout</small></p>
+    <p>Image savers move still image data out of LightWave, translating from LightWave's
+    internal image formats to one of the myriad file formats available for image storage.</p>
+    <p><strong>Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyImageSaver( long version, GlobalFunc *global,
+      LWImageSaverLocal *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to an image saver's activation function is an
+    LWImageSaverLocal.</p>
+    <pre>   typedef struct st_LWImageSaverLocal {
+      void        *priv_data;
+      int          result;
+      LWImageType  type;
+      const char  *filename;
+      LWMonitor   *monitor;
+      int         (*sendData) (void *, LWImageProtocolID, int flags);
+   } LWImageSaverLocal;</pre>
+    <dl>
+      <dt><tt>priv_data</tt></dt>
+      <dd>Pass this to the <tt>sendData</tt> function. It's an opaque pointer to data used
+        internally by LightWave.</dd>
+      <dt><br>
+        <tt>result</tt></dt>
+      <dd>Set this to indicate whether the image was saved successfully. The result codes are <dl>
+          <dt><br>
+            <tt>IPSTAT_OK</tt></dt>
+          <dd>The image was saved successfully.</dd>
+          <dt><tt>IPSTAT_BADFILE</tt></dt>
+          <dd>The saver couldn't open the file.</dd>
+          <dt><tt>IPSTAT_ABORT</tt></dt>
+          <dd>Use this to indicate that the user cancelled the save operation. This can happen if you
+            use the monitor to indicate the progress of a lengthy image saving operation.</dd>
+          <dt><tt>IPSTAT_FAILED</tt></dt>
+          <dd>An error occurred during saving.</dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>type</tt></dt>
+      <dd>The kind of pixel data LightWave would like to send to you. Pixel types are explained on
+        the <a href="imgload.html#pixdata">ImageLoader</a> page. If the pixel data isn't in a form
+        you can handle, the activation function should set the <tt>local-&gt;result</tt> field to <tt>IPSTAT_FAILED</tt>
+        and return <tt>AFUNC_OK</tt>.</dd>
+      <dt><br>
+        <tt>filename</tt></dt>
+      <dd>The name of the image file to write.</dd>
+      <dt><br>
+        <tt>monitor</tt></dt>
+      <dd>A monitor for displaying the progress of the save to the user. You don't have to use
+        this, but you're encouraged to if your image saving takes an unusual amount of time. This
+        is the same structure returned by the global monitor call. See the global monitor page for
+        details.</dd>
+      <dt><br>
+        <tt>sendData( priv_data, protocol, flags )</tt></dt>
+      <dd>Call this when you're ready to begin receiving image data from LightWave. This will be
+        after you've filled in the fields of an appropriate LWImageProtocol structure, which is
+        described in detail below. The protocol structure is what LightWave will use to actually
+        send you the image data. The only flag currently defined is <tt>IMGF_REVERSE</tt>, which
+        instructs LightWave to send scanlines in right-to-left order. </dd>
+    </dl>
+    <p><strong>Image Protocol</strong></p>
+    <p>The LWImageProtocol structure you send in the local <tt>sendData</tt> function tells
+    LightWave where to find callbacks in your image saver. LightWave calls these to send the
+    image data to the saver. This is the same protocol structure used by ImageLoader plug-ins,
+    but here the roles are reversed. Rather than the plug-in calling these functions,
+    LightWave calls them, and the saver <em>provides</em> them.</p>
+    <pre>   typedef struct st_LWImageProtocol {
+      int   type;
+      void *priv_data;
+      int  (*done)     (void *, int);
+      void (*setSize)  (void *, int w, int h);
+      void (*setParam) (void *, LWImageParam, int, float);
+      int  (*sendLine) (void *, int, const LWPixelID);
+      void (*setMap)   (void *, int, const unsigned char[3]);
+   } LWImageProtocol, *LWImageProtocolID;</pre>
+    <dl>
+      <dt><tt>type</tt></dt>
+      <dd>Set this to <tt>local-&gt;type</tt>.</dd>
+      <dt><br>
+        <tt>priv_data</tt></dt>
+      <dd>LightWave sends this as the first argument to each of your saver callbacks. Your private
+        data will typically point to a structure containing information that pertains to the
+        particular file being saved, although it can be anything.</dd>
+      <dt><br>
+        <tt>done( priv_data, result )</tt></dt>
+      <dd>LightWave calls this when it's finished sending image data. The result will be <tt>IPSTAT_OK</tt>
+        or <tt>IPSTAT_FAILED</tt>. Return <tt>IPSTAT_OK</tt> if <tt>done</tt> is successful <em>and</em>
+        <tt>result</tt> is <tt>IPSTAT_OK</tt>, otherwise return <tt>IPSTAT_FAILED</tt>.</dd>
+      <dt><br>
+        <tt>setSize( priv_data, width, height )</tt></dt>
+      <dd>LightWave calls this to tell you the pixel dimensions of the image. The width and height
+        are the number of pixels in a scanline and the number of scanlines, respectively. This
+        will be called before the first call to <tt>sendLine</tt>.</dd>
+      <dt><br>
+        <tt>setParam( priv_data, paramid, intparam, floatparam )</tt></dt>
+      <dd>LightWave uses this to tell you other information about the image. The parameter ID can
+        be one of the following. <dl>
+          <dt><br>
+            <tt>LWIMPAR_ASPECT</tt></dt>
+          <dd>The pixel aspect ratio, defined as width/height. This will most often be 1.0 (the
+            default), but D1 NTSC images, for example, use a pixel aspect of 0.9, meaning that each
+            pixel is 0.9 times as wide as it is high. The value will be set in <tt>floatparam</tt> and
+            <tt>intparam</tt> can be ignored.</dd>
+          <dt><br>
+            <tt>LWIMPAR_NUMCOLS</tt></dt>
+          <dd>The size of the color table in an indexed-color image (an image of type <tt>LWIMTYP_INDEX8</tt>).
+            Values will be between 2 and 256. The value will be set in <tt>intparam</tt> and <tt>floatparam</tt>
+            can be ignored.</dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>sendLine( priv_data, y, scanline_pixels )</tt></dt>
+      <dd>LightWave calls this to send one scanline from the image. <tt>setSize</tt> will be
+        called before the first call to <tt>sendLine</tt>. Scanlines are numbered from the top of
+        the image, starting at 0, and will be sent in this order. The pixels within a scanlines
+        are in left-to-right order, unless the flags passed to the <tt>sendData</tt> function
+        included the <tt>IMGF_REVERSE</tt> flag. The structure of the pixel data you receive will
+        depend on the pixel type. Details about specific types are on the <a
+        href="imgload.html#pixdata">ImageLoader</a> page. <p>Return <tt>IPSTAT_OK</tt> or <tt>IPSTAT_FAILED</tt>
+        as appropriate. If <tt>sendLine</tt> fails, you should still be prepared to receive
+        further <tt>sendLine</tt> calls, all of which you should fail.</p>
+      </dd>
+      <dt><tt>setMap( priv_data, index, rgb )</tt></dt>
+      <dd>LightWave calls this to set the color of an entry in the color table of an indexed-color
+        image. LightWave will call <tt>setParam</tt> with a <tt>LWIMPAR_NUMCOLS</tt> parameter
+        before calling <tt>setMap</tt> for the first time, so that you'll know how many color
+        table entries there are. But <tt>setMap</tt> may be called any time after that. The index
+        identifies the color table entry and must be between 0 and <tt>numcolors-1</tt>.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

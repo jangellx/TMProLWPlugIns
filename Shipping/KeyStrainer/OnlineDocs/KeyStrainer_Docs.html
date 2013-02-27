@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- Key Strainer Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="../../images/logo/TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt="Key Strainer" border=0 height=131 src ="PROG-KeyStrainer.gif" width=230 ></p>
+	<P align=justify>
+	<br><STRONG>Key Strainer</STRONG>
+	  is a keyframe reduction plug-in for Lightwave 6 or greater.  It provides various methods for reducing the number of keys
+    on the channels of items in a scene.</P>
+
+	<P align=justify>To install <b>Key Strainer</b>, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy KeyStrainer.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add KeyStrainer.p. Layout should report that one plug-in has been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        <STRONG>Key Strainer</STRONG> plug-in from 
+        the Generics pop-up in the Plug-in Options Panel, or assign it to a key 
+        or button on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.  The plug-in will be
+    		prefixed with TM_P under the Plugins heading of the Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+
+	<P align=justify>The basic <STRONG>Key Strainer</STRONG> interface looks very similar to <strong>Mot-ify</strong>
+    and the delete key panel built into Lightwave.  After launching it, you should see an interface like this:</P>
+
+    <p align=center><IMG alt="Content Director Interface" border=0 height=213 src="KeyStrainer-Main-Kill.jpg" width=458></p>
+
+	<P align=justify>At the top of the interface is the reduction range.  All frames between the low and high frames will be reduced.</P>
+
+	<P align=justify>
+     <IMG align=right alt ="Reduction Modes" border=0 height=65 hspace=15 src="KeyStrainer-Modes.jpg" width=115 >
+    There are three reduction modes in <STRONG>Key Strainer</STRONG>.  The interface above shows the <em>Keep/Kill Step</em> mode.
+    This is a very simple:  It skips over a certain number of keyframes, and deletes a certain number of keyframes, repeating this down the range.
+    This is most useful when the channel has a keyframe at every frame, since this only looks at the number of keys and not their times.</P>
+
+	<P align=justify>When using <em>Keep/Kill Step</em> mode, you can enter the number of keys to skip in the <em>Keep Step</em> field, and the number of
+    keys you want to delete in the <em>Kill Step</em> field.  If you enter a Keep of 2 and a Kill of 3, then <strong>Key Strainer</strong> will skip
+    two keys, delete three keys, skip two keys, and so on.</P>
+
+    <p align=center><IMG alt="Content Director Interface" border=0 height=213 src="KeyStrainer-Main-Smart.jpg" width=458></p>
+
+ 	<P align=justify>
+     <IMG align=right alt ="Keys As" border=0 height=95 hspace=15 src="KeyStrainer-Spline.jpg" width=80 >
+    The highest quality reduction mode is <em>Smart Freeze</em>, shown above.  This will bake the channel, and then intelligently remove
+    keyframes based on the <em>Threshold</em> value.  The higher this value, the fewer keys there will be.  If <em>Freeze Modifiers</em> is checked,
+    channel modifiers will also be baked and their keyframes will be reduced.  You can pick they spline type for the generated keys with the
+    <em>Keys As</em>. Note that Bezier and TCB values will be set to their defaults, but the different interpolations will still determine how
+    the keys are reduced.<p>
+  
+    <p align=center><IMG alt="Content Director Interface" border=0 height=211 src="KeyStrainer-Main-Stepped.jpg" width=456></p>
+
+ 	<P align=justify>The final mode, <em>Stepped Freeze</em>, is really just a more flexible baker.  It will create a baked motion with a keyframe
+    every frame as determined by the <em>Frame Step</em> field.  If <em>Freeze Modifiers</em> is checked, channel modifiers will also be baked and
+    their keyframes will be reduced.  You can pick they spline type for the generated keys with the <em>Keys As</em>. Note that Bezier and TCB values
+    will be set to their defaults.<p>
+
+ 	<P align=justify>To the right of the reduction mode popup is a <em>Preview</em> button.  When enabled, a preview of a single channel will fill
+    the bottom of the interface as shown below, allowing you to get an idea of what the reduction will do to your channels before reducing the.
+    You can turn on and off the orignal or reduced curves or keys using the checkboxes above the preview. The reduced curve is drawn purple with
+    white keys, while the original curve is drawn black with red keys. You can pick which channel you want to preview using the channel list at
+    the bottom of the panel.</P>
+
+    <p align=center><IMG alt="Content Director Interface" border=0 height=577 src="KeyStrainer-Preview.jpg" width=456></p>
+
+  <P align=justify>
+     <IMG align=right alt ="For" border=0 height=95 hspace=15 src="KeyStrainer-For.jpg" width=195 >
+     The <i>For</i> pop-up is identical to that in Motify, and allows you to pick what
+     items will be affected by the reduction.</P>
+
+ 	<P align=justify>As with Delete Key and <b>Mot-ify</b>, <strong>Key Strainer</strong> has buttons
+     to enabled and disable individual channels and groups of channels.  Only the selected channels
+     will be processed.  You can click the <i>Position</i>, <i>Rotation</i> and <i>Scale</i> buttons
+     to toggle all the channels in that group, and shift-click to invert that group's selection.</P>
+
+	<P align=justify>The <i>All Other Channels</i> toggle is a very powerful feature, but can cause
+	   a lot of damage to your scene if used incorrectly.  When you click on it, a message will appear
+	   asking if you're really sure you want it enabled.  If you do, then all non-motion channels will
+	   also be processed by <b>Key Strainer</b> (the <i>Position</i>, <i>Rotation</i> and <i>Scale</i> buttons
+	   still determine if the motion channels are processed).  This includes all envelopes applied to
+	   those items (like Camera Zoom Factor and Light Intensity), envelopes for applied plug-ins (such
+	   as Morph Mixer channels), and surface envelopes applied in the Surface Editor.  <b>Use this feature
+	   carefully</b>, especially when deleting keys on multiple items at once; in such cases <bKey Strainer</b>
+	   will ask you once more if you're really sure you want to do this.</P>
+
+	<P align=justify>To begin processing, fill in the options you want and click <i>OK</i>.  A progress window
+     will show you the reduction process while it <strong>Key Strainer</strong> works.  Remember that this
+     operation isn't undoable, so you might want to make sure you've saved your scene first and made sure you
+     have the options set correctly.</P>
+
+
+	<br><p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

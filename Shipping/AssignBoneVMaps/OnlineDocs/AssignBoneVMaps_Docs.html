@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- AssignBoneVMaps Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="TMP-BG.gif">
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=AssignBoneVMaps border=0 height=131 src ="PROG-AssignBoneVMaps.gif" width=260 ></p>
+	<P align=justify>
+	<br><STRONG>AssignBoneVMaps</STRONG> is a plug-in for Lightwave 
+      6.0 or greater. It provides a series of bone tools to aid in setting 
+      up hierarchies. It contains six Generic plug-ins:
+	  <A href="#AssignBoneVMaps"><STRONG>Assign Bone VMaps</STRONG></A>,    
+	  <A href="#ActivateBones"><STRONG>Activate Bones</STRONG></A>,    
+	  <A href="#DeactivateBones"><STRONG>Deactivate Bones</STRONG></A>,    
+	  <A href="#ToggleActiveBones"><STRONG>Toggle Active Bones</STRONG></A>,    
+	  <A href="#RecordBonePivots"><STRONG>Record Bone Pivots</STRONG></A> and
+	  <A href="#RestBones"><STRONG>Rest Bones</STRONG></A>.
+      All of these plug-ins operate on all selected bones, or on all bones in the currently selected 
+      objects. This plug-in requires Lightwave 6.0 or greater.</P>
+	
+	<P align=justify>To install AssignBoneVMaps, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy AssignBoneVmaps.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add AssignBoneVMaps.p. Layout should report that six plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave config and ensure that everything works properly.
+	  <LI>The next time you run Layout, you can launch 
+        the <STRONG>AssignBoneVMaps</STRONG> plug-ins from 
+        the Generics pop-up in the Plug-in Options Panel, or assign them to keys 
+        or buttons on the interface with Configure Keys and Configure Menus.  
+        Please refer to your Lightwave documentation for more information.  The plug-ins will be
+        prefixed with TM_P under the Plugins heading of the Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+	<P><STRONG>AssignBoneVmaps</STRONG>  includes the following plugins:</P>
+
+	<br><HR width="90%">
+	<a name="#AssignBoneVMaps"></a><STRONG>  </STRONG>
+	<H3 align=center>Assign Bone VMaps
+	<HR width="40%"></H3>
+	
+	<P align=justify><STRONG>
+	  Assign Bone VMaps</STRONG> automatically assigns a weight map with the 
+      same name as the bone to each selected bone, 
+      or to each bone in the selected objects.  While this is is done automatically 
+      by Layout when the object is loaded,  
+		it is helpful when you change bone names after the fact, or when you 
+		are having troubles with third party software failing to load objects 
+		with weight maps, and thus you must manually re-assign them in 
+		Layout. </P>
+	<center>
+    <p><IMG align=center alt="AssignBoneVMaps Interface" border=0 height=136 src="AssignBoneVMaps-Main.jpg" width=429></p>
+    </center>
+	<P align=justify>
+	  <STRONG>Assign Bone VMaps</STRONG> 
+      is used by selecting the bones, or the objects containing the bones, that 
+      you want to modify.  If objects are selected, then all bones in those objects will
+	  be affected.  After selecting the appropriate items, launch 
+      <STRONG>Assign Bone VMaps</STRONG>.  You should see an interface similar to the one 
+      here.  The <i>About</i> button, as you'd expect, presents information about
+	  the plug-ins.</i></P>
+
+	  <P>If <EM>Adjust Bone Settings</EM> is enabled, you'll be able to activate
+	  <EM>Use Weight Maps Only</EM> and then <EM>Weight Normalization</EM>.
+	  The state of these buttons will only be applied to the bones if
+	  <EM>Adjust Bone Setings </EM>is enabled.  If all you want to do is
+	  assign weight maps to bones, simply leave <EM>Adjust Bone Settings</EM>
+	  in it's disabled state.</P>
+
+      <P>After hitting <EM>Yes</EM>, <STRONG>AssignBoneVMaps</STRONG> will assign 
+      each bone in the selection a weight map of the same name, and apply the 
+      weight-based bone settings if <EM>Adjust Bone Settings</EM> is 
+      enabled.  Clicking <EM>Cancel</EM> from the interface will return to 
+      Layout with no changes performed.</P>
+	
+	<br><HR width="90%">
+	<a name="#ActivateBones"></a>
+	<a name="#DeactivateBones"></a>
+	<a name="#ToggleActiveBones"></a>
+	<H3 align=center>
+	ActivateBones<br>
+	Deactivate Bones<br>
+	Toggle Active Bones
+	<HR width="40%"></H3>
+	
+	<P align=justify><STRONG>Activate Bones</STRONG>, 
+      <STRONG>Deactivate Bones</STRONG> and <STRONG>Toggle 
+      Active Bones</STRONG> are related plug-ins for acitavting and 
+      deactivating bones.  While 
+		Lightwave does include mappable commands for this already, those commands only operate on 
+		the current item, while these plug-ins will operate on all selected bones, or all 
+		bones in the selected objects. </P>
+      <P align=justify><STRONG>Activate Bones</STRONG> will make th selected 
+      bone active, just like the built-in <EM>Bone Active</EM> command.  
+      <STRONG>Deactivate Bones</STRONG> will deactive the selected bones.</P>
+      <P align=justify><STRONG>Toggle Active Bones</STRONG> will make the active 
+      bones inactive, and force currently inactive bones to become active.  
+      </P>
+      <P align=justify>Note that none of these affect the bone's rest state; 
+      they only modify the bone's active state.</P>
+	
+	<br><HR width="90%">
+	<a name="#RecordBonePivots"></a>
+	<a name="#RestBones"></a>
+	<H3 align=center>
+	Record Bone Pivots<br>
+	Rest Bones<br>
+	<HR width="40%"></H3>
+      <P><STRONG>Record Bone Pivots</STRONG> will record the rotations of 
+      the selected bones, or the bones of the selected objects, into the bone's 
+      pivot point, just like <EM>Record Pivot Point</EM>, but operating on many 
+      bones at the same time.</P>
+
+      <P><STRONG>Rest Bones</STRONG> operates just like the built-in <EM>Rest 
+      Bone</EM> command, but will affect any number of bones at once.</P>
+
+	  <center>
+      <p><IMG align=center alt="Rest Bones Warning Message" border=0 height=82 src="RestBones-Main.jpg" width=403></p>
+	  </center>
+
+      <P>Upon activation, both of these plug-ins will ask you if you really 
+      want to perform this possibly dangerous operation.  If you click 
+      <EM>Yes</EM>, the bones will be processed.  Note that the processing 
+      occurs hierarchically, from the root of the parenting chain down to the 
+      last children.  This ensures that the bones are rested as expected, 
+      since resting in a non-hierarchical order can result in unpredictable 
+      changes the bone chain.</P>
+      <P>
+	
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2001 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/framesets/fs-Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

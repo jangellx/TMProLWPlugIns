@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<title>Globals: Animation Envelopes</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="sysid.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="System ID"></a> </td>
+    <td width="96" align="left"><a href="bkdpinfo.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="LW Backdrop Info"></a> </td>
+    <td width="96" align="left"><a href="../globals.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Globals"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>&quot;Animation Envelopes&quot;</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 6.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout</small></p>
+    <p>An envelope is an array of time-varying settings, or keyframes. This global returns
+    functions that allow you to create and manage envelopes and envelope groups.</p>
+    <p><strong>Global Call</strong></p>
+    <pre>   LWEnvelopeFuncs *envfunc;
+   envfunc = global( &quot;Animation Envelopes&quot;, GFUSE_TRANSIENT );</pre>
+    <p>The global function returns a pointer to an LWEnvelopeFuncs.</p>
+    <pre>   typedef struct st_LWEnvelopeFuncs {
+      LWEnvelopeID    (*create)(LWEnvGroupID, const char *, int);
+      void            (*destroy)(LWEnvelopeID);
+      LWEnvGroupID    (*createGroup)(LWEnvGroupID parent, const char *);
+      void            (*destroyGroup)(LWEnvGroupID);
+      LWError         (*copy)(LWEnvelopeID to, LWEnvelopeID from);
+      LWError         (*load)(LWEnvelopeID, LWLoadState *);
+      LWError         (*save)(LWEnvelopeID, LWSaveState *);
+      double          (*evaluate)(LWEnvelopeID, LWTime);
+      int             (*edit)(LWEnvGroupID, LWEnvelopeID,
+                         int flags, void *data);
+      int             (*envAge)(LWEnvelopeID);
+      LWEnvKeyframeID (*createKey)(LWEnvelopeID, LWTime, double value);
+      void            (*destroyKey)(LWEnvelopeID, LWEnvKeyframeID);
+      LWEnvKeyframeID (*nextKey)(LWEnvelopeID, LWEnvKeyframeID);
+      LWEnvKeyframeID (*prevKey)(LWEnvelopeID, LWEnvKeyframeID);
+      int             (*keySet)(LWEnvelopeID, LWEnvKeyframeID,
+                         LWKeyTag, void *value);
+      int             (*keyGet)(LWEnvelopeID, LWEnvKeyframeID,
+                         LWKeyTag, void *value);
+   } LWEnvelopeFuncs;</pre>
+    <dl>
+      <dt><tt>env = create( group, name, type )</tt></dt>
+      <dd>Creates a new envelope.</dd>
+      <dt><tt><br>
+        destroy( env )</tt></dt>
+      <dd>Destroys an envelope.</dd>
+      <dt><tt><br>
+        group = createGroup( parent, name )</tt></dt>
+      <dd>Creates a new envelope group.</dd>
+      <dt><tt><br>
+        destroyGroup( group )</tt></dt>
+      <dd>Destroys an envelope group.</dd>
+      <dt><tt><br>
+        error = copy( to, from )</tt></dt>
+      <dd>Copies the contents of an envelope.</dd>
+      <dt><tt><br>
+        error = load( env, loadstate )</tt></dt>
+      <dd>Loads an envelope from an envelope file.</dd>
+      <dt><tt><br>
+        error = save( env, savestate )</tt></dt>
+      <dd>Saves an envelope to an envelope file.</dd>
+      <dt><tt><br>
+        value = evaluate( env, time )</tt></dt>
+      <dd>Returns the interpolated value of the envelope at a given time.</dd>
+      <dt><tt><br>
+        result = edit( group, env, flags, mydata )</tt></dt>
+      <dd>Allows the user to edit the envelope group.</dd>
+      <dt><tt><br>
+        age = envAge( env )</tt></dt>
+      <dd>Returns an integer containing the number of times the envelope has been changed.</dd>
+      <dt><tt><br>
+        key = createKey( env, time, value )</tt></dt>
+      <dd>Creates a new key in an envelope.</dd>
+      <dt><tt><br>
+        destroyKey( env, key )</tt></dt>
+      <dd>Deletes a key in an envelope.</dd>
+      <dt><tt><br>
+        key = nextKey( env, key )</tt></dt>
+      <dd>Returns the next key in the envelope.</dd>
+      <dt><tt><br>
+        key = prevKey( env, key )</tt></dt>
+      <dd>Returns the previous key in the envelope.</dd>
+      <dt><tt><br>
+        result = keySet( env, key, tag, value )</tt></dt>
+      <dd>Sets the value of a key.</dd>
+      <dt><tt><br>
+        result = keyGet( env, key, tag, value )</tt></dt>
+      <dd>Gets the value of a key.</dd>
+    </dl>
+    <p><strong>Example</strong></p>
+    <p>This code fragment don't do so much yet.</p>
+    <pre>   #include &lt;lwserver.h&gt;
+   #include &lt;lwenvel.h&gt;
+
+   LWEnvelopeFuncs *envfunc;
+   envfunc = global( &quot;Animation Envelopes&quot;, GFUSE_TRANSIENT );
+</pre>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

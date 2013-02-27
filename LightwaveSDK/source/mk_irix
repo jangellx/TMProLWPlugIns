@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cp irix/serv_u.c .
+make -f irix/makefile -u
+rm -f serv_u.c
+rm -f *.o

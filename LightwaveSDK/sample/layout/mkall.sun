@@ -1,0 +1,15 @@
+#!/bin/sh
+
+cd blotch
+make -f sun/makefile
+cd ../superblotch
+make -f sun/makefile
+cd ../lazypnts
+make -f sun/makefile
+cd ../motdump
+make -f sun/makefile
+cd ../negative
+make -f sun/makefile
+cd ../zor
+make -f sun/makefile
+cd ..

@@ -1,0 +1,166 @@
+<html>
+
+<head>
+<title>Classes: ImageFilterHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="globserv.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="Global"></a> </td>
+    <td width="96" align="left"><a href="imgload.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ImageLoader"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>ImageFilterHandler<br>
+    ImageFilterInterface</h3>
+    <p>Image filter plug-ins apply image post processing (filtering) effects to the final
+    rendered image.</p>
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyImageFilter( long version, GlobalFunc *global,
+      LWImageFilterHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to an image filter's activation function is an
+    LWImageFilterHandler.</p>
+    <pre>   typedef struct st_LWImageFilterHandler {
+      LWInstanceFuncs *inst;
+      LWItemFuncs     *item;
+      void            (*process) (LWInstance, const LWFilterAccess *);
+      unsigned int    (*flags) (LWInstance);
+   } LWImageFilterHandler;</pre>
+    <p>The first two members of this structure are standard <a href="../handler.html">handler
+    functions</a>. In addition to these, an image filter provides a processing function and a
+    flags function.<dl>
+      <dt><tt>process( instance, access )</tt></dt>
+      <dd>This is where the image filter does its work. For each frame, the filter is given access
+        to the red, green, blue and alpha channels of the rendered image, along with any other
+        image buffers requested by the flags function. The access structure, described below,
+        provides image information and functions for examining the buffers and writing new RGB and
+        alpha values.</dd>
+      <dt><br>
+        <tt>flags( instance )</tt></dt>
+      <dd>Returns an int that tells the renderer which buffers the image filter will need to
+        examine. The return value contains bitfields combined using bitwise-OR. The symbols listed
+        here and in lwfilter.h are bit positions, not the flags themselves, so you'll need to form
+        the expression <tt>(1 &lt;&lt; LWBUF_WHATEVER)</tt> to create the flags before ORing them
+        together. For efficiency reasons, the renderer will ignore requests from the processing
+        function for access to any buffers that weren't indicated by the bit flags returned from
+        the flags function. The buffers are <dl>
+          <dt><br>
+            <tt><a name="flags">LWBUF_RED</a><br>
+            LWBUF_GREEN<br>
+            LWBUF_BLUE<br>
+            LWBUF_ALPHA</tt></dt>
+          <dd>The final output of the rendering pass. These form the image to be modified by the
+            filter. They are always provided to every image filter (it isn't necessary to return flags
+            for them in the flags function).</dd>
+          <dt><tt>LWBUF_LUMINOUS<br>
+            LWBUF_DIFFUSE<br>
+            LWBUF_SPECULAR<br>
+            LWBUF_MIRROR<br>
+            LWBUF_TRANS<br>
+            LWBUF_RAW_RED<br>
+            LWBUF_RAW_GREEN<br>
+            LWBUF_RAW_BLUE</tt></dt>
+          <dd>The raw, unshaded values of the surface parameters at each pixel.</dd>
+          <dt><tt>LWBUF_SHADING</tt></dt>
+          <dd>A picture of the diffuse shading and specular highlights applied to the objects in the
+            scene. This is a component of the rendering calculations that depends solely on the angle
+            of incidence of the lights on a surface. It doesn't include the effects of explicit shadow
+            calculations.</dd>
+          <dt><tt>LWBUF_DIFFSHADE<br>
+            LWBUF_SPECSHADE</tt></dt>
+          <dd>Like the <tt>LWBUF_SHADING</tt> buffer, but these store the amount of diffuse and
+            specular shading (highlighting) separately, rather than adding them together. They should
+            not be confused with the <tt>LWBUF_DIFFUSE</tt> and <tt>LWBUF_SPECULAR</tt> buffers, which
+            store the unshaded surface values for those parameters.</dd>
+          <dt><tt>LWBUF_SHADOW</tt></dt>
+          <dd>Indicates where shadows are falling in the final image. It may also be thought of as an
+            illumination map, showing what parts of the image are visible to the lights in the scene.</dd>
+          <dt><tt>LWBUF_GEOMETRY</tt></dt>
+          <dd>The values in this buffer are proportional to the dot-products of the surface normals
+            with the eye vector (or the cosine of the angle of the surfaces to the eye). They reveal
+            something about the underlying shape of the objects in the image. Where the value is 255
+            (or 1.0) the surface is facing directly toward the camera, and where it's 0, the surface
+            is edge-on to the camera.</dd>
+          <dt><tt>LWBUF_DEPTH</tt></dt>
+          <dd>A map of the distance from each pixel on the viewplane to the nearest object the pixel
+            sees. Also known as the z-buffer.</dd>
+          <dt><tt>LWBUF_SPECIAL</tt></dt>
+          <dd>This value is assigned by the user on a surface by surface basis which is used only for
+            this filter. This is designed to be used to activate the post processing effect for
+            specific surfaces, and user-assigned percentages show up here as 0-255 values in the
+            buffer.</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD.</p>
+    <p><strong>Filter Access</strong></p>
+    <p>This is the access structure passed to the processing function. The data members are
+    read-only. The functions provide the means to get and set pixel values, and the optional
+    monitor informs the user of the filter's progress.</p>
+    <pre>
+   typedef struct st_LWFilterAccess {
+      int              width, height;
+      LWFrame          frame;
+      LWTime           start, end;
+      LWBufferValue * (*bufLine)  (int type, int y);
+      float *         (*fltLine)  (int type, int y);
+      void            (*setRGB)   (int x, int y, LWBufferValue[3]);
+      void            (*setAlpha) (int x, int y, LWBufferValue);
+      LWMonitor       *monitor;
+   } LWFilterAccess;</pre>
+    <dl>
+      <dt><tt>width, height</tt></dt>
+      <dd>The image dimensions of all of the image buffers. Filters can't change the size of the
+        image.</dd>
+      <dt><tt>frame</tt></dt>
+      <dd>The frame number.</dd>
+      <dt><tt>start, end</tt></dt>
+      <dd>The start and end times for the frame. The times are the same unless the frame was
+        rendered with motion blur, in which case the difference between them can be considered the
+        exposure time for the frame.</dd>
+      <dt><br>
+        <tt>bufLine( buftype, y )<br>
+        fltLine( buftype, y )</tt></dt>
+      <dd>Call these to get a pointer to the start of a scanline from the specified buffer. <tt>y
+        = 0</tt> is the top line of the buffer, and <tt>y = width - 1</tt> is the bottom line. <tt>bufLine</tt>
+        returns lines from byte-encoded buffers and <tt>fltLine</tt> returns lines from
+        float-encoded buffers. Don't try to look past the end of a scanline. Layout may not store
+        scanlines contiguously for a given buffer. In fact, scanlines aren't guaranteed to exist
+        at all until they're requested through these functions. The type codes are the same as
+        those used by the flags function. NULL is returned for invalid type codes, or type codes
+        for buffers not requested by the flags function. </dd>
+      <dt><br>
+        <tt>setRGB( x, y, rgb )<br>
+        setAlpha( x, y, a )</tt></dt>
+      <dd>Use these functions to set the output values of the filter. The input RGBA buffers do
+        not change as the output buffers are modified. A filter must set every pixel in the output
+        image even if it does not alter the value, but it can set them in any order.</dd>
+      <dt><br>
+        <tt>monitor</tt></dt>
+      <dd>The filter can use this to update the user about its progress through the frame. This
+        also allows the user to cancel the rendering during the filter's processing. The monitor
+        mechanism is the same one provided by the <a href="globals/monitor.html">monitor global</a>.
+        As with all monitors, the number of steps should be kept fairly low since checking for
+        abort can have significant overhead on some systems. Every line or every other line should
+        be about right.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

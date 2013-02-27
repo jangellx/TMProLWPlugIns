@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- Spaceball Driver Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="../../images/logo/TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt="Spaceball Driver" border=0 height=131 src ="PROG-Spaceball.gif" width=244 ></p>
+	<P align=justify>
+	<br><STRONG>The Spaceball driver</STRONG>
+	  is a Master plug-in that allows a Spaceball-compatible input device to be used to move and rotate items
+    in Layout.  For full functionality, this requries Lightwave 7.5, but it should work with some earlier
+    versions with restrictions.  This driver only works in Layout, and will do nothing for Modeler.</P>
+
+	<P align=justify>To install the <b>Spaceball</b> driver, just follow these steps:</P>
+	<UL>
+    <LI><STRONG>NOTE:  You must first install the Spaceball drivers provided with your hardware for the Lightwave
+                       Spaceball driver to function.</STRONG>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy Spaceball.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add Spaceball.p. Layout should report that two plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        <STRONG>Content Director</STRONG> plug-in from 
+        the Generics pop-up in the Plug-in Options Panel, or assign it to a key 
+        or button on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.  The plug-in will be
+ 		    prefixed with TM_P under the Plugins heading of the Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+
+	<P align=justify>Optionally, while Layout is not running, you can edit your LW3.cfg and add the
+  following line to the beginning of the file:</P>
+
+  <TT>
+      StartupCommand Generic_TM-P_SpaceBallApply--Debug
+  </TT>
+
+	<P align=justify>This will automatically launch the driver every time Layout is run.</P>
+
+	<br><HR width="90%">
+	<H3 align=center>
+  Using the Spaceball in Layout
+	<HR width="40%"></H3>
+	  
+  <P align=justify>You can activate the Spaceball driver by manually adding the Spaceball
+  master plug-in, or by activating the Spaceball Apply generic plug-in.</P>
+
+  <P align=justify>One activated, the Spaceball will move and rotate the selected items just by
+  moving or rotating the Spaceball.  Many options such as the sensitivity and axis locking is
+  handled directly by the Spaceball system driver provided with your hardware.  Refer to that
+  documentation for more information on those features.  The Spaceball Config generic plug-in
+  can be used to open the system driver's window.</P>
+
+  <P align=justify>The Spaceball can be used to scale items instead of move them by using the
+  Spaceball Move and Spaceball Scale generic plug-ins.  Spaceball Move Toggle will switch
+  between Move and Scale each time it is activated.</P>
+  
+	<br><HR width="90%">
+	<H3 align=center>
+  Enabling and Disabling the Spaceball
+	<HR width="40%"></H3>
+  
+  <P align=justify>You can temporarilly disable the Spaceball using the Spaceball Disable
+  generic plug-in. Spaceball Enable will turn it back on, and Spaceball Toggle will switch
+  between these two states.</P>
+
+  <P align=justify>It is important to note that before Lightwave 7.5, it was impossible to
+  check to see if it was safe to issue commands, such as move and rotate, for a plug-in.
+  This means that it is possible to do very dangerous things like moving an object while
+  Lightwave is rendering.  While this is addressed for rendering in 7.5, it is still possible
+  for the Spaceball to issue commands at the wrong time if you're not careful.  For example,
+  Lightwave probably won't like it very much if you try to clear an object using one of the
+  Spaceball buttons while it's trying to save the scene.  You have been warned.</P>
+  
+  <P align=justify>When rendering is started, the Spaceball will automatically be disabled.
+  After rendering in Lightwave 7.5, it will automatically be enabled again.  If you are using
+  an older version of Lightwave, you will have to manually re-enable the Spaceball using the
+  Spaceball Enable generic plug-in.</P>
+  
+	<br><HR width="90%">
+	<H3 align=center>
+  Configuring the Spaceball
+	<HR width="40%"></H3>
+
+  <P align=justify>Double-clicking the Spaceball plug-in in the Master plug-ins list or
+  activating the Spaceball Properties generic will all you to remap the buttons on the
+  Spaceball to issue commands and scripts.  Any command that can be mapped to a key or
+  menu in Lightwave can be attached to a button on the Spaceball.</P>
+
+  <p align=center><IMG alt="Spaceball Properties" border=0 height=338 src="SpaceballProperties.jpg" width=335></p>
+
+  <P align=justify>The <em>Configure</em> button will open up the system driver's window.
+  If <em>Open on activation</em> is checked, this window will automatically open whenever
+  the driver is applied.</P>
+  
+  <P align=justify>The list contains all possible buttons that can be remapped on the
+  Spaceball.  The function numbers are defined in the system drivers, so be sure to check
+  those.</P>
+  
+  <P align=justify>There are two ways to change the command that is mapped to a particular
+  button.  After selecting an entry in the list, you can directly type in a new command
+  in the <em>Command</em> field.  Alternatively, you can click the Capture button.  The
+  next command you execute in Layout will be assigned to this key.  After a command is mapped
+  to a function, pushing the button that is mapped to that function will launch that command.</P>
+  
+	<br><HR width="90%">
+
+    <H3 align=center><b>Revision History</b>
+	  <HR width="50%"></H3>
+	  <ul>
+	    <li><b>05-12-02</b>  First Public Release</li>
+	  </ul>
+
+	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright ©2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font>
+      <P></P>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

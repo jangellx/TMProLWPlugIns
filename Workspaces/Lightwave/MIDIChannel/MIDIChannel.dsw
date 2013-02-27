@@ -1,0 +1,143 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "DirTools"=..\..\..\Projects\Portable\DirTools\DirTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name StringTools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Image"=..\..\..\Projects\Portable\Image\Image.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name DirTools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LW6Server"=..\..\..\Projects\Lightwave\LW6Server\LW6Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LWAboutPanel_TMPro"=..\..\..\Projects\Lightwave\LWAboutPanel_TMPro\LWAboutPanel_TMPro.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Image
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LW_SDK_CPP_Wrappers
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LW_SDK_CPP_Wrappers"=..\..\..\Projects\Lightwave\LW_SDK_CPP_Wrappers\LW_SDK_CPP_Wrappers.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Image
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MIDIChannel"=.\MIDIChannel.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LW_SDK_CPP_Wrappers
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LW6Server
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LWAboutPanel_TMPro
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name StringTools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name bfstream
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "StringTools"=..\..\..\Projects\Portable\StringTools\StringTools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "bfstream"=..\..\..\Projects\Portable\bfstream\bfstream.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

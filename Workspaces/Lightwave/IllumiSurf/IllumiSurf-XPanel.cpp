@@ -1,0 +1,107 @@
+//
+// IllumiSurf-XPanel.cpp
+//
+
+#include "illumisurf-xpanel.h"
+
+// Main XPanel
+LWXPanelControl  main_controls[]      = { { ISX_BLEND_MODE,       "Blending Mode",                 "iPopChoice"  },
+                                          { ISX_BASE_INTENSITY,   "Light Intensity for Base",      "percent-env" },
+                                          { ISX_ALT_INTENSITY,    "Light Intensity for Alternate", "percent-env" },
+                                          { ISX_USE_COLOR,        "Affect Color",                  "iBoolean"    },
+                                          { ISX_COLOR,            "",                              "color-env"   },
+                                          { ISX_USE_LUMINOSITY,   "Affect Luminosity",             "iBoolean"    },
+                                          { ISX_LUMINOSITY,       "",                              "percent-env" },
+                                          { ISX_USE_DIFFUSION,    "Affect Diffuse",                "iBoolean"    },
+                                          { ISX_DIFFUSION,        "",                              "percent-env" },
+                                          { ISX_USE_SPECULAR,     "Affect Specularity",            "iBoolean"    },
+                                          { ISX_SPECULAR,         "",                              "percent-env" },
+                                          { ISX_USE_GLOSSINESS,   "Affect Glossiness",             "iBoolean"    },
+                                          { ISX_GLOSSINESS,       "",                              "percent-env" },
+                                          { ISX_USE_REFLECTION,   "Affect Reflection",             "iBoolean"    },
+                                          { ISX_REFLECTION,       "",                              "percent-env" },
+                                          { ISX_USE_TRANSPARENCY, "Affect Transparency",           "iBoolean"    },
+                                          { ISX_TRANSPARENCY,     "",                              "percent-env" },
+                                          { ISX_USE_REFRACTION,   "Affect Refraction",             "iBoolean"    },
+                                          { ISX_REFRACTION,       "",                              "percent-env" },
+                                          { ISX_USE_TRANSLUCENCY, "Affect Translucency",           "iBoolean"    },
+                                          { ISX_TRANSLUCENCY,     "",                              "percent-env" },
+                                          NULL };
+
+LWXPanelDataDesc main_data[]          = { { ISX_BLEND_MODE,       "Blending Mode",                 "integer"     },
+                                          { ISX_BASE_INTENSITY,   "Light Intensity for Base",      "percent-env" },
+                                          { ISX_ALT_INTENSITY,    "Light Intensity for Alternate", "percent-env" },
+                                          { ISX_USE_COLOR,        "Affect Color",                  "integer"     },
+                                          { ISX_COLOR,            "",                              "color-env"   },
+                                          { ISX_USE_LUMINOSITY,   "Affect Luminosity",             "integer"     },
+                                          { ISX_LUMINOSITY,       "",                              "percent-env" },
+                                          { ISX_USE_DIFFUSION,    "Affect Diffuse",                "integer"     },
+                                          { ISX_DIFFUSION,        "",                              "percent-env" },
+                                          { ISX_USE_SPECULAR,     "Affect Specularity",            "integer"     },
+                                          { ISX_SPECULAR,         "",                              "percent-env" },
+                                          { ISX_USE_GLOSSINESS,   "Affect Glossiness",             "integer"     },
+                                          { ISX_GLOSSINESS,       "",                              "percent-env" },
+                                          { ISX_USE_REFLECTION,   "Affect Reflection",             "integer"     },
+                                          { ISX_REFLECTION,       "",                              "percent-env" },
+                                          { ISX_USE_TRANSPARENCY, "Affect Transparency",           "integer"     },
+                                          { ISX_TRANSPARENCY,     "",                              "percent-env" },
+                                          { ISX_USE_REFRACTION,   "Affect Refraction",             "integer"     },
+                                          { ISX_REFRACTION,       "",                              "percent-env" },
+                                          { ISX_USE_TRANSLUCENCY, "Affect Translucency",           "integer"     },
+                                          { ISX_TRANSLUCENCY,     "",                              "percent-env" },
+                                          NULL };
+
+LWXPanelHint     main_hint[]          = { XpLABEL( 0, "Main" ),
+                                          XpSTRLIST( ISX_BLEND_MODE, IllumiSurf_BlendModeStrings ),
+
+                                          XpGROUP_(ISX_BLEND_GROUP),
+                                            XpH( ISX_BLEND_MODE ), XpEND,
+
+                                          XpGROUP_(ISX_INTENSITY_GROUP),
+                                            XpH( ISX_BASE_INTENSITY ), XpH( ISX_ALT_INTENSITY ), XpEND,
+
+                                          XpGROUP_(ISX_VALUES_GROUP1),
+                                            XpH( ISX_USE_COLOR      ), XpH( ISX_COLOR      ), 
+                                            XpH( ISX_USE_LUMINOSITY ), XpH( ISX_LUMINOSITY ), 
+                                            XpH( ISX_USE_DIFFUSION  ), XpH( ISX_DIFFUSION  ), XpEND,
+
+                                          XpGROUP_(ISX_VALUES_GROUP2),
+                                            XpH( ISX_USE_SPECULAR   ), XpH( ISX_SPECULAR   ), 
+                                            XpH( ISX_USE_GLOSSINESS ), XpH( ISX_GLOSSINESS ),
+                                            XpH( ISX_USE_REFLECTION ), XpH( ISX_REFLECTION ), XpEND,
+
+                                          XpGROUP_(ISX_VALUES_GROUP3),
+                                            XpH( ISX_USE_TRANSPARENCY ), XpH( ISX_TRANSPARENCY ), 
+                                            XpH( ISX_USE_REFRACTION   ), XpH( ISX_REFRACTION   ),
+                                            XpH( ISX_USE_TRANSLUCENCY ), XpH( ISX_TRANSLUCENCY ), XpEND,
+
+                                          XpNARROW_(), XpH( ISX_USE_COLOR        ), XpH( ISX_COLOR         ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_LUMINOSITY   ), XpH( ISX_LUMINOSITY   ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_DIFFUSION    ), XpH( ISX_DIFFUSION    ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_SPECULAR     ), XpH( ISX_SPECULAR     ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_GLOSSINESS   ), XpH( ISX_GLOSSINESS   ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_REFLECTION   ), XpH( ISX_REFLECTION   ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_TRANSPARENCY ), XpH( ISX_TRANSPARENCY ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_TRANSLUCENCY ), XpH( ISX_TRANSLUCENCY ), XpEND,
+                                          XpNARROW_(), XpH( ISX_USE_REFRACTION   ), XpH( ISX_REFRACTION   ), XpEND,
+
+                                          XpLEFT_(), XpH( ISX_USE_COLOR        ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_LUMINOSITY   ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_DIFFUSION    ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_SPECULAR     ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_GLOSSINESS   ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_REFLECTION   ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_TRANSPARENCY ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_TRANSLUCENCY ), XpEND,
+                                          XpLEFT_(), XpH( ISX_USE_REFRACTION   ), XpEND,
+
+                                          XpENABLE_( ISX_USE_COLOR        ), XpH( ISX_COLOR        ), XpEND,
+                                          XpENABLE_( ISX_USE_LUMINOSITY   ), XpH( ISX_LUMINOSITY   ), XpEND,
+                                          XpENABLE_( ISX_USE_DIFFUSION    ), XpH( ISX_DIFFUSION    ), XpEND,
+                                          XpENABLE_( ISX_USE_SPECULAR     ), XpH( ISX_SPECULAR     ), XpEND,
+                                          XpENABLE_( ISX_USE_GLOSSINESS   ), XpH( ISX_GLOSSINESS   ), XpEND,
+                                          XpENABLE_( ISX_USE_REFLECTION   ), XpH( ISX_REFLECTION   ), XpEND,
+                                          XpENABLE_( ISX_USE_TRANSPARENCY ), XpH( ISX_TRANSPARENCY ), XpEND,
+                                          XpENABLE_( ISX_USE_TRANSLUCENCY ), XpH( ISX_TRANSLUCENCY ), XpEND,
+                                          XpENABLE_( ISX_USE_REFRACTION   ), XpH( ISX_REFRACTION   ), XpEND,
+                                          XpEND };

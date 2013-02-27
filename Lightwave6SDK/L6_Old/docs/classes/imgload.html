@@ -1,0 +1,201 @@
+<html>
+
+<head>
+<title>Classes: ImageLoader</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="imgfilt.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="ImageFilterHandler"></a> </td>
+    <td width="96" align="left"><a href="imgsave.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="ImageSaver"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>ImageLoader</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 6.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout, Modeler</small></p>
+    <p>Image loaders move still image data into LightWave, translating to LightWave's internal
+    image formats from the myriad file formats available for image storage.</p>
+    <p>When an image loader's activation function is called, it should open the image file and
+    try to recognize its contents. This first step is important. LightWave calls all of the
+    installed image loaders in sequence until one of them recognizes the file. Each image
+    loader is therefore responsible for identifying the files it can load. If the file isn't
+    one the loader understands, the loader sets the <tt>result</tt> field of the <tt>local</tt>
+    structure to <tt>IPSTAT_NOREC</tt> and returns <tt>AFUNC_OK</tt>.</p>
+    <p>If, on the other hand, the loader understands the image file, it calls <tt>local-&gt;begin</tt>
+    to obtain the functions it will use to send the image data to LightWave and then calls
+    those functions.</p>
+    <p><strong>Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyImageLoader( long version, GlobalFunc *global,
+      LWImageLoaderLocal *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to an image loader's activation function is an
+    LWImageLoaderLocal.</p>
+    <pre>   typedef struct st_LWImageLoaderLocal {
+      void              *priv_data;
+      int                result;
+      const char        *filename;
+      LWMonitor         *monitor;
+      LWImageProtocolID (*begin) (void *, LWImageType);
+      void              (*done)  (void *, LWImageProtocolID);
+   } LWImageLoaderLocal;</pre>
+    <dl>
+      <dt><tt>priv_data</tt></dt>
+      <dd>Pass this as the first argument to the <tt>begin</tt> and <tt>done</tt> functions. It's
+        an opaque pointer to data used internally by LightWave.</dd>
+      <dt><br>
+        <tt>result</tt></dt>
+      <dd>Set this to indicate whether the image was loaded successfully. The result codes are <dl>
+          <dt><br>
+            <tt>IPSTAT_OK</tt></dt>
+          <dd>The image was loaded successfully.</dd>
+          <dt><tt>IPSTAT_NOREC</tt></dt>
+          <dd>The loader didn't recognize the file. This can happen frequently, since all loaders are
+            called in sequence until one of them <em>doesn't</em> return this result.</dd>
+          <dt><tt>IPSTAT_BADFILE</tt></dt>
+          <dd>The loader couldn't open the file. If the loader is able to open the file but believes
+            it has found an error in the contents, it should return <tt>IPSTAT_NOREC</tt>.</dd>
+          <dt><tt>IPSTAT_ABORT</tt></dt>
+          <dd>Use this to indicate that the user cancelled the load operation. This can happen if you
+            use the monitor to indicate the progress of a lengthy image loading operation.</dd>
+          <dt><tt>IPSTAT_FAILED</tt></dt>
+          <dd>An error occurred during loading, for example a memory allocation failed.</dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>filename</tt></dt>
+      <dd>The name of the file to load.</dd>
+      <dt><br>
+        <tt>monitor</tt></dt>
+      <dd>A monitor for displaying the progress of the load to the user. You don't have to use
+        this, but you're encouraged to if your image loading takes an unusual amount of time. This
+        is the same structure returned by the global monitor call. See the global monitor page for
+        details.</dd>
+      <dt><br>
+        <tt>begin( priv_data, pixeltype )</tt></dt>
+      <dd>Call this when you're ready to begin sending image data to LightWave. This will be after
+        you've opened and examined the image file and know what it contains. The pixel type code
+        tells LightWave what kind of pixel data you will be sending, and this will in general
+        depend on what kind of pixel data the file contains, although it doesn't have to. The type
+        must be one of the types listed later in the <a href="#pixdata">Pixel Data</a> section. <p>The
+        <tt>begin</tt> function returns a pointer to an LWImageProtocol, which is the structure
+        you'll use to actually transfer the image data. The LWImageProtocol structure is described
+        in detail below. If you call <tt>begin</tt>, you must also call <tt>done</tt> so that
+        LightWave can free resources associated with the LWImageProtocol it allocates for you.</p>
+      </dd>
+      <dt><tt>done( priv_data, protocol )</tt></dt>
+      <dd>Completes the image loading process. The protocol argument should be the
+        LWImageProtocolID returned to you by <tt>begin</tt>. Only call <tt>done</tt> if you
+        previously called <tt>begin</tt>. </dd>
+    </dl>
+    <p><strong>Image Protocol</strong></p>
+    <p>The LWImageProtocol structure returned by the local <tt>begin</tt> function provides
+    the functions you'll call to send the image data to LightWave. The <tt>lwimageio.h</tt>
+    header file defines macros that slightly simplify calls to these functions, although they
+    won't be described here. Using the macros is optional.</p>
+    <pre>   typedef struct st_LWImageProtocol {
+      int   type;
+      void *priv_data;
+      int  (*done)     (void *, int);
+      void (*setSize)  (void *, int w, int h);
+      void (*setParam) (void *, LWImageParam, int, float);
+      int  (*sendLine) (void *, int, const LWPixelID);
+      void (*setMap)   (void *, int, const unsigned char[3]);
+   } LWImageProtocol, *LWImageProtocolID;</pre>
+    <dl>
+      <dt><tt>type</tt></dt>
+      <dd>LightWave sets this to the pixel type code you sent in the call to <tt>begin</tt>.</dd>
+      <dt><br>
+        <tt>priv_data</tt></dt>
+      <dd>Pass this to the protocol functions. It's an opaque pointer to data used internally by
+        LightWave.</dd>
+      <dt><br>
+        <tt>done( priv_data, result )</tt></dt>
+      <dd>Call this when you've finished sending image data. The result should be <tt>IPSTAT_OK</tt>
+        or <tt>IPSTAT_FAILED</tt>.</dd>
+      <dt><br>
+        <tt>setSize( priv_data, width, height )</tt></dt>
+      <dd>Call this to tell LightWave the pixel dimensions of the image. The width and height are
+        the number of pixels in a scanline and the number of scanlines, respectively. This must be
+        called before the first call to <tt>sendLine</tt>.</dd>
+      <dt><br>
+        <tt>setParam( priv_data, paramid, intparam, floatparam )</tt></dt>
+      <dd>Use this to tell LightWave other information about the image. The parameter ID can be
+        one of the following. <dl>
+          <dt><br>
+            <tt>LWIMPAR_ASPECT</tt></dt>
+          <dd>The pixel aspect ratio, defined as width/height. This will most often be 1.0 (the
+            default), but D1 NTSC images, for example, use a pixel aspect of 0.9, meaning that each
+            pixel is 0.9 times as wide as it is high. Set the value in <tt>floatparam</tt> and set <tt>intparam</tt>
+            to 0.</dd>
+          <dt><br>
+            <tt>LWIMPAR_NUMCOLS</tt></dt>
+          <dd>The size of the color table in an indexed-color image (an image of type <tt>LWIMTYP_INDEX8</tt>).
+            Valid values are between 2 and 256. Set the value in <tt>intparam</tt> and set <tt>floatparam</tt>
+            to 0.</dd>
+        </dl>
+      </dd>
+      <dt><br>
+        <tt>sendLine( priv_data, y, scanline_pixels )</tt></dt>
+      <dd>Send one scanline from the image. <tt>setSize</tt> must be called before the first call
+        to <tt>sendLine</tt>. Scanlines don't have to be sent in a particular order. Scanlines are
+        numbered from the top of the image, starting at 0. The first data item in each scanline
+        describes the leftmost pixel. The structure of the pixel data will depend on the pixel
+        type you set in the local <tt>begin</tt> function. Details about specific types are below.</dd>
+      <dt><br>
+        <tt>setMap( priv_data, index, rgb )</tt></dt>
+      <dd>Call this to set the color of an entry in the color table of an indexed-color image. You
+        need to call <tt>setParam</tt> with a <tt>LWIMPAR_NUMCOLS</tt> parameter before calling <tt>setMap</tt>
+        for the first time, but you may call <tt>setMap</tt> any time after that. The index
+        identifies the color table entry and must be between 0 and <tt>numcolors-1</tt>.</dd>
+    </dl>
+    <p><a name="pixdata"><strong>Pixel Data</strong></a></p>
+    <p>The structure of the data in a scanline will vary, depending on the pixel type. Each
+    scanline is an array of either unsigned bytes or floats. Bytes can contain any value
+    between 0 and 255. The nominal range of float values is 0.0 to 1.0, but values outside
+    that range may also be valid.</p>
+    <p>Each pixel's data is contiguous--the scanline contains all of the channel values for
+    the first pixel, followed by the values for the second, and so on. The <tt>lwimageio.h</tt>
+    header file contains typedefs for some pixel types, but use of these in your code is
+    currently optional.</p>
+    <p>For each pixel type, the data is organized as follows. <dl>
+      <dt><tt>LWIMTYP_RGB24</tt></dt>
+      <dd>Each scanline is an array of <tt>unsigned char</tt> in <tt>RGBRGB...</tt> order. The
+        corresponding typedef is <tt>LWPixelRGB24</tt>.</dd>
+      <dt><tt>LWIMTYP_GREY8</tt></dt>
+      <dd>Each scanline is an array of <tt>unsigned char</tt>, with one byte per grayscale pixel.</dd>
+      <dt><tt>LWIMTYP_INDEX8</tt></dt>
+      <dd>Each scanline is an array of <tt>unsigned char</tt>, with one byte per pixel containing
+        color map indexes.</dd>
+      <dt><tt>LWIMTYP_GREYFP</tt></dt>
+      <dd>Each scanline is an array of <tt>float</tt>, with one float per pixel.</dd>
+      <dt><tt>LWIMTYP_RGBFP</tt></dt>
+      <dd>Each scanline is an array of <tt>float</tt> in <tt>RGBRGB...</tt> order. The
+        corresponding typedef is <tt>LWPixelRGBFP</tt>.</dd>
+      <dt><tt>LWIMTYP_RGBA32</tt></dt>
+      <dd>Each scanline is an array of <tt>unsigned char</tt> in <tt>RGBARGBA...</tt> order and
+        contains both RGB color and alpha channel values. The corresponding typedef is <tt>LWPixelRGBA32</tt>.</dd>
+      <dt><tt>LWIMTYP_RGBAFP</tt></dt>
+      <dd>Each scanline is an array of <tt>float</tt> in <tt>RGBARGBA...</tt> order and contains
+        both RGB color and alpha channel values. The corresponding typedef is <tt>LWPixelRGBAFP</tt>.</dd>
+      <dt><tt>LWIMTYP_RGBAZFP</tt></dt>
+      <dd>Each scanline is an array of <tt>float</tt> in <tt>RGBAZRGBAZ...</tt> order and contains
+        RGB color, alpha, and depth channel values. The corresponding typedef is <tt>LWPixelRGBAZFP</tt>.
+        The depth, or z, channel contains viewing coordinate system z coordinates, in meters.</dd>
+    </dl>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

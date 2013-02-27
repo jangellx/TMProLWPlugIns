@@ -1,0 +1,1853 @@
+<!--This file created 9:45 AM  5/26/98 by Claris Home Page version 2.0-->
+<HTML>
+<HEAD>
+   <TITLE>SpaceWare Functions</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 2.0">
+   <X-SAS-WINDOW TOP=85 BOTTOM=593 LEFT=14 RIGHT=928>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"><!--This file created 1:57 PM  4/6/98 by Claris Home Page version 2.0-->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<P><A HREF="InputLib.htm"><IMG SRC="graphics/prev1.gif"
+ALT="graphics/prev1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0
+ALIGN=bottom></A><A HREF="MathLib.htm"><IMG SRC="graphics/next1.gif"
+ALT="graphics/next1.gif" WIDTH=46 HEIGHT=22 X-SAS-UseImageWidth
+X-SAS-UseImageHeight BORDER=0 ALIGN=bottom></A></P>
+
+<H1><FONT COLOR="#0000AF">SpaceWare Functions</FONT></H1>
+
+<P><A NAME="SiBeep"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiBeep</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiBeep( SiHdl hdl, char
+*pString )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the Spaceball input device
+         handle returned by SiOpen</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pString</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the user-defined beep
+         string</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_VALUE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">bad string</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiBeep (</FONT><FONT
+FACE="Times New Roman">‘</FONT><FONT
+FACE="Courier New">CcC</FONT><FONT
+FACE="Times New Roman">’</FONT><FONT FACE="Courier New">);</FONT></B>
+</P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">SiBeep causes the Spaceball device to
+emit a sequence of tones and pauses. Each character of the string
+represents either a tone or a delay. Lowercase letters [a-z]
+represent a tone; uppercase letters [A-Z] represent a pause. The
+closer the letter is to the beginning of the alphabet the shorter the
+pause or tone (</FONT><FONT SIZE="-1"
+FACE="Times New Roman">‘</FONT><FONT SIZE="-1"
+FACE="Arial">a</FONT><FONT SIZE="-1"
+FACE="Times New Roman">’</FONT><FONT SIZE="-1" FACE="Arial"> or
+</FONT><FONT SIZE="-1" FACE="Times New Roman">‘</FONT><FONT SIZE="-1"
+FACE="Arial">A</FONT><FONT SIZE="-1"
+FACE="Times New Roman">’</FONT><FONT SIZE="-1" FACE="Arial"> is 1/16
+second, </FONT><FONT SIZE="-1" FACE="Times New Roman">‘</FONT><FONT
+SIZE="-1" FACE="Arial">b</FONT><FONT SIZE="-1"
+FACE="Times New Roman">’</FONT><FONT SIZE="-1" FACE="Arial"> or
+</FONT><FONT SIZE="-1" FACE="Times New Roman">‘</FONT><FONT SIZE="-1"
+FACE="Arial">B</FONT><FONT SIZE="-1"
+FACE="Times New Roman">’</FONT><FONT SIZE="-1" FACE="Arial"> is 2/16
+second, and so on). Up to 14 characters in a string are processed;
+additional characters are ignored.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiButtonPressed"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiButtonPressed</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">int SiButtonPressed( SiSpwEvent
+*pEvent )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pEvent</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to SpaceWare
+         event</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Button number</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">actual number of the button
+         pressed</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_NO_BUTTON</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no button
+         pressed</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">not a button
+         event</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error, it is a button
+         event</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">int button = SiButtonPressed
+(&amp;event);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">Given a button event, this function
+returns the number of the button pressed. When multiple buttons are
+pressed, the lowest button number is returned. There are three
+special buttons: SI_PICK_BUTTON, SI_DIALOG_BUTTON, and
+SI_RESET_BUTTON; the other buttons are numbered from 1-29.</FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial">See </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#Special Button Definition">Special
+Button Definitions</A></FONT><FONT SIZE="-1" FACE="Arial"> for more
+details.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiButtonReleased"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiButtonReleased</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">int SiButtonReleased( SiSpwEvent
+*pEvent )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pEvent</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to SpaceWare
+         event</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Button number</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">actual number of the button
+         pressed</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_NO_BUTON</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no button
+         pressed</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no button event</FONT>&nbsp;
+      
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error, it is a button
+         event</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">int button = SiButtonRelease
+(&amp;event);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">Given a button event, this function
+returns the number of the button released. When multiple buttons are
+released, the lowest button number is returned. There are three
+special buttons: SI_PICK_BUTTON, SI_DIALOG_BUTTON, and
+SI_RESET_BUTTON; the other buttons are numbered from 1-29.</FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial">See </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#Special Button Definition">Special
+Button Definitions</A></FONT><FONT SIZE="-1" FACE="Arial"> for more
+details.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiClose"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiClose</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiClose( SiHdl hdl
+)</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare handle returned by
+         </FONT><FONT SIZE="-1" FACE="Arial"
+         COLOR="#000000">SiOpen</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">close error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiClose (hdl);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function closes a device. Once
+closed, the SpaceWare handle is no longer valid.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiDispatch"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiDispatch</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">int SiDispatch( SiHdl hdl,
+SiGetEventData *pData, SiSpwEvent *pEvent, SiSpwHandlers *pHandlers
+)</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pData</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to platform-specific
+         data (as passed to SiGetEvent)</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pEvent</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to SpaceWare event
+         (as returned by SiGetEvent)</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pHandlers</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointers to SpaceWare event
+         handlers</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value </FONT></B><FONT
+SIZE="-1" FACE="Arial">(returned by the called event
+handler)</FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">Zero if handler is not defined</FONT>
+</P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiDispatch (hdl, &amp;Edata, &amp;Event,
+&amp;dspHdlrs)</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">Provided as a companion to </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiGetEvent">SiGetEvent</A></FONT><FONT
+SIZE="-1" FACE="Arial">, this function calls the appropriate handler
+to process the SpaceWare event returned by SiGetEvent. Pointers to
+the handler functions are specified via </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwHandlers Structure">SiSpwHandlers
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial">.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">The structure contains one handler
+for each event type. You can ignore an event type by setting the
+</FONT><I><FONT SIZE="-1" FACE="Arial">func</FONT></I><FONT SIZE="-1"
+FACE="Arial"> member of the appropriate SiEventHandler Structure to
+NULL. Unlike the handler for SiGetEvent, there is no specific use for
+the function return value of these handlers -- the interpretation is
+entirely the caller</FONT><FONT SIZE="-1"
+FACE="Times New Roman">’</FONT><FONT SIZE="-1" FACE="Arial">s.</FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial">See </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="#SiGetEvent">SiGetEvent</A></FONT><FONT
+SIZE="-1" FACE="Arial">, </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwHandler Structure">SiSpwHandler
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial">, </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwHandlers Structure">SiSpwHandlers
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial">, and </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwEvent Types">SiSpwEvent
+Types</A></FONT><FONT SIZE="-1" FACE="Arial"> for more information
+about event types.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGetDeviceID"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGetDeviceID</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">SiDevID SiGetDeviceID( SiHdl hdl
+)</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare handle returned by
+         SiOpen</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">If there is no error, the function
+returns the device ID and </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpwErrorVal">SpwErrorVal</A></FONT><FONT
+SIZE="-1" FACE="Arial"> is set to SPW_NO_ERROR. Otherwise,
+SpwErrorVal can be one of the following:</FONT> <TABLE BORDER=0
+CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_NO_DEVICE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the handle is not attached
+         to a device</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1"
+         FACE="Arial">SI_UNINITIALIZED</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare has not been
+         initialized.</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_NO_DRIVER</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the driver is not
+         running</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">devId = SiGetDeviceID (hdl);</FONT></B>
+</P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">Given a SpaceWare handle, this function
+returns the ID of the associated device.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGetDeviceInfo"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGetDeviceInfo</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiGetDeviceInfo( SiHdl
+hdl, SiDevInfo *pInfo )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare handle returned by
+         SiOpen</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pInfo</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(w/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to storage for
+         returned Spaceball device information</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiGetDeviceInfo (hdl,
+&amp;info);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">SiGetDeviceInfo returns a variety of
+information about the Spaceball device: device type, number of
+buttons, and firmware version. See the description of the
+</FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiDevInfo Structure">SiDevInfo
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial"> for more
+information.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGetDriverInfo"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGetDriverInfo</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiGetDriverInfo(
+SiVerInfo *pInfo )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pInfo</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(w/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to storage for
+         returned Spaceball device information</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the driver did not return a
+         version number</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiGetDriverInfo (&amp;info);</FONT></B>
+</P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">SiGetDriverInfo returns the version
+number of the SpaceWare driver. See the description of the
+</FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiVerInfo Structure">SiVerInfo
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial"> for more
+information.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGetEvent"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGetEvent</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiGetEvent( SiHdl hdl,
+int flags, SiGetEventData *pData, SiSpwEvent *pEvent )</FONT></B>
+<TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">flags</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">processing flags: should be
+         0</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pData</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to platform-specific
+         data</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pEvent</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(w/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to storage for
+         returned SpaceWare event</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no event is
+         pending</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_NOT_EVENT</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the event is not a SpaceWare
+         event</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_IS_EVENT</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the event is a SpaceWare
+         event</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_SKIP_EVENT</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the event is a SpaceWare
+         event but it should be skipped</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiGetEvent (hdl, 0, &amp;gData,
+&amp;event);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function checks to see if the
+specified Windows message is a message from the requested Spaceball
+device and, if so, returns the data as a SpaceWare event. SiGetEvent
+is invoked by the application routine that receives the system
+messages. Event information is passed via the </FONT><I><FONT
+SIZE="-1" FACE="Arial">pData</FONT></I><FONT SIZE="-1" FACE="Arial">
+argument. If a message is not from the API (therefore not a SpaceWare
+message) the function return value is SI_NOT_EVENT. In this case the
+message may need further processing. Otherwise, the function return
+value is SI_IS_EVENT and a SpaceWare event is returned by the
+</FONT><I><FONT SIZE="-1" FACE="Arial">pEvent</FONT></I><FONT
+SIZE="-1" FACE="Arial"> argument. For more information see
+</FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwEvent Structure">SiSpwEvent
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial">. If SiGetEvent
+returns a value of SI_SKIP_EVENT, this indicates the event is indeed
+a SpaceWare event, but should not be processed because it is not
+associated with the specified SpaceWare handle.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">Each SpaceWare event is assigned one
+of the following event types described below:</FONT> <TABLE BORDER=0
+CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BUTTON_EVENT</FONT>&nbsp;
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">a SpaceWare button
+         event</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_MOTION_EVENT</FONT>&nbsp;
+      
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">a Spaceware motion
+         event</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1"
+         FACE="Arial">SI_EXCEPTION_EVENT</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">the SpaceWare device
+         returned indecipherable data</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_ZERO_EVENT</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no information from the
+         SpaceWare device</FONT>&nbsp;
+      </TD></TR>
+</TABLE> <FONT SIZE="-1" FACE="Arial">If the event is a
+SI_BUTTON_EVENT it returns its data using the </FONT><I><FONT
+SIZE="-1" FACE="Arial">spwData</FONT></I><FONT SIZE="-1"
+FACE="Arial"> portion of the union. The </FONT><I><FONT SIZE="-1"
+FACE="Arial">bData</FONT></I><FONT SIZE="-1" FACE="Arial"> field
+contains the states of all the buttons on the device (see
+</FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiButtonData Structure">SiButtonData
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial"> for more
+information). For simple press and release processing, the functions
+</FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiButtonPressed">SiButtonPressed</A></FONT><FONT
+SIZE="-1" FACE="Arial"> and </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiButtonReleased">SiButtonReleased</A></FONT><FONT
+SIZE="-1" FACE="Arial"> can be used to retrieve a button number from
+the </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwEvent Structure">SiSpwEvent
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial">.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">If the event is a SI_MOTION_EVENT, it
+returns its data using spwData. Only the </FONT><I><FONT SIZE="-1"
+FACE="Arial">mData</FONT></I><FONT SIZE="-1" FACE="Arial"> and
+</FONT><I><FONT SIZE="-1" FACE="Arial">period</FONT></I><FONT
+SIZE="-1" FACE="Arial"> fields are valid for a Motion event.
+</FONT><I><FONT SIZE="-1" FACE="Arial">mData</FONT></I><FONT
+SIZE="-1" FACE="Arial"> contains the axis data from the Spaceball in
+the following order:</FONT></P>
+
+<BLOCKQUOTE><P><FONT SIZE="-1" FACE="Arial">Translation along
+X</FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">Translation along Y</FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">Translation along Z</FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">Rotation about X</FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">Rotation about Y</FONT><BR>
+
+<FONT SIZE="-1" FACE="Arial">Rotation about Z.</FONT></P>
+</BLOCKQUOTE>
+
+<P><FONT SIZE="-1" FACE="Arial">You may wish to use the </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpaceWare Data Offsets">SpaceWare
+Data Offsets</A></FONT><FONT SIZE="-1" FACE="Arial"> to get the axis
+data.</FONT></P>
+
+<P><I><FONT SIZE="-1" FACE="Arial">period</FONT></I><FONT SIZE="-1"
+FACE="Arial"> contains the time in milliseconds since the last
+Spaceball event.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">If the event is a SI_ZERO_EVENT, it
+returns zero for all axes in </FONT><I><FONT SIZE="-1"
+FACE="Arial">spwData</FONT></I><FONT SIZE="-1" FACE="Arial">.</FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial">If the event is a SI_EXCEPTION_EVENT,
+the data is returned in </FONT><I><FONT SIZE="-1"
+FACE="Arial">exData</FONT></I><FONT SIZE="-1" FACE="Arial">. This
+data represents a unrecognized packet from the attached
+device.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGetEventWinInit"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGetEventWinInit</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">void SiGetEventWinInit( SiGetEventData
+*pData, UINT msg, WPARAM wParam, LPARAM lParam )</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pData</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(w/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to storage for
+         returned platform-specific data</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">msg</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Windows message</FONT>&nbsp;
+      
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">wParam</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">parameter one passed into
+         the Windows message procedure</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">lParam</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">parameter two passed into
+         the Windows message procedure</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">Nothing</FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiGetEventWinInit (&amp;gData, msg,
+wParam, lParam);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial" COLOR="#000000">SiGetEventWinInit
+</FONT><FONT SIZE="-1" FACE="Arial">initializes the Windows
+platform-specific data for a subsequent call to </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiGetEvent">SiGetEvent</A></FONT><FONT
+SIZE="-1" FACE="Arial">.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGetLibraryInfo"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGetLibraryInfo</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">void SiGetLibraryInfo( SiVerInfo
+*pInfo )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pInfo</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(w/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to storage for
+         returned Spaceball device information</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function does not return any
+value.</FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiGetLibraryInfo (&amp;info);</FONT></B>
+</P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">SiGetLibraryInfo returns the version
+number of the SpaceWare library. See the description of the
+</FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiVerInfo Structure">SiVerInfo
+Structure</A></FONT><FONT SIZE="-1" FACE="Arial"> for more
+information.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGetNumDevices"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGetNumDevices</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">int SiGetNumDevices( void )</FONT></B>
+</P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">If the SpaceWare Input Library is
+initialized, this function returns the number of devices and
+SpwErrorVal is set to SPW_NO_ERROR. Otherwise, the return code is -1
+and SpwErrorVal is set to either SI_UNINITIALIZED or
+SI_NO_DRIVER.</FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">num = SiGetNumDevices ();</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function returns the number of
+input devices detected by the driver.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiGrabDevice"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiGrabDevice</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiGrabDevice( SiHdl
+hdl, SPWbool exclusive )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare handle returned by
+         SiOpen</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">exclusive</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">flag to determine if the
+         grab should be exclusive (SPW_TRUE) or </FONT><FONT
+         SIZE="-1" FACE="Times New Roman">“</FONT><FONT SIZE="-1"
+         FACE="Arial">soft</FONT><FONT SIZE="-1"
+         FACE="Times New Roman">”</FONT><FONT SIZE="-1" FACE="Arial">
+         (SPW_FALSE)</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">grab failed</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiGrabDevice (hdl, SPW_FALSE);</FONT></B>
+</P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function is used to </FONT><FONT
+SIZE="-1" FACE="Times New Roman">“</FONT><FONT SIZE="-1"
+FACE="Arial">grab</FONT><FONT SIZE="-1"
+FACE="Times New Roman">”</FONT><FONT SIZE="-1" FACE="Arial"> or
+capture a device in multi-tasking environments. For an exclusive
+capture, the application retains control of the device regardless of
+which window has the focus. For a non-exclusive or </FONT><FONT
+SIZE="-1" FACE="Times New Roman">“</FONT><FONT SIZE="-1"
+FACE="Arial">soft</FONT><FONT SIZE="-1"
+FACE="Times New Roman">”</FONT><FONT SIZE="-1" FACE="Arial"> capture,
+the application retains control of the device only if no other
+application, sharing the same device, has the focus.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">Some SpaceWare implementations allow
+only one non-exclusive grab. Others allow multiple non-exclusive
+grabs and provide an interface to interactively select the current
+non-exclusive grab application.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">An exclusive grab fails if another
+application already has exclusively captured the device. A
+non-exclusive grab fails if the SpaceWare implementation allows only
+one non-exclusive grab and another application already has
+non-exclusively captured the device.</FONT><BR>
+
+<BR>
+
+<TABLE BORDER=1 CELLPADDING=5 HEIGHT=88>
+   <TR>
+      <TD>
+         <P><B><FONT SIZE="-1" FACE="Arial"
+         COLOR="#AF0000">Note</FONT></B><FONT SIZE="-1"
+         FACE="Arial">:</FONT><BR>
+         
+         <FONT SIZE="-1" FACE="Arial">An exclusive grab should be
+         used sparingly, if at all.</FONT>&nbsp;
+      </TD></TR>
+</TABLE><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiInitialize"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiInitialize</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiInitialize(
+)</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">&nbsp;</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">initialization
+         error</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiInitialize ();</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function initializes the SpaceWare
+Input Library. Since most input functions require the library to be
+initialized, call this function before you call any other input
+functions.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiOpen"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiOpen</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">SiHdl SiOpen( char *pAppName, SiDevID
+devID, SiTypeMask *pTMask, int mode, SiOpenData *pData )</FONT></B>
+<TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pAppName</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to application
+         name</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">devID</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">device ID or SI_ANY_DEVICE
+         to select by device type</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pTMask</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to device type mask
+         if ID is SI_ANY_DEVICE</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">mode</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare event retrieval
+         method: SI_EVENT or SI_POLL. Only SI_EVENT is currently
+         supported.</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pData</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to platform-specific
+         data if mode is SI_EVENT</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">If the function succeeds, the return
+value is the Spaceball input device handle. If this function fails,
+it returns a NULL value and sets the global variable SpwErrorVal to
+one of the following:</FONT> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Spaceball device could not
+         be opened</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_ID</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid device
+         ID</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_VALUE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid
+         argument</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_UNSUPPORTED</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">specified retrieval method
+         is unsupported</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">devHandle = SiOpen ("app name",
+SI_ANY_DEVICE,</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SI_NO_MASK, SI_EVENT,
+&amp;oData);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">The SiOpen function checks for the
+Spaceball input device number, as specified in the Configuration
+program. Most SpaceWare functions use the Spaceball input device
+handle returned by this function to reference the requested Spaceball
+input device.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiOpenWinInit"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiOpenWinInit</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">void SiOpenWinInit( SiOpenData *pData,
+HWND hWnd )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pData</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(w/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to storage for
+         returned platform-specific data</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hWnd</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">Window handle</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">Nothing</FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiOpenWinInit (&amp;oData,
+hWnd);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">SiOpenWinInit initializes the Windows
+platform-specific data for a subsequent call to </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiOpen">SiOpen</A></FONT><FONT SIZE="-1"
+FACE="Arial">.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiReleaseDevice"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiReleaseDevice</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiReleaseDevice( SiHdl
+hdl )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare handle returned by
+         SiOpen</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">device not
+         captured</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiReleaseDevice (hdl);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function releases a device that has
+been captured via the function </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiGrabDevice">SiGrabDevice</A></FONT><FONT
+SIZE="-1" FACE="Arial">. A captured device is automatically released
+when closed with </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiClose">SiClose</A></FONT><FONT SIZE="-1"
+FACE="Arial"> or when the application terminates.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiRezero"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiRezero</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiRezero( SiHdl hdl
+)</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hdl</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare handle returned by
+         SiOpen</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_HANDLE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">invalid SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiRezero (hdl);</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">SiRezero causes the Spaceball
+device</FONT><FONT SIZE="-1" FACE="Times New Roman">’</FONT><FONT
+SIZE="-1" FACE="Arial">s current setting to be defined as the rest
+position. Movement away from this position cause </FONT><FONT
+SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SiSpwEvent Types">motion
+events</A></FONT><FONT SIZE="-1" FACE="Arial">. This is used to halt
+image drift or set up a constant motion.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiSetTypeMask (Obsolete)"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiSetTypeMask (Obsolete)</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiSetTypeMask(
+SiTypeMask *pTMask, int type1, ..., SI_END_ARGS )</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pTMask</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(w/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">pointer to storage for
+         returned device type mask</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">type1</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">first device
+         type</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><B><FONT SIZE="-1" FACE="Arial">...</FONT></B>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">additional device
+         types</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B> <TABLE
+BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SPW_NO_ERROR</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">no error</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SI_BAD_VALUE</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">bad type</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function has been removed from the
+SDK and is included only to enable older applications to link with
+this version of the library without changing any source code.</FONT>
+</P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiSetUiMode"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiSetUiMode</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">enum SpwRetVal SiSetUiMode( SiHdl hdl,
+SPWuint32 mode )</FONT></B> <TABLE BORDER=0 CELLPADDING=5>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">hld</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">SpaceWare
+         handle</FONT>&nbsp;
+      </TD></TR>
+   <TR>
+      <TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">mode</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">(r/o)</FONT>&nbsp;
+      </TD><TD VALIGN=top>
+         <P><FONT SIZE="-1" FACE="Arial">UI Mode</FONT>&nbsp;
+      </TD></TR>
+</TABLE><BR>
+
+<B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiSetUiMode (SI_ALL_HANDLES,
+SI_UI_ALL_CONTROLS)</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">The SiSetUiMode function changes the
+state of the driver menu window from within an application.</FONT>
+</P>
+
+<P><FONT SIZE="-1" FACE="Arial">Make this call before you use
+</FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiOpen">SiOpen</A></FONT><FONT SIZE="-1"
+FACE="Arial">. This function allows the application to turn off the
+driver menu by using SI_UI_NO_CONTROLS.</FONT></P>
+
+<P><FONT SIZE="-1" FACE="Arial">See </FONT><FONT SIZE="-1"
+FACE="Arial"
+COLOR="#008000"><A HREF="InputLib.htm#SpaceWare UI Mode Setting">SpaceWare
+UI Mode Settings</A></FONT><FONT SIZE="-1" FACE="Arial"> for more
+information.</FONT></P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SiTerminate"></A><B><FONT FACE="Arial"
+COLOR="#000080">SiTerminate</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">void SiTerminate( )</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">&nbsp;</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">None</FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">SiTerminate ();</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function must be called to shut
+down the SpaceWare Input Library correctly. Once the SpaceWare Input
+Library is shut down, use </FONT><FONT SIZE="-1" FACE="Arial"
+COLOR="#008000"><A HREF="#SiInitialize">SiInitialize</A></FONT><FONT
+SIZE="-1" FACE="Arial"> before calling any input functions.</FONT>
+</P>
+
+<P><B><FONT FACE="Arial" COLOR="#000080">&nbsp;</FONT></B></P>
+
+<P><A NAME="SpwErrorString"></A><B><FONT FACE="Arial"
+COLOR="#000080">SpwErrorString</FONT></B></P>
+
+<P><B><FONT FACE="Courier New">char *SpwErrorString( enum SpwRetVal
+val )</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">&nbsp;</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Return Value</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">A pointer to a character string
+representing the return value passed into the function.</FONT></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Example</FONT></B><BR>
+
+<B><FONT FACE="Courier New">printf (</FONT><FONT
+FACE="Times New Roman">“</FONT><FONT FACE="Courier New">Error:
+%s\n</FONT><FONT FACE="Times New Roman">”</FONT><FONT
+FACE="Courier New">, SpwErrorString (SpwErrorVal));</FONT></B></P>
+
+<P><B><FONT SIZE="-1" FACE="Arial">Description</FONT></B><BR>
+
+<FONT SIZE="-1" FACE="Arial">This function converts the
+</FONT><I><FONT SIZE="-1" FACE="Arial">SpwRetVal</FONT></I><FONT
+SIZE="-1" FACE="Arial"> error/return codes into a string for
+display.</FONT></P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P>&nbsp;</P>
+</BODY>
+</HTML>

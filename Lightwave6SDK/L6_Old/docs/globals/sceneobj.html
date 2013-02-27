@@ -1,0 +1,220 @@
+<html>
+
+<head>
+<title>Globals: Scene Objects</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="sceneinf.html"><img width="96" height="20" border="0"
+    src="../images/navlt.gif" alt="LW Scene Info 2"></a> </td>
+    <td width="96" align="left"><a href="sysid.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="System ID"></a> </td>
+    <td width="96" align="left"><a href="../globals.html"><img width="56" height="20"
+    border="0" src="../images/navup.gif" alt="Globals"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20"
+    border="0" src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+    <h3>&quot;Scene Objects&quot;</h3>
+    <p><small><strong>Availability:</strong>&nbsp; LightWave 6.0</small><br>
+    <small><strong>Component:</strong>&nbsp; Layout</small></p>
+    <p>The scene objects global gives plug-ins access to the internal representation of each
+    object file loaded into the scene. Functions are provided for scanning the points,
+    polygons and vertex maps of an object.</p>
+    <p><strong>Global Call</strong></p>
+    <pre>   LWObjectFuncs *objfunc;
+   objfunc = global( &quot;Scene Objects&quot;, GFUSE_TRANSIENT );</pre>
+    <p>The global function returns a pointer to an LWObjectFuncs.</p>
+    <pre>   typedef struct st_LWObjectFuncs {
+      int          (*numObjects)  (void);
+      const char * (*filename)    (int obj);
+      int          (*maxLayers)   (int obj);
+      int          (*layerExists) (int obj, int lnum);
+      void         (*pivotPoint)  (int obj, int lnum, LWFVector pos);
+      LWMeshInfo * (*layerMesh)   (int obj, int lnum);
+      int          (*numVMaps)    (LWID);
+      const char * (*vmapName)    (LWID, int index);
+      int          (*vmapDim)     (LWID, int index);
+   } LWObjectFuncs;</pre>
+    <dl>
+      <dt><tt>count = numObjects()</tt> </dt>
+      <dd>Returns a count of the number of objects in the scene's object database. This is the
+        number of unique object files that have been loaded, which in general will be different
+        from the number of animateable object items (clones and null objects, for example, aren't
+        counted). </dd>
+      <dt><tt><br>
+        name = filename( object_index )</tt> </dt>
+      <dd>Returns the filename for the object. Objects in the database are indexed by integers
+        ranging from 0 to <tt>count</tt> - 1. Except during rendering, the index associated with a
+        given object can change at any time as objects are added to or removed from the object
+        database by the user.</dd>
+      <dt><tt><br>
+        maxlayer = maxLayers( object_index )</tt> </dt>
+      <dd>Returns a value one greater than the highest indexed, existing layer for the object.
+        This is just the layer count if all layers with indexes between 0 and <tt>maxlayer</tt> -
+        1 exist.</dd>
+      <dt><tt><br>
+        exists = layerExists( object_index, layer_index )</tt> </dt>
+      <dd>True if the layer exists.</dd>
+      <dt><tt><br>
+        pivotPoint( object_index, layer_index, pos )</tt> </dt>
+      <dd>Gets the pivot point for the object layer.</dd>
+      <dt><tt><br>
+        mesh = layerMesh( object_index, layer_index )</tt></dt>
+      <dd>Returns a mesh info structure for the object layer. These are described in detail below.
+        Call the mesh info <tt>destroy</tt> function when you no longer need it. This frees
+        resources allocated by <tt>layerMesh</tt>.</dd>
+      <dt><tt><br>
+        vmap_count = numVMaps( vmtype );</tt></dt>
+      <dd>Returns a count of the number of vertex maps of a given type. Vmap type codes are an
+        extensible set of four-character identifiers. The header file <tt>lwmeshes.h</tt> defines
+        some of the common vmap IDs.<blockquote>
+          <p><tt>LWVMAP_PICK</tt> -<br>
+          <tt>LWVMAP_WGHT</tt> - weight map<br>
+          <tt>LWVMAP_MNVW</tt> -<br>
+          <tt>LWVMAP_TXUV</tt> - texture UV coordinates<br>
+          <tt>LWVMAP_MORF</tt> - vertex displacement<br>
+          <tt>LWVMAP_SPOT</tt> -</p>
+        </blockquote>
+      </dd>
+      <dt><tt>vmap_name = vmapName( vmtype, vmindex );</tt></dt>
+      <dd>Returns the name of a vmap.</dd>
+      <dt><tt><br>
+        dimensions = vmapDim( vmtype, vmindex );</tt></dt>
+      <dd>Returns the number of dimensions, or values per vertex, of a vmap. Vmaps are typically
+        2D or 3D (two or three coordinate values per vertex), but they can have any number of
+        dimensions.</dd>
+    </dl>
+    <p><strong>Mesh Info</strong></p>
+    <p>The <tt>layerMesh</tt> function returns a structure of type LWMeshInfo.</p>
+    <pre>   typedef struct st_GCoreVertex *  LWPntID;
+   typedef struct st_GCorePolygon * LWPolID;
+   typedef struct st_LWMeshInfo *   LWMeshInfoID;
+
+   typedef int LWPntScanFunc (void *, LWPntID);
+   typedef int LWPolScanFunc (void *, LWPolID);
+
+   typedef struct st_LWMeshInfo {
+      void         *priv;
+      void         (*destroy)     (LWMeshInfoID);
+      int          (*numPoints)   (LWMeshInfoID);
+      int          (*numPolygons) (LWMeshInfoID);
+      int          (*scanPoints)  (LWMeshInfoID, LWPntScanFunc *, void *);
+      int          (*scanPolys)   (LWMeshInfoID, LWPolScanFunc *, void *);
+      void         (*pntBasePos)  (LWMeshInfoID, LWPntID, LWFVector pos);
+      void         (*pntOtherPos) (LWMeshInfoID, LWPntID, LWFVector pos);
+      int          (*pntVSelect)  (LWMeshInfoID, LWID, const char *);
+      int          (*pntVGet)     (LWMeshInfoID, LWPntID, float *vector);
+      LWID         (*polType)     (LWMeshInfoID, LWPolID);
+      int          (*polSize)     (LWMeshInfoID, LWPolID);
+      LWPntID      (*polVertex)   (LWMeshInfoID, LWPolID, int);
+      const char * (*polTag)      (LWMeshInfoID, LWPolID, LWID);
+   } LWMeshInfo;</pre>
+    <dl>
+      <dt><tt>priv</tt></dt>
+      <dd>An opaque pointer to private data used internally by the mesh info functions.</dd>
+      <dt><tt><br>
+        destroy( meshinfo )</tt></dt>
+      <dd>Frees resources allocated by the <tt>layerMesh</tt> call that created this LWMeshInfo.
+        This should only be called by the client that created it.</dd>
+      <dt><tt><br>
+        npts = numPoints( meshinfo )</tt></dt>
+      <dd>Returns the number of points in the object.</dd>
+      <dt><tt><br>
+        npols = numPolygons( meshinfo )</tt></dt>
+      <dd>Returns the number of polygons in the object.</dd>
+      <dt><tt><br>
+        result = scanPoints( meshinfo, pointscan_func, mydata )</tt></dt>
+      <dd>Enumerate the points in the object. The callback you supply is called for each point in
+        the object. The <tt>mydata</tt> argument is passed to the callback and can be anything it
+        might require. Enumeration stops if your callback returns a non-zero value, and this value
+        is then returned by <tt>scanPoints</tt>. Otherwise it returns 0.</dd>
+      <dt><tt><br>
+        result = scanPolygons( meshinfo, polyscan_func, mydata )</tt></dt>
+      <dd>Enumerate the polygons in the object.</dd>
+      <dt><tt><br>
+        pntBasePos( meshinfo, point, pos )</tt></dt>
+      <dd>Gets the base position of a point. This is the position of the point at rest in the
+        basic object coordinate system.</dd>
+      <dt><tt><br>
+        pntOtherPos( meshinfo, point, pos )</tt></dt>
+      <dd>Gets an alternate position for the point. This many be the same as the base position or
+        it may be the position of the point after some transformation. The nature of the alternate
+        position depends on how the mesh info was created.</dd>
+      <dt><tt><br>
+        dim = pntVSelect( meshinfo, vmap_type, vmap_name )</tt></dt>
+      <dd>Selects a vmap for reading vectors. The vmap is given by its four-character identifier
+        and its name string. The function returns the dimension of the vmap, or -1 if no vmap was
+        found with the given ID and name.</dd>
+      <dt><tt><br>
+        ismapped = pntVGet( meshinfo, point, val )</tt></dt>
+      <dd>Reads the vmap vector for a point. The vector is read from the vmap selected by a
+        previous call to <tt>pntVSelect</tt>. If the point is mapped (has a vmap value in the
+        selected vmap), the <tt>val</tt> array is filled with the vmap vector for the point, and <tt>pntVGet</tt>
+        returns true. The <tt>val</tt> array must have at least as many elements as the number
+        returned by <tt>pntVSelect</tt>.</dd>
+      <dt><tt><br>
+        type = polType( meshinfo, polygon )</tt></dt>
+      <dd>Returns the type of a polygon. &quot;Polygon&quot; here refers to a number of different
+        kinds of geometric atoms, including things like curves and bones. The polygon type codes
+        are an extensible set of four-character identifiers. The header file <tt>lwmeshes.h</tt>
+        defines the most common ones.<blockquote>
+          <p><tt>LWPOLTYPE_FACE</tt> - face<br>
+          <tt>LWPOLTYPE_CURV</tt> - higher order curve<br>
+          <tt>LWPOLTYPE_PTCH</tt> - higher order surface patch<br>
+          <tt>LWPOLTYPE_MBAL</tt> - metaball<br>
+          <tt>LWPOLTYPE_BONE</tt> - bone</p>
+        </blockquote>
+      </dd>
+      <dt><tt>nvert = polSize( meshinfo, polygon )</tt></dt>
+      <dd>Returns the number of vertices that the polygon has.</dd>
+      <dt><tt><br>
+        point = polVertex( meshinfo, polygon, vert_index )</tt></dt>
+      <dd>Returns the point ID for a vertex of the polygon. Vertex indexes range from 0 to <tt>nvert</tt>
+        - 1.</dd>
+      <dt><tt><br>
+        tagname = polTag( meshinfo, polygon, tagID )</tt></dt>
+      <dd>Returns the tag string of the given type associated with the polygon. A null string
+        pointer means that the polygon does not have a tag of that type. <tt>lwmeshes.h</tt>
+        defines the most common polygon tags. <dl>
+          <dt><tt><br>
+            LWPTAG_SURF</tt></dt>
+          <dd>The name of the surface applied to the polygon.</dd>
+          <dt><tt>LWPTAG_PART</tt></dt>
+          <dd>The name of a polygon group the polygon belongs to.</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p><strong>Example</strong></p>
+    <p>This code fragment doesn't do much of anything yet.</p>
+    <pre>   #include &lt;lwserver.h&gt;
+   #include &lt;lwmeshes.h&gt;
+
+   LWObjectFuncs *objfunc;
+   LWMeshInfo *meshinfo;
+   int objindex, layindex;
+
+   objfunc = global( &quot;Scene Objects&quot;, GFUSE_TRANSIENT );
+
+   if ( objfunc ) {
+      ...
+<tt>      meshinfo = layerMesh( objindex, layindex )</tt>;
+      if ( meshinfo ) {
+         ...
+         meshinfo-&gt;destroy( meshinfo );
+      }
+   }
+</pre>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

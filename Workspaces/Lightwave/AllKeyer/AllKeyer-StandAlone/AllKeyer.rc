@@ -1,0 +1,366 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\AllKeyer.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAINFRAME           ICON    DISCARDABLE     "icon1.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDR_ABOUTBOX DIALOG DISCARDABLE  0, 0, 199, 76
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About AllKeyer"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDI_MAINFRAME,IDC_STATIC,11,17,20,20
+    CTEXT           "Lightwave 3D All-Keyer V1.0",IDC_STATIC,40,5,119,8,
+                    SS_NOPREFIX
+    CTEXT           "Copyright (C) 1999 TM Productions",IDC_STATIC,40,15,119,
+                    10
+    DEFPUSHBUTTON   "OK",IDOK,84,55,30,14,WS_GROUP
+    CTEXT           "http://www.tmproductions.com",IDC_STATIC,35,35,119,10
+END
+
+IDD_ALLKEYER_MAIN DIALOGEX 0, 0, 453, 143
+STYLE WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "All-Keyer for Lightwave 3D"
+MENU IDR_MAIN_MENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&Process Scenes",IDOK,5,100,175,14,WS_GROUP
+    LTEXT           "&Compare File",IDC_STATIC,185,7,55,10,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_COMPARE,249,6,178,12,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+    PUSHBUTTON      "",IDC_OPEN_COMPARE,430,5,16,13,BS_BITMAP
+    LTEXT           "&Source Pattern",IDC_STATIC,185,21,55,10,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_SOURCE,249,20,178,12,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+    PUSHBUTTON      "",IDC_OPEN_SOURCE,430,19,16,13,BS_BITMAP
+    LTEXT           "&Destination Path",IDC_STATIC,185,36,55,10,0,
+                    WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_DESTINATION,249,33,177,12,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+    PUSHBUTTON      "",IDC_OPEN_DESTINATION,430,33,16,13,BS_BITMAP
+    COMBOBOX        IDC_COMBO_KEY_MODE,250,50,101,59,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_COMPARE_MODE,90,13,80,59,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Use Frame 0?",IDC_CHECK_USEFRAME0,"Button",
+                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_GROUP | WS_TABSTOP,9,
+                    27,90,10,WS_EX_RIGHT
+    CONTROL         "Last Key &is Last Frame?",IDC_CHECK_LASTKEY,"Button",
+                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_GROUP | WS_TABSTOP,9,
+                    37,90,10,WS_EX_RIGHT
+    CONTROL         "Pause On &Errors?",IDC_CHECK_PAUSEONERRORS,"Button",
+                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_GROUP | WS_TABSTOP,9,
+                    47,90,10,WS_EX_RIGHT
+    LTEXT           "&Log File",IDC_STATIC,9,74,29,10,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_LOGFILE,45,74,237,12,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+    PUSHBUTTON      "",IDC_OPEN_LOGFILE,288,74,16,13,BS_BITMAP
+    COMBOBOX        IDC_COMBO_LOG_MODE,309,74,88,48,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Append?",IDC_CHECK_APPEND,"Button",BS_AUTOCHECKBOX | 
+                    BS_LEFTTEXT | WS_GROUP | WS_TABSTOP,400,75,46,10,
+                    WS_EX_RIGHT
+    PUSHBUTTON      "&Help",ID_HELP,190,100,95,14,WS_GROUP
+    PUSHBUTTON      "&Quit",IDCANCEL,295,100,155,14,WS_GROUP
+    PUSHBUTTON      "A&bout",ID_ABOUTBOX,410,122,40,15,WS_GROUP
+    GROUPBOX        "Log",IDC_STATIC,7,65,443,25
+    GROUPBOX        "Options",IDC_STATIC,5,5,170,55
+    LTEXT           "Status",IDC_STATIC,10,127,25,10
+    LTEXT           "Lightwave 3D All-Keyer Standing By",IDC_RO_STATUS,40,
+                    127,360,10,0,WS_EX_STATICEDGE
+    RTEXT           "C&ompare Method",IDC_STATIC,25,15,60,10
+    RTEXT           "&Key Method",IDC_STATIC,200,52,45,10
+    LTEXT           "Frame Step",IDC_STATIC,354,52,45,10,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_KEY_VALUE,403,50,42,12,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+END
+
+IDD_ALLKEYER_PROCESSING DIALOGEX 0, 0, 309, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Pause",ID_PAUSE,5,115,95,14
+    PUSHBUTTON      "Abort",ID_ABORT,205,115,95,14
+    PUSHBUTTON      "Skip",ID_SKIP,105,115,95,14
+    LTEXT           "All-Keying Scenes...",IDC_STATIC,121,5,65,10
+    LTEXT           "Compare ",IDC_STATIC,5,20,35,10,0,WS_EX_RIGHT
+    LTEXT           "compare_file.txt",IDC_RO_COMPARE,45,20,255,10,0,
+                    WS_EX_STATICEDGE
+    LTEXT           "To",IDC_STATIC,10,35,30,10,0,WS_EX_RIGHT
+    LTEXT           "output_file.txt",IDC_RO_TO,45,35,255,10,0,
+                    WS_EX_STATICEDGE
+    LTEXT           "From",IDC_STATIC,10,50,30,10,0,WS_EX_RIGHT
+    LTEXT           "input_file.txt",IDC_RO_FROM,45,50,255,10,0,
+                    WS_EX_STATICEDGE
+    CONTROL         "Progress1",IDC_PROGRESS_SCENE,"msctls_progress32",
+                    WS_BORDER,110,70,195,15
+    LTEXT           "Scene X XX of YYY",IDC_RO_SCENE,9,73,96,10,0,
+                    WS_EX_RIGHT
+    CONTROL         "Progress1",IDC_PROGRESS_OBJECT,"msctls_progress32",
+                    WS_BORDER,110,90,195,15
+    LTEXT           "XXX Keyed; YYY Removed",IDC_RO_OBJECT,10,93,95,10,0,
+                    WS_EX_RIGHT
+    GROUPBOX        "",IDC_STATIC,2,108,302,24
+    GROUPBOX        "",IDC_STATIC,3,13,301,52
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "LIghtwave 3D All-Keyer\0"
+            VALUE "CompanyName", "TM Productions\0"
+            VALUE "FileDescription", "AllKeyer MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "AllKeyer\0"
+            VALUE "LegalCopyright", "Copyright (C) 1999 TM Productions.  All Rights Reserved\0"
+            VALUE "OriginalFilename", "AllKeyer.EXE\0"
+            VALUE "ProductName", "AllKeyer Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDR_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 192
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 69
+    END
+
+    IDD_ALLKEYER_MAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 446
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 136
+    END
+
+    IDD_ALLKEYER_PROCESSING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 128
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_ALLKEYER_MAIN DLGINIT
+BEGIN
+    IDC_COMBO_KEY_MODE, 0x403, 19, 0
+0x654b, 0x2079, 0x7645, 0x7265, 0x2079, 0x2058, 0x7246, 0x6d61, 0x7365, 
+"\000" 
+    IDC_COMBO_KEY_MODE, 0x403, 21, 0
+0x694c, 0x656e, 0x7261, 0x4120, 0x7070, 0x6f72, 0x6978, 0x616d, 0x6974, 
+0x6e6f, "\000" 
+    IDC_COMBO_COMPARE_MODE, 0x403, 7, 0
+0x6e28, 0x6e6f, 0x2965, "\000" 
+    IDC_COMBO_COMPARE_MODE, 0x403, 16, 0
+0x654b, 0x7065, 0x4920, 0x2066, 0x614d, 0x6374, 0x6568, 0x0064, 
+    IDC_COMBO_COMPARE_MODE, 0x403, 18, 0
+0x6552, 0x6f6d, 0x6576, 0x4920, 0x2066, 0x614d, 0x6374, 0x6568, 0x0064, 
+
+    IDC_COMBO_LOG_MODE, 0x403, 9, 0
+0x6e28, 0x206f, 0x6f6c, 0x2967, "\000" 
+    IDC_COMBO_LOG_MODE, 0x403, 12, 0
+0x7245, 0x6f72, 0x7372, 0x4f20, 0x6c6e, 0x0079, 
+    IDC_COMBO_LOG_MODE, 0x403, 7, 0
+0x6953, 0x706d, 0x656c, "\000" 
+    IDC_COMBO_LOG_MODE, 0x403, 9, 0
+0x6544, 0x6174, 0x6c69, 0x6465, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Save Settings",              IDM_SAVE_SETTINGS
+        MENUITEM "A&bout",                      ID_ABOUTBOX
+        MENUITEM SEPARATOR
+        MENUITEM "&Quit",                       IDCANCEL
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_OPEN_FILE           BITMAP  DISCARDABLE     "res\\OpenFile.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATORS ACCELERATORS DISCARDABLE 
+BEGIN
+    "Q",            IDCANCEL,               VIRTKEY, CONTROL, NOINVERT
+    "S",            IDM_SAVE_SETTINGS,      VIRTKEY, CONTROL, NOINVERT
+    "T",            IDC_COMBO_LOG_MODE,     VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About the All-Keyer..."
+    IDS_DEFAULT_STATUS_TEXT "Lightwave 3D All-Keyer, 1999 TM Productions, started "
+    IDS_BAD_COMPARE_NAME    "The Compare Filename specified doesn't exist.\nChoose a valid filename and try again."
+    IDS_BAD_DESTINATION_NAME 
+                            "The Destination Path specified doesn't exist.\nChoose a valid path and try again."
+    IDS_BAD_SOURCE_NAME     "The no files wer found that match the Source Pattern.\nEnsure there is at least one match for the pattern\n and try again."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\AllKeyer.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

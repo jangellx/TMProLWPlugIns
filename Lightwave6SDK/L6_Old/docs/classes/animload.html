@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<title>Classes: AnimLoaderHandler</title>
+<style type="text/css"><!--tt { font-size: 10pt } pre { font-size: 10pt }--></style>
+</head>
+
+<body bgcolor="#c0c0c0" text="#000000" link="#000080" vlink="#800000" alink="#0000ff">
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="120" align="left"><a href="volume.html"><img width="96" height="20"
+    border="0" src="../images/navlt.gif" alt="VolumetricHandler"></a> </td>
+    <td width="96" align="left"><a href="animsave.html"><img width="64" height="20" border="0"
+    src="../images/navrt.gif" alt="AnimSaverHandler"></a> </td>
+    <td width="96" align="left"><a href="../classes.html"><img width="56" height="20" border="0"
+    src="../images/navup.gif" alt="Classes"></a> </td>
+    <td width="288" align="right"><a href="../index.html"><img width="230" height="20" border="0"
+    src="../images/proglw.gif" alt="Table of Contents"></a> </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="600"><hr>
+
+<h3>AnimLoaderHandler<br>
+AnimLoaderInterface</h3>
+    <p>At each time step, an animation loader gives Layout a frame from an animation file.</p>
+    <p><strong>Background</strong></p>
+    <p>Animation loaders must be prepared to provide random access to the frames contained
+    in an animation file. They are also responsible for deciding whether a given file is in
+    a format they understand. Animation loaders are called in sequence until one of them
+    claims to recognize the file.</p>
+    <p><strong>Handler Activation Function</strong></p>
+    <pre>
+   XCALL_( int ) MyAnimLoader( long version, GlobalFunc *global,
+      LWAnimLoaderHandler *local, void *serverData );</pre>
+    <p>The <tt>local</tt> argument to an anim loader's activation function is an
+    LWAnimLoaderHandler.</p>
+    <pre>
+   typedef struct st_LWAnimLoaderHandler {
+      LWInstanceFuncs  *inst;
+      int              result;
+      const char       *filename;
+      int             (*frameCount) (LWInstance);
+      double          (*frameRate)  (LWInstance);
+      void            (*evaluate)   (LWInstance, double,
+                         LWAnimFrameAccess *);
+   } LWAnimLoaderHandler;</pre>
+    <p>The first member of this structure points to the standard instance
+    <a href="../handler.html">handler functions</a>. An anim loader is also given the name of
+    the file to load and provides functions that return frames and other information from
+    the file.
+    <dl>
+      <dt><tt>result</tt></dt>
+      <dd>This is set to a code that indicates what happened when the activation function
+      tried to open and read the file.
+      <dl>
+      <dt><br><tt>IPSTAT_BADFILE</tt></dt><dd>The file couldn't be opened.</dd>
+      <dt><tt>IPSTAT_NOREC</tt></dt><dd>The format of the file wasn't recognized (the
+      file isn't the type this loader handles).</dd>
+      <dt><tt>IPSTAT_OK</tt></dt><dd>The file was opened and recognized.</dd></dl>
+      </dd>
+      <dt><br>
+        <tt>filename</tt></dt>
+      <dd>The name of the file to open.</dd>
+      <dt><tt>frameCount( instance )</tt></dt>
+      <dd>Returns the number of frames in the file.</dd>
+      <dt><tt>frameRate( instance )</tt></dt>
+      <dd>Returns the animation's playback speed, in frames per second.</dd>
+      <dt><tt>evaluate( instance, time, access )</tt></dt>
+      <dd>The evaluation function is called to load an image at the specified running time
+      from the file. At the loader's discretion, the image can be the frame nearest to the
+      time or an interpolation of two or more frames. The access structure, described below,
+      provides the functions the loader uses to pass image data to Layout.</dd>
+    </dl>
+    <p><strong>Interface Activation Function</strong></p>
+    <pre>   XCALL_( int ) MyInterface( long version, GlobalFunc *global,
+      ??? *???, void *serverData );</pre>
+    <p>TBD.</p>
+    <p><strong>Anim Loader Access</strong></p>
+    <p>The access structure passed to the loader's evaluation function uses the same
+    mechanism as <a href="imgldsv.html">image loaders</a> to pass image data to Layout.
+
+<pre>
+   typedef struct st_LWAnimFrameAccess {
+      void               *priv_data;
+      LWImageProtocolID (*begin) (void *, int type);
+      void              (*done)  (void *, LWImageProtocolID);
+   } LWAnimFrameAccess;</pre>
+
+<dl>
+      <dt><tt>priv_data</tt></dt>
+      <dd>An opaque pointer to data used by Layout. Pass this to <tt>begin</tt> and
+      <tt>done</tt>.</dd>
+      <dt><br><tt>begin( priv_data, type )</tt></dt>
+      <dd>Call this to tell Layout that you're about to send it image data. The type
+      argument describes the kind of pixel data you'll send. <blockquote>
+         <tt><p>LWIMTYP_RGB24<br>
+         LWIMTYP_GREY8<br>
+         LWIMTYP_INDEX8<br>
+         LWIMTYP_GREYFP<br>
+         LWIMTYP_RGBFP<br>
+         LWIMTYP_RGBA32<br>
+         LWIMTYP_RGBAFP</tt></p></blockquote>
+      Layout returns an LWImageProtocolID containing the functions used to pass the
+      data.</dd>
+      <dt><br><tt>done( priv_data, protocol )</tt></dt>
+      <dd>Call this to tell Layout that you've finished sending the image.</dd>
+      </dl>
+
+
+</td></tr></table>
+</body>
+
+</html>

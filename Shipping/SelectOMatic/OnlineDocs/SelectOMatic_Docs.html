@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- Select-O-Matic Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=Selec-t0OMatic border=0 height=142 src ="PROG-SelectOMatic.gif" width=173 ></p>
+	<P align=justify>
+	<br><STRONG>Select-O-Matic</STRONG> is a grouping and selection plug-in for
+    Lightwave 7.5.  I provides improved item selection features as well as arbitrary
+    grouping of items.  This plug-in requires Lightwave 7.5.</P>
+
+	<P align=justify>To install ReplaceObjects, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy Select-O-Matic.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add ReplaceObjects.p. Layout should report that the plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        the <STRONG>Select-O-Matic</STRONG> plug-ins from 
+        the Generics pop-up in the Plug-in Options Panel, or assign them to keys 
+        or buttons on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.   The plug-ins will be
+        the prefixed with TM_P under the Plugins heading of the 
+        Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+
+	<hr width="90%">
+	
+  <p align=center><IMG alt="Select-O-Matic Master Interface" border=0 height=389 src="SelectOMatic-Main.jpg" width=218></p>
+
+	<P align=justify><STRONG>Select-O-Matic</STRONG>'s core is the Master plug-in of the same name.  This can
+     be added directly from the Master plug-ins panel, or via the Select-O-Matic Properties generic plug-in.</P>
+
+	<P align=justify>Initially, the properties panel shows the current selection.  This can be changed to show
+     custom groups by clicking the <em>Groupings</em> button at the top of the panel.</p>
+
+	<P align=justify>
+     <IMG align=right alt="Sort Mode" border=0 height=64 src="SelectOMatic-Sort.jpg" width=98>
+     How the list is sorted is determined by the <em>Sort</em> popup.  The list can be sorted in
+     Natural order, Alphabetically, and when in <em>Groupings</em> mode, Manually by dragging around items within
+     groups.</P>
+     
+	<P align=justify>
+     <IMG align=right alt="Select-O-Matic Group Menu" border=0 height=109 src="SelectOMatic-Groupings.jpg" width=221>
+     <em>Groupings</em> allow the creation of selection sets of items.  An item can belong to multiple
+     groups, and any combination of items can be in any group.  Groups can also have sub-groups.  Items can be moved
+     between groups by simple drag and drop, and can be sorted in the same way when <em>Sort</em> is set to Manual.
+     
+  <P align=justify>You can create a new group by right-clicking in the group list and selecting <em>Create Group</em>
+     from the menu.  You can also remove or rename existing groups from here.  <em>Add selected items in Layout to
+     group</em> will add all selected items to the current group.  You can also remove items selected in the list
+     from the groups they belong to.</P>
+
+  <P align=justify>The yellow block to the left of one of the groups marks it as the current group.  Similarly, the
+     black dot marks an item as the current item.  These are used as the starting point by the navigation generics.
+     You can click in this column to directly set the current group or item.</P>
+
+  <p align=center><IMG alt="Select-O-Matic Selection Interface" border=0 height=576 src="SelectOMatic-Select.jpg" width=218></p>
+  
+  <P align=justify>
+     The Selection Tools button toggles the selection controls on and off.  The <em>Mode</em> popup
+     determines if this palette will selected, deselect or add to the current selection or invert the selection of
+     items that match when the Execute button is clicked.  The <em>Match</em> popup allows for specific comparisons to be
+     made based on item name.  The <em>Skip</em>/<em>Keep</em> fields allow you to skip some number of items, and then
+     keep another count of items.  For example, a skip of one and a keep of 2 would skip one item, keep two, skip another
+     item, keep two more, and so on.  The <em>Random</em> field allows a random number of the items to be selected
+     out of the total number of matches.  The closer this is to 100%, the more items will be selected.  Once you have
+     entered the appropriate settings, click the Execute button to perform it.  It's best to be in the Selection display
+     mode so you can see the effects immediately.</P>
+     
+
+  <P align=justify>
+     The <em>Fetch</em> button will simply refresh the selected items list.  This is usually done automatically,
+     so you'll likely not need to use this button.</P>
+     
+
+  <br><HR width="90%">
+	<H3 align=center>
+	Navigation Generics<br>
+	<HR width="40%"></H3>
+	
+  The navigation generics allow you to walk the groupings list through Layout menus or key mappings:
+  <UL>
+    <LI>Select First Group and Select Last Group, which select the first or last group.
+    <LI>Select Parent Group, which selects the parent of the current group.
+    <LI>Select Next Group and Select Previous Group, which select the next or previous group.
+    <LI>Select Next in Group Hierarchy and Select Previous in Group Hierarchy, which select the next or previous group
+        or the next or previous item, depending on which is after the current item in the list.
+    <LI>Select First in Group and Select Last in Group, which select the first or last item in a group.
+    <LI>Select Next in Group and Select Previous in Group, which select the next or previous item in a group.
+  </UL>
+
+  Also included are a series of high-level selection functions:
+  
+  <UL>
+    <LI>Select All Nulls, which selects all null objects in the scene.
+    <LI>Select All Roots, which selects all items of the current type that don't have any parents.
+    <LI>Select Root, which selects the root of the current item.
+    <LI>Select Target, which selects the target of the current item.
+    <LI>Select IK Goal, which selects the IK goal of the current item.
+    <LI>Select Clones, which selects all clones of the current item.
+  </UL>  
+
+  <H3 align=center><b>Revision History</b>
+  <HR width=50%></H3>
+	<ul>
+	  <li><b>05-13-02</b>  First public release</li>
+  </ul>
+  
+  <br>
+  <p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Lightwave3D Object Geometry Access Plugin</TITLE>
+   <META NAME="Author" CONTENT="Arnie">
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#400040" BGCOLOR="#C0C0C0" LINK="#FFFF00" VLINK="#008000" ALINK="#FF0000" BACKGROUND="GRFPPSM.gif">
+
+<H1 ALIGN=CENTER><IMG SRC="lwlogo001.gif" ALT="logo" HSPACE=5 VSPACE=5 HEIGHT=80 WIDTH=64 ALIGN=CENTER><B><I>The
+Lightwave3D Object Access Plugin</I></B><IMG SRC="lwlogo001.gif" ALT="logo" HSPACE=5 VSPACE=5 HEIGHT=80 WIDTH=64 ALIGN=CENTER></H1>
+
+<P>
+<HR width="100%"></P>
+
+<P><FONT SIZE=+2>This
+&quot;Global Class&quot; plugin provides the plugin programmer with
+access to any object's point, polygon, and surface data. Given an object's
+file name, the plugin will load that object from disk, and supply points
+and polygons as requested. When this plugin is activated by calling Lightwave3D's
+global function with the string &quot;LWObjectAccess&quot;, it returns
+an ObjectAccess structure with the following elements: </FONT></P>
+
+<DT><B><TT><FONT SIZE=+1>LWObjectID (*create)(char *name)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function reads an object file specified into
+memory, and returns its ID, or NULL on failure.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>void (*destroy)(LWObjectID obj)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>This function should be called to free objects when
+they're no longer needed.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>int (*pointCount)(LWObjectID obj)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Return the number of points in the object.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>int (*polyCount)(LWObjectID obj); </FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Return the number of polygons in the object.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>int (*surfCount)(LWObjectID obj)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Return the number of surfaces in the object.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWPointID (*pointGet)(LWObjectID obj, int index)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Return the address of a (read-only) LWPoint structure.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWPolygonID (*polyGet)(LWObjectID obj, int index)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Return the address of a (read-only) LWPolygon structure.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWSurfaceID (*surfGet)(LWObjectID obj, int index)
+</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Return the address of a (read-only) LWSurface structure.
+Note that LWSurface.data, which points to a chunk of texture data, may
+be NULL if there was no SURF chunk in the object corresponding to that
+name entry in the SRFS chunk. Check the size before trying to use the texture
+data.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>double (*boundBox)(LWObjectID obj, double *bounds)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Returns the maximum value of R ( = sqrt(x*x+y*y+z*z)
+) for any point, and fills bounds[6] with xmin,xmax,ymin,ymax,zmin,zmax.
+This structure, and the point, polygon, and surface structures are defined
+in <A HREF="../include/lwobjacc.h">lwobjacc.h</A>,
+which should be #include'd in any program which will use this plugin. </FONT></TT></DD>
+
+<P><FONT SIZE=+2>A new addition to the ObjectAccess plugin is the ObjectHelp
+module, which provides some handy functions for working with LWObjects
+and surfaces. This plugin is activated by calling Lightwave3D's global
+function with the string &quot;LWObjectHelp&quot;, it returns an ObjectHelp
+structure with the following elements: </FONT></P>
+
+<DT><B><TT><FONT SIZE=+1>void (*polyNormal)(ObjectAccess *, LWObjectID,
+LWPolygon *,LWPoint *) </FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Fill the LWPoint structure with the polygon's normal
+vector.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWPoint *(*createNormals)(ObjectAccess *, LWObjectID)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Allocate and fill an array of face and vertex normals.
+The array</FONT></TT></DD>
+
+<DD><TT><FONT SIZE=+1>has one LWPoint for each point in the object, which
+is the vertex-normal for the corresponding point. The vertex normals are
+followed by one LWPoint for each polygon, containing the face normals.</FONT></TT></DD>
+
+<DD><TT><FONT SIZE=+1>You must free the memory allocated by this function
+using the destroyArray() function below! </FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>LWUV *(*createUVs)(ObjectAccess *, LWObjectID,
+LWPoint *, LWTexture *)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Allocate and fill an array of LWUV's. These values
+will not necessarily be between 0.0 and 1.0, so you may need to take only
+the fractional part.</FONT></TT></DD>
+
+<DD><TT><FONT SIZE=+1>You must free the memory allocated by this function
+using the destroyArray() function below!! </FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>int (*getSurfAttr)(LWSurfaceID, surfAttr *)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Fill surfAttr, return SURF bytes read.</FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>void (*getTextureUV)(LWTexture *,LWPoint *,LWUV
+*,LWPoint *)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Fill LWUV , args: tx,spot,uv,norm set axis for TT_CUBIC
+per poly. </FONT></TT></DD>
+
+<DT><B><TT><FONT SIZE=+1>void destroyArray(void *)</FONT></TT></B></DT>
+
+<DD><TT><FONT SIZE=+1>Free memory allocated for UV and Normals arrays by
+createNormals() and createUVs().</FONT></TT></DD>
+
+<P>
+<HR width="100%"></P>
+
+</BODY>
+</HTML>

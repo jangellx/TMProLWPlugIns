@@ -1,0 +1,1005 @@
+<html><head>
+<title>plug</title></head>
+<body>
+
+LightWave Plug-in Architecture --
+Stuart Ferguson 2/19/96
+<p>
+<ul>
+<br>
+<li>1.  <a href="#S1">Plug-In Interface</a>
+<ul>
+<li>1.1.  <a href="#S1.1">Server Identification</a>
+<li>1.2.  <a href="#S1.2">Server Activation Function</a>
+<li>1.3.  <a href="#S1.3">The Global Function</a>
+<li>1.4.  <a href="#S1.4">Plug-in and Built-in Servers</a>
+</ul>
+<br>
+<li>2.  <a href="#S2">Server Interface</a>
+<ul>
+<li>2.1.  <a href="#S2.1">Plug-in Initialization and Cleanup</a>
+<li>(1) <a href="#S2.1">Startup usage</a>
+<li>(2) <a href="#S2.1">Shutdown usage</a>
+<li>2.2.  <a href="#S2.2">Activation Function</a>
+<li>(3) <a href="#S2.2">Activation function args</a>
+<li>(4) <a href="#S2.2">ActivateFunc type</a>
+<li>2.3.  <a href="#S2.3">Global Function</a>
+<li>(5) <a href="#S2.3">GlobalFunc types</a>
+<li>(6) <a href="#S2.3">GlobalFunc types</a>
+<li>2.4.  <a href="#S2.4">The Global Server Class</a>
+<li>(7) <a href="#S2.4">Global activation data</a>
+<li>2.5.  <a href="#S2.5">External Function Entry Points</a>
+<li>(8) <a href="#S2.5">XCALL Definitions</a>
+<li>2.6.  <a href="#S2.6">Single-Service Plug-ins</a>
+<li>(9) <a href="#S2.6">Activate usage</a>
+<li>2.7.  <a href="#S2.7">Multiple-Service Plug-ins</a>
+<li>(10) <a href="#S2.7">ServerRecord type</a>
+</ul>
+<br>
+<li>3.  <a href="#S3">Common Globals</a>
+<ul>
+<li>3.1.  <a href="#S3.1">Host Display Info</a>
+<li>(11) <a href="#S3.1">Host Display Info declaration</a>
+<li>3.2.  <a href="#S3.2">Monitor Objects</a>
+<li>(12) <a href="#S3.2">Monitor types</a>
+<li>(13) <a href="#S3.2">Monitor declarations</a>
+</ul>
+<br>
+<li>4.  <a href="#S4">Example Plug-in Service</a>
+<ul>
+<li>4.1.  <a href="#S4.1">String Transform Class</a>
+<li>(14) <a href="#S4.1">Test types</a>
+<li>(15) <a href="#S4.1">Test types</a>
+<li>4.2.  <a href="#S4.2">String Transform Functions</a>
+<li>(16) <a href="#S4.2">String transform arguments</a>
+<ul>
+<li>4.2.1.  <a href="#S4.2.1">Length Operation</a>
+<li>(17) <a href="#S4.2.1">Length function body</a>
+<li>4.2.2.  <a href="#S4.2.2">Reverse Operation</a>
+<li>(18) <a href="#S4.2.2">Reverse function body</a>
+<li>4.2.3.  <a href="#S4.2.3">Capitalization Operation</a>
+<li>(19) <a href="#S4.2.3">Capitalize function body</a>
+<li>4.2.4.  <a href="#S4.2.4">Double Operation</a>
+<li>(20) <a href="#S4.2.4">Double function body</a>
+</ul>
+<li>4.3.  <a href="#S4.3">Implementing Servers</a>
+<ul>
+<li>4.3.1.  <a href="#S4.3.1">Single-Service Plug-in -- Reverse</a>
+<li>(21) <a href="#S4.3.1">Test Reverse plug-in program</a>
+<li>4.3.2.  <a href="#S4.3.2">Multiple-Service Plug-in -- Caps &amp; Double</a>
+<li>(22) <a href="#S4.3.2">Test Caps and Double plug-in program</a>
+<li>4.3.3.  <a href="#S4.3.3">Built-in Server -- Length</a>
+<li>(23) <a href="#S4.3.3">Test host utilities</a>
+<li>4.3.4.  <a href="#S4.3.4">Global Test Server</a>
+<li>(24) <a href="#S4.3.4">Test Global Server plug-in</a>
+</ul>
+</ul>
+<br>
+<li>5.  <a href="#S5">Creating a Plug-in</a>
+<ul>
+<li>5.1.  <a href="#S5.1">Microsoft's Windows</a>
+<li>(25) <a href="#S5.1">Makefile examples</a>
+<li>(26) <a href="#S5.1">Alignment Table</a>
+<li>5.2.  <a href="#S5.2">SGI Unix</a>
+<li>(27) <a href="#S5.2">Makefile examples</a>
+<li>5.3.  <a href="#S5.3">Macintosh OS</a>
+<li>5.4.  <a href="#S5.4">Linking with LightWave</a>
+<li>(28) <a href="#S5.4">Config file examples</a>
+<li>(29) <a href="#S5.4">Config file examples</a>
+</ul>
+</ul>
+
+<hr>
+<a name="S1"><h1>1. Plug-In Interface</h1></a>
+
+There are two parts to the system-generic plug-in interface: the host side and
+the server side.  The host is the application program which wants to load 
+external code modules to perform some generic type of operation.  Servers are
+imported routines (which can be loaded plug-ins or internal built-ins) which
+implement a specific instance of a generic type of service.
+<p>
+The host interface provides facilities to create server classes, register
+plug-in modules, and perform lazy loading and activation of registered servers.
+There is a fairly elaborate name and type mapping scheme which allows a great
+deal of flexibility in how modules are used, but which still provides a fairly
+simple interface for those who do not need the full facility.
+<p>
+The server interface provides an easy method to write programs that will
+operate as plug-ins.  Different classes of plug-in services will require 
+different host interfaces, but the loading and initialization part of the 
+server interface is standard and works with the host portion of the system.
+<p>
+<ul>
+<ul>
+<li>1.1.  <a href="#S1.1">Server Identification</a>
+<li>1.2.  <a href="#S1.2">Server Activation Function</a>
+<li>1.3.  <a href="#S1.3">The Global Function</a>
+<li>1.4.  <a href="#S1.4">Plug-in and Built-in Servers</a>
+</ul>
+</ul>
+
+<a name="S1.1"><h2>1.1. Server Identification</h2></a>
+
+The plug-in interface 
+is designed to allow the host to have any number of servers loaded to
+perform as many different functions as the host wants to define.  The servers
+in the system are referenced by a combination of class and name.
+<p>
+A Server Class is a string which determines the type of service which the
+server can perform.  This might be strings like &quot;TEXTURE&quot; or &quot;FileRequester&quot;.
+Many servers can have the same class, and all servers of the same class
+have the same host interface.
+<p>
+A Server Name is a string which refers to a specific server within a
+given class.  This might be something like &quot;FractalNoise3D&quot; or &quot;Default&quot;.
+The name must be unique among the servers of the same class.
+<p>
+The names for class and server identification should be byte strings
+containing characters only the the ASCII range 33-127.  By convention these
+string contain no spaces and no characters outside 7-bit ASCII.  Case is
+significant in distinguishing different classes and servers within classes.
+<p>
+
+<a name="S1.2"><h2>1.2. Server Activation Function</h2></a>
+
+Every server has a single `activation' function.  This is the function which
+the host calls to access the service provided by the server.  For some servers
+this one function will perform the whole action and for others this will only
+be a prelude to a sequence of actions.  Servers which must remain loaded after
+they return from their activation function must be locked by the host
+while there are actions pending or they may be unloaded.
+<p>
+
+<a name="S1.3"><h2>1.3. The Global Function</h2></a>
+
+The activation function for every server is called with a `global' function
+pointer which provides access to the internal global state of the host system.
+The server calls the function with a string identifing the global data
+requested and a flag for how it will be used.  The host can service this
+request, or the request can be passed on to global plug-in servers.
+<p>
+
+<a name="S1.4"><h2>1.4. Plug-in and Built-in Servers</h2></a>
+
+Servers can be either plug-in or built-in.  A plug-in server is implemented
+as a file containing code that can be loaded and unloaded as needed.  A built-in
+server is implemented as a callback within the host itself.
+Having both allows the host to provide a standard set of servers which it
+handles the same way it handles plug-in servers, without having to unbundle
+their functionality in a way that can be replaced or used by other programs.
+<p>
+
+<hr>
+<a name="S2"><h1>2. Server Interface</h1></a>
+
+A plug-in server is written like any ordinary C program, but instead
+of a single &quot;main()&quot; entry point, a server has a different primary entry
+point and several possible additional entry points.  The server is linked
+with initializaion code (different from the normal shell or Workbench init)
+which places these interfaces where the host can access them.
+<p>
+There are two main types of plug-in modules: those providing a single
+server and those providing multiple servers.  It is simple to have one
+server per module, but it can be more efficient and useful to define
+many servers with a single code file.
+<p>
+All servers require an activation function, and all plug-ins have the
+option of providing initialization and cleanup functions.  The header
+for server types is `splug.h'.
+<p>
+<ul>
+<ul>
+<li>2.1.  <a href="#S2.1">Plug-in Initialization and Cleanup</a>
+<li>2.2.  <a href="#S2.2">Activation Function</a>
+<li>2.3.  <a href="#S2.3">Global Function</a>
+<li>2.4.  <a href="#S2.4">The Global Server Class</a>
+<li>2.5.  <a href="#S2.5">External Function Entry Points</a>
+<li>2.6.  <a href="#S2.6">Single-Service Plug-ins</a>
+<li>2.7.  <a href="#S2.7">Multiple-Service Plug-ins</a>
+</ul>
+</ul>
+
+<a name="S2.1"><h2>2.1. Plug-in Initialization and Cleanup</h2></a>
+
+In both the single and multiple versions of the plug-in module,
+there are optional entry points which allow the module to initialize
+itself when it is first loaded and to clean itself up before being unloaded.
+If the plug-in code does not contain functions with these names, no attempt
+will be made to call them.
+<p>
+The Startup function, if present, will be called when the plug-in is first
+loaded into the host system.  The return value is global data for the server
+which is passed to the Activate and Shutdown entry points as `
+serverData'.
+A zero return value (null pointer) indicates failure, so even a plug-in with no
+data should return something.
+<p>
+<dl><dd><h4>(1) Startup usage</h4></dl>
+<pre>
+		    void *
+	    Startup (void)</pre>
+
+If provided, the server's Shutdown function is called just before the server
+module is unloaded from the host.  Any allocated server data should be freed
+at this point.  Note that even though it is an error, this function may be 
+called even when the server is locked, so correct cleanup should be done in 
+this case as well.
+<p>
+<dl><dd><h4>(2) Shutdown usage</h4></dl>
+<pre>
+		    void
+	    Shutdown (
+		    void                    *serverData)</pre>
+
+
+<a name="S2.2"><h2>2.2. Activation Function</h2></a>
+
+All servers have a single activation function which is the entry point for
+the host to get access to the service provided by the server.  The activation
+function gets passed the version number 
+for the service implementation, the `global' pointer to access global host
+data, class-specific `local' data, and private data maintained by the plug-in.
+The version number is application-defined, but typically
+it represents the revision of the interface that the host expects the server
+to use.  Typically a server will not attempt to operate if the version
+number is greater than it expects.  The `
+<a href="#S2.1">serverData</a>' is returned by the 
+Startup entry point in a plug-in.  The global function can be called to get
+global data from the host enviroment, and the contents of the `local' pointer
+are defined by the type of service.
+<p>
+<dl><dd><h4>(3) Activation function args</h4></dl>
+<pre>
+	    long             version,
+	    <a href="#S2.3">GlobalFunc</a>      *global,
+	    void            *local,
+	    void            *<a href="#S2.1">serverData</a></pre>
+
+The activation function returns an error code if the attempt to call 
+failed because of some clash between the server and the host environment.
+If the server was able to process the request, even it failed to complete
+it, it should return AFUNC_OK.  If the version number is not a value which
+the server can explicitly handle it should return AFUNC_BADVERSION.  If
+there is some global data the server cannot get which it requires it should
+return AFUNC_BADGLOBAL.  Severe problems with the contents of the local
+data, such as some necessary pointer in the local data being null, may be
+reported by returning AFUNC_BADLOCAL.  AFUNC_BADAPP is returned if the
+server detects an application under which it chooses not to function; plug-ins
+can use this to lock themselves into (or out of) specific LightWave-based
+application derivatives (i.e., Inspire 3D).  Any other errors from the
+server (running out of memory, bad filenames, user aborts, etc.) must be
+provided for by the specific plug-in protocol.
+<p>
+<dl><dd><h4>(4) ActivateFunc type</h4></dl>
+<pre>
+	    typedef int     ActivateFunc (&lt;Activation function args&gt;);
+
+	    #define AFUNC_OK                0
+	    #define AFUNC_BADVERSION        1
+	    #define AFUNC_BADGLOBAL         2
+	    #define AFUNC_BADLOCAL          3
+	    #define AFUNC_BADAPP        4</pre>
+
+
+<a name="S2.3"><h2>2.3. Global Function</h2></a>
+
+The global function passed by the host to the server is a special function
+which returns the pointer to some global data given by a string ID.  These data
+blocks will often contain function pointers, but can be anything.
+<p>
+<dl><dd><h4>(5) GlobalFunc types</h4></dl>
+<pre>
+	    typedef void *          GlobalFunc (const char *, int);
+	    . . .</pre>
+
+When a server calls the global function, it passes a string which identifies
+the global data required and a code for the way the data will be used.  If
+the data pointer is not available, null is returned.  The ID's that will
+be recognized depends on the host, on the available global plug-ins and 
+perhaps on the server class.
+<p>
+The use code depends on how the result of the call will be used.
+If the returned pointer will only be used for the course of the activation
+function itself, the TRANSIENT code should be used.  If the data will
+be used after the activation function returns, such as in a server that
+requires locking, the ACQUIRE code should be used.  In this case there must
+be a matching RELEASE call made when the data pointer is no longer
+required.  RELEASE calls need only be made for ACQUIRE calls which returned
+a non-null pointer.  The return value from a release mode global data call is
+undefined.
+<p>
+<dl><dd><h4>(6) GlobalFunc types</h4></dl>
+<pre>
+	    . . .
+	    #define GFUSE_TRANSIENT         0
+	    #define GFUSE_ACQUIRE           1
+	    #define GFUSE_RELEASE           2</pre>
+
+
+<a name="S2.4"><h2>2.4. The Global Server Class</h2></a>
+
+The server class given by the name &quot;Global&quot; is special in that it allows
+multiple plug-in servers to share common data or routines.  In fact, the
+members of the Gobal class are extensions to the set of ID strings that
+can be passed to the &quot;global&quot; function.
+<p>
+When a server calls the global function with an ID string,
+the host can service the request itself or has the option
+of pass unrecognized ID's to Global class servers of the same name.  For
+example, if the ID is &quot;Mambo Functions,&quot; the host may recognize this
+itself and return a pointer value.  If it does not recognize it, it may
+attempt to activate a server of class &quot;Global&quot; with name &quot;Mambo Functions.&quot;
+If such a server exists, it may be locked or unlocked, depending on the
+use type of the global request, and it will be called to get the value of
+the global pointer for the orignal requester.
+<p>
+The activation function of a Global server is called with a GlobalService
+structure which will be initialized with the ID string for the request. 
+The server must fill in the data pointer with a value which will be 
+returned to the client, which may be null if the server wishes to deny
+the request.  The string is passed as data so that the same
+activation function may be used for multiple servers.
+<p>
+<dl><dd><h4>(7) Global activation data</h4></dl>
+<pre>
+	    typedef struct st_GlobalService {
+		    const char      *id;
+		    void            *data;
+	    } GlobalService;</pre>
+
+
+<a name="S2.5"><h2>2.5. External Function Entry Points</h2></a>
+
+Functions in the plug-in get called directly by the host, and this is a 
+funky thing in some systems since they are different environments.  The XCALL_
+and XCALL_INIT macros take care of everything for all different systems
+and compilers, so these can be used to make multi-platform servers from
+a single source code.
+<p>
+XCALL_ is used on the return type, e.g. XCALL_(int) for an external
+entry point returning an int.  XCALL_INIT is used as the first statement
+of the function.  Both must be used for full compatibility, but XCALL_INIT
+is only non-null for Manx small-code modules.
+<p>
+<dl><dd><h4>(8) XCALL Definitions</h4></dl>
+<pre>
+	    &lt;XCALL_ and XCALL_INIT system-specific definition&gt;</pre>
+
+The activation function as well as any function pointers returned from the
+activation function need the XCALL treatment.  Startup and Shutdown do not.
+<p>
+
+<a name="S2.6"><h2>2.6. Single-Service Plug-ins</h2></a>
+
+A single-service plug-in is a C program with an entry point for the
+activation callback and global symbols for the class and name of the
+server.  There are also optional entry points for initialization and
+cleanup.
+<p>
+This plug-in must contain a global character string with the name `ServerClass'.
+This string defines the class of this server and the server
+will not be loaded if this string does not match the service type string
+requested by the host.
+<p>
+It must also contain a global character string called `ServerName' which
+holds the name for this specific server.
+<p>
+The activation function must be called Activate, which takes the arguments 
+as described above.
+<p>
+<dl><dd><h4>(9) Activate usage</h4></dl>
+<pre>
+		    <a href="#S2.5">XCALL_</a>(int)
+	    Activate (<a href="#S2.2">&lt;Activation function args&gt;</a>)</pre>
+
+
+<a name="S2.7"><h2>2.7. Multiple-Service Plug-ins</h2></a>
+
+A multiple-service plug-in is a C program which defines multiple servers
+through a standard set of global symbols.  In particular, a multiple server
+module must contain a global array with the name `ServerDesc' composed of
+elements of the ServerRecord type.
+The last record in the array must have a null class name pointer.
+<p>
+<dl><dd><h4>(10) ServerRecord type</h4></dl>
+<pre>
+	    typedef struct st_ServerRecord {
+		    const char      *className;
+		    const char      *name;
+		    <a href="#S2.2">ActivateFunc</a>    *activate;
+	    } ServerRecord;</pre>
+
+The plug-in module may also have Startup and Shutdown entry points, and
+all the activate functions in the plug-in will get the same 
+<a href="#S2.1">serverData</a>  as
+returned from the Startup function.  The assumption is that the servers
+all share a module for some logical reason, so the sharing of global data
+is not unreasonable.
+<p>
+
+<hr>
+<a name="S3"><h1>3. Common Globals</h1></a>
+
+There are a few global data types which are so basic that they are the
+same across plug-in hosts or are used in a wide range of plug-in interfaces.
+<p>
+<ul>
+<ul>
+<li>3.1.  <a href="#S3.1">Host Display Info</a>
+<li>3.2.  <a href="#S3.2">Monitor Objects</a>
+</ul>
+</ul>
+
+<a name="S3.1"><h2>3.1. Host Display Info</h2></a>
+
+A plug-in may need to open windows to get user input, and since they run
+in the host's context, they will need to do this using the host's display
+information.  This info, which can be normally accessed with the &quot;Host
+Display Info&quot; ID string, contains information about the windows and display
+context used by the host.  If this ID yeilds a null pointer, the server
+is probably running in a batch mode and has no display context.
+<p>
+The fields of the HostDisplayInfo structure
+vary from system to system, but all include the window pointer
+is the main application window or null if there is none.  On X systems, the
+window session handle is passed.  On Win32 systems, the application instance
+is provided, even though it is probably unnecessary.
+<p>
+<dl><dd><h4>(11) Host Display Info declaration</h4></dl>
+<pre>
+	    typedef struct st_HostDisplayInfo {
+		#ifdef _XGL
+		    Display         *xsys;
+		    Window           window;
+		#endif
+
+		#ifdef _MACOS
+		    WindowPtr        window;
+		#endif
+
+		#ifdef _WIN32
+		    HANDLE           instance;
+		    HWND             window;
+		#endif
+	    } HostDisplayInfo;</pre>
+
+This structure is defined in the `hdisp.h' header file.
+<p>
+
+<a name="S3.2"><h2>3.2. Monitor Objects</h2></a>
+
+Monitors are simple data structures defining an interface which the server can
+use to give feedback to the host on its progress in performing some task.
+They are sometimes passed servers to give feedback on the progress of the
+particular operation, and can sometimes be accessed from within a server that
+wants to show its progress on a slow operation using the host's normal feedback
+display.
+<p>
+A Monitor consists of some generic data and three functions: init, step and done.
+The `init' function is called first with the number of steps in the process to
+be monitored, which is computed by the server.
+As the task is processed, the `step' function is called with the number of steps
+just completed (often one).  These step increments should eventually add up 
+to the total
+number and then the `done' function is called, but `done' may be called early
+if there was a problem or the process was aborted.  The `step' function will
+return one if the user requested an abort and zero otherwise.
+<p>
+<dl><dd><h4>(12) Monitor types</h4></dl>
+<pre>
+	    typedef struct st_Monitor {
+		    void             *data;
+		    void            (*init) (void *, unsigned int);
+		    int             (*step) (void *, unsigned int);
+		    void            (*done) (void *);
+	    } Monitor;</pre>
+
+The server is masked from any errors in the monitor that may occur on the host
+side of the interface.  If there is a problem with putting up a monitor, the
+functions will still return normally, since the monitor is for user feedback
+and is not that critical.
+<p>
+There are some macros provided to call a monitor which will do nothing if the
+monitor pointer is null.
+MON_INCR is used for step sizes greater than one and MON_STEP is used for
+step sizes exactly one.
+<p>
+<dl><dd><h4>(13) Monitor declarations</h4></dl>
+<pre>
+	    #define MON_INIT(mon,count)     if (mon) (*mon-&gt;init) (mon-&gt;data, count)
+	    #define MON_INCR(mon,d)         (mon ? (*mon-&gt;step) (mon-&gt;data, d) : 0)
+	    #define MON_STEP(mon)           MON_INCR (mon, 1)
+	    #define MON_DONE(mon)           if (mon) (*mon-&gt;done) (mon-&gt;data)</pre>
+
+These structures and macros are described in the `moni.h' header file.
+<p>
+
+<hr>
+<a name="S4"><h1>4. Example Plug-in Service</h1></a>
+
+This describes a hypothetical server class and creates some samples
+of plug-in modules using it.  This serves as a testbed for third parties
+to create test plug-ins, so it should have some general capability.
+<p>
+<ul>
+<ul>
+<li>4.1.  <a href="#S4.1">String Transform Class</a>
+<li>4.2.  <a href="#S4.2">String Transform Functions</a>
+<li>4.3.  <a href="#S4.3">Implementing Servers</a>
+</ul>
+</ul>
+
+<a name="S4.1"><h2>4.1. String Transform Class</h2></a>
+
+This server class will perform manipulations on character strings, like
+reverse them, capitalize them, etc.  This class will be &quot;StringXfrm&quot;.
+<p>
+A new server class is completely defined by the semantics of the 
+activation function for the class.  The activation function takes a
+pointer argument from the host, `local' which is a reference to data 
+for the particular service the host needs performed.  It also gets a
+`global' function pointer which will return global data as needed by
+the server.
+<p>
+The `local' pointer will point to a StringLocal structure which holds
+the data for the current operation.  This is a null-terminated string and
+the length of the string buffer, plus a temporary scratch buffer and its 
+length.  The server will overwrite `buf' with the result,
+and will set the `overflow' status flag if the buffers were too short.
+<p>
+<dl><dd><h4>(14) Test types</h4></dl>
+<pre>
+	    typedef struct st_StringLocal {
+		    char            *buf;
+		    char            *tmpBuf;
+		    int              len, tmpLen;
+		    int              overflow;
+	    } StringLocal;
+	    . . .</pre>
+
+For the string transform class of server, the global function can return
+a `progress' function which can be called by the server to give the user
+feedback about its progress.  This is returned using a string ID of
+&quot;Progress Function.&quot;
+<p>
+<dl><dd><h4>(15) Test types</h4></dl>
+<pre>
+	    . . .
+	    typedef void            StringProgress (void);</pre>
+
+We'll stick these definitions into the `_tplug.h' header file for test 
+modules to use.
+<p>
+
+<a name="S4.2"><h2>4.2. String Transform Functions</h2></a>
+
+The functions to do string transformations are all the same.  They all get
+the same arguments as defined by the format of the activation function.
+The local pointer is specific to the string transform class.
+There is no `
+<a href="#S2.1">serverData</a>' for any of the transforms since there is no Startup
+function.
+<p>
+<dl><dd><h4>(16) String transform arguments</h4></dl>
+<pre>
+	    long                     version,
+	    <a href="#S2.3">GlobalFunc</a>              *global,
+	    <a href="#S4.1">StringLocal</a>             *local,
+	    void                    *<a href="#S2.1">serverData</a></pre>
+
+String activation functions may return with an error code if the version
+number is wrong or if the global progress function is not available.
+<p>
+<ul>
+<ul>
+<li>4.2.1.  <a href="#S4.2.1">Length Operation</a>
+<li>4.2.2.  <a href="#S4.2.2">Reverse Operation</a>
+<li>4.2.3.  <a href="#S4.2.3">Capitalization Operation</a>
+<li>4.2.4.  <a href="#S4.2.4">Double Operation</a>
+</ul>
+</ul>
+
+<a name="S4.2.1"><h3>4.2.1. Length Operation</h3></a>
+
+The length operation gets the length of the string and prints that as a number
+into the string buffer.
+<p>
+<dl><dd><h4>(17) Length function body</h4></dl>
+<pre>
+	    {
+		    if (version != 1)
+			    return <a href="#S2.2">AFUNC_BADVERSION</a>;
+
+		    if (local-&gt;len &lt; 10)
+			    local-&gt;overflow = 1;
+		    else
+			    sprintf (local-&gt;buf, &quot;%ld&quot;, strlen (local-&gt;buf));
+
+		    return <a href="#S2.2">AFUNC_OK</a>;
+	    }</pre>
+
+
+<a name="S4.2.2"><h3>4.2.2. Reverse Operation</h3></a>
+
+The reverse operation copies the characters from the main buffer to
+the temp buffer in reverse order and then copies them back.  This could use
+a swap operation to reverse them in place, but this method demonstrates using
+the temp buffer and returning an overflow if the
+temp buffer is too small.  This also calls the progress function as it
+swaps.
+<p>
+<dl><dd><h4>(18) Reverse function body</h4></dl>
+<pre>
+	    {
+		    <a href="#S4.1">StringProgress</a>          *progress;
+		    int                      len, i;
+
+		    if (version != 1)
+			    return <a href="#S2.2">AFUNC_BADVERSION</a>;
+
+		    progress = (*global) (&quot;Progress Function&quot;, <a href="#S2.3">GFUSE_TRANSIENT</a>);
+		    if (!progress)
+			    return <a href="#S2.2">AFUNC_BADGLOBAL</a>;
+
+		    len = strlen (local-&gt;buf);
+		    if (local-&gt;tmpLen &lt;= len) {
+			    local-&gt;overflow = 1;
+			    return <a href="#S2.2">AFUNC_OK</a>;
+		    }
+
+		    for (i = 0; i &lt; len; i++) {
+			    local-&gt;tmpBuf[i] = local-&gt;buf[len - i - 1];
+			    (*progress) ();
+		    }
+		    local-&gt;tmpBuf[len] = 0;
+
+		    strcpy (local-&gt;buf, local-&gt;tmpBuf);
+		    return <a href="#S2.2">AFUNC_OK</a>;
+	    }</pre>
+
+
+<a name="S4.2.3"><h3>4.2.3. Capitalization Operation</h3></a>
+
+This just passes through the string and converts each letter to uppercase,
+calling the progress function as it goes.  This will also use the global empty
+string if there are no characters passed.
+<p>
+<dl><dd><h4>(19) Capitalize function body</h4></dl>
+<pre>
+	    {
+		    <a href="#S4.1">StringProgress</a>          *progress;
+		    const char              *empty;
+		    char                    *c;
+
+		    if (version != 1)
+			    return <a href="#S2.2">AFUNC_BADVERSION</a>;
+
+		    progress = (*global) (&quot;Progress Function&quot;, <a href="#S2.3">GFUSE_TRANSIENT</a>);
+		    empty = (*global) (&quot;EmptyStringText&quot;, <a href="#S2.3">GFUSE_TRANSIENT</a>);
+		    if (!progress || !empty)
+			    return <a href="#S2.2">AFUNC_BADGLOBAL</a>;
+
+		    if (local-&gt;buf[0]) {
+			    for (c = local-&gt;buf; *c; c++) {
+				    (*progress) ();
+				    if (*c &gt;= 'a' &amp;&amp; *c &lt;= 'z')
+					    *c = *c - 'a' + 'A';
+			    }
+		    } else
+			    strncpy (local-&gt;buf, empty, local-&gt;len - 1);
+
+		    return <a href="#S2.2">AFUNC_OK</a>;
+	    }</pre>
+
+
+<a name="S4.2.4"><h3>4.2.4. Double Operation</h3></a>
+
+This doubles each character in the string by copying the buffer to the temp
+buffer and moving twice as many characters back into the buffer from there.
+This will fail if the buffers are not big enough.
+<p>
+<dl><dd><h4>(20) Double function body</h4></dl>
+<pre>
+	    {
+		    <a href="#S4.1">StringProgress</a>          *progress;
+		    int                      len, i;
+
+		    if (version != 1)
+			    return <a href="#S2.2">AFUNC_BADVERSION</a>;
+
+		    progress = (*global) (&quot;Progress Function&quot;, <a href="#S2.3">GFUSE_TRANSIENT</a>);
+		    if (!progress)
+			    return <a href="#S2.2">AFUNC_BADGLOBAL</a>;
+
+		    len = strlen (local-&gt;buf);
+		    if (local-&gt;tmpLen &lt; len || local-&gt;len - 1 &lt; len * 2) {
+			    local-&gt;overflow = 1;
+			    return <a href="#S2.2">AFUNC_OK</a>;
+		    }
+
+		    strcpy (local-&gt;tmpBuf, local-&gt;buf);
+		    for (i = 0; i &lt; len; i++) {
+			    local-&gt;buf[i * 2]     = local-&gt;tmpBuf[i];
+			    local-&gt;buf[i * 2 + 1] = local-&gt;tmpBuf[i];
+			    (*progress) ();
+		    }
+		    local-&gt;buf[len * 2] = 0;
+
+		    return <a href="#S2.2">AFUNC_OK</a>;
+	    }</pre>
+
+
+<a name="S4.3"><h2>4.3. Implementing Servers</h2></a>
+
+A plug-in module is really a wrapper around the activation function, and
+can be implemented several ways.  They can be single-service plug-ins,
+multiple-service plug-ins, or built-in.  This test includes one of each.
+<p>
+<ul>
+<ul>
+<li>4.3.1.  <a href="#S4.3.1">Single-Service Plug-in -- Reverse</a>
+<li>4.3.2.  <a href="#S4.3.2">Multiple-Service Plug-in -- Caps &amp; Double</a>
+<li>4.3.3.  <a href="#S4.3.3">Built-in Server -- Length</a>
+<li>4.3.4.  <a href="#S4.3.4">Global Test Server</a>
+</ul>
+</ul>
+
+<a name="S4.3.1"><h3>4.3.1. Single-Service Plug-in -- Reverse</h3></a>
+
+The reverse operation is implemented as a single-service plug-in,
+so there is one global class and server name.
+The activation function is called `Activate' (which it must be).
+<p>
+The C program module itself includes the headers for the test system and
+server-side plug-ins.  The source file is `_tprev.c'.
+<p>
+<dl><dd><h4>(21) Test Reverse plug-in program</h4></dl>
+<pre>
+	    #include &lt;splug.h&gt;
+	    #include &quot;_tplug.h&quot;
+	    #include &lt;string.h&gt;
+
+	    char            ServerClass[] = &quot;StringXfrm&quot;;
+	    char            ServerName[]  = &quot;REVERSE&quot;;
+
+		    <a href="#S2.5">XCALL_</a>(int)
+	    Activate (<a href="#S4.2">&lt;String transform arguments&gt;</a>)
+	    {
+		    <a href="#S2.5">XCALL_INIT</a>;
+		    <a href="#S4.2.2">&lt;Reverse function body&gt;</a>
+	    }</pre>
+
+
+<a name="S4.3.2"><h3>4.3.2. Multiple-Service Plug-in -- Caps &amp; Double</h3></a>
+
+The capitalize and double operations are implemented as one 
+multiple-service plug-in with two servers.  The activation function
+entry points can have any name and are not exported symbols.  They are
+associated with their server name in the exported array of
+ServerRecords which has the required name `ServerDesc'.  The source
+file for this is `_tpcpdb.c'.
+<p>
+<dl><dd><h4>(22) Test Caps and Double plug-in program</h4></dl>
+<pre>
+	    #include &lt;splug.h&gt;
+	    #include &quot;_tplug.h&quot;
+	    #include &lt;string.h&gt;
+
+		    static <a href="#S2.5">XCALL_</a>(int)
+	    Capitalize (<a href="#S4.2">&lt;String transform arguments&gt;</a>)
+	    {
+		    <a href="#S2.5">XCALL_INIT</a>;
+		    <a href="#S4.2.3">&lt;Capitalize function body&gt;</a>
+	    }
+
+		    static <a href="#S2.5">XCALL_</a>(int)
+	    Double (<a href="#S4.2">&lt;String transform arguments&gt;</a>)
+	    {
+		    <a href="#S2.5">XCALL_INIT</a>;
+		    <a href="#S4.2.4">&lt;Double function body&gt;</a>
+	    }
+
+	    const char              class[] = &quot;StringXfrm&quot;;
+	    <a href="#S2.7">ServerRecord</a>            ServerDesc[] = {
+		    { class, &quot;CAPS&quot;,        Capitalize },
+		    { class, &quot;DOUBLE&quot;,      Double },
+		    { NULL }
+	    };</pre>
+
+
+<a name="S4.3.3"><h3>4.3.3. Built-in Server -- Length</h3></a>
+
+The length operation will be implemented as a built-in.  As result, all
+we need is a local function entry point of any name in the host program.
+<p>
+<dl><dd><h4>(23) Test host utilities</h4></dl>
+<pre>
+		    static int
+	    ActLength (<a href="#S4.2">&lt;String transform arguments&gt;</a>)
+	    {
+		    <a href="#S4.2.1">&lt;Length function body&gt;</a>
+	    }
+	    . . .</pre>
+
+
+<a name="S4.3.4"><h3>4.3.4. Global Test Server</h3></a>
+
+This test program includes a global server which just returns a string
+for clients to use when passed an empty string.
+This global's activation function gets a GlobalService request block
+with the `id' set to the requested string.  In this case, this MUST be the
+same as the server name.  The function returns a global pointer in the
+`data' field.
+<p>
+<dl><dd><h4>(24) Test Global Server plug-in</h4></dl>
+<pre>
+	    #include &lt;splug.h&gt;
+	    #include &lt;string.h&gt;
+
+	    char            ServerClass[] = &quot;Global&quot;;
+	    char            ServerName[]  = &quot;EmptyStringText&quot;;
+	    char            result[] = &quot;** Empty String **&quot;;
+
+		    <a href="#S2.5">XCALL_</a>(int)
+	    Activate (
+		    long             version,
+		    <a href="#S2.3">GlobalFunc</a>      *global,
+		    <a href="#S2.4">GlobalService</a>   *local,
+		    void            *data)
+	    {
+		    <a href="#S2.5">XCALL_INIT</a>;
+		    if (strcmp (local-&gt;id, ServerName) != 0)
+			    return <a href="#S2.2">AFUNC_BADLOCAL</a>;
+
+		    local-&gt;data = result;
+		    return <a href="#S2.2">AFUNC_OK</a>;
+	    }</pre>
+
+
+<hr>
+<a name="S5"><h1>5. Creating a Plug-in</h1></a>
+
+Methods for creating plug-ins have been developed for each of the 
+target platforms.  Versions of a plug-in
+can be created for the different systems from a single source code
+with different linking instructions.  Each case that follows includes
+an implicit makefile rule to create a &quot;.p&quot; plug-in
+module from an object file.  The macro SLIB stands for the
+directory where the startup code and server libraries are located.
+SINC is the include directory and OTHER_LIBS would be any other 
+libraries need by the module.
+<p>
+The final section shows how to add your plug-in to the LightWave host.
+<p>
+<ul>
+<ul>
+<li>5.1.  <a href="#S5.1">Microsoft's Windows</a>
+<li>5.2.  <a href="#S5.2">SGI Unix</a>
+<li>5.3.  <a href="#S5.3">Macintosh OS</a>
+<li>5.4.  <a href="#S5.4">Linking with LightWave</a>
+</ul>
+</ul>
+
+<a name="S5.1"><h2>5.1. Microsoft's Windows</h2></a>
+
+Plug-in modules under Windows are just DLLs created by linking with
+`serv_w.obj' and `server.lib'.  There is no need to create a &quot;.lib&quot; or 
+&quot;.exp&quot; file for the DLL, but the &quot;.def&quot; file should contain an 
+export statement for the global address `_mod_descrip'.  A usable 
+default def file is provided as
+&quot;serv.def&quot; in the main include directory.  There is no DLL entry 
+point function.
+<p>
+<dl><dd><h4>(25) Makefile examples</h4></dl>
+<pre>
+	    .obj.p:
+		    link32 -dll -out:$@ -def:$(SINC)serv.def $*.obj\
+		     $(SLIB)serv_w.obj server.lib $(OTHER_LIBS)
+	    <a href="#S5.2">. . .</a></pre>
+
+Structure alignment may vary among different compilers and can cause
+problems when trying to communicate between the host and a plug-in DLL.
+The LightWave host is compiled using Microsoft alignment rules.  Here's
+an excerpt on structure alignment from the MS Visual C documentation:
+<p>
+&quot;Applications should generally align structure members at addresses that 
+are 'natural' for the data type and the processor involved. For example, a 
+4-byte data member should have an address that is a multiple of four.
+<p>
+&quot;This principle is especially important when you write code for porting to 
+multiple processors. A misaligned 4-byte data member, which is on an address 
+that is not a multiple of four, causes a performance penalty with an 80386 
+processor and a hardware exception with a MIPS« RISC processor. In the 
+latter case, although the system handles the exception, the performance 
+penalty is significantly greater.  The following guidelines ensure proper
+alignment for processors targeted by Win32:
+<p>
+<dl><dd><h4>(26) Alignment Table</h4></dl>
+<pre>
+	    &quot;Type                   Alignment
+	     ----                   ---------
+	     char                   Align on byte boundaries
+	     short (16-bit)         Align on even byte boundaries
+	     int and long (32-bit)  Align on 32-bit boundaries
+	     float                  Align on 32-bit boundaries
+	     double                 Align on 64-bit boundaries
+	     structures             Largest alignment requirement of any member
+	     unions                 Alignment requirement of the first member</pre>
+
+&quot;The compiler automatically aligns data in accordance with these 
+requirements, inserting padding in structures up to the limit (default pack 
+size) specified by the /Zp option or #pragma pack. For example, /Zp2 permits 
+up to 1 byte of padding, /Zp4 permits up to 3 bytes of padding, and so on. 
+The default pack size for Windows 3.x is 2, whereas the default for Win32 is 8.&quot;
+<p>
+
+<a name="S5.2"><h2>5.2. SGI Unix</h2></a>
+
+Plug-in modules under IRIX are shared object modules linked with
+`serv_u.o' and `libserver.lib'.  The DSO should export
+the &quot;_mod_descrip&quot; symbol and use &quot;serv_u&quot; as startup code.
+<p>
+The link line should include any other libraries that the plug-in
+would need as a stand-alone program.  Since most libs on the SGI
+are themselves DSOs, this adds very little to the size of the
+plug-in and adds no extra runtime overhead.
+<p>
+<dl><dd><h4>(27) Makefile examples</h4></dl>
+<pre>
+	    <a href="#S5.1">. . .</a>
+	    .o.p:
+		    ld -shared -exported_symbol _mod_descrip -L$(SLIB)\
+		     $(SLIB)serv_u.o $*.o -o $@ -lserver $(OTHER_LIBS)</pre>
+
+Normally the plug-in DSO's are loaded in a way that forces
+resolution of all symbols.  This allows the host program to report
+undefined symbols to the plug-in developer.  If the name of the module
+includes the substring &quot;__lazy&quot; (lowercase), however, then the lazy evaluation
+mode is used, allowing the module to contain undefined symbols as
+long as they are not referenced by any executed code.  This is normally
+not needed unless you are using code from an external vendor which
+includes undefined but unused symbols, like the HIIP library from Elastic
+Reality.
+<p>
+
+<a name="S5.3"><h2>5.3. Macintosh OS</h2></a>
+
+Plug-in modules on the Mac are shared libraries of type 'shlb'.  These can
+be made from CodeWarrior by setting the project type to &quot;Shared Library.&quot;
+<p>
+
+<a name="S5.4"><h2>5.4. Linking with LightWave</h2></a>
+
+LightWave and Modeler read the names of servers from their startup
+configuration files.
+This method is much faster than scanning a directory path and allows for
+some user customization of plug-in names (such as national localization).
+It does require that the config file be accurate, since the host will
+blindly attempt to use servers that may not exist.  This is non-fatal but
+may be disconcerting to the user.
+<p>
+For Modeler, for example, the config file on the SGI is &quot;.lwmrc&quot;, on the 
+Mac is &quot;LightWave Modeler Prefs&quot;, and on Windows is &quot;LWM.CFG&quot;.  This file 
+can contain any number of lines of the following form:
+<p>
+<dl><dd><h4>(28) Config file examples</h4></dl>
+<pre>
+	    Plugin &lt;class&gt; &lt;name&gt; &lt;module&gt; &lt;user name&gt;
+	    . . .</pre>
+
+Each line describes a single server given by Class and Name.  The module
+is the plug-in file containing the server and the user name is the string
+to display on the interface for describing the server's function.  Class,
+name and module are delimited by spaces, and the user name is the rest of
+the line.  Here are some examples (lines wrap for readability -- each 
+statement has to be a single line).
+<p>
+<dl><dd><h4>(29) Config file examples</h4></dl>
+<pre>
+	    . . .
+	    Plugin CommandSequence Demo_AllBGLayers layerset.p Include Background
+	    Plugin CommandSequence Demo_NextEmptyLayer layerset.p Next Empty
+	    Plugin MeshDataEdit Demo_MakeSpikey z:lw/plugin/spikey.p Spikey Subdivide
+	    Plugin ImageLoader PDQ_Targa pdq/targa.lwp Truevision Targa Image</pre>
+
+</body></html>

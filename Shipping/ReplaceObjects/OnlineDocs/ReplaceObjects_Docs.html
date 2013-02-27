@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<HTML>
+<HEAD>
+	<TITLE>TM Productions -- ReplaceObjects Docs </TITLE>
+</HEAD>
+
+<BODY bgcolor="#ffffff" background="TMP-BG.gif">
+
+<center>
+  <table><tr><td>
+	<br><br>
+	<p align="center"><IMG alt=ReplaceObjects border=0 height=131 src ="PROG-ReplaceObjects.gif" width=239 ></p>
+	<P align=justify>
+	<br><STRONG>ReplaceObjects</STRONG> is a 
+	  plug-in for Lightwave 6.0 or greater. It allows you to replace multiple
+    objects with multiple other objects.  The replacement can be from a random
+    selection of objects and weighted for more control, and the original object's
+    name and path can be stored as scene tags so you can return to the original
+    at any time.  Two plug-ins are included, 
+	  <A href="#RepalceObjects"><STRONG>Replace Objects</STRONG></A> and
+	  <A href="#ReplaceWithOriginalObject"><STRONG>Replace With Original Object</STRONG></A>.
+	  This plug-in requires Lightwave 6.0 or greater.</P>
+
+	<P align=justify>To install ReplaceObjects, just follow these steps:</P>
+	<UL>
+	  <LI>If any copies of Layout are running, quit them now.
+	  <LI>Create a new directory in your Lightwave Plugins directory called TMPro and copy ReplaceObjects.p into it.
+	  <LI>Load Layout
+	  <LI>Select Add Plug-ins.
+	  <LI>Find and add ReplaceObjects.p. Layout should report that two plug-ins have been added.
+	  <LI>Quit Layout. This will update your Lightwave 
+        config and ensure that everything works properly. 
+        <LI>The next time you run Layout, you can launch 
+        the <STRONG>ReplaceObjects</STRONG> plug-ins from 
+        the Generics pop-up in the Plug-in Options Panel, or assign them to keys 
+        or buttons on the interface with Configure Keys and Configure Menus.  Please 
+        refer to your Lightwave documentation for more information.   The plug-ins will be
+        the prefixed with TM_P under the Plugins heading of the 
+        Configure Keys and Configure Menus panels.</LI>
+	</UL>
+	<br>
+	<P><STRONG>ReplaceObjects</STRONG> includes the following plugins:</P>
+
+	<br><HR width="90%">
+	<a name="#ReplaceObjects"></a>
+	<H3 align=center>Replace Objects<br>
+	<HR width="40%"></H3>
+	
+  <p align=center><IMG alt="Replace Objects Interface" border=0 height=515 src="ReplaceObjects-Main.jpg" width=400></p>
+
+ 	<P align=justify><b>Replace Objects</b> allows you to replace any or all objects in the
+  scene with any other objects.  These replacements are randomly selected from the swap list
+  based on each's weight.  You use the plug-in by selecting the objects you want to replace,
+  activating the <b>Replace Objects</b>, selecting any number of swap objects and their
+  weights, and hitting <i>OK</i> to replace the selected objects with the swaps.</p>
+
+ 	<P align=justify>To use <b>Replace Objects</b>, you must first select the objects you want
+  to replace.  Once you have some selected, activating the plug-in will open an interface
+  like the one above.</P>
+  
+ 	<P align=justify>
+  <IMG align=right alt="Limit To Popup" border=0 height=50 src="ReplaceObjects-LimitTo.jpg" width=121 hspace=15>
+  The <i>Limit To</i> pop-up determines if all objects will be replaced, or
+  only the selected objects.</P>
+
+ 	<P align=justify>The core of the plug-in is the <i>Swap List</i>.  This contains a list of all
+  the swap objects you have entered.  The first column of the list shows a check if the item is
+  enabled, and you can click in this column to change this state.  The second column is the
+  filename of the swap object.  The third column displays the weight of this swap object.  The
+  final column shows the probability of this object being chosen as a replacement.  Adding together
+  all the values in this column will total 100%.  Disabled items will not contribute to this total,
+  and will display a dash instead.</P>
+
+ 	<P align=justify>
+  <IMG align=right alt="Sort By Popup" border=0 height=50 src="ReplaceObjects-SortBy.jpg" width=74 hspace=15>
+  The <i>Sort By</i> pop-up allows you to sort the swap list alphabetically
+  by object name or by weight.</P>
+
+ 	<P align=justify><i>Add</i> will add a new swap object to the list.  <i>Clone</i> will duplicate
+  the selected swap object.  <i>Remove</i> will remove a swap object, and <i>Clear All</i> will
+  remove all swap objects and clear the list.</P>
+
+ 	<P align=justify>The <i>Object Path</i> field contains the path of the swap object.  You can click
+  the button to the right of the field to open a file requester to select the object.  If no path
+  is entered, the <i>Swap List</i> will display (original object), meaning that if this swap object
+  is chosen, the object won't be replaced.</P>
+
+ 	<P align=justify>The <i>Weight</i> field allows you to adjust the weight of the selected swap
+  object.  By default, all objects have a weight of 1.0, which means they all have an equal chance
+  of being chosen as a replacement object.  An object with a weight of 2.0 has twice as much chance
+  of being chosen as an object with a 1.0 weight.  You can see these weights as a percentage in
+  the <i>Swap List</i>.</P>
+
+ 	<P align=justify>The <i>Enable</i> checkbox allows you to enable or disable a particular item.
+  If an item is disabled, it will act as if it wasn't there, allowing you to temporarilly ignore
+  unessesary items.</P>
+
+ 	<P align=justify><i>Store Original Object Name As Tag</i> will keep a copy of the original object
+  name as a scene tag.  Scene tags can be viewed using the Comments Generic plug-in include with
+  Lightwave.  Storing the original object names allows you to use the <b>Replace With Original
+  Object</b> plug-in to reload the original item. The tag starts with the keyword "OriginalItem",
+  then a 0 if it was a null or a 1 if it was an object, and finally the path to the object, or the
+  original name of the null object.  If this tag already exists for this object, it will be replaced
+  with the new tag.  If this option is left unchecked, then no tags will be modified or created.</P>
+
+  <P align=justify><i>Save</i> can be used to store the current swap list to disk for later use as
+  an .RPS file.  You can load these settings back in with the <i>Load</i> button.</P>
+  
+  <P align=justify><i>About</i>, as you'd expect, will pop up some information about this plug-in.</P>
+
+  <P align=justify>Once you have all the options set up, <i>OK</i> will begin replacing objects.
+  A progress bar will show you how the replacement is going.  If you don't want to perform the
+  replacement, you can hit <i>Cancel</i> instead.</P>
+
+ 	<br><HR width="90%">
+	<a name="#ReplaceWithOriginalObject"></a>
+	<H3 align=center>Replace With Original Object<br>
+	<HR width="40%"></H3>
+
+  <P align=justify>This plug-in reverses the effects of <b>Nullify</b> and <b>Replace Objects</b> when
+  <i>Store Original Object Name As Tag</i> was enabled.  It replaces each selected object with the
+  object or null object specified by the "OriginalItem" tag.  The existing tag will then be replaced
+  with the original name of the item we're replacing, so you can call this over and over again to swap
+  between the orignal item and the replacement.  If the tag doesn't exist, then this will do nothing.</P>
+
+  <H3 align=center><b>Revision History</b>
+  <HR width=50%></H3>
+	<ul>
+	  <li><b>04-22-01</b>  First public release</li>
+  </ul>
+
+ 	<br>
+	<p><font size="-1">
+	Bugs?  Feature requests?  Can't get it to work?  Feel free to <A href="http://www.tmproductions.com/Contact.html">contact</A> us if
+	you're having any problems or want to request a feature.</font></p>
+	
+	<p> <hr width="90%">
+		<font size="-1">
+		All programs presented here are Copyright &copy;2000-2002 TM Productions, All Rights Reserved.
+		Please <A href="http://www.tmproductions.com/Contact.html">contact</A> us if you would like to distribute any of these programs,
+		or if you find any particularly useful.
+		</font></p>
+
+  </td><td width="5%"></td></tr></table>
+</center>
+</BODY>
+</HTML>

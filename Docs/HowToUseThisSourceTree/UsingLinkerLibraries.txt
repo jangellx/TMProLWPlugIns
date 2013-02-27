@@ -1,0 +1,53 @@
+- Using linker libraries in a program ---------------------------
+The easiest way to add a library to a program is to insert the library's project into
+the program's workspace, and set the library's project as a dependancy of the program's
+project.
+
+The advantage of adding the library's project to your programs workspace is that you
+don't have to deal with including different libraries for different builds.  For
+example, x86 debug and AXP release would each require a different library to link with.  
+By adding the projects, the compiler will automatically compile and link the correct
+project based on the Active Configuration, set with the Build/Set Active Configuration
+menu option.
+
+For example, you have a workspace called Test.  It includes the project Test, which
+compiles into the executable Test.exe.
+
+You want to use the DirTools linker libraries from Projects/Dirtools, in Test.exe.
+Right-click on the workspace name and select Insert Project.  Go back a few dirs and
+add Projects/Dirtools/Dirtools.dsp.
+
+This alone won't link DirTools with your program.  You must also make it a dependancy.
+Do this by selecting the menu option Build/Set Dependencies.  In the Dependencies
+window, select your program (in this case, Test) from the pop-up list.  The list below
+shows all the other projects in the scene.  Click each project that you want the
+selected one to be dependant on.  In this case, DirTools would be clicked.  Then close
+the window.
+
+You'll now see a little DirTools icon and name under the project's heading in the File
+View.  This means that Test is dependant on DirTools.  Whenever Test is compiled,
+DirTools will also compile, if needed.
+
+
+Note that you still can include linker libraries the old fashioned way, but this becomes
+difficult to maintain after a while.  For example, I've had no luck generating a linker
+library project for the Lightwave SDK libs, and so I add them by hand.  Each Lightwave
+plug-in includes a libraries list like this:
+
+- Libs
+  - Libs x86 Release
+    - <insert libs here>
+  - Libs x86 Debug
+    - <insert libs here>
+  - Libs AXP Release
+    - <insert libs here>
+  - Libs AXP Debug
+    - <insert libs here>
+
+For each configuration (ie: x86 Debug configuration), only one of the four sets is not
+exluded from the build. Unfortunately, copying and pasting this libs structure from one
+project to another looses the Exclude From Build state, and so must be reset for each
+new program (at least in MSVC++ 5.0).  How annoying.
+
+For examples of both of these, see any of the Lightwave plug-ins in Workspaces/Lightwave.
+
